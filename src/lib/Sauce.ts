@@ -12,55 +12,54 @@ import fetch from "node-fetch";
 const sauce = new SauceNao({ api_key: process.env.saucenaoApiKey });
 
 export async function getSauce({ interaction, link, ephemeral }: SauceOptions) {
-	/**
-	 * Filtering Inputs
-	 */
-	await interaction.deferReply({ ephemeral });
-	let wait: EmbedBuilder = new EmbedBuilder()
-		.setTitle("Processing...")
-		.setColor("Green")
-		.setDescription(
-			"<a:lod:1021265223707000923> | Validating Link...\n<a:lod:1021265223707000923> | Searching For Sauce...\n<a:lod:1021265223707000923> | Filtering..."
+	try {
+		/**
+		 * Filtering Inputs
+		 */
+		await interaction.deferReply({ ephemeral });
+		let wait: EmbedBuilder = new EmbedBuilder()
+			.setTitle("Processing...")
+			.setColor("Green")
+			.setDescription(
+				"<a:lod:1021265223707000923> | Validating Link...\n<a:lod:1021265223707000923> | Searching For Sauce...\n<a:lod:1021265223707000923> | Filtering..."
+			);
+		await interaction.editReply({ embeds: [wait] });
+
+		if (!isImageAndGif(link)) {
+			const failed: EmbedBuilder = new EmbedBuilder()
+				.setColor("Red")
+				.setDescription("Must be an image/gif!");
+			return interaction.editReply({ embeds: [failed] });
+		}
+
+		const response = await fetch(link);
+		if (response.status !== 200) {
+			const failed: EmbedBuilder = new EmbedBuilder()
+				.setColor("Red")
+				.setDescription("Invalid image/gif link/file.");
+			return interaction.editReply({ embeds: [failed] });
+		}
+
+		/**
+		 * Sauce Searching
+		 */
+		wait.setDescription(
+			"✅ | Valid Link!\n<a:lod:1021265223707000923> | Searching For Sauce...\n<a:lod:1021265223707000923> | Filtering..."
 		);
-	await interaction.editReply({ embeds: [wait] });
+		await interaction.editReply({ embeds: [wait] });
 
-	if (!isImageAndGif(link)) {
-		const failed: EmbedBuilder = new EmbedBuilder()
-			.setColor("Red")
-			.setDescription("Must be an image/gif!");
-		return interaction.editReply({ embeds: [failed] });
-	}
+		const emojis = {
+			Pixiv: "1003211984747118642",
+			Twitter: "1003211986697453680",
+			Danbooru: "1003212182156230686",
+			Gelbooru: "1003211988916252682",
+			"Yande.re": "🔪",
+			Konachan: "⭐",
+			Fantia: "1003211990673670194",
+			AniDB: "1003211992410107924",
+		};
 
-	const response = await fetch(link);
-	if (response.status !== 200) {
-		const failed: EmbedBuilder = new EmbedBuilder()
-			.setColor("Red")
-			.setDescription("Invalid image/gif link/file.");
-		return interaction.editReply({ embeds: [failed] });
-	}
-
-	/**
-	 * Sauce Searching
-	 */
-	wait.setDescription(
-		"✅ | Valid Link!\n<a:lod:1021265223707000923> | Searching For Sauce...\n<a:lod:1021265223707000923> | Filtering..."
-	);
-	await interaction.editReply({ embeds: [wait] });
-
-	const emojis = {
-		Pixiv: "1003211984747118642",
-		Twitter: "1003211986697453680",
-		Danbooru: "1003212182156230686",
-		Gelbooru: "1003211988916252682",
-		"Yande.re": "🔪",
-		Konachan: "⭐",
-		Fantia: "1003211990673670194",
-		AniDB: "1003211992410107924",
-	};
-
-	sauce
-		.find({ url: link })
-		.then(async (sauce) => {
+		sauce.find({ url: link }).then(async (sauce) => {
 			if (sauce.results.length == 0) {
 				const noResult: EmbedBuilder = new EmbedBuilder()
 					.setColor("Red")
@@ -299,34 +298,34 @@ export async function getSauce({ interaction, link, ephemeral }: SauceOptions) {
 				embeds: [result],
 				components: [sauceUrls],
 			});
-		})
-		.catch(async (err) => {
-			/**
-			 * Error Catching
-			 */
-			const errorEmbed: EmbedBuilder = new EmbedBuilder()
-				.setColor("Red")
-				.setDescription(`[${err.name}] ${err.message}`)
-				.setFooter({
-					text: "Please use the command again or contact support!",
-				});
-			const button: ActionRowBuilder<ButtonBuilder> =
-				new ActionRowBuilder<ButtonBuilder>().addComponents(
-					new ButtonBuilder()
-						.setStyle(ButtonStyle.Link)
-						.setLabel("Support Server")
-						.setEmoji("⚙️")
-						.setURL("https://discord.gg/NFkMxFeEWr")
-				);
-
-			interaction.deferred
-				? await interaction.editReply({
-						embeds: [errorEmbed],
-						components: [button],
-				  })
-				: await interaction.reply({
-						embeds: [errorEmbed],
-						components: [button],
-				  });
 		});
+	} catch (err) {
+		/**
+		 * Error Catching
+		 */
+		const errorEmbed: EmbedBuilder = new EmbedBuilder()
+			.setColor("Red")
+			.setDescription(`[${err.name}] ${err.message}`)
+			.setFooter({
+				text: "Please use the command again or contact support!",
+			});
+		const button: ActionRowBuilder<ButtonBuilder> =
+			new ActionRowBuilder<ButtonBuilder>().addComponents(
+				new ButtonBuilder()
+					.setStyle(ButtonStyle.Link)
+					.setLabel("Support Server")
+					.setEmoji("⚙️")
+					.setURL("https://discord.gg/NFkMxFeEWr")
+			);
+
+		interaction.deferred
+			? await interaction.editReply({
+					embeds: [errorEmbed],
+					components: [button],
+			  })
+			: await interaction.reply({
+					embeds: [errorEmbed],
+					components: [button],
+			  });
+	}
 }

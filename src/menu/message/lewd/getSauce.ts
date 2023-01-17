@@ -11,10 +11,10 @@ export default new MessageCommand({
 		if ((interaction.channel as TextChannel).nsfw) ephemeral = false;
 
 		let link: string;
-		interaction.options.data[0].attachment
-			? (link =
-					interaction.options.data[0].message.attachments.first().proxyURL)
+		interaction.options.data[0].message.attachments
+			? (link = interaction.options.data[0].message.attachments.first().url)
 			: (link = interaction.options.data[0].message.content);
+
 		await getSauce({ interaction, link, ephemeral });
 	},
 });
