@@ -7,6 +7,7 @@ import {
 } from "discord.js";
 import { ChatInputCommand } from "../../structures/Command";
 import nsfwFunc from "./subcommands/nsfwSubs";
+import fetch from "node-fetch";
 
 export default new ChatInputCommand({
 	name: "nsfw",

@@ -1,13 +1,5 @@
-import {
-	ActionRowBuilder,
-	ApplicationCommandOptionType,
-	ButtonBuilder,
-	ButtonStyle,
-	EmbedBuilder,
-} from "discord.js";
-import fetch from "node-fetch";
-import { getSauce } from "../../lib/Sauce";
-import { isImageAndGif } from "../../lib/Utils";
+import { ApplicationCommandOptionType } from "discord.js";
+import { findSauce } from "../../lib/Sauce";
 import { ChatInputCommand } from "../../structures/Command";
 
 export default new ChatInputCommand({
@@ -50,6 +42,6 @@ export default new ChatInputCommand({
 			? (link = interaction.options.getString("link"))
 			: (link = interaction.options.getAttachment("image").proxyURL);
 
-		await getSauce({ interaction, link, ephemeral: false });
+		await findSauce({ interaction, link, ephemeral: false });
 	},
 });

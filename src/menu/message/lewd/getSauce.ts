@@ -1,5 +1,5 @@
 import { ApplicationCommandType, EmbedBuilder, TextChannel } from "discord.js";
-import { getSauce } from "../../../lib/Sauce";
+import { findSauce } from "../../../lib/Sauce";
 import { MessageCommand } from "../../../structures/Command";
 
 export default new MessageCommand({
@@ -24,6 +24,6 @@ export default new MessageCommand({
 			return interaction.reply({ embeds: [noImg], ephemeral: true });
 		}
 
-		await getSauce({ interaction, link, ephemeral });
+		await findSauce({ interaction, link, ephemeral });
 	},
 });
