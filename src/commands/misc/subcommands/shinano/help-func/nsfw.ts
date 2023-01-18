@@ -13,7 +13,7 @@ export = async (interaction: ChatInputCommandInteraction) => {
 			.setColor("Red")
 			.setTitle("NSFW Command")
 			.setDescription("NSFW commands can only be used in NSFW channels!");
-		return interaction.editReply({ embeds: [nsfwErrorEmbed] });
+		return interaction.reply({ embeds: [nsfwErrorEmbed] });
 	}
 
 	const noNSFW: ActionRowBuilder<ButtonBuilder> =
