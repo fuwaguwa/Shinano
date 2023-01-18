@@ -36,6 +36,7 @@ export class Shinano extends Client {
 		Utilities: [],
 		Reactions: [],
 		Image: [],
+		Dev: [],
 	};
 
 	constructor() {
@@ -160,7 +161,15 @@ export class Shinano extends Client {
 			let arr = [];
 			const embedArr: EmbedBuilder[] = [];
 
-			if (["Image", "AzurLane", "GenshinImpact", "Anime"].includes(category)) {
+			if (
+				[
+					"Image",
+					"AzurLane",
+					"GenshinImpact",
+					"Anime",
+					"Miscellaneous",
+				].includes(category)
+			) {
 				this.catagorizedCommands[category].forEach((command) => {
 					if (!command.options) {
 						arr.push(command);
@@ -181,9 +190,21 @@ export class Shinano extends Client {
 				const arrChunk = arr.slice(i, i + 7);
 
 				let text: string = `/<command>\n\n`;
-				if (category === "AzurLane") text = `/azur-lane <command>\n\n`;
-				if (category === "GenshinImpact") text = `/genshin <command>\n\n`;
-				if (category === "Anime") text = `/anime <command>\n\n`;
+
+				switch (category) {
+					case "AzurLane":
+						text = `/azur-lane <command>\n\n`;
+						break;
+					case "GenshinImpact":
+						text = `/genshin <command>\n\n`;
+						break;
+					case "Anime":
+						text = `/anime <command>\n\n`;
+						break;
+					case "Miscellaneous":
+						text = `/shinano <command>\n\n`;
+						break;
+				}
 
 				for (let i = 0; i < arrChunk.length; i++) {
 					const command = arrChunk[i];
@@ -220,7 +241,7 @@ export class Shinano extends Client {
 			const command: ChatInputCommandType = await this.importFile(filePath);
 			if (!command.name) return;
 
-			if (command.category !== "NSFW")
+			if (command.category !== "NSFW" && command.category !== "Dev")
 				this.catagorizedCommands[command.category].push(command);
 
 			this.commands.set(command.name, command);

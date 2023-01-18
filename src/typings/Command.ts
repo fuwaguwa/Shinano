@@ -19,7 +19,8 @@ export type ChatInputCommandCategories =
 	| "Utilities"
 	| "Reactions"
 	| "Image"
-	| "NSFW";
+	| "NSFW"
+	| "Dev";
 
 export interface ChatInputCommandCategoryList {
 	Anime: EmbedBuilder[];

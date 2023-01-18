@@ -7,7 +7,7 @@ export default new ChatInputCommand({
 	description: "Developer Tools",
 	defaultMemberPermissions: "0",
 	cooldown: 4500,
-	category: "Miscellaneous",
+	category: "Dev",
 	ownerOnly: true,
 	options: [
 		{
