@@ -17,7 +17,8 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		"[nekos.fun](https://nekos.fun)",
 		"[nekos.life](https://nekos.life)",
 		"[jikan.moe](https://jikan.moe)",
-		"[genshin-db](genshin-db](https://github.com/theBowja/genshin-db)",
+		"[nekos.best](https://nekos.best)",
+		"[genshin-db](https://github.com/theBowja/genshin-db)",
 	];
 
 	const shinanoEmbed: EmbedBuilder = new EmbedBuilder()
