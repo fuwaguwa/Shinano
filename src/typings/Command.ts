@@ -1,7 +1,6 @@
 import {
 	ChatInputApplicationCommandData,
 	ChatInputCommandInteraction,
-	CommandInteractionOptionResolver,
 	EmbedBuilder,
 	MessageApplicationCommandData,
 	MessageContextMenuCommandInteraction,
