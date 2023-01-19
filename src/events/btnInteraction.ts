@@ -1,7 +1,6 @@
 import {
 	ActionRowBuilder,
 	ButtonBuilder,
-	ButtonInteraction,
 	ButtonStyle,
 	EmbedBuilder,
 } from "discord.js";
@@ -17,53 +16,6 @@ const twitClient = new TwitterApi({
 	accessToken: process.env.twitterAccessToken,
 	accessSecret: process.env.twitterAccessTokenSecret,
 });
-
-let EHOSTRetries: number = 0;
-function translateTweet(text: string, interaction: ButtonInteraction) {
-	translate(text, {
-		from: "ja",
-		to: "en",
-		requestFunction: fetch,
-	})
-		.then(async (translations) => {
-			const translateEmbed: EmbedBuilder = new EmbedBuilder()
-				.setColor("#2f3136")
-				.setTitle("Translated Tweet")
-				.setDescription(translations.text)
-				.setFooter({ text: "Translated with Google Translate" });
-
-			await interaction.editReply({ embeds: [translateEmbed] });
-		})
-		.catch(async (err) => {
-			console.error(err);
-
-			if (err.message.includes("EHOSTUNREACH") && EHOSTRetries < 3) {
-				EHOSTRetries += 1;
-				return translateTweet(text, interaction);
-			}
-
-			EHOSTRetries = 0;
-			const errorEmbed: EmbedBuilder = new EmbedBuilder()
-				.setColor("Red")
-				.setDescription(`**${err.name}**: ${err.message}`)
-				.setFooter({
-					text: "Please use the command again or contact support!",
-				});
-			const button: ActionRowBuilder<ButtonBuilder> =
-				new ActionRowBuilder<ButtonBuilder>().setComponents(
-					new ButtonBuilder()
-						.setStyle(ButtonStyle.Link)
-						.setLabel("Support Server")
-						.setEmoji({ name: "⚙️" })
-						.setURL("https://discord.gg/NFkMxFeEWr")
-				);
-
-			await interaction.editReply({
-				embeds: [errorEmbed],
-				components: [button],
-			});
-		});
-}
 
 export default new Event("interactionCreate", async (interaction) => {
 	if (!interaction.isButton()) return;
@@ -153,6 +105,18 @@ export default new Event("interactionCreate", async (interaction) => {
 		const tweetId = interaction.customId.split("-")[1];
 		const tweet = await twitClient.v2.singleTweet(tweetId);
 
-		await translateTweet(tweet.data.text, interaction);
+		const translations: any = await translate(tweet.data.text, {
+			from: "ja",
+			to: "en",
+			requestFunction: fetch,
+		});
+
+		const translateEmbed: EmbedBuilder = new EmbedBuilder()
+			.setColor("#2f3136")
+			.setTitle("Translated Tweet")
+			.setDescription(translations.text)
+			.setFooter({ text: "Translated with Google Translate" });
+
+		await interaction.editReply({ embeds: [translateEmbed] });
 	}
 });
