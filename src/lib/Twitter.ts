@@ -1,4 +1,10 @@
-import { TextChannel } from "discord.js";
+import {
+	ActionRowBuilder,
+	ButtonBuilder,
+	ButtonStyle,
+	MessageCreateOptions,
+	TextChannel,
+} from "discord.js";
 import { ETwitterStreamEvent, TwitterApi } from "twitter-api-v2";
 import { client } from "..";
 import { sleep } from "./Utils";
@@ -6,27 +12,15 @@ import News from "../schemas/ALNews";
 
 let lastTweetLink: string;
 
-async function listenForever(streamFactory, dataConsumer) {
-	try {
-		console.log("Connected to Twitter stream!");
-		for await (const { data } of streamFactory()) {
-			dataConsumer(data);
-		}
-
-		console.log("Stream disconnected healthily. Reconnecting.");
-		listenForever(streamFactory, dataConsumer);
-	} catch (error) {
-		console.warn("Stream disconnected with error. Retrying.", error);
-		listenForever(streamFactory, dataConsumer);
-	}
-}
-
 export async function postTweet(tweet) {
 	sleep(5000);
 
 	const link: string = `https://twitter.com/${tweet.data.author_id}/status/${tweet.data.conversation_id}`;
 	let server: string = link.includes("993682160744738816") ? "EN" : "JP";
 
+	/**
+	 * Source check
+	 */
 	if (link === lastTweetLink) return;
 	if (
 		!["993682160744738816", "864400939125415936"].includes(
@@ -37,6 +31,28 @@ export async function postTweet(tweet) {
 
 	lastTweetLink = link;
 
+	/**
+	 * Translation check
+	 */
+	let messageOptions: MessageCreateOptions = {
+		content: `__Shikikans, there's a new message from ${server} HQ!__\n` + link,
+	};
+
+	if (tweet.data.author_id === "864400939125415936") {
+		const translate: ActionRowBuilder<ButtonBuilder> =
+			new ActionRowBuilder<ButtonBuilder>().setComponents(
+				new ButtonBuilder()
+					.setStyle(ButtonStyle.Primary)
+					.setCustomId(`STWT-${tweet.data.conversation_id}`)
+					.setLabel("Translate Tweet")
+					.setEmoji({ id: "1065640481687617648" })
+			);
+		messageOptions = Object.assign({ components: [translate] }, messageOptions);
+	}
+
+	/**
+	 * Sending message
+	 */
 	const iterations: number = 0;
 	for await (const doc of News.find()) {
 		if (iterations == 40) sleep(1000);
@@ -45,10 +61,7 @@ export async function postTweet(tweet) {
 			const guild = await client.guilds.fetch(doc.guildId);
 			const channel = await guild.channels.fetch(doc.channelId);
 
-			await (channel as TextChannel).send({
-				content:
-					`__Shikikans, there's a new message from ${server} HQ!__\n` + link,
-			});
+			await (channel as TextChannel).send(messageOptions);
 		} catch (error) {
 			console.warn(error);
 			continue;
