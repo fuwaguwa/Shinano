@@ -3,7 +3,7 @@ import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { client } from "../../../..";
 
 export = async (interaction: ChatInputCommandInteraction) => {
-	await interaction.deferReply();
+	if (!interaction.deferred) await interaction.deferReply();
 
 	/**
 	 * Top.gg Stats

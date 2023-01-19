@@ -19,7 +19,7 @@ export default new ChatInputCommand({
 		if (!interaction.isChatInputCommand())
 			throw new Error("Interaction is not from chat!");
 
-		await interaction.deferReply();
+		if (!interaction.deferred) await interaction.deferReply();
 
 		const word = interaction.options.getString("word");
 		const response = await fetch(

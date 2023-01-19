@@ -11,7 +11,7 @@ import { ShinanoPaginator } from "../../../../../lib/Pages";
 import { ChatInputCommandCategoryList } from "../../../../../typings/Command";
 
 export = async (interaction: ChatInputCommandInteraction) => {
-	await interaction.deferReply();
+	if (!interaction.deferred) await interaction.deferReply();
 
 	const allCommands: ChatInputCommandCategoryList =
 		await client.generateCommandList();

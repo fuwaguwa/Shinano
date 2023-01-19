@@ -14,7 +14,7 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		return interaction.reply({ embeds: [nsfwCommand] });
 	}
 
-	await interaction.deferReply();
+	if (!interaction.deferred) await interaction.deferReply();
 	const embed: EmbedBuilder = new EmbedBuilder().setColor("#2f3136");
 
 	await nsfwSubs.privateColle(interaction, embed, "shinano");

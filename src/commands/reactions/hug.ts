@@ -15,7 +15,7 @@ export default new ChatInputCommand({
 		},
 	],
 	run: async ({ interaction }) => {
-		await interaction.deferReply();
+		if (!interaction.deferred) await interaction.deferReply();
 
 		const user: User = interaction.options.getUser("user");
 		const reactionEmbed: EmbedBuilder = new EmbedBuilder()

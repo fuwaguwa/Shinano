@@ -8,7 +8,7 @@ export default new ChatInputCommand({
 	cooldown: 4500,
 	category: "Image",
 	run: async ({ interaction }) => {
-		await interaction.deferReply();
+		if (!interaction.deferred) await interaction.deferReply();
 
 		const response = await fetch("https://api.thedogapi.com/v1/images/search", {
 			method: "GET",

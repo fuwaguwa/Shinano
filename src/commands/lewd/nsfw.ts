@@ -286,7 +286,7 @@ export default new ChatInputCommand({
 		},
 	],
 	run: async ({ interaction, client }) => {
-		await interaction.deferReply();
+		if (!interaction.deferred) await interaction.deferReply();
 		let lewdEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")
 			.setFooter({

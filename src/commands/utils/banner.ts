@@ -16,7 +16,7 @@ export default new ChatInputCommand({
 	run: async ({ interaction }) => {
 		const user: User = interaction.options.getUser("user") || interaction.user;
 
-		await interaction.deferReply();
+		if (!interaction.deferred) await interaction.deferReply();
 		const response = await fetch(
 			`https://discord.com/api/v8/users/${user.id}`,
 			{

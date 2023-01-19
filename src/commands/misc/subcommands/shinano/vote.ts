@@ -7,7 +7,7 @@ import {
 } from "discord.js";
 
 export = async (interaction: ChatInputCommandInteraction) => {
-	await interaction.deferReply();
+	if (!interaction.deferred) await interaction.deferReply();
 
 	const voteEmbed: EmbedBuilder = new EmbedBuilder()
 		.setColor("#2f3136")

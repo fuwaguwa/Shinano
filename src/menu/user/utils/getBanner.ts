@@ -9,7 +9,7 @@ export default new UserCommand({
 	run: async ({ interaction }) => {
 		const user: GuildMember = interaction.options.data[0].member as GuildMember;
 
-		await interaction.deferReply();
+		if (!interaction.deferred) await interaction.deferReply();
 		const response = await fetch(
 			`https://discord.com/api/v8/users/${user.id}`,
 			{

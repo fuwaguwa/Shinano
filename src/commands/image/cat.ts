@@ -8,7 +8,7 @@ export default new ChatInputCommand({
 	cooldown: 4000,
 	category: "Image",
 	run: async ({ interaction }) => {
-		await interaction.deferReply();
+		if (!interaction.deferred) await interaction.deferReply();
 
 		const response = await fetch("https://api.thecatapi.com/v1/images/search", {
 			method: "GET",

@@ -207,7 +207,7 @@ export default new ChatInputCommand({
 		},
 	],
 	run: async ({ interaction }) => {
-		await interaction.deferReply();
+		if (!interaction.deferred) await interaction.deferReply();
 
 		if (!interaction.options["_group"]) {
 			switch (interaction.options.getSubcommand()) {

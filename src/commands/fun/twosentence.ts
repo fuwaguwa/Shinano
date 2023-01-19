@@ -8,7 +8,7 @@ export default new ChatInputCommand({
 	category: "Fun",
 	cooldown: 5000,
 	run: async ({ interaction }) => {
-		await interaction.deferReply();
+		if (!interaction.deferred) await interaction.deferReply();
 
 		const post = await rFetch({
 			subreddit: "TwoSentenceHorror",

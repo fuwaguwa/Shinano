@@ -9,7 +9,7 @@ export default new ChatInputCommand({
 	cooldown: 4500,
 	category: "Image",
 	run: async ({ interaction }) => {
-		await interaction.deferReply();
+		if (!interaction.deferred) await interaction.deferReply();
 
 		const kemonomimiEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")

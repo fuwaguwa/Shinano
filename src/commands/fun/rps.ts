@@ -294,7 +294,7 @@ export default new ChatInputCommand({
 				}
 			});
 		} else {
-			await interaction.deferReply();
+			if (!interaction.deferred) await interaction.deferReply();
 
 			/**
 			 * Button

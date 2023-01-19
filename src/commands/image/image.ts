@@ -206,7 +206,7 @@ export default new ChatInputCommand({
 		const target = interaction.options.getUser("user") || interaction.user;
 		const avatar = target.displayAvatarURL({ size: 512, extension: "png" });
 
-		await interaction.deferReply();
+		if (!interaction.deferred) await interaction.deferReply();
 		let image: Buffer;
 		let link: string;
 

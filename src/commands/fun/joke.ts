@@ -8,7 +8,7 @@ export default new ChatInputCommand({
 	cooldown: 4500,
 	category: "Fun",
 	run: async ({ interaction }) => {
-		await interaction.deferReply();
+		if (!interaction.deferred) await interaction.deferReply();
 
 		const response = await fetch("https://some-random-api.ml/others/joke", {
 			method: "GET",
