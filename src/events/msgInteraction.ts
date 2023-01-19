@@ -4,14 +4,57 @@ import {
 	ButtonStyle,
 	Collection,
 	EmbedBuilder,
+	MessageContextMenuCommandInteraction,
 } from "discord.js";
 import { client } from "..";
 import { Event } from "../structures/Event";
 import ms from "ms";
 import User from "../schemas/User";
+import { MessageCommandType } from "../typings/Command";
 
 const Cooldown: Collection<string, number> = new Collection();
 const owner = "836215956346634270";
+
+let EHOSTRetries: number = 0;
+function runCommand(
+	command: MessageCommandType,
+	interaction: MessageContextMenuCommandInteraction
+) {
+	command.run({ client, interaction }).catch(async (err) => {
+		console.error(err);
+
+		if (err.message.includes("EHOSTUNREACH") && EHOSTRetries < 3) {
+			EHOSTRetries += 1;
+			return runCommand(command, interaction);
+		}
+
+		EHOSTRetries = 0;
+		const errorEmbed: EmbedBuilder = new EmbedBuilder()
+			.setColor("Red")
+			.setDescription(`**${err.name}**: ${err.message}`)
+			.setFooter({
+				text: "Please use the command again or contact support!",
+			});
+		const button: ActionRowBuilder<ButtonBuilder> =
+			new ActionRowBuilder<ButtonBuilder>().setComponents(
+				new ButtonBuilder()
+					.setStyle(ButtonStyle.Link)
+					.setLabel("Support Server")
+					.setEmoji({ name: "⚙️" })
+					.setURL("https://discord.gg/NFkMxFeEWr")
+			);
+
+		interaction.deferred
+			? await interaction.editReply({
+					embeds: [errorEmbed],
+					components: [button],
+			  })
+			: await interaction.reply({
+					embeds: [errorEmbed],
+					components: [button],
+			  });
+	});
+}
 
 export default new Event("interactionCreate", async (interaction) => {
 	if (!interaction.guild) return;
@@ -62,32 +105,7 @@ export default new Event("interactionCreate", async (interaction) => {
 		/**
 		 * Executing Command
 		 */
-		command.run({ client, interaction }).catch(async (err) => {
-			const errorEmbed: EmbedBuilder = new EmbedBuilder()
-				.setColor("Red")
-				.setDescription(`**${err.name}**: ${err.message}`)
-				.setFooter({
-					text: "Please use the command again or contact support!",
-				});
-			const button: ActionRowBuilder<ButtonBuilder> =
-				new ActionRowBuilder<ButtonBuilder>().setComponents(
-					new ButtonBuilder()
-						.setStyle(ButtonStyle.Link)
-						.setLabel("Support Server")
-						.setEmoji({ name: "⚙️" })
-						.setURL("https://discord.gg/NFkMxFeEWr")
-				);
-
-			interaction.deferred
-				? await interaction.editReply({
-						embeds: [errorEmbed],
-						components: [button],
-				  })
-				: await interaction.reply({
-						embeds: [errorEmbed],
-						components: [button],
-				  });
-		});
+		runCommand(command, interaction);
 		await user.updateOne({ commandsExecuted: user.commandsExecuted + 1 });
 
 		/**
