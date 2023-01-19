@@ -2,5 +2,8 @@
     "semi": true,
     "arrowParens": "always",
     "bracketSpacing": true,
-    "useTabs": true
+    "useTabs": true,
+    "singleQuote": false,
+    "quoteProps": "as-needed",
+    "trailingComma": "es5"
 }
