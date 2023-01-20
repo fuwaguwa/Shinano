@@ -5,7 +5,6 @@ import {
 	ChatInputCommandInteraction,
 	EmbedBuilder
 } from "discord.js";
-import { client } from "../../../..";
 
 export = async (interaction: ChatInputCommandInteraction) => 
 {
