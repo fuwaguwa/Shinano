@@ -24,7 +24,7 @@
         "indent": ["warn", "tab", { "SwitchCase": 1 }],
         "space-before-blocks": ["warn", "always"],
         "arrow-parens": ["warn", "as-needed"],
-        "linebreak-style": ["warn", "unix"],
+        "linebreak-style": ["warn", "windows"],
         "no-mixed-spaces-and-tabs": ["warn", "smart-tabs"],
         "no-useless-escape": ["off"],
         "no-async-promise-executor": ["off"],
