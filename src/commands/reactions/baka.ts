@@ -7,13 +7,14 @@ export default new ChatInputCommand({
 	description: "Y-You idiot!",
 	cooldown: 4000,
 	category: "Reactions",
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
 
 		const bakaEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")
 			.setImage(await neko.sfw.baka());
 
-		await interaction.editReply({ embeds: [bakaEmbed] });
+		await interaction.editReply({ embeds: [bakaEmbed], });
 	},
 });

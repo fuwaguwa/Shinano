@@ -12,9 +12,10 @@ export default new ChatInputCommand({
 			type: ApplicationCommandOptionType.User,
 			name: "user",
 			description: "Person to hold hands with.",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
 
 		const user: User = interaction.options.getUser("user");
@@ -24,9 +25,9 @@ export default new ChatInputCommand({
 			.setDescription(
 				user
 					? `${interaction.user} helf ${user}'s hand!`
-					: `You held hands with yourself...`
+					: "You held hands with yourself..."
 			);
 
-		await interaction.editReply({ embeds: [reactionEmbed] });
+		await interaction.editReply({ embeds: [reactionEmbed], });
 	},
 });

@@ -2,7 +2,7 @@ import {
 	ActionRowBuilder,
 	ChatInputCommandInteraction,
 	EmbedBuilder,
-	StringSelectMenuBuilder,
+	StringSelectMenuBuilder
 } from "discord.js";
 import { ShinanoPaginator } from "./Pages";
 
@@ -16,12 +16,13 @@ export async function animeInfo(
 	anime,
 	interaction: ChatInputCommandInteraction,
 	menu?: ActionRowBuilder<StringSelectMenuBuilder>
-) {
+) 
+{
 	let genres: string[] = [];
-	anime.genres.forEach((genre) => genres.push(genre.name));
+	anime.genres.forEach(genre => genres.push(genre.name));
 
 	let studios: string[] = [];
-	anime.studios.forEach((studio) =>
+	anime.studios.forEach(studio =>
 		studios.push(`[${studio.name}](${studio.url})`)
 	);
 
@@ -73,7 +74,8 @@ export async function animeInfo(
 			}
 		);
 
-	if (menu) {
+	if (menu) 
+	{
 		await ShinanoPaginator({
 			interaction,
 			interactorOnly: true,
@@ -81,7 +83,9 @@ export async function animeInfo(
 			menu: menu,
 			pages: [synopsisEmbed, generalInfoEmbed],
 		});
-	} else {
+	}
+	else 
+	{
 		await ShinanoPaginator({
 			interaction,
 			interactorOnly: true,
@@ -96,7 +100,8 @@ export async function animeInfo(
  * @param character character info
  * @param VAs character's voice actors
  */
-export async function characterInfo(character, VAs) {
+export async function characterInfo(character, VAs) 
+{
 	const characterEmbed: EmbedBuilder = new EmbedBuilder()
 		.setColor("Random")
 		.setTitle(
@@ -107,7 +112,8 @@ export async function characterInfo(character, VAs) {
 		.setThumbnail(character.images.jpg.image_url)
 		.setDescription(character.about ? character.about : "No Biography Found");
 
-	if (character.anime.length != 0) {
+	if (character.anime.length != 0) 
+	{
 		characterEmbed.addFields(
 			{
 				name: "Extra Info:",
@@ -127,7 +133,9 @@ export async function characterInfo(character, VAs) {
 					`**Favorites**: ${character.favorites}`,
 			}
 		);
-	} else {
+	}
+	else 
+	{
 		characterEmbed.addFields({
 			name: "MyAnimeList Info",
 			value:

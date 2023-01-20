@@ -6,7 +6,8 @@ export default new MessageCommand({
 	name: "Get Sauce",
 	cooldown: 5000,
 	type: ApplicationCommandType.Message,
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		let ephemeral: boolean = true;
 		if ((interaction.channel as TextChannel).nsfw) ephemeral = false;
 
@@ -15,15 +16,16 @@ export default new MessageCommand({
 			? (link = interaction.options.data[0].message.attachments.first().url)
 			: (link = interaction.options.data[0].message.content);
 
-		if (!link) {
+		if (!link) 
+		{
 			const noImg: EmbedBuilder = new EmbedBuilder()
 				.setColor("Red")
 				.setDescription(
 					"❌ | There's no image to be searched for! If the image is inside an embed, you can copy the image link and use `/sauce link` instead! "
 				);
-			return interaction.reply({ embeds: [noImg], ephemeral: true });
+			return interaction.reply({ embeds: [noImg], ephemeral: true, });
 		}
 
-		await findSauce({ interaction, link, ephemeral });
+		await findSauce({ interaction, link, ephemeral, });
 	},
 });

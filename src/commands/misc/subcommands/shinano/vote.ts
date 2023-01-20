@@ -3,10 +3,11 @@ import {
 	ButtonBuilder,
 	ButtonStyle,
 	ChatInputCommandInteraction,
-	EmbedBuilder,
+	EmbedBuilder
 } from "discord.js";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	if (!interaction.deferred) await interaction.deferReply();
 
 	const voteEmbed: EmbedBuilder = new EmbedBuilder()
@@ -20,12 +21,12 @@ export = async (interaction: ChatInputCommandInteraction) => {
 			new ButtonBuilder()
 				.setStyle(ButtonStyle.Link)
 				.setLabel("Vote on top.gg")
-				.setEmoji({ id: "1002849574517477447" })
+				.setEmoji({ id: "1002849574517477447", })
 				.setURL("https://top.gg/bot/1002193298229829682/vote"),
 			new ButtonBuilder()
 				.setStyle(ButtonStyle.Secondary)
 				.setLabel("Check top.gg Vote")
-				.setEmoji({ name: "🔍" })
+				.setEmoji({ name: "🔍", })
 				.setCustomId("VOTE-CHECK")
 		);
 	const links2: ActionRowBuilder<ButtonBuilder> =
@@ -34,12 +35,12 @@ export = async (interaction: ChatInputCommandInteraction) => {
 				.setStyle(ButtonStyle.Link)
 				.setLabel("Vote on discordbotlist.com")
 				.setURL("https://discordbotlist.com/bots/shinano/upvote")
-				.setEmoji({ name: "🤖" }),
+				.setEmoji({ name: "🤖", }),
 			new ButtonBuilder()
 				.setStyle(ButtonStyle.Link)
 				.setLabel("Vote on discordservices.net")
 				.setURL("https://discordservices.net/bot/1002193298229829682")
-				.setEmoji({ name: "🔨" })
+				.setEmoji({ name: "🔨", })
 		);
 
 	await interaction.editReply({

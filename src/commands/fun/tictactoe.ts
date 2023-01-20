@@ -2,10 +2,10 @@ import { ChatInputCommand } from "../../structures/Command";
 import TTT from "discord-tictactoe";
 import {
 	ApplicationCommandOptionType,
-	ChatInputCommandInteraction,
+	ChatInputCommandInteraction
 } from "discord.js";
 
-const game = new TTT({ language: "en", commandOptionName: "user" });
+const game = new TTT({ language: "en", commandOptionName: "user", });
 
 export default new ChatInputCommand({
 	name: "ttt",
@@ -17,9 +17,10 @@ export default new ChatInputCommand({
 			type: ApplicationCommandOptionType.User,
 			name: "user",
 			description: "The user you want to play against.",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		game.handleInteraction(interaction as ChatInputCommandInteraction);
 	},
 });

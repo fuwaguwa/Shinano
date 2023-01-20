@@ -5,4 +5,4 @@ import inspect from "./dev/inspect";
 import blacklist from "./dev/blacklist";
 import eval from "./dev/eval";
 
-export default { voteCheck, usage, leave, inspect, blacklist, eval };
+export default { voteCheck, usage, leave, inspect, blacklist, eval, };

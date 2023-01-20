@@ -12,14 +12,15 @@ export default new ChatInputCommand({
 			required: true,
 			name: "range",
 			description: "Number range.",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.isChatInputCommand())
 			throw new Error("Interaction is not from chat!");
 
 		const range = interaction.options.getInteger("range");
 		const dice = Math.floor(Math.random() * range);
-		await interaction.reply({ content: `You rolled: ${dice}` });
+		await interaction.reply({ content: `You rolled: ${dice}`, });
 	},
 });

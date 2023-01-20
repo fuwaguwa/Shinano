@@ -6,4 +6,4 @@ import privateColle from "./nsfw/privateColle";
 import random from "./nsfw/random";
 import video from "./nsfw/video";
 
-export default { bomb, fanbox, fanboxBomb, gif, privateColle, random, video };
+export default { bomb, fanbox, fanboxBomb, gif, privateColle, random, video, };

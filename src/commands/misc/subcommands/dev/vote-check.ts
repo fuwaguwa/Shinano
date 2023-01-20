@@ -7,11 +7,12 @@ import {
 	ChatInputCommandInteraction,
 	ComponentType,
 	EmbedBuilder,
-	InteractionCollector,
+	InteractionCollector
 } from "discord.js";
 import fetch from "node-fetch";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	const user = interaction.options.getUser("user");
 
 	/**
@@ -20,14 +21,17 @@ export = async (interaction: ChatInputCommandInteraction) => {
 	let voteTime: number | string;
 	let voteStatus: boolean | string = false;
 
-	const voteUser = await User.findOne({ userId: user.id });
+	const voteUser = await User.findOne({ userId: user.id, });
 
-	if (voteUser.lastVoteTimestamp) {
+	if (voteUser.lastVoteTimestamp) 
+	{
 		const currentTime = Math.floor(Date.now() / 1000);
 		voteTime = voteUser.lastVoteTimestamp;
 
 		if (currentTime - voteUser.lastVoteTimestamp >= 43200) voteStatus = true;
-	} else {
+	}
+	else 
+	{
 		voteStatus = "N/A";
 		voteTime = "N/A";
 	}
@@ -63,7 +67,7 @@ export = async (interaction: ChatInputCommandInteraction) => {
 					`Last Voted: ${
 						typeof voteTime != "string"
 							? `<t:${voteTime}:R> | <t:${voteTime}>`
-							: `N/A`
+							: "N/A"
 					}`,
 			}
 		);
@@ -71,7 +75,7 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		new ActionRowBuilder<ButtonBuilder>().setComponents(
 			new ButtonBuilder()
 				.setLabel("Update user in database")
-				.setEmoji({ name: "✅" })
+				.setEmoji({ name: "✅", })
 				.setStyle(ButtonStyle.Success)
 				.setCustomId("ADB")
 				.setDisabled(false)
@@ -91,20 +95,27 @@ export = async (interaction: ChatInputCommandInteraction) => {
 			time: 60000,
 		});
 
-	collector.on("collect", async (i) => {
-		if (i.user.id !== "836215956346634270") {
+	collector.on("collect", async i => 
+	{
+		if (i.user.id !== "836215956346634270") 
+		{
 			await i.reply({
 				content: "This button is only for developers!",
 				ephemeral: true,
 			});
-		} else {
-			if (!voteUser) {
+		}
+		else 
+		{
+			if (!voteUser) 
+			{
 				await User.create({
 					userId: user.id,
 					commandsExecuted: 0,
 					lastVoteTimestamp: Math.floor(Date.now() / 1000),
 				});
-			} else {
+			}
+			else 
+			{
 				await voteUser.updateOne({
 					lastVoteTimestamp: Math.floor(Date.now() / 1000),
 				});
@@ -122,8 +133,9 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		collector.stop();
 	});
 
-	collector.on("end", async (collected, reason) => {
+	collector.on("end", async (collected, reason) => 
+	{
 		dbUpdate.components[0].setDisabled(true);
-		await interaction.editReply({ components: [dbUpdate] });
+		await interaction.editReply({ components: [dbUpdate], });
 	});
 };

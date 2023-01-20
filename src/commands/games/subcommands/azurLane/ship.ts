@@ -5,22 +5,24 @@ import {
 	EmbedBuilder,
 	InteractionCollector,
 	StringSelectMenuBuilder,
-	StringSelectMenuInteraction,
+	StringSelectMenuInteraction
 } from "discord.js";
 import { ShinanoPaginator } from "../../../../lib/Pages";
 import { ShinanoShip } from "../../../../structures/Ship";
 
-export = async (interaction: ChatInputCommandInteraction, AL: any) => {
+export = async (interaction: ChatInputCommandInteraction, AL: any) => 
+{
 	/**
 	 * Getting ship
 	 */
 	const shipName: string = interaction.options.getString("ship-name");
 	const shipInfo = await AL.ships.get(shipName);
-	if (!shipInfo) {
+	if (!shipInfo) 
+	{
 		const shipNotFound: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("❌ | Ship not found!");
-		return interaction.reply({ embeds: [shipNotFound], ephemeral: true });
+		return interaction.reply({ embeds: [shipNotFound], ephemeral: true, });
 	}
 
 	const ship = await new ShinanoShip(shipInfo).getShipEmbeds();
@@ -92,26 +94,32 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 	let skinPage: number = 0;
 	let galleryPage: number = 0;
 
-	collector.on("collect", async (i) => {
+	collector.on("collect", async i => 
+	{
 		const customId = i.customId.split("-")[0];
 
-		if (!i.customId.endsWith(i.user.id)) {
+		if (!i.customId.endsWith(i.user.id)) 
+		{
 			await i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
-		} else {
+		}
+		else 
+		{
 			const menuOptions = categories.components[0].options;
 
 			await i.deferUpdate();
 
-			for (let j = 0; j < menuOptions.length; j++) {
+			for (let j = 0; j < menuOptions.length; j++) 
+			{
 				menuOptions[j].data.value === i.values[0]
 					? menuOptions[j].setDefault(true)
 					: menuOptions[j].setDefault(false);
 			}
 
-			switch (i.values[0]) {
+			switch (i.values[0]) 
+			{
 				case "info": {
 					await i.editReply({
 						embeds: [ship.generalInfo],
@@ -177,8 +185,9 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 		}
 	});
 
-	collector.on("end", async (collected, reason) => {
+	collector.on("end", async (collected, reason) => 
+	{
 		categories.components[0].setDisabled(true);
-		await interaction.editReply({ components: [categories] });
+		await interaction.editReply({ components: [categories], });
 	});
 };

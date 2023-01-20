@@ -4,7 +4,7 @@ import {
 	ComponentType,
 	InteractionCollector,
 	StringSelectMenuBuilder,
-	StringSelectMenuInteraction,
+	StringSelectMenuInteraction
 } from "discord.js";
 import { Character } from "genshin-db";
 import { ShinanoPaginator } from "../../../../../lib/Pages";
@@ -13,7 +13,8 @@ import { ShinanoCharacter } from "../../../../../structures/Character";
 export = async (
 	interaction: ChatInputCommandInteraction,
 	character: Character
-) => {
+) => 
+{
 	const characterClass = new ShinanoCharacter(character);
 	const characterInfo = characterClass.getCharacterEmbeds();
 
@@ -64,24 +65,30 @@ export = async (
 	let consPage: number = 0;
 	let acPage: number = 0;
 
-	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id)) {
+	collector.on("collect", async i => 
+	{
+		if (!i.customId.endsWith(i.user.id)) 
+		{
 			await i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
-		} else {
+		}
+		else 
+		{
 			await i.deferUpdate();
 
 			const menuOptions = navigation.components[0].options;
 
-			for (let j = 0; j < menuOptions.length; j++) {
+			for (let j = 0; j < menuOptions.length; j++) 
+			{
 				menuOptions[j].data.value === i.values[0]
 					? menuOptions[j].setDefault(true)
 					: menuOptions[j].setDefault(false);
 			}
 
-			switch (i.values[0]) {
+			switch (i.values[0]) 
+			{
 				case "info": {
 					await i.editReply({
 						embeds: [characterInfo.generalInfo],
@@ -92,7 +99,8 @@ export = async (
 				}
 
 				case "constellations": {
-					if (characterInfo.travellerConstellations.length != 0) {
+					if (characterInfo.travellerConstellations.length != 0) 
+					{
 						consPage = await ShinanoPaginator({
 							interaction,
 							menu: navigation,
@@ -101,7 +109,9 @@ export = async (
 							pages: characterInfo.travellerConstellations,
 							time: 120000,
 						});
-					} else {
+					}
+					else 
+					{
 						await i.editReply({
 							embeds: [characterInfo.constellations],
 							components: [navigation],
@@ -127,8 +137,9 @@ export = async (
 		}
 	});
 
-	collector.on("end", async (collected, reason) => {
+	collector.on("end", async (collected, reason) => 
+	{
 		navigation.components[0].setDisabled(true);
-		await interaction.editReply({ components: [navigation] });
+		await interaction.editReply({ components: [navigation], });
 	});
 };

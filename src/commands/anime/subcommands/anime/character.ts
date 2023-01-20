@@ -5,12 +5,13 @@ import {
 	EmbedBuilder,
 	InteractionCollector,
 	StringSelectMenuInteraction,
-	StringSelectMenuBuilder,
+	StringSelectMenuBuilder
 } from "discord.js";
 import fetch from "node-fetch";
 import { characterInfo } from "../../../../lib/Anime";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	/**
 	 * Processing data
 	 */
@@ -23,11 +24,12 @@ export = async (interaction: ChatInputCommandInteraction) => {
 	});
 
 	const charResponse = (await response.json()).data;
-	if (charResponse.length == 0) {
+	if (charResponse.length == 0) 
+	{
 		const noResult: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("No result can be found!");
-		return interaction.editReply({ embeds: [noResult] });
+		return interaction.editReply({ embeds: [noResult], });
 	}
 
 	/**
@@ -41,7 +43,8 @@ export = async (interaction: ChatInputCommandInteraction) => {
 				.setCustomId(`CHARES-${interaction.user.id}`)
 				.setPlaceholder(`Character Search Results (${charResponse.length})`)
 		);
-	charResponse.forEach((result) => {
+	charResponse.forEach(result => 
+	{
 		results.components[0].addOptions({
 			label: `${result.name} | ${
 				result.name_kanji ? result.name_kanji : "No Kanji Name"
@@ -53,31 +56,37 @@ export = async (interaction: ChatInputCommandInteraction) => {
 	/**
 	 * Collector
 	 */
-	const message = await interaction.editReply({ components: [results] });
+	const message = await interaction.editReply({ components: [results], });
 	const collector: InteractionCollector<StringSelectMenuInteraction> =
 		await message.createMessageComponentCollector({
 			componentType: ComponentType.StringSelect,
 			time: 120000,
 		});
 
-	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id)) {
+	collector.on("collect", async i => 
+	{
+		if (!i.customId.endsWith(i.user.id)) 
+		{
 			await i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
-		} else {
+		}
+		else 
+		{
 			await i.deferUpdate();
 
 			const response = await fetch(
 				`https://api.jikan.moe/v4/characters/${i.values[0]}/full`,
-				{ method: "GET" }
+				{ method: "GET", }
 			);
 			const character = (await response.json()).data;
 
 			let VAs: string[] = [];
-			if (character && character.voices) {
-				character.voices.forEach((va) => {
+			if (character && character.voices) 
+			{
+				character.voices.forEach(va => 
+				{
 					if (va.language !== "Japanese" && va.language !== "English") return;
 					VAs.push(`[${va.person.name}](${va.person.url})`);
 				});
@@ -86,7 +95,8 @@ export = async (interaction: ChatInputCommandInteraction) => {
 			const characterEmbed = await characterInfo(character, VAs);
 
 			const menu = results.components[0];
-			for (let j = 0; j < menu.options.length; j++) {
+			for (let j = 0; j < menu.options.length; j++) 
+			{
 				menu.options[j].data.value === i.values[0]
 					? menu.options[j].setDefault(true)
 					: menu.options[j].setDefault(false);
@@ -101,8 +111,9 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		}
 	});
 
-	collector.on("end", async (collected, reason) => {
+	collector.on("end", async (collected, reason) => 
+	{
 		results.components[0].setDisabled(true);
-		await interaction.editReply({ components: [results] });
+		await interaction.editReply({ components: [results], });
 	});
 };

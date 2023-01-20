@@ -1,7 +1,8 @@
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import fetch from "node-fetch";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	const response = await fetch("https://some-random-api.ml/animu/quote", {
 		method: "GET",
 	});
@@ -13,5 +14,5 @@ export = async (interaction: ChatInputCommandInteraction) => {
 			`> *${quote.sentence}*\n\n` + `**${quote.character}** - *${quote.anime}*`
 		);
 
-	await interaction.editReply({ embeds: [quoteEmbed] });
+	await interaction.editReply({ embeds: [quoteEmbed], });
 };

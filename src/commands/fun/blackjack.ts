@@ -6,7 +6,8 @@ export default new ChatInputCommand({
 	description: "Play blackjack!",
 	cooldown: 4500,
 	category: "Fun",
-	run: async ({ interaction }) => {
-		await blackjack(interaction, { resultEmbed: true });
+	run: async ({ interaction, }) => 
+	{
+		await blackjack(interaction, { resultEmbed: true, });
 	},
 });

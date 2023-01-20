@@ -4,16 +4,18 @@ import {
 	ButtonStyle,
 	ChatInputCommandInteraction,
 	EmbedBuilder,
-	TextChannel,
+	TextChannel
 } from "discord.js";
 
-export = async (interaction: ChatInputCommandInteraction) => {
-	if (!(interaction.channel as TextChannel).nsfw) {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
+	if (!(interaction.channel as TextChannel).nsfw) 
+	{
 		const nsfwErrorEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setTitle("NSFW Command")
 			.setDescription("NSFW commands can only be used in NSFW channels!");
-		return interaction.reply({ embeds: [nsfwErrorEmbed] });
+		return interaction.reply({ embeds: [nsfwErrorEmbed], });
 	}
 
 	const noNSFW: ActionRowBuilder<ButtonBuilder> =

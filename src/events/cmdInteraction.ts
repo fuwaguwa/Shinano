@@ -5,7 +5,7 @@ import {
 	ActionRowBuilder,
 	ButtonBuilder,
 	ButtonStyle,
-	ChatInputCommandInteraction,
+	ChatInputCommandInteraction
 } from "discord.js";
 import { client } from "..";
 import { Event } from "../structures/Event";
@@ -20,11 +20,14 @@ let EHOSTRetries: number = 0;
 function runCommand(
 	command: ChatInputCommandType,
 	interaction: ChatInputCommandInteraction
-) {
-	command.run({ client, interaction }).catch(async (err) => {
+) 
+{
+	command.run({ client, interaction, }).catch(async err => 
+	{
 		console.error(err);
 
-		if (err.message.includes("EHOSTUNREACH") && EHOSTRetries < 3) {
+		if (err.message.includes("EHOSTUNREACH") && EHOSTRetries < 3) 
+		{
 			EHOSTRetries += 1;
 			return runCommand(command, interaction);
 		}
@@ -41,23 +44,24 @@ function runCommand(
 				new ButtonBuilder()
 					.setStyle(ButtonStyle.Link)
 					.setLabel("Support Server")
-					.setEmoji({ name: "⚙️" })
+					.setEmoji({ name: "⚙️", })
 					.setURL("https://discord.gg/NFkMxFeEWr")
 			);
 
 		interaction.deferred
 			? await interaction.editReply({
-					embeds: [errorEmbed],
-					components: [button],
+				embeds: [errorEmbed],
+				components: [button],
 			  })
 			: await interaction.reply({
-					embeds: [errorEmbed],
-					components: [button],
+				embeds: [errorEmbed],
+				components: [button],
 			  });
 	});
 }
 
-export default new Event("interactionCreate", async (interaction) => {
+export default new Event("interactionCreate", async interaction => 
+{
 	if (!interaction.guild) return;
 	if (!interaction.isChatInputCommand()) return;
 
@@ -65,66 +69,74 @@ export default new Event("interactionCreate", async (interaction) => {
 	if (!command)
 		return interaction.reply("You have used a non existent command");
 
-	if (command.cooldown) {
+	if (command.cooldown) 
+	{
 		/**
 		 * Cooldown Check
 		 */
 		if (Cooldown.has(`${command.name}${owner}`))
 			Cooldown.delete(`${command.name}${owner}`);
 
-		if (Cooldown.has(`${command.name}${interaction.user.id}`)) {
+		if (Cooldown.has(`${command.name}${interaction.user.id}`)) 
+		{
 			const cms = Cooldown.get(`${command.name}${interaction.user.id}`);
 			const onChillOut = new EmbedBuilder()
 				.setTitle("Slow Down!")
 				.setColor("Red")
 				.setDescription(
-					`You are on a \`${ms(cms - Date.now(), { long: true })}\` cooldown.`
+					`You are on a \`${ms(cms - Date.now(), { long: true, })}\` cooldown.`
 				);
-			return interaction.reply({ embeds: [onChillOut], ephemeral: true });
+			return interaction.reply({ embeds: [onChillOut], ephemeral: true, });
 		}
 
 		/**
 		 * Getting user and blacklist check
 		 */
-		let user = await User.findOne({ userId: interaction.user.id });
-		if (!user) {
+		let user = await User.findOne({ userId: interaction.user.id, });
+		if (!user) 
+		{
 			user = await User.create({
 				userId: interaction.user.id,
 				commandsExecuted: 0,
 			});
 		}
-		if (user.blacklisted == true) {
+		if (user.blacklisted == true) 
+		{
 			const blacklisted: EmbedBuilder = new EmbedBuilder()
 				.setColor("Red")
 				.setTitle("You have been blacklisted!")
 				.setDescription(
 					"Please contact us at the [support server](https://discord.gg/NFkMxFeEWr) for more information about your blacklist."
 				);
-			return interaction.reply({ embeds: [blacklisted] });
+			return interaction.reply({ embeds: [blacklisted], });
 		}
 
 		/**
 		 * NSFW Check
 		 */
-		if (command.nsfw) {
-			if (!(interaction.channel as TextChannel).nsfw) {
+		if (command.nsfw) 
+		{
+			if (!(interaction.channel as TextChannel).nsfw) 
+			{
 				const nsfwCommand: EmbedBuilder = new EmbedBuilder()
 					.setColor("Red")
 					.setTitle("NSFW Command")
 					.setDescription("NSFW commands can only be used in NSFW channels.");
 				return interaction.deferred
-					? interaction.editReply({ embeds: [nsfwCommand] })
-					: interaction.reply({ embeds: [nsfwCommand], ephemeral: true });
+					? interaction.editReply({ embeds: [nsfwCommand], })
+					: interaction.reply({ embeds: [nsfwCommand], ephemeral: true, });
 			}
 
 			/**
 			 * Vote Checking
 			 */
-			if (command.voteRequired) {
+			if (command.voteRequired) 
+			{
 				if (
 					interaction.user.id !== owner &&
 					interaction.guild.id !== "1020960562710052895"
-				) {
+				) 
+				{
 					const voteEmbed: EmbedBuilder = new EmbedBuilder()
 						.setColor("Red")
 						.setTitle("Hold on...")
@@ -134,48 +146,51 @@ export default new Event("interactionCreate", async (interaction) => {
 							new ButtonBuilder()
 								.setStyle(ButtonStyle.Link)
 								.setLabel("Vote for Shinano!")
-								.setEmoji({ id: "1002849574517477447" })
+								.setEmoji({ id: "1002849574517477447", })
 								.setURL("https://top.gg/bot/1002193298229829682/vote"),
 							new ButtonBuilder()
 								.setStyle(ButtonStyle.Secondary)
 								.setLabel("Check Vote")
 								.setCustomId("VOTE-CHECK")
-								.setEmoji({ name: "🔍" })
+								.setEmoji({ name: "🔍", })
 						);
 
-					if (!user.lastVoteTimestamp) {
+					if (!user.lastVoteTimestamp) 
+					{
 						voteEmbed.setDescription(
-							`To **use NSFW commands**, you'll have to **vote for Shinano on top.gg** using the button below!\n` +
-								`It only takes **a few seconds to vote**, after which you will have access to **premium quality NSFW commands until you are able vote again (12 hours!)**\n\n` +
-								`Run the \`/support\` command if you have any problem with voting!`
+							"To **use NSFW commands**, you'll have to **vote for Shinano on top.gg** using the button below!\n" +
+								"It only takes **a few seconds to vote**, after which you will have access to **premium quality NSFW commands until you are able vote again (12 hours!)**\n\n" +
+								"Run the `/support` command if you have any problem with voting!"
 						);
 
 						return interaction.deferred
 							? interaction.editReply({
-									embeds: [voteEmbed],
-									components: [voteLink],
+								embeds: [voteEmbed],
+								components: [voteLink],
 							  })
 							: interaction.reply({
-									embeds: [voteEmbed],
-									components: [voteLink],
+								embeds: [voteEmbed],
+								components: [voteLink],
 							  });
-					} else if (
+					}
+					else if (
 						Math.floor(Date.now() / 1000) - user.lastVoteTimestamp >
 						43200
-					) {
+					) 
+					{
 						// Voted before but 12 hours has passed
 						voteEmbed.setDescription(
-							`Your **12 hours** access to NSFW commands ran out!\n` +
-								`Please **vote again** if you want to continue using **Shinano's NSFW features**`
+							"Your **12 hours** access to NSFW commands ran out!\n" +
+								"Please **vote again** if you want to continue using **Shinano's NSFW features**"
 						);
 						return interaction.deferred
 							? interaction.editReply({
-									embeds: [voteEmbed],
-									components: [voteLink],
+								embeds: [voteEmbed],
+								components: [voteLink],
 							  })
 							: interaction.reply({
-									embeds: [voteEmbed],
-									components: [voteLink],
+								embeds: [voteEmbed],
+								components: [voteLink],
 							  });
 					}
 				}
@@ -185,14 +200,16 @@ export default new Event("interactionCreate", async (interaction) => {
 		/**
 		 * Owner Check
 		 */
-		if (command.ownerOnly) {
-			if (owner !== interaction.user.id) {
+		if (command.ownerOnly) 
+		{
+			if (owner !== interaction.user.id) 
+			{
 				const notForYou: EmbedBuilder = new EmbedBuilder()
 					.setColor("Red")
 					.setDescription("This command is for owners only!");
 				return interaction.deferred
-					? interaction.editReply({ embeds: [notForYou] })
-					: interaction.reply({ embeds: [notForYou], ephemeral: true });
+					? interaction.editReply({ embeds: [notForYou], })
+					: interaction.reply({ embeds: [notForYou], ephemeral: true, });
 			}
 		}
 
@@ -200,7 +217,7 @@ export default new Event("interactionCreate", async (interaction) => {
 		 * Executing Command
 		 */
 		runCommand(command, interaction);
-		await user.updateOne({ commandsExecuted: user.commandsExecuted + 1 });
+		await user.updateOne({ commandsExecuted: user.commandsExecuted + 1, });
 
 		/**
 		 * Applying Cooldown
@@ -209,7 +226,8 @@ export default new Event("interactionCreate", async (interaction) => {
 			`${command.name}${interaction.user.id}`,
 			Date.now() + command.cooldown
 		);
-		setTimeout(() => {
+		setTimeout(() => 
+		{
 			Cooldown.delete(`${command.name}${interaction.user.id}`);
 		}, command.cooldown);
 	}
@@ -229,8 +247,10 @@ export default new Event("interactionCreate", async (interaction) => {
 	if (options._group) fullCommand = fullCommand + " " + options._group;
 	if (options._subcommand)
 		fullCommand = fullCommand + " " + options._subcommand;
-	if (options._hoistedOptions.length > 0) {
-		options._hoistedOptions.forEach((option) => {
+	if (options._hoistedOptions.length > 0) 
+	{
+		options._hoistedOptions.forEach(option => 
+		{
 			option.attachment
 				? (fullCommand = `${fullCommand} ${option.name}:${option.attachment.proxyURL}`)
 				: (fullCommand = `${fullCommand} ${option.name}:${option.value}`);
@@ -239,20 +259,20 @@ export default new Event("interactionCreate", async (interaction) => {
 
 	const commandExecuted: EmbedBuilder = new EmbedBuilder()
 		.setColor("#2f3136")
-		.setTitle(`Command Executed!`)
-		.setThumbnail(interaction.user.displayAvatarURL({ forceStatic: false }))
+		.setTitle("Command Executed!")
+		.setThumbnail(interaction.user.displayAvatarURL({ forceStatic: false, }))
 		.addFields(
-			{ name: "Command Name: ", value: `\`/${fullCommand}\`` },
+			{ name: "Command Name: ", value: `\`/${fullCommand}\``, },
 			{
 				name: "Guild Name | Guild ID",
 				value: `${interaction.guild.name} | ${interaction.guild.id}`,
 			},
 			{
-				name: `Channel Name | Channel ID`,
+				name: "Channel Name | Channel ID",
 				value: `#${interaction.channel.name} | ${interaction.channel.id}`,
 			},
 			{
-				name: `User | User ID`,
+				name: "User | User ID",
 				value: `${interaction.user.username}#${interaction.user.discriminator} | ${interaction.user.id}`,
 			}
 		)

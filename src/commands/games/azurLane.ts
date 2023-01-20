@@ -21,7 +21,7 @@ export default new ChatInputCommand({
 					required: true,
 					name: "ship-name",
 					description: "Ship's Name",
-				},
+				}
 			],
 		},
 		{
@@ -34,7 +34,7 @@ export default new ChatInputCommand({
 					required: true,
 					name: "gear-name",
 					description: "Gear Name",
-				},
+				}
 			],
 		},
 		{
@@ -48,22 +48,22 @@ export default new ChatInputCommand({
 					name: "chapter-number",
 					description: "Chapter Number",
 					choices: [
-						{ name: "Chapter 1: Tora! Tora! Tora!", value: "1" },
-						{ name: "Chapter 2: Battle of the Coral Sea", value: "2" },
-						{ name: "Chapter 3: Midway Showdown", value: "3" },
-						{ name: "Chapter 4: Solomon's Nightmare Pt.1", value: "4" },
-						{ name: "Chapter 5: Solomon's Nightmare Pt.2", value: "5" },
-						{ name: "Chapter 6: Solomon's Nightmare Pt.3", value: "6" },
-						{ name: "Chapter 7: Night of Chaos", value: "7" },
-						{ name: "Chapter 8: Battle Komandorski", value: "8" },
-						{ name: "Chapter 9: Battle of Kula Gulf", value: "9" },
-						{ name: "Chapter 10: Battle of Kolombangara", value: "10" },
-						{ name: "Chapter 11: Empress Augusta Bay", value: "11" },
-						{ name: "Chapter 12: Mariana's Turmoil Pt.1", value: "12" },
-						{ name: "Chapter 13: Mariana's Turmoil Pt.2", value: "13" },
-						{ name: "Chapter 14: Surigao Night Combat", value: "14" },
+						{ name: "Chapter 1: Tora! Tora! Tora!", value: "1", },
+						{ name: "Chapter 2: Battle of the Coral Sea", value: "2", },
+						{ name: "Chapter 3: Midway Showdown", value: "3", },
+						{ name: "Chapter 4: Solomon's Nightmare Pt.1", value: "4", },
+						{ name: "Chapter 5: Solomon's Nightmare Pt.2", value: "5", },
+						{ name: "Chapter 6: Solomon's Nightmare Pt.3", value: "6", },
+						{ name: "Chapter 7: Night of Chaos", value: "7", },
+						{ name: "Chapter 8: Battle Komandorski", value: "8", },
+						{ name: "Chapter 9: Battle of Kula Gulf", value: "9", },
+						{ name: "Chapter 10: Battle of Kolombangara", value: "10", },
+						{ name: "Chapter 11: Empress Augusta Bay", value: "11", },
+						{ name: "Chapter 12: Mariana's Turmoil Pt.1", value: "12", },
+						{ name: "Chapter 13: Mariana's Turmoil Pt.2", value: "13", },
+						{ name: "Chapter 14: Surigao Night Combat", value: "14", }
 					],
-				},
+				}
 			],
 		},
 		{
@@ -96,20 +96,20 @@ export default new ChatInputCommand({
 					name: "chapter",
 					description: "The chapter you want to farm at.",
 					choices: [
-						{ name: "Chapter 1: Tora! Tora! Tora!", value: "1" },
-						{ name: "Chapter 2: Battle of the Coral Sea", value: "2" },
-						{ name: "Chapter 3: Midway Showdown", value: "3" },
-						{ name: "Chapter 4: Solomon's Nightmare Pt.1", value: "4" },
-						{ name: "Chapter 5: Solomon's Nightmare Pt.2", value: "5" },
-						{ name: "Chapter 6: Solomon's Nightmare Pt.3", value: "6" },
-						{ name: "Chapter 7: Night of Chaos", value: "7" },
-						{ name: "Chapter 8: Battle Komandorski", value: "8" },
-						{ name: "Chapter 9: Battle of Kula Gulf", value: "9" },
-						{ name: "Chapter 10: Battle of Kolombangara", value: "10" },
-						{ name: "Chapter 11: Empress Augusta Bay", value: "11" },
-						{ name: "Chapter 12: Mariana's Turmoil Pt.1", value: "12" },
-						{ name: "Chapter 13: Mariana's Turmoil Pt.2", value: "13" },
-						{ name: "Chapter 14: Surigao Night Combat", value: "14" },
+						{ name: "Chapter 1: Tora! Tora! Tora!", value: "1", },
+						{ name: "Chapter 2: Battle of the Coral Sea", value: "2", },
+						{ name: "Chapter 3: Midway Showdown", value: "3", },
+						{ name: "Chapter 4: Solomon's Nightmare Pt.1", value: "4", },
+						{ name: "Chapter 5: Solomon's Nightmare Pt.2", value: "5", },
+						{ name: "Chapter 6: Solomon's Nightmare Pt.3", value: "6", },
+						{ name: "Chapter 7: Night of Chaos", value: "7", },
+						{ name: "Chapter 8: Battle Komandorski", value: "8", },
+						{ name: "Chapter 9: Battle of Kula Gulf", value: "9", },
+						{ name: "Chapter 10: Battle of Kolombangara", value: "10", },
+						{ name: "Chapter 11: Empress Augusta Bay", value: "11", },
+						{ name: "Chapter 12: Mariana's Turmoil Pt.1", value: "12", },
+						{ name: "Chapter 13: Mariana's Turmoil Pt.2", value: "13", },
+						{ name: "Chapter 14: Surigao Night Combat", value: "14", }
 					],
 				},
 				{
@@ -118,10 +118,10 @@ export default new ChatInputCommand({
 					name: "stage",
 					description: "The stage you want to farm at",
 					choices: [
-						{ name: "1", value: "1" },
-						{ name: "2", value: "2" },
-						{ name: "3", value: "3" },
-						{ name: "4", value: "4" },
+						{ name: "1", value: "1", },
+						{ name: "2", value: "2", },
+						{ name: "3", value: "3", },
+						{ name: "4", value: "4", }
 					],
 				},
 				{
@@ -129,7 +129,7 @@ export default new ChatInputCommand({
 					required: false,
 					name: "flagship",
 					description: "Is the ship at the flagship position or not.",
-				},
+				}
 			],
 		},
 		{
@@ -144,8 +144,8 @@ export default new ChatInputCommand({
 					name: "rarity",
 					description: "Rarity of the ship",
 					choices: [
-						{ name: "Normal", value: "normal" },
-						{ name: "Ultra Rare", value: "ultraRare" },
+						{ name: "Normal", value: "normal", },
+						{ name: "Ultra Rare", value: "ultraRare", }
 					],
 				},
 				{
@@ -159,7 +159,7 @@ export default new ChatInputCommand({
 					required: true,
 					name: "target-level",
 					description: "The level you want the ship to reach (Max 125)",
-				},
+				}
 			],
 		},
 		{
@@ -191,14 +191,14 @@ export default new ChatInputCommand({
 					name: "fate-sim-level",
 					description: "Fate simulation level of the PR/DR ship.",
 					choices: [
-						{ name: "0", value: "0" },
-						{ name: "1", value: "1" },
-						{ name: "2", value: "2" },
-						{ name: "3", value: "3" },
-						{ name: "4", value: "4" },
-						{ name: "5", value: "5" },
+						{ name: "0", value: "0", },
+						{ name: "1", value: "1", },
+						{ name: "2", value: "2", },
+						{ name: "3", value: "3", },
+						{ name: "4", value: "4", },
+						{ name: "5", value: "5", }
 					],
-				},
+				}
 			],
 		},
 		{
@@ -218,21 +218,24 @@ export default new ChatInputCommand({
 							channelTypes: [ChannelType.GuildText],
 							name: "channel",
 							description: "The channel for the bot to send tweets into.",
-						},
+						}
 					],
 				},
 				{
 					type: ApplicationCommandOptionType.Subcommand,
 					name: "stop",
 					description: "Stop posting news/tweets into the server.",
-				},
+				}
 			],
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
-		if (!interaction.options["_group"]) {
-			switch (interaction.options.getSubcommand()) {
+		if (!interaction.options["_group"]) 
+		{
+			switch (interaction.options.getSubcommand()) 
+			{
 				case "exp": {
 					return azurLaneFunc.expCalculator(interaction);
 				}
@@ -259,7 +262,8 @@ export default new ChatInputCommand({
 			}
 		}
 
-		switch (interaction.options.getSubcommandGroup()) {
+		switch (interaction.options.getSubcommandGroup()) 
+		{
 			case "news": {
 				return azurLaneFunc.news(interaction);
 			}

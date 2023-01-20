@@ -12,9 +12,10 @@ export default new ChatInputCommand({
 			type: ApplicationCommandOptionType.User,
 			name: "user",
 			description: "Person to hug.",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
 
 		const user: User = interaction.options.getUser("user");
@@ -22,9 +23,9 @@ export default new ChatInputCommand({
 			.setColor("Random")
 			.setImage(await getWaifuReactionGIF(interaction.commandName))
 			.setDescription(
-				user ? `${interaction.user} slapped ${user}!` : `You slapped yourself?`
+				user ? `${interaction.user} slapped ${user}!` : "You slapped yourself?"
 			);
 
-		await interaction.editReply({ embeds: [reactionEmbed] });
+		await interaction.editReply({ embeds: [reactionEmbed], });
 	},
 });

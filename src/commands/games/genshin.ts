@@ -18,7 +18,7 @@ export default new ChatInputCommand({
 					required: true,
 					name: "artifact-name",
 					description: "The name of an artifact set.",
-				},
+				}
 			],
 		},
 		{
@@ -31,7 +31,7 @@ export default new ChatInputCommand({
 					required: true,
 					name: "material-name",
 					description: "The material name.",
-				},
+				}
 			],
 		},
 		{
@@ -50,7 +50,7 @@ export default new ChatInputCommand({
 							required: true,
 							name: "character-name",
 							description: "The character's name.",
-						},
+						}
 					],
 				},
 				{
@@ -75,14 +75,14 @@ export default new ChatInputCommand({
 							name: "ascension-phase",
 							description: "The character's ascension phase.",
 							choices: [
-								{ name: "1", value: "1" },
-								{ name: "2", value: "2" },
-								{ name: "3", value: "3" },
-								{ name: "4", value: "4" },
-								{ name: "5", value: "5" },
-								{ name: "6", value: "6" },
+								{ name: "1", value: "1", },
+								{ name: "2", value: "2", },
+								{ name: "3", value: "3", },
+								{ name: "4", value: "4", },
+								{ name: "5", value: "5", },
+								{ name: "6", value: "6", }
 							],
-						},
+						}
 					],
 				},
 				{
@@ -97,9 +97,9 @@ export default new ChatInputCommand({
 							name: "character-name",
 							description:
 								"The character's name (Tip: Use 'Traveler <Element>' for the info on the Traveler)",
-						},
+						}
 					],
-				},
+				}
 			],
 		},
 		{
@@ -117,7 +117,7 @@ export default new ChatInputCommand({
 							required: true,
 							name: "weapon-name",
 							description: "The weapon's name.",
-						},
+						}
 					],
 				},
 				{
@@ -142,12 +142,12 @@ export default new ChatInputCommand({
 							name: "ascension-phase",
 							description: "The weapon's ascension phase.",
 							choices: [
-								{ name: "1", value: "1" },
-								{ name: "2", value: "2" },
-								{ name: "3", value: "3" },
-								{ name: "4", value: "4" },
-								{ name: "5", value: "5" },
-								{ name: "6", value: "6" },
+								{ name: "1", value: "1", },
+								{ name: "2", value: "2", },
+								{ name: "3", value: "3", },
+								{ name: "4", value: "4", },
+								{ name: "5", value: "5", },
+								{ name: "6", value: "6", }
 							],
 						},
 						{
@@ -155,15 +155,15 @@ export default new ChatInputCommand({
 							name: "refinement-level",
 							description: "The weapon's ascension phase.",
 							choices: [
-								{ name: "1", value: "1" },
-								{ name: "2", value: "2" },
-								{ name: "3", value: "3" },
-								{ name: "4", value: "4" },
-								{ name: "5", value: "5" },
+								{ name: "1", value: "1", },
+								{ name: "2", value: "2", },
+								{ name: "3", value: "3", },
+								{ name: "4", value: "4", },
+								{ name: "5", value: "5", }
 							],
-						},
+						}
 					],
-				},
+				}
 			],
 		},
 		{
@@ -181,7 +181,7 @@ export default new ChatInputCommand({
 							required: true,
 							name: "enemy-name",
 							description: "The enemy's name.",
-						},
+						}
 					],
 				},
 				{
@@ -200,17 +200,20 @@ export default new ChatInputCommand({
 							required: true,
 							name: "enemy-level",
 							description: "The enemy's level.",
-						},
+						}
 					],
-				},
+				}
 			],
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
 
-		if (!interaction.options["_group"]) {
-			switch (interaction.options.getSubcommand()) {
+		if (!interaction.options["_group"]) 
+		{
+			switch (interaction.options.getSubcommand()) 
+			{
 				case "artifact": {
 					return genshinFunc.artifact(interaction);
 				}
@@ -221,7 +224,8 @@ export default new ChatInputCommand({
 			}
 		}
 
-		switch (interaction.options.getSubcommandGroup()) {
+		switch (interaction.options.getSubcommandGroup()) 
+		{
 			case "enemy": {
 				return genshinFunc.enemy(interaction);
 			}

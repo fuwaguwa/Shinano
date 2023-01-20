@@ -5,17 +5,19 @@ import {
 	EmbedBuilder,
 	InteractionCollector,
 	StringSelectMenuBuilder,
-	StringSelectMenuInteraction,
+	StringSelectMenuInteraction
 } from "discord.js";
 import { chapterInfo } from "../../../../lib/AzurLane";
 import { ShinanoPaginator } from "../../../../lib/Pages";
 
-export = async (interaction: ChatInputCommandInteraction, AL: any) => {
+export = async (interaction: ChatInputCommandInteraction, AL: any) => 
+{
 	/**
 	 * Getting chapter
 	 */
 	const chapterNumber: string = interaction.options.getString("chapter-number");
-	const chapter = AL.chapters.filter((chapter) => {
+	const chapter = AL.chapters.filter(chapter => 
+	{
 		return chapter.id === chapterNumber;
 	});
 
@@ -25,7 +27,8 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 	 * Difficulties
 	 */
 	const normalLevels: EmbedBuilder[] = chapterInfo(info, "normal");
-	if (!info[1].hard) {
+	if (!info[1].hard) 
+	{
 		return await ShinanoPaginator({
 			interaction,
 			interactorOnly: true,
@@ -81,23 +84,29 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 			time: 120000,
 		});
 
-	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id)) {
+	collector.on("collect", async i => 
+	{
+		if (!i.customId.endsWith(i.user.id)) 
+		{
 			await i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
-		} else {
+		}
+		else 
+		{
 			await i.deferUpdate();
 			const menuOptions = menu.components[0].options;
 
-			for (let j = 0; j < menuOptions.length; j++) {
+			for (let j = 0; j < menuOptions.length; j++) 
+			{
 				menuOptions[j].data.value === i.values[0]
 					? menuOptions[j].setDefault(true)
 					: menuOptions[j].setDefault(false);
 			}
 
-			switch (i.values[0]) {
+			switch (i.values[0]) 
+			{
 				case "normal": {
 					await ShinanoPaginator({
 						interaction,

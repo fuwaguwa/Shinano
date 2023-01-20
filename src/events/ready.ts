@@ -4,7 +4,8 @@ import { updateServerCount } from "../lib/Utils";
 import { Event } from "../structures/Event";
 import { ActivityList } from "../typings/Activity";
 
-export default new Event("ready", async () => {
+export default new Event("ready", async () => 
+{
 	console.log("Shinano is ready!");
 	await updateServerCount();
 
@@ -39,13 +40,14 @@ export default new Event("ready", async () => {
 		{
 			type: ActivityType.Listening,
 			message: "Feelin' It All",
-		},
+		}
 	];
 
-	setInterval(() => {
+	setInterval(() => 
+	{
 		const presence =
 			activitiesList[Math.floor(Math.random() * activitiesList.length)];
 
-		client.user.setActivity({ name: presence.message, type: presence.type });
+		client.user.setActivity({ name: presence.message, type: presence.type, });
 	}, 30000);
 });

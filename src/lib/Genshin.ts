@@ -20,27 +20,32 @@ const elementIcons = {
 	Geo: "<:geo:1003213050561699897>",
 };
 
-export function stars(item: genshin.Character | genshin.Weapon) {
+export function stars(item: genshin.Character | genshin.Weapon) 
+{
 	return "⭐".repeat(parseInt(item.rarity, 10));
 }
 
-export function color(char: genshin.Character | string) {
+export function color(char: genshin.Character | string) 
+{
 	if (typeof char == "string") return elementColors[char];
 	return elementColors[char.element];
 }
 
-export function icon(char: genshin.Character | string) {
+export function icon(char: genshin.Character | string) 
+{
 	if (typeof char == "string") return elementIcons[char];
 	return elementIcons[char.element];
 }
 
 export function rarityColor(
 	item: genshin.Weapon | genshin.Material | string
-): any {
+): any 
+{
 	let itemRarity;
 	typeof item === "string" ? (itemRarity = item) : (itemRarity = item.rarity);
 
-	switch (itemRarity) {
+	switch (itemRarity) 
+	{
 		case "1":
 			return "Grey";
 		case "2":

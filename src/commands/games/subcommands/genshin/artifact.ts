@@ -5,13 +5,14 @@ import {
 	EmbedBuilder,
 	InteractionCollector,
 	StringSelectMenuBuilder,
-	StringSelectMenuInteraction,
+	StringSelectMenuInteraction
 } from "discord.js";
 import genshin from "genshin-db";
 import { rarityColor } from "../../../../lib/Genshin";
 import { toTitleCase } from "../../../../lib/Utils";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	/**
 	 * Processing
 	 */
@@ -20,11 +21,12 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		.toLowerCase();
 	const artifact: genshin.Artifact = genshin.artifacts(name);
 
-	if (!artifact) {
+	if (!artifact) 
+	{
 		const noResult: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("❌ | No artifact set found!");
-		return interaction.editReply({ embeds: [noResult] });
+		return interaction.editReply({ embeds: [noResult], });
 	}
 
 	const embedColor = rarityColor(artifact.rarity[artifact.rarity.length - 1]);
@@ -38,7 +40,7 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		"plume",
 		"sands",
 		"goblet",
-		"circlet",
+		"circlet"
 	];
 
 	const infoEmbed: EmbedBuilder = new EmbedBuilder()
@@ -47,21 +49,23 @@ export = async (interaction: ChatInputCommandInteraction) => {
 	if (artifact.url.fandom)
 		infoEmbed.setDescription(`[Wiki Link](${artifact.url.fandom})`);
 
-	if (artifact["1pc"]) {
+	if (artifact["1pc"]) 
+	{
 		infoEmbed
 			.setThumbnail(artifact.images.circlet)
 			.setDescription(`*${artifact.circlet.description}*`)
-			.addFields({ name: "1-piece Effect:", value: artifact["1pc"] });
-		return interaction.editReply({ embeds: [infoEmbed] });
+			.addFields({ name: "1-piece Effect:", value: artifact["1pc"], });
+		return interaction.editReply({ embeds: [infoEmbed], });
 	}
 
 	infoEmbed.setThumbnail(artifact.images.flower);
 	if (artifact["2pc"])
-		infoEmbed.addFields({ name: "2-pieces Effect:", value: artifact["2pc"] });
+		infoEmbed.addFields({ name: "2-pieces Effect:", value: artifact["2pc"], });
 	if (artifact["4pc"])
-		infoEmbed.addFields({ name: "4-pieces Effect:", value: artifact["4pc"] });
+		infoEmbed.addFields({ name: "4-pieces Effect:", value: artifact["4pc"], });
 
-	for (let i = 0; i < artifactParts.length; i++) {
+	for (let i = 0; i < artifactParts.length; i++) 
+	{
 		const part = artifactParts[i];
 		artifactPartsInfo = Object.assign(
 			{
@@ -137,19 +141,25 @@ export = async (interaction: ChatInputCommandInteraction) => {
 			time: 120000,
 		});
 
-	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id)) {
+	collector.on("collect", async i => 
+	{
+		if (!i.customId.endsWith(i.user.id)) 
+		{
 			await i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
-		} else {
+		}
+		else 
+		{
 			const menuOptions = navigation.components[0].options;
 
 			await i.deferUpdate();
-			switch (i.values[0]) {
+			switch (i.values[0]) 
+			{
 				case "info": {
-					for (let i = 0; i < menuOptions.length; i++) {
+					for (let i = 0; i < menuOptions.length; i++) 
+					{
 						i == 0
 							? menuOptions[i].setDefault(true)
 							: menuOptions[i].setDefault(false);
@@ -165,11 +175,12 @@ export = async (interaction: ChatInputCommandInteraction) => {
 
 				default: {
 					const defaultOption = menuOptions.filter(
-						(option) => option.data.value === i.values[0]
+						option => option.data.value === i.values[0]
 					);
 					const defaultVal = menuOptions.indexOf(defaultOption[0]);
 
-					for (let i = 0; i < menuOptions.length; i++) {
+					for (let i = 0; i < menuOptions.length; i++) 
+					{
 						i === defaultVal
 							? menuOptions[i].setDefault(true)
 							: menuOptions[i].setDefault(false);
@@ -186,8 +197,9 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		}
 	});
 
-	collector.on("end", async (collected, reason) => {
+	collector.on("end", async (collected, reason) => 
+	{
 		navigation.components[0].setDisabled(true);
-		await interaction.editReply({ components: [navigation] });
+		await interaction.editReply({ components: [navigation], });
 	});
 };

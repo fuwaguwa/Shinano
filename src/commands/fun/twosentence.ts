@@ -7,7 +7,8 @@ export default new ChatInputCommand({
 	description: "A two sentences story. Could be horrifying, cringe or funny.",
 	category: "Fun",
 	cooldown: 5000,
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
 
 		const post = await rFetch({
@@ -23,6 +24,6 @@ export default new ChatInputCommand({
 			.setColor("#2f3136")
 			.setDescription(`**${post.title}**\n${post.selftext}`);
 
-		await interaction.editReply({ embeds: [postEmbed] });
+		await interaction.editReply({ embeds: [postEmbed], });
 	},
 });

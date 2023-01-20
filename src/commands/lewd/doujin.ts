@@ -19,7 +19,7 @@ export default new ChatInputCommand({
 					required: true,
 					name: "doujin-code",
 					description: "The doujin's code.",
-				},
+				}
 			],
 		},
 		{
@@ -38,23 +38,25 @@ export default new ChatInputCommand({
 					name: "sorting",
 					description: "The search sorting.",
 					choices: [
-						{ name: "Popular All-Time", value: "popular" },
-						{ name: "Popular Weekly", value: "popular-weekly" },
-						{ name: "Popular Today", value: "popular-today" },
-						{ name: "Recent", value: "recent" },
+						{ name: "Popular All-Time", value: "popular", },
+						{ name: "Popular Weekly", value: "popular-weekly", },
+						{ name: "Popular Today", value: "popular-today", },
+						{ name: "Recent", value: "recent", }
 					],
-				},
+				}
 			],
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
 			name: "random",
 			description: "Get a random doujin.",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
-		switch (interaction.options.getSubcommand()) {
+		switch (interaction.options.getSubcommand()) 
+		{
 			case "code": {
 				return doujinFunc.code(interaction);
 			}

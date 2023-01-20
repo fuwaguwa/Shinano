@@ -4,7 +4,8 @@ import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 export = async (
 	interaction: ChatInputCommandInteraction,
 	lewdEmbed: EmbedBuilder
-) => {
+) => 
+{
 	let category = interaction.options.getString("category") || "random";
 
 	category === "random"
@@ -23,6 +24,6 @@ export = async (
 	const waifu = await response.json();
 
 	return interaction.editReply({
-		content: waifu.links.map((item) => item.link).join("\n"),
+		content: waifu.links.map(item => item.link).join("\n"),
 	});
 };

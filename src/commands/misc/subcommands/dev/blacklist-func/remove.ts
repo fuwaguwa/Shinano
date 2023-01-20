@@ -1,23 +1,29 @@
 import User from "../../../../../schemas/User";
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	const user = await User.findOne({
 		userId: interaction.options.getUser("user").id,
 	});
 
-	if (!user) {
+	if (!user) 
+	{
 		const noOne: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("User is not blacklisted!");
-		return interaction.editReply({ embeds: [noOne] });
-	} else if (user.blacklisted == true) {
-		await user.updateOne({ blacklisted: false });
-	} else {
+		return interaction.editReply({ embeds: [noOne], });
+	}
+	else if (user.blacklisted == true) 
+	{
+		await user.updateOne({ blacklisted: false, });
+	}
+	else 
+	{
 		const noOne: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("User is not blacklisted!");
-		return interaction.editReply({ embeds: [noOne] });
+		return interaction.editReply({ embeds: [noOne], });
 	}
 
 	const success: EmbedBuilder = new EmbedBuilder()
@@ -29,5 +35,5 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		)
 		.setTimestamp();
 
-	await interaction.editReply({ embeds: [success] });
+	await interaction.editReply({ embeds: [success], });
 };

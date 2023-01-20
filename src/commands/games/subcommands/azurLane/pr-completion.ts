@@ -2,7 +2,8 @@ import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { getALEXPTable } from "../../../../lib/AzurLane";
 import { closest } from "../../../../lib/Utils";
 
-export = async (interaction: ChatInputCommandInteraction, AL: any) => {
+export = async (interaction: ChatInputCommandInteraction, AL: any) => 
+{
 	/**
 	 * Processing Data
 	 */
@@ -25,9 +26,12 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 	/**
 	 * Filtering
 	 */
-	if (!interaction.options.getString("fate-sim-level")) {
+	if (!interaction.options.getString("fate-sim-level")) 
+	{
 		fateSimLevel = 0;
-	} else {
+	}
+	else 
+	{
 		fateSimLevel = parseInt(
 			interaction.options.getString("fate-sim-level"),
 			10
@@ -36,27 +40,32 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 	}
 
 	const ship: any = await AL.ships.get(shipName);
-	if (!ship) {
+	if (!ship) 
+	{
 		const shipNotFound: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("Ship not found!");
-		return interaction.reply({ embeds: [shipNotFound], ephemeral: true });
+		return interaction.reply({ embeds: [shipNotFound], ephemeral: true, });
 	}
 
-	if (ship.rarity !== "Priority" && ship.rarity !== "Decisive") {
+	if (ship.rarity !== "Priority" && ship.rarity !== "Decisive") 
+	{
 		const shipNotPR: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("The ship is not a PR ship!");
-		return interaction.reply({ embeds: [shipNotPR] });
+		return interaction.reply({ embeds: [shipNotPR], });
 	}
 
-	if (ship.rarity === "Priority") {
+	if (ship.rarity === "Priority") 
+	{
 		color = "Gold";
 		prTable = data.PR;
 		prFSTable = data["PR-FS"];
 		prFSTableTotal = data["PR-FS-TOTAL"];
 		totalPRBPs = prTable[30] + prFSTable[5];
-	} else {
+	}
+	else 
+	{
 		color = "#2f3136";
 		prTable = data.DR;
 		prFSTable = data["DR-FS"];
@@ -70,11 +79,12 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 		fateSimLevel < 0 ||
 		(unusedBPs > totalPRBPs && devLevel > 0) ||
 		devLevel > 30
-	) {
+	) 
+	{
 		const impossible: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("Your inputted data is wrong, please check again");
-		return interaction.reply({ embeds: [impossible] });
+		return interaction.reply({ embeds: [impossible], });
 	}
 
 	/**
@@ -132,5 +142,5 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 		.setFooter({
 			text: "Fate Sim is included regardless even if the ship does not have Fate Sim in game.",
 		});
-	await interaction.editReply({ embeds: [completion] });
+	await interaction.editReply({ embeds: [completion], });
 };

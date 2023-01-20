@@ -12,9 +12,10 @@ export default new ChatInputCommand({
 			required: true,
 			name: "question",
 			description: "Your Question.",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.isChatInputCommand())
 			throw new Error("Interaction is not from chat!");
 
@@ -38,7 +39,7 @@ export default new ChatInputCommand({
 			"Without a doubt.",
 			"Yes.",
 			"Yes – definitely.",
-			"You may rely on it.",
+			"You may rely on it."
 		];
 
 		const response: EmbedBuilder = new EmbedBuilder()
@@ -48,6 +49,6 @@ export default new ChatInputCommand({
 					responses[Math.floor(Math.random() * responses.length)]
 			);
 
-		await interaction.reply({ embeds: [response] });
+		await interaction.reply({ embeds: [response], });
 	},
 });

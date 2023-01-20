@@ -6,7 +6,7 @@ import {
 	EmbedBuilder,
 	InteractionCollector,
 	StringSelectMenuBuilder,
-	StringSelectMenuInteraction,
+	StringSelectMenuInteraction
 } from "discord.js";
 import fetch from "node-fetch";
 import { genDoujinEmbed, getDoujinTags } from "../../../../lib/Doujin";
@@ -14,7 +14,8 @@ import { ShinanoPaginator } from "../../../../lib/Pages";
 import { getNHentaiIP } from "../../../../lib/Utils";
 import code from "./code";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	/**
 	 * Getting doujin info
 	 */
@@ -25,15 +26,16 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		"-lolicon -scat -guro -insect -shotacon -amputee -vomit -vore";
 	const response = await fetch(
 		`${nhentaiIP}/api/galleries/search?query=${name} ${blacklist}&sort=${sorting}`,
-		{ method: "GET" }
+		{ method: "GET", }
 	);
 	const searchResults = await response.json();
 
-	if (searchResults.error || searchResults.result.length == 0) {
+	if (searchResults.error || searchResults.result.length == 0) 
+	{
 		const noResult: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("❌ | No Result!");
-		return interaction.editReply({ embeds: [noResult] });
+		return interaction.editReply({ embeds: [noResult], });
 	}
 
 	/**
@@ -53,7 +55,8 @@ export = async (interaction: ChatInputCommandInteraction) => {
 				.setPlaceholder(`Doujin Search Results (${count})`)
 		);
 
-	for (let i = 0; i < count; i++) {
+	for (let i = 0; i < count; i++) 
+	{
 		const result = searchResults.result[i];
 		const tagsInfo = getDoujinTags(result);
 
@@ -86,17 +89,22 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		time: 60000,
 	});
 
-	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id)) {
+	collector.on("collect", async i => 
+	{
+		if (!i.customId.endsWith(i.user.id)) 
+		{
 			await i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
-		} else {
+		}
+		else 
+		{
 			await i.deferUpdate();
 
 			const menu = resultNavigation.components[0];
-			for (let j = 0; j < menu.options.length; j++) {
+			for (let j = 0; j < menu.options.length; j++) 
+			{
 				menu.options[j].data.value === i.values[0]
 					? menu.options[j].setDefault(true)
 					: menu.options[j].setDefault(false);
@@ -108,11 +116,13 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		}
 	});
 
-	collector.on("end", async (collected, reason) => {
+	collector.on("end", async (collected, reason) => 
+	{
 		// Timeout
-		if (reason !== "Processed") {
+		if (reason !== "Processed") 
+		{
 			resultNavigation.components[0].setDisabled(true);
-			await interaction.editReply({ components: [resultNavigation] });
+			await interaction.editReply({ components: [resultNavigation], });
 		}
 	});
 };

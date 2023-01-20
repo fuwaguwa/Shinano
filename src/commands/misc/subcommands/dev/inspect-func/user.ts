@@ -1,11 +1,12 @@
 import User from "../../../../../schemas/User";
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	if (!interaction.isChatInputCommand()) return;
 
 	const user = interaction.options.getUser("user") || interaction.user;
-	const userDB = await User.findOne({ userId: user.id });
+	const userDB = await User.findOne({ userId: user.id, });
 
 	const infoEmbed: EmbedBuilder = new EmbedBuilder()
 		.setColor("#2f3136")
@@ -18,5 +19,5 @@ export = async (interaction: ChatInputCommandInteraction) => {
 				`Commands Executed: **${userDB.commandsExecuted}**`
 		);
 
-	await interaction.editReply({ embeds: [infoEmbed] });
+	await interaction.editReply({ embeds: [infoEmbed], });
 };

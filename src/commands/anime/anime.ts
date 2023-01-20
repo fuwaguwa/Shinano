@@ -25,12 +25,12 @@ export default new ChatInputCommand({
 					name: "type",
 					description: "The type of the anime",
 					choices: [
-						{ name: "TV", value: "tv" },
-						{ name: "Movie", value: "movie" },
-						{ name: "OVA (Original Video Animation)", value: "ova" },
-						{ name: "ONA (Original Net Animation)", value: "ona" },
+						{ name: "TV", value: "tv", },
+						{ name: "Movie", value: "movie", },
+						{ name: "OVA (Original Video Animation)", value: "ova", },
+						{ name: "ONA (Original Net Animation)", value: "ona", }
 					],
-				},
+				}
 			],
 		},
 		{
@@ -43,7 +43,7 @@ export default new ChatInputCommand({
 					required: true,
 					name: "name",
 					description: "The character name.",
-				},
+				}
 			],
 		},
 		{
@@ -56,11 +56,13 @@ export default new ChatInputCommand({
 			type: ApplicationCommandOptionType.Subcommand,
 			name: "random",
 			description: "Return a random anime.",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
-		switch (interaction.options.getSubcommand()) {
+		switch (interaction.options.getSubcommand()) 
+		{
 			case "character": {
 				return animeFunc.character(interaction);
 			}

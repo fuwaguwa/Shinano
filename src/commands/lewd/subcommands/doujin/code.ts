@@ -6,7 +6,8 @@ import { getNHentaiIP } from "../../../../lib/Utils";
 export = async (
 	interaction: ChatInputCommandInteraction,
 	nuclearLaunchCode?
-) => {
+) => 
+{
 	const code =
 		nuclearLaunchCode || interaction.options.getInteger("doujin-code");
 	const nhentaiIP = await getNHentaiIP();
@@ -16,11 +17,12 @@ export = async (
 	});
 	const doujin = await response.json();
 
-	if (doujin.error) {
+	if (doujin.error) 
+	{
 		const notFound: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("❌ | Doujin not found!");
-		return interaction.editReply({ embeds: [notFound] });
+		return interaction.editReply({ embeds: [notFound], });
 	}
 
 	await displayDoujin(interaction, doujin);

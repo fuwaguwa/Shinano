@@ -1,7 +1,8 @@
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { Enemy } from "genshin-db";
 
-export = async (interaction: ChatInputCommandInteraction, enemy: Enemy) => {
+export = async (interaction: ChatInputCommandInteraction, enemy: Enemy) => 
+{
 	/**
 	 * Processing
 	 */
@@ -25,5 +26,5 @@ export = async (interaction: ChatInputCommandInteraction, enemy: Enemy) => {
 				`ATK: **${enemyStats.attack.toFixed(2)} ATK**\n` +
 				`DEF: **${enemyStats.defense.toFixed(2)} DEF**`,
 		});
-	await interaction.editReply({ embeds: [enemyStatsEmbed] });
+	await interaction.editReply({ embeds: [enemyStatsEmbed], });
 };

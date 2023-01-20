@@ -13,20 +13,22 @@ export default new ChatInputCommand({
 			required: true,
 			name: "text",
 			description: "The text you want to owoify (Limit: 200 chars)",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.isChatInputCommand())
 			throw new Error("Interaction is not from chat!");
 
 		if (!interaction.deferred) await interaction.deferReply();
 
 		const text: string = interaction.options.getString("text");
-		if (text.length > 200) {
+		if (text.length > 200) 
+		{
 			const invalid: EmbedBuilder = new EmbedBuilder()
 				.setColor("Red")
 				.setDescription("❌ | The text limit is 200 characters!");
-			return interaction.editReply({ embeds: [invalid] });
+			return interaction.editReply({ embeds: [invalid], });
 		}
 
 		const response = await fetch(
@@ -38,6 +40,6 @@ export default new ChatInputCommand({
 			.setColor("#2f3136")
 			.setDescription(`> ${owo}\n\n` + `- ${interaction.user}`);
 
-		await interaction.editReply({ embeds: [owoEmbed] });
+		await interaction.editReply({ embeds: [owoEmbed], });
 	},
 });

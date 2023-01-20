@@ -6,11 +6,12 @@ import {
 	EmbedBuilder,
 	InteractionCollector,
 	StringSelectMenuBuilder,
-	StringSelectMenuInteraction,
+	StringSelectMenuInteraction
 } from "discord.js";
 import { animeInfo } from "../../../../lib/Anime";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	/**
 	 * Processing data
 	 */
@@ -23,11 +24,12 @@ export = async (interaction: ChatInputCommandInteraction) => {
 	});
 
 	const animeResponse = (await response.json()).data;
-	if (animeResponse.length == 0) {
+	if (animeResponse.length == 0) 
+	{
 		const noResult: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("❌ | No result can be found!");
-		return interaction.editReply({ embeds: [noResult] });
+		return interaction.editReply({ embeds: [noResult], });
 	}
 
 	/**
@@ -41,7 +43,8 @@ export = async (interaction: ChatInputCommandInteraction) => {
 				.setCustomId(`RES-${interaction.user.id}`)
 				.setPlaceholder(`Anime Search Results (${animeResponse.length})`)
 		);
-	animeResponse.forEach((result) => {
+	animeResponse.forEach(result => 
+	{
 		results.components[0].addOptions({
 			label: `${result.title}`,
 			value: `${result.mal_id}`,
@@ -51,30 +54,35 @@ export = async (interaction: ChatInputCommandInteraction) => {
 	/**
 	 * Collector
 	 */
-	const message = await interaction.editReply({ components: [results] });
+	const message = await interaction.editReply({ components: [results], });
 	const collector: InteractionCollector<StringSelectMenuInteraction> =
 		await message.createMessageComponentCollector({
 			componentType: ComponentType.StringSelect,
 			time: 120000,
 		});
 
-	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id)) {
+	collector.on("collect", async i => 
+	{
+		if (!i.customId.endsWith(i.user.id)) 
+		{
 			await i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
-		} else {
+		}
+		else 
+		{
 			await i.deferUpdate();
 
 			const response = await fetch(
 				`https://api.jikan.moe/v4/anime/${i.values[0]}/full`,
-				{ method: "GET" }
+				{ method: "GET", }
 			);
 			const anime = (await response.json()).data;
 
 			const menu = results.components[0];
-			for (let j = 0; j < menu.options.length; j++) {
+			for (let j = 0; j < menu.options.length; j++) 
+			{
 				menu.options[j].data.value === i.values[0]
 					? menu.options[j].setDefault(true)
 					: menu.options[j].setDefault(false);
@@ -84,8 +92,9 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		}
 	});
 
-	collector.on("end", async (collected, reason) => {
+	collector.on("end", async (collected, reason) => 
+	{
 		results.components[0].setDisabled(true);
-		await interaction.editReply({ components: [results] });
+		await interaction.editReply({ components: [results], });
 	});
 };

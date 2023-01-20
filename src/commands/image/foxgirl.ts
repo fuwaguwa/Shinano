@@ -7,7 +7,8 @@ export default new ChatInputCommand({
 	description: "If you love me, you'll love them too (SFW)",
 	cooldown: 4500,
 	category: "Image",
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
 
 		const response = await fetch("https://nekos.best/api/v2/kitsune");
@@ -17,11 +18,11 @@ export default new ChatInputCommand({
 			.setColor("Random")
 			.setFooter({
 				text: `Requested by ${interaction.user.tag}`,
-				iconURL: interaction.user.displayAvatarURL({ forceStatic: false }),
+				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 			})
 			.setTimestamp()
 			.setImage(kitsunePic.results[0].url);
 
-		await interaction.editReply({ embeds: [foxgirlEmbed] });
+		await interaction.editReply({ embeds: [foxgirlEmbed], });
 	},
 });

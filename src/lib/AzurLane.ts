@@ -7,7 +7,8 @@ import { toTitleCase } from "./Utils";
 /**
  * Get EXP Table
  */
-export async function getALEXPTable() {
+export async function getALEXPTable() 
+{
 	const response = await fetch(
 		"https://AmagiAPI.fuwafuwa08.repl.co/azur-lane/ship-stats",
 		{
@@ -26,14 +27,17 @@ export async function getALEXPTable() {
  * @param gearStats Stats of the gear
  * @param embed Stats embed
  */
-export function gearStats(gearStats, embed: EmbedBuilder) {
-	for (let stat in gearStats) {
+export function gearStats(gearStats, embed: EmbedBuilder) 
+{
+	for (let stat in gearStats) 
+	{
 		let name: string;
 		let st = gearStats[stat].formatted; // Stats of {name}
 
 		if (!st) continue;
 
-		switch (stat.toLowerCase()) {
+		switch (stat.toLowerCase()) 
+		{
 			case "rof":
 				continue;
 			case "antiair":
@@ -66,7 +70,8 @@ export function gearStats(gearStats, embed: EmbedBuilder) {
 			case "aaguns": {
 				let guns: string[] = [];
 
-				gearStats[stat].stats.forEach((unit) => {
+				gearStats[stat].stats.forEach(unit => 
+				{
 					guns.push(unit.formatted);
 				});
 
@@ -78,7 +83,8 @@ export function gearStats(gearStats, embed: EmbedBuilder) {
 			case "ordnance": {
 				let ordnances: string[] = [];
 
-				gearStats[stat].stats.forEach((unit) => {
+				gearStats[stat].stats.forEach(unit => 
+				{
 					ordnances.push(unit.formatted);
 				});
 
@@ -92,7 +98,7 @@ export function gearStats(gearStats, embed: EmbedBuilder) {
 				break;
 			}
 		}
-		embed.addFields({ name, value: st, inline: true });
+		embed.addFields({ name, value: st, inline: true, });
 	}
 }
 
@@ -101,12 +107,16 @@ export function gearStats(gearStats, embed: EmbedBuilder) {
  * @param fits type of ships the gear is equippable on
  * @returns string[]
  */
-export function gearFits(fits) {
+export function gearFits(fits) 
+{
 	const fitted: string[] = [];
-	for (let ship in fits) {
-		if (fits[ship]) {
+	for (let ship in fits) 
+	{
+		if (fits[ship]) 
+		{
 			const slot = toTitleCase(fits[ship]);
-			switch (ship.toLowerCase()) {
+			switch (ship.toLowerCase()) 
+			{
 				case "destroyer":
 					fitted.push(`Destroyer: ${slot}`);
 					break;
@@ -162,14 +172,17 @@ export function gearFits(fits) {
  * @param chapterMode chapter mode
  * @returns array of embeds about chapter information
  */
-export function chapterInfo(chapterInfo, chapterMode) {
+export function chapterInfo(chapterInfo, chapterMode) 
+{
 	const levels: EmbedBuilder[] = [];
 	const title = `Chapter ${chapterInfo.id}: ${chapterInfo.names.en}`;
 
-	for (let i = 1; i - 1 < 4; i++) {
+	for (let i = 1; i - 1 < 4; i++) 
+	{
 		const blueprints: string[] = [];
 
-		chapterInfo[i][chapterMode].blueprintDrops.forEach((blueprint) => {
+		chapterInfo[i][chapterMode].blueprintDrops.forEach(blueprint => 
+		{
 			const name = blueprint.tier + " " + blueprint.name;
 			blueprints.push(name);
 		});
@@ -270,9 +283,10 @@ export function chapterInfo(chapterInfo, chapterMode) {
  * @param AL AzurAPI
  * @returns gear
  */
-export async function gearSearch(gearName: string, AL: AzurAPI) {
+export async function gearSearch(gearName: string, AL: AzurAPI) 
+{
 	const allGears = [];
-	AL.equipments.forEach((gear) => allGears.push(gear));
+	AL.equipments.forEach(gear => allGears.push(gear));
 
 	const searcher = new Fuse(allGears, {
 		keys: ["names.en", "names.wiki"],
@@ -288,7 +302,8 @@ export async function gearSearch(gearName: string, AL: AzurAPI) {
  * @param tier gear's tier
  * @returns embed color
  */
-export function gearColor(gear, tier: number) {
+export function gearColor(gear, tier: number) 
+{
 	let color: any;
 	if (gear.tiers[tier].rarity === "Normal") color = "#b0b7b8";
 	if (gear.tiers[tier].rarity === "Rare") color = "#03dbfc";

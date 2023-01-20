@@ -1,11 +1,12 @@
 import {
 	ChatInputCommandInteraction,
 	EmbedBuilder,
-	TextChannel,
+	TextChannel
 } from "discord.js";
 import News from "../../../../../schemas/ALNews";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	/**
 	 * Perm Check
 	 */
@@ -16,13 +17,14 @@ export = async (interaction: ChatInputCommandInteraction) => {
 	if (
 		!guildUserPerms.has("Administrator") &&
 		!guildUserPerms.has("ManageWebhooks")
-	) {
+	) 
+	{
 		const noPerm: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
 				"❌ | You need `Manage Webhooks` permission to use this command!"
 			);
-		return interaction.editReply({ embeds: [noPerm] });
+		return interaction.editReply({ embeds: [noPerm], });
 	}
 
 	const channel =
@@ -32,29 +34,30 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		!interaction.guild.members.me
 			.permissionsIn(channel as TextChannel)
 			.has("SendMessages")
-	) {
+	) 
+	{
 		const noPerm: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
 				"❌ | Shinano does not have permission to send message in this channel"
 			);
-		return interaction.reply({ embeds: [noPerm] });
+		return interaction.reply({ embeds: [noPerm], });
 	}
 
 	/**
 	 * Setting the channel to post news
 	 */
-	const dbChannel = await News.findOne({ guildId: interaction.guild.id });
+	const dbChannel = await News.findOne({ guildId: interaction.guild.id, });
 	dbChannel
-		? await dbChannel.updateOne({ channelId: channel.id })
+		? await dbChannel.updateOne({ channelId: channel.id, })
 		: await News.create({
-				guildId: interaction.guild.id,
-				channelId: channel.id,
+			guildId: interaction.guild.id,
+			channelId: channel.id,
 		  });
 	const done: EmbedBuilder = new EmbedBuilder()
 		.setColor("Green")
 		.setDescription(
 			`✅ | Shinano will now send the latest news/tweets about the game in <#${channel.id}>`
 		);
-	await interaction.editReply({ embeds: [done] });
+	await interaction.editReply({ embeds: [done], });
 };

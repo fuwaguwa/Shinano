@@ -5,19 +5,21 @@ import {
 	Embed,
 	EmbedBuilder,
 	Guild,
-	TextChannel,
+	TextChannel
 } from "discord.js";
 import { client } from "..";
 import { updateServerCount } from "../lib/Utils";
 import { Event } from "../structures/Event";
 
-export default new Event("guildCreate", async (guild) => {
+export default new Event("guildCreate", async guild => 
+{
 	await guild
 		.fetchAuditLogs({
 			type: 28,
 			limit: 1,
 		})
-		.then(async (log) => {
+		.then(async log => 
+		{
 			const logGuild: Guild = await client.guilds.fetch("1002188088942022807");
 			const ioChannel: TextChannel = (await logGuild.channels.fetch(
 				"1017463107737628732"
@@ -27,8 +29,8 @@ export default new Event("guildCreate", async (guild) => {
 			const botAddEmbed: EmbedBuilder = new EmbedBuilder()
 				.setColor("Green")
 				.setTitle("Shinano joined a server!")
-				.setThumbnail(adder.displayAvatarURL({ forceStatic: false }))
-				.setImage(guild.iconURL({ forceStatic: false }))
+				.setThumbnail(adder.displayAvatarURL({ forceStatic: false, }))
+				.setImage(guild.iconURL({ forceStatic: false, }))
 				.setFields(
 					{
 						name: "Guild Name | Guild ID",
@@ -40,7 +42,7 @@ export default new Event("guildCreate", async (guild) => {
 					}
 				)
 				.setTimestamp();
-			await ioChannel.send({ embeds: [botAddEmbed] });
+			await ioChannel.send({ embeds: [botAddEmbed], });
 
 			await updateServerCount();
 		});
@@ -48,12 +50,14 @@ export default new Event("guildCreate", async (guild) => {
 	/**
 	 * Join message
 	 */
-	await guild.channels.cache.some((channel) => {
+	await guild.channels.cache.some(channel => 
+	{
 		if (
 			channel.name.includes("general") ||
 			channel.name.includes("lobby") ||
 			channel.name.includes("chat")
-		) {
+		) 
+		{
 			const helloEmbed: EmbedBuilder = new EmbedBuilder()
 				.setColor("#2f3136")
 				.setDescription(
@@ -70,12 +74,12 @@ export default new Event("guildCreate", async (guild) => {
 						.setStyle(ButtonStyle.Link)
 						.setURL("https://discord.gg/NFkMxFeEWr")
 						.setLabel("Support Server")
-						.setEmoji({ name: "⚙️" }),
+						.setEmoji({ name: "⚙️", }),
 					new ButtonBuilder()
 						.setStyle(ButtonStyle.Link)
 						.setURL("https://top.gg/bot/1002193298229829682")
 						.setLabel("Top.gg")
-						.setEmoji({ id: "1002849574517477447" })
+						.setEmoji({ id: "1002849574517477447", })
 				);
 			(async () =>
 				await (channel as TextChannel).send({

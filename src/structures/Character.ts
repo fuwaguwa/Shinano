@@ -3,7 +3,8 @@ import { Character } from "genshin-db";
 import { color, icon, stars } from "../lib/Genshin";
 import genshin from "genshin-db";
 
-export class ShinanoCharacter {
+export class ShinanoCharacter 
+{
 	character: Character;
 	icon: string;
 	color: any;
@@ -17,14 +18,16 @@ export class ShinanoCharacter {
 
 	stats: EmbedBuilder;
 
-	constructor(character) {
+	constructor(character) 
+	{
 		this.character = character;
 
 		this.color = color(character);
 		this.icon = icon(character);
 		this.stars = stars(character);
 
-		if (character.name === "Aether" || character.name === "Lumine") {
+		if (character.name === "Aether" || character.name === "Lumine") 
+		{
 			this.mc = true;
 			this.color = "Grey";
 		}
@@ -35,7 +38,8 @@ export class ShinanoCharacter {
 	 * @param charName character name
 	 * @param embedColor color for embed
 	 */
-	private queryCons(charName?: string, embedColor?) {
+	private queryCons(charName?: string, embedColor?) 
+	{
 		const character = this.character;
 
 		const charCons = genshin.constellations(
@@ -43,8 +47,10 @@ export class ShinanoCharacter {
 		);
 		const consInfo = [];
 
-		for (let cons in charCons) {
-			if (!["name", "images", "version"].includes(cons)) {
+		for (let cons in charCons) 
+		{
+			if (!["name", "images", "version"].includes(cons)) 
+			{
 				consInfo.push({
 					name: cons.toUpperCase() + " | " + charCons[cons].name,
 					description: charCons[cons].effect,
@@ -57,7 +63,8 @@ export class ShinanoCharacter {
 			.setTitle(`${charName ? charName : character.name}'s Constellations`)
 			.setThumbnail(character.images.icon);
 
-		consInfo.forEach((cons) => {
+		consInfo.forEach(cons => 
+		{
 			this.constellations.addFields({
 				name: cons.name,
 				value: cons.description,
@@ -70,12 +77,15 @@ export class ShinanoCharacter {
 	/**
 	 * Get all traveler's constellations
 	 */
-	private queryTravellerCons() {
+	private queryTravellerCons() 
+	{
 		const currNumOfTravellerElement: number = 4;
-		for (let i = 0; i < currNumOfTravellerElement; i++) {
+		for (let i = 0; i < currNumOfTravellerElement; i++) 
+		{
 			let element: string;
 
-			switch (i) {
+			switch (i) 
+			{
 				case 0:
 					element = "Anemo";
 					break;
@@ -99,7 +109,8 @@ export class ShinanoCharacter {
 	/**
 	 * Generate character general info embed
 	 */
-	private genGeneralInfoEmbed() {
+	private genGeneralInfoEmbed() 
+	{
 		const character = this.character;
 
 		this.generalInfo = new EmbedBuilder()
@@ -149,40 +160,45 @@ export class ShinanoCharacter {
 						`EN: ${character.cv.english}`,
 				}
 			)
-			.setFooter({ text: `Added in Version ${character.version}` });
+			.setFooter({ text: `Added in Version ${character.version}`, });
 	}
 
 	/**
 	 * Generate character constellations embed(s)
 	 */
-	private genConstellationsEmbed() {
+	private genConstellationsEmbed() 
+	{
 		this.mc ? this.queryTravellerCons() : this.queryCons();
 	}
 
 	/**
 	 * Generate character ascension costs embeds
 	 */
-	private genAscensionCostsEmbeds() {
+	private genAscensionCostsEmbeds() 
+	{
 		const character = this.character;
 		const ascensionCosts = [];
 
-		for (let ascensionLevel in character.costs) {
+		for (let ascensionLevel in character.costs) 
+		{
 			let materials = [];
 
-			character.costs[ascensionLevel].forEach((material) => {
+			character.costs[ascensionLevel].forEach(material => 
+			{
 				materials.push(`${material.count}x **${material.name}**`);
 			});
 
 			ascensionCosts.push(materials.join("\n"));
 		}
 
-		for (let i = 0; i < ascensionCosts.length; i++) {
+		for (let i = 0; i < ascensionCosts.length; i++) 
+		{
 			this.ascensionCosts.push(
 				new EmbedBuilder()
 					.setColor(this.color)
 					.setTitle(`${character.name}'s Ascension Costs`)
 					.setThumbnail(character.images.icon)
-					.addFields({ name: `Ascension ${i + 1}:`, value: ascensionCosts[i] })
+					.addFields({ name: `Ascension ${i + 1}:`, value: ascensionCosts[i], })
 			);
 		}
 	}
@@ -190,7 +206,8 @@ export class ShinanoCharacter {
 	/**
 	 * Get all character embeds
 	 */
-	public getCharacterEmbeds() {
+	public getCharacterEmbeds() 
+	{
 		this.genGeneralInfoEmbed();
 		this.genConstellationsEmbed();
 		this.genAscensionCostsEmbeds();
@@ -208,7 +225,8 @@ export class ShinanoCharacter {
 	 * @param level character level
 	 * @param ascension character ascension phase
 	 */
-	public getCharaterStatsEmbed(level: number, ascension?: string) {
+	public getCharaterStatsEmbed(level: number, ascension?: string) 
+	{
 		const character = this.character;
 		let characterStats = character.stats(level);
 

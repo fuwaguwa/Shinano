@@ -1,7 +1,8 @@
 import { EmbedBuilder } from "discord.js";
 import { createTable, toTitleCase } from "../lib/Utils";
 
-export class ShinanoShip {
+export class ShinanoShip 
+{
 	public ship: any;
 	public color: any;
 
@@ -12,7 +13,8 @@ export class ShinanoShip {
 	private skins: EmbedBuilder[] = [];
 	private gallery: EmbedBuilder[] = [];
 
-	constructor(ship) {
+	constructor(ship) 
+	{
 		this.ship = ship;
 
 		this.color = this.shipColor();
@@ -22,7 +24,8 @@ export class ShinanoShip {
 	 * Get ship color based on ship rarity
 	 * @param ship ship
 	 */
-	public shipColor() {
+	public shipColor() 
+	{
 		const ship = this.ship;
 
 		let color: any;
@@ -42,10 +45,12 @@ export class ShinanoShip {
 	 * @param ship ship
 	 * @param embed general info embed
 	 */
-	private pools(embed: EmbedBuilder) {
+	private pools(embed: EmbedBuilder) 
+	{
 		const ship = this.ship;
 
-		if (ship.rarity !== "Decisive" && ship.rarity !== "Priority") {
+		if (ship.rarity !== "Decisive" && ship.rarity !== "Priority") 
+		{
 			const pools: string[] = [];
 			if (ship.construction.availableIn.exchange) pools.push("Exchange");
 			if (ship.construction.availableIn.light) pools.push("Light Ship Pool");
@@ -63,11 +68,16 @@ export class ShinanoShip {
 
 			// Maps
 			const maps: string[] = [];
-			if (ship.obtainedFrom.fromMaps.length > 0) {
-				for (let i = 0; i < ship.obtainedFrom.fromMaps.length; i++) {
-					if (ship.obtainedFrom.fromMaps[i].name) {
+			if (ship.obtainedFrom.fromMaps.length > 0) 
+			{
+				for (let i = 0; i < ship.obtainedFrom.fromMaps.length; i++) 
+				{
+					if (ship.obtainedFrom.fromMaps[i].name) 
+					{
 						maps.push(ship.obtainedFrom.fromMaps[i].name);
-					} else {
+					}
+					else 
+					{
 						maps.push(ship.obtainedFrom.fromMaps[i]);
 					}
 				}
@@ -88,19 +98,19 @@ export class ShinanoShip {
 							? "Cannot Be Constructed"
 							: ship.construction.constructionTime,
 				},
-				{ name: "Appears In:", value: aprIn },
+				{ name: "Appears In:", value: aprIn, },
 				{
 					name: "Obtainable From:",
 					value: `${
 						ship.obtainedFrom.obtainedFrom
 							? ship.obtainedFrom.obtainedFrom
-							: `Other Sources (Maps/Banner)`
+							: "Other Sources (Maps/Banner)"
 					}`,
 				}
 			);
 		}
 
-		return embed.addFields({ name: "Obtain From:", value: "Shipyard" });
+		return embed.addFields({ name: "Obtain From:", value: "Shipyard", });
 	}
 
 	/**
@@ -108,7 +118,8 @@ export class ShinanoShip {
 	 * @param shipStats ship stats
 	 * @returns link to stats table
 	 */
-	private createStatsTable(shipStats) {
+	private createStatsTable(shipStats) 
+	{
 		// Structure
 		const columns: string[] = [
 			"LVL",
@@ -123,7 +134,7 @@ export class ShinanoShip {
 			"ACC",
 			"LCK",
 			"ASW",
-			"OIL",
+			"OIL"
 		];
 
 		// Stats
@@ -187,11 +198,12 @@ export class ShinanoShip {
 				OIL: shipStats.level125.oilConsumption,
 				ACC: shipStats.level125.accuracy,
 				ASW: shipStats.level125.antisubmarineWarfare,
-			},
+			}
 		];
 
 		// Retrofit Stats
-		if (shipStats.level100Retrofit) {
+		if (shipStats.level100Retrofit) 
+		{
 			dataSrc.push(
 				{
 					LVL: "100 (Retro)",
@@ -240,13 +252,14 @@ export class ShinanoShip {
 				}
 			);
 		}
-		return createTable({ columns, dataSrc });
+		return createTable({ columns, dataSrc, });
 	}
 
 	/**
 	 * Generate ship general info embed
 	 */
-	private generateGeneralInfoEmbed() {
+	private generateGeneralInfoEmbed() 
+	{
 		const ship = this.ship;
 
 		const generalInfo: EmbedBuilder = new EmbedBuilder()
@@ -259,13 +272,13 @@ export class ShinanoShip {
 				}\nVoiced by ${ship.misc.voice.name ? ship.misc.voice.name : "Unknown"}`
 			)
 			.setFields(
-				{ name: "Rarity:", value: ship.rarity },
+				{ name: "Rarity:", value: ship.rarity, },
 				{
 					name: "Nationality:",
-					value: `${ship.nationality ? ship.nationality : `None`}`,
+					value: `${ship.nationality ? ship.nationality : "None"}`,
 				},
-				{ name: "Class:", value: ship.class },
-				{ name: "Hull Type:", value: ship.hullType }
+				{ name: "Class:", value: ship.class, },
+				{ name: "Hull Type:", value: ship.hullType, }
 			);
 
 		this.pools(generalInfo);
@@ -275,7 +288,8 @@ export class ShinanoShip {
 	/**
 	 * Generate ship stats embed
 	 */
-	private async generateStatsEmbed() {
+	private async generateStatsEmbed() 
+	{
 		const ship = this.ship;
 
 		/**
@@ -284,16 +298,21 @@ export class ShinanoShip {
 		let name: string;
 		let limitBreak: string;
 
-		if (!ship.limitBreaks && !ship.devLevels) {
+		if (!ship.limitBreaks && !ship.devLevels) 
+		{
 			name = "Limit Breaks:";
 			limitBreak = "Ship cannot be limit broken.";
-		} else if (ship.limitBreaks && !ship.devLevels) {
+		}
+		else if (ship.limitBreaks && !ship.devLevels) 
+		{
 			name = "Limit Breaks:";
 			limitBreak =
 				`**First**: ${ship.limitBreaks[0].join("/")}\n` +
 				`**Second**: ${ship.limitBreaks[1].join("/")}\n` +
 				`**Third**: ${ship.limitBreaks[2].join("/")}\n`;
-		} else {
+		}
+		else 
+		{
 			name = "Dev Levels:";
 			limitBreak =
 				`**Dev 5**: ${ship.devLevels[0].buffs.join("/")}\n` +
@@ -310,12 +329,15 @@ export class ShinanoShip {
 		let scrapValue: string[] = [];
 		let enhanceValue: string[] = [];
 
-		if (ship.rarity !== "Priority" && ship.rarity !== "Decisive") {
-			for (let value in ship.scrapValue) {
+		if (ship.rarity !== "Priority" && ship.rarity !== "Decisive") 
+		{
+			for (let value in ship.scrapValue) 
+			{
 				scrapValue.push(`**${toTitleCase(value)}**: ${ship.scrapValue[value]}`);
 			}
 
-			for (let value in ship.enhanceValue) {
+			for (let value in ship.enhanceValue) 
+			{
 				enhanceValue.push(
 					`**${toTitleCase(value)}**: ${ship.enhanceValue[value]}`
 				);
@@ -329,7 +351,7 @@ export class ShinanoShip {
 			.setImage(statsTable)
 			.setThumbnail(ship.thumbnail)
 			.setFields(
-				{ name: name, value: limitBreak },
+				{ name: name, value: limitBreak, },
 				{
 					name: "Weapon Slots: MinEff%/MaxEff%: ",
 					value:
@@ -340,14 +362,15 @@ export class ShinanoShip {
 				}
 			);
 
-		if (scrapValue.length != 0) {
+		if (scrapValue.length != 0) 
+		{
 			statsEmbed.addFields(
 				{
 					name: "Enhance Value:",
 					value: enhanceValue.join("\n"),
 					inline: true,
 				},
-				{ name: "Scrap Value: ", value: scrapValue.join("\n"), inline: true }
+				{ name: "Scrap Value: ", value: scrapValue.join("\n"), inline: true, }
 			);
 		}
 
@@ -357,7 +380,8 @@ export class ShinanoShip {
 	/**
 	 * Generate ship skills embed
 	 */
-	private generateSkillsEmbed() {
+	private generateSkillsEmbed() 
+	{
 		const ship = this.ship;
 
 		const skillsEmbed: EmbedBuilder = new EmbedBuilder()
@@ -365,7 +389,8 @@ export class ShinanoShip {
 			.setThumbnail(ship.thumbnail)
 			.setTitle(`${ship.names.en}'s Skills`);
 
-		ship.skills.forEach((skill) => {
+		ship.skills.forEach(skill => 
+		{
 			let skillType: string;
 
 			if (skill.color === "pink") skillType = "Offensive Skill";
@@ -384,20 +409,25 @@ export class ShinanoShip {
 	/**
 	 * Generate ship tech embed
 	 */
-	private generateTechEmbed() {
+	private generateTechEmbed() 
+	{
 		const ship = this.ship;
 
 		let techPts: string;
 		let statsBonus: string;
 
-		if (!ship.fleetTech.statsBonus.collection || !ship.fleetTech.techPoints) {
+		if (!ship.fleetTech.statsBonus.collection || !ship.fleetTech.techPoints) 
+		{
 			techPts = "N/A";
 			statsBonus = "N/A";
-		} else {
+		}
+		else 
+		{
 			let collection = ship.fleetTech.statsBonus.collection.stat;
 			let maxLevel = ship.fleetTech.statsBonus.maxLevel.stat;
 
-			switch (collection.toLowerCase()) {
+			switch (collection.toLowerCase()) 
+			{
 				case "antisubmarinewarfare": {
 					collection = "ASW";
 					break;
@@ -409,7 +439,8 @@ export class ShinanoShip {
 				}
 			}
 
-			switch (maxLevel.toLowerCase()) {
+			switch (maxLevel.toLowerCase()) 
+			{
 				case "antisubmarinewarfare": {
 					maxLevel = "ASW";
 					break;
@@ -445,8 +476,8 @@ export class ShinanoShip {
 			.setTitle(`${ship.names.en}'s Fleet Stats`)
 			.setThumbnail(ship.thumbnail)
 			.setFields(
-				{ name: "Tech Points:", value: techPts },
-				{ name: "Stats Bonus:", value: statsBonus }
+				{ name: "Tech Points:", value: techPts, },
+				{ name: "Stats Bonus:", value: statsBonus, }
 			);
 
 		this.tech = tech;
@@ -455,16 +486,19 @@ export class ShinanoShip {
 	/**
 	 * Generate array of ship skin embeds
 	 */
-	private generateSkinEmbeds() {
+	private generateSkinEmbeds() 
+	{
 		const ship = this.ship;
 		let description: string;
 
-		ship.skins.forEach((skin) => {
-			switch (skin.info.obtainedFrom.toLowerCase()) {
+		ship.skins.forEach(skin => 
+		{
+			switch (skin.info.obtainedFrom.toLowerCase()) 
+			{
 				case "skin shop": {
 					description =
 						`**Skin Name**: ${skin.name}\n` +
-						`**Obtain From**: Skin Shop\n` +
+						"**Obtain From**: Skin Shop\n" +
 						`**Cost**: ${skin.info.cost} <:GEAMS:1002198674539036672>\n` +
 						`**Live2D?** ${skin.info.live2dModel == false ? "No" : "Yes"}\n` +
 						`**Limited or Permanent**: ${
@@ -505,11 +539,14 @@ export class ShinanoShip {
 	/**
 	 * Generate ship gallery embed
 	 */
-	private generateGalleryEmbed() {
+	private generateGalleryEmbed() 
+	{
 		const ship = this.ship;
 
-		if (ship.gallery.length != 0) {
-			ship.gallery.forEach((image) => {
+		if (ship.gallery.length != 0) 
+		{
+			ship.gallery.forEach(image => 
+			{
 				this.gallery.push(
 					new EmbedBuilder()
 						.setColor(this.color)
@@ -525,7 +562,8 @@ export class ShinanoShip {
 	 * Return all ship embeds
 	 * @returns all ship embeds
 	 */
-	public async getShipEmbeds() {
+	public async getShipEmbeds() 
+	{
 		this.generateGeneralInfoEmbed();
 		await this.generateStatsEmbed();
 		this.generateSkillsEmbed();

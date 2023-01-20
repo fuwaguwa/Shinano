@@ -3,7 +3,8 @@ import genshin from "genshin-db";
 import { rarityColor } from "../../../../lib/Genshin";
 import { toTitleCase } from "../../../../lib/Utils";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	/**
 	 * Processing
 	 */
@@ -12,11 +13,12 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		.toLowerCase();
 	const material: genshin.Material = genshin.materials(name);
 
-	if (!material) {
+	if (!material) 
+	{
 		const noResult: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("❌ | No material found!");
-		return interaction.editReply({ embeds: [noResult] });
+		return interaction.editReply({ embeds: [noResult], });
 	}
 
 	/**
@@ -43,12 +45,15 @@ export = async (interaction: ChatInputCommandInteraction) => {
 				value: material.materialtype,
 			}
 		);
-	if (!material.daysofweek) {
+	if (!material.daysofweek) 
+	{
 		materialEmbed.addFields({
 			name: "Material Source:",
 			value: material.source.join("\n"),
 		});
-	} else {
+	}
+	else 
+	{
 		materialEmbed.addFields({
 			name: "Material Source",
 			value:
@@ -57,5 +62,5 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		});
 	}
 
-	await interaction.editReply({ embeds: [materialEmbed] });
+	await interaction.editReply({ embeds: [materialEmbed], });
 };

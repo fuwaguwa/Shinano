@@ -33,14 +33,16 @@ export default new ChatInputCommand({
 			type: ApplicationCommandOptionType.String,
 			name: "choice-5",
 			description: "Choice 5.",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.isChatInputCommand())
 			throw new Error("Interaction is not from chat!");
 
 		const choices: string[] = [];
-		for (let i = 0; i < 5; i++) {
+		for (let i = 0; i < 5; i++) 
+		{
 			if (interaction.options.getString(`choice-${i + 1}`))
 				choices.push(interaction.options.getString(`choice-${i + 1}`));
 		}
@@ -52,6 +54,6 @@ export default new ChatInputCommand({
 					`I pick...**${choices[Math.floor(Math.random() * choices.length)]}**!`
 			);
 
-		await interaction.reply({ embeds: [pickEmbed] });
+		await interaction.reply({ embeds: [pickEmbed], });
 	},
 });

@@ -1,17 +1,19 @@
 import {
 	ChatInputCommandInteraction,
 	EmbedBuilder,
-	TextChannel,
+	TextChannel
 } from "discord.js";
 import nsfwSubs from "../../../lewd/subcommands/nsfwSubs";
 
-export = async (interaction: ChatInputCommandInteraction) => {
-	if (!(interaction.channel as TextChannel).nsfw) {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
+	if (!(interaction.channel as TextChannel).nsfw) 
+	{
 		const nsfwCommand: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setTitle("NSFW Command")
 			.setDescription("NSFW commands can only be used in NSFW channels.");
-		return interaction.reply({ embeds: [nsfwCommand] });
+		return interaction.reply({ embeds: [nsfwCommand], });
 	}
 
 	if (!interaction.deferred) await interaction.deferReply();

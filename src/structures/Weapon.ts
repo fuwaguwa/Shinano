@@ -3,7 +3,8 @@ import { Weapon } from "genshin-db";
 import { rarityColor, stars } from "../lib/Genshin";
 import { strFormat } from "../lib/Utils";
 
-export class ShinanoWeapon {
+export class ShinanoWeapon 
+{
 	weapon: Weapon;
 	color: any;
 	stars: string;
@@ -15,7 +16,8 @@ export class ShinanoWeapon {
 	generalInfo: EmbedBuilder;
 	ascensionCosts: EmbedBuilder[] = [];
 
-	constructor(weapon: Weapon) {
+	constructor(weapon: Weapon) 
+	{
 		this.weapon = weapon;
 
 		this.color = rarityColor(weapon);
@@ -25,7 +27,8 @@ export class ShinanoWeapon {
 	/**
 	 * Converting weapon subvalues
 	 */
-	private getSubValue() {
+	private getSubValue() 
+	{
 		const weapon = this.weapon;
 
 		weapon.substat.toLowerCase() !== "elemental mastery"
@@ -36,23 +39,32 @@ export class ShinanoWeapon {
 	/**
 	 * Formatting weapon refinement stats
 	 */
-	private getRefinementStats() {
+	private getRefinementStats() 
+	{
 		const weapon = this.weapon;
 
-		if (weapon.effect) {
-			for (let i = 0; i < 5; i++) {
-				if (i == 0) {
-					weapon[`r${i + 1}`].forEach((stat) => {
+		if (weapon.effect) 
+		{
+			for (let i = 0; i < 5; i++) 
+			{
+				if (i == 0) 
+				{
+					weapon[`r${i + 1}`].forEach(stat => 
+					{
 						this.refinementStats.push(stat);
 					});
-				} else {
-					for (let k = 0; k < weapon.r1.length; k++) {
+				}
+				else 
+				{
+					for (let k = 0; k < weapon.r1.length; k++) 
+					{
 						this.refinementStats[k] += `/${weapon[`r${i + 1}`][k]}`;
 					}
 				}
 			}
 
-			for (let i = 0; i < this.refinementStats.length; i++) {
+			for (let i = 0; i < this.refinementStats.length; i++) 
+			{
 				this.refinementStats[i] = `**${this.refinementStats[i]}**`;
 			}
 		}
@@ -62,10 +74,12 @@ export class ShinanoWeapon {
 	 * Add weapon effect to embed
 	 * @param embed weapon embed
 	 */
-	private includeEffect(embed: EmbedBuilder, refStats?: string[]) {
+	private includeEffect(embed: EmbedBuilder, refStats?: string[]) 
+	{
 		const weapon = this.weapon;
 
-		if (weapon.effect) {
+		if (weapon.effect) 
+		{
 			embed.addFields({
 				name: `Effect: ${this.weapon.effectname}`,
 				value: strFormat(
@@ -79,7 +93,8 @@ export class ShinanoWeapon {
 	/**
 	 * Generate weapon general info embed
 	 */
-	private genGeneralInfoEmbed() {
+	private genGeneralInfoEmbed() 
+	{
 		const weapon = this.weapon;
 
 		this.getSubValue();
@@ -107,7 +122,7 @@ export class ShinanoWeapon {
 					name: "Base Stats",
 					value:
 						`Base ATK: **${weapon.baseatk} ATK**\n` +
-						`${this.subValue ? `Base Substat: **${this.subValue}**\n` : ``}`,
+						`${this.subValue ? `Base Substat: **${this.subValue}**\n` : ""}`,
 				}
 			);
 		if (weapon.effect) this.includeEffect(this.generalInfo);
@@ -116,27 +131,31 @@ export class ShinanoWeapon {
 	/**
 	 * Generate weapon ascension costs embed
 	 */
-	private genAscensionCostsEmbed() {
+	private genAscensionCostsEmbed() 
+	{
 		const weapon = this.weapon;
 		const ascensionCosts = [];
 
-		for (let ascensionLevel in this.weapon.costs) {
+		for (let ascensionLevel in this.weapon.costs) 
+		{
 			let materials = [];
 
-			weapon.costs[ascensionLevel].forEach((material) => {
+			weapon.costs[ascensionLevel].forEach(material => 
+			{
 				materials.push(`${material.count}x **${material.name}**`);
 			});
 
 			ascensionCosts.push(materials.join("\n"));
 		}
 
-		for (let i = 0; i < ascensionCosts.length; i++) {
+		for (let i = 0; i < ascensionCosts.length; i++) 
+		{
 			this.ascensionCosts.push(
 				new EmbedBuilder()
 					.setColor(this.color)
 					.setTitle(`${weapon.name}'s Ascension Costs`)
 					.setThumbnail(weapon.images.icon)
-					.setFields({ name: `Ascension ${i + 1}:`, value: ascensionCosts[i] })
+					.setFields({ name: `Ascension ${i + 1}:`, value: ascensionCosts[i], })
 			);
 		}
 	}
@@ -144,7 +163,8 @@ export class ShinanoWeapon {
 	/**
 	 * Returing the embeds
 	 */
-	public getWeaponEmbeds() {
+	public getWeaponEmbeds() 
+	{
 		this.genGeneralInfoEmbed();
 		this.genAscensionCostsEmbed();
 
@@ -164,18 +184,23 @@ export class ShinanoWeapon {
 		level: number,
 		refinementLevel: number,
 		ascension?: string
-	) {
+	) 
+	{
 		const weapon = this.weapon;
 		let weaponStats = weapon.stats(level);
 		if (ascension) weaponStats = weapon.stats(level, parseInt(ascension, 10));
 
 		let weaponSPStats: string;
-		if (weapon.substat) {
-			if (weapon.substat.toLowerCase() !== "elemental mastery") {
+		if (weapon.substat) 
+		{
+			if (weapon.substat.toLowerCase() !== "elemental mastery") 
+			{
 				weaponSPStats = `${(weaponStats.specialized * 100).toFixed(2)}% ${
 					weapon.substat
 				}`;
-			} else {
+			}
+			else 
+			{
 				weaponSPStats = `${weaponStats.specialized.toFixed(2)} ${
 					weapon.substat
 				}`;
@@ -193,7 +218,7 @@ export class ShinanoWeapon {
 						`Level: **${weaponStats.level}**\n` +
 						`Ascensions: **${weaponStats.ascension}**\n` +
 						`${
-							weapon.effect ? `Refinement Level: **${refinementLevel}**` : ``
+							weapon.effect ? `Refinement Level: **${refinementLevel}**` : ""
 						}`,
 				},
 				{
@@ -210,9 +235,11 @@ export class ShinanoWeapon {
 				}
 			);
 
-		if (weapon.effect) {
+		if (weapon.effect) 
+		{
 			const refStats: string[] = [];
-			weapon[`r${refinementLevel}`].forEach((stat) => {
+			weapon[`r${refinementLevel}`].forEach(stat => 
+			{
 				refStats.push(`**${stat}**`);
 			});
 

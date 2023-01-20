@@ -19,7 +19,7 @@ export default new ChatInputCommand({
 					name: "link",
 					description: "RAW image link.",
 					required: true,
-				},
+				}
 			],
 		},
 		{
@@ -32,16 +32,17 @@ export default new ChatInputCommand({
 					name: "image",
 					description: "Image.",
 					required: true,
-				},
+				}
 			],
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		let link: string;
 		interaction.options.getSubcommand() === "link"
 			? (link = interaction.options.getString("link"))
 			: (link = interaction.options.getAttachment("image").proxyURL);
 
-		await findSauce({ interaction, link, ephemeral: false });
+		await findSauce({ interaction, link, ephemeral: false, });
 	},
 });

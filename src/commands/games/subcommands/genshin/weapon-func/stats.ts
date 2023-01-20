@@ -2,7 +2,8 @@ import { ChatInputCommandInteraction } from "discord.js";
 import { Weapon } from "genshin-db";
 import { ShinanoWeapon } from "../../../../../structures/Weapon";
 
-export = async (interaction: ChatInputCommandInteraction, weapon: Weapon) => {
+export = async (interaction: ChatInputCommandInteraction, weapon: Weapon) => 
+{
 	let level: number = interaction.options.getInteger("weapon-level");
 	let ascension = interaction.options.getString("ascension-phase");
 	let refinementLevel: string | number =
@@ -19,5 +20,5 @@ export = async (interaction: ChatInputCommandInteraction, weapon: Weapon) => {
 		ascension
 	);
 
-	await interaction.editReply({ embeds: [weaponStats] });
+	await interaction.editReply({ embeds: [weaponStats], });
 };

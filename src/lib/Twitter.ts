@@ -3,7 +3,7 @@ import {
 	ButtonBuilder,
 	ButtonStyle,
 	MessageCreateOptions,
-	TextChannel,
+	TextChannel
 } from "discord.js";
 import { ETwitterStreamEvent, TwitterApi } from "twitter-api-v2";
 import { client } from "..";
@@ -12,7 +12,8 @@ import News from "../schemas/ALNews";
 
 let lastTweetLink: string;
 
-export async function postTweet(tweet) {
+export async function postTweet(tweet) 
+{
 	sleep(5000);
 
 	const link: string = `https://twitter.com/${tweet.data.author_id}/status/${tweet.data.conversation_id}`;
@@ -38,38 +39,44 @@ export async function postTweet(tweet) {
 		content: `__Shikikans, there's a new message from ${server} HQ!__\n` + link,
 	};
 
-	if (tweet.data.author_id === "864400939125415936") {
+	if (tweet.data.author_id === "864400939125415936") 
+	{
 		const translate: ActionRowBuilder<ButtonBuilder> =
 			new ActionRowBuilder<ButtonBuilder>().setComponents(
 				new ButtonBuilder()
 					.setStyle(ButtonStyle.Primary)
 					.setCustomId(`STWT-${tweet.data.conversation_id}`)
 					.setLabel("Translate Tweet")
-					.setEmoji({ id: "1065640481687617648" })
+					.setEmoji({ id: "1065640481687617648", })
 			);
-		messageOptions = Object.assign({ components: [translate] }, messageOptions);
+		messageOptions = Object.assign({ components: [translate], }, messageOptions);
 	}
 
 	/**
 	 * Sending message
 	 */
 	const iterations: number = 0;
-	for await (const doc of News.find()) {
+	for await (const doc of News.find()) 
+	{
 		if (iterations == 40) sleep(1000);
 
-		try {
+		try 
+		{
 			const guild = await client.guilds.fetch(doc.guildId);
 			const channel = await guild.channels.fetch(doc.channelId);
 
 			await (channel as TextChannel).send(messageOptions);
-		} catch (error) {
+		}
+		catch (error) 
+		{
 			console.warn(error);
 			continue;
 		}
 	}
 }
 
-export async function startTweetListener() {
+export async function startTweetListener() 
+{
 	const twitClient = new TwitterApi(process.env.twitterBearerToken);
 	const stream = await twitClient.v2.searchStream({
 		"tweet.fields": ["author_id", "conversation_id"],
@@ -79,19 +86,24 @@ export async function startTweetListener() {
 
 	stream.autoReconnect = true;
 
-	stream.on(ETwitterStreamEvent.ConnectionError, (err) => {
+	stream.on(ETwitterStreamEvent.ConnectionError, err => 
+	{
 		console.log("Twitter: Connection Error", err);
 	});
-	stream.on(ETwitterStreamEvent.ConnectionClosed, () => {
+	stream.on(ETwitterStreamEvent.ConnectionClosed, () => 
+	{
 		console.log("Twitter: Connection Closed");
 	});
-	stream.on(ETwitterStreamEvent.Reconnected, () => {
+	stream.on(ETwitterStreamEvent.Reconnected, () => 
+	{
 		console.log("Twitter: Reconnected to stream");
 	});
-	stream.on(ETwitterStreamEvent.ReconnectAttempt, (tries) => {
+	stream.on(ETwitterStreamEvent.ReconnectAttempt, tries => 
+	{
 		console.log(`Twitter: Reconnection Attempt#${tries}`);
 	});
-	stream.on(ETwitterStreamEvent.ReconnectError, (err) => {
+	stream.on(ETwitterStreamEvent.ReconnectError, err => 
+	{
 		console.log("Twitter: Reconnect Error", err);
 	});
 

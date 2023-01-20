@@ -7,7 +7,8 @@ export default new ChatInputCommand({
 	description: "Give someone a warm hug.",
 	cooldown: 4000,
 	category: "Reactions",
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
 
 		const reactionEmbed: EmbedBuilder = new EmbedBuilder()
@@ -15,6 +16,6 @@ export default new ChatInputCommand({
 			.setImage(await getWaifuReactionGIF(interaction.commandName))
 			.setDescription(`${interaction.user} blushed!`);
 
-		await interaction.editReply({ embeds: [reactionEmbed] });
+		await interaction.editReply({ embeds: [reactionEmbed], });
 	},
 });

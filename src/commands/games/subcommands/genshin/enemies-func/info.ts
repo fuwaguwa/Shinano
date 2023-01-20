@@ -2,12 +2,14 @@ import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { Enemy } from "genshin-db";
 import { toTitleCase } from "../../../../../lib/Utils";
 
-export = async (interaction: ChatInputCommandInteraction, enemy: Enemy) => {
+export = async (interaction: ChatInputCommandInteraction, enemy: Enemy) => 
+{
 	/**
 	 * Drops
 	 */
 	const possibleDrops: string[] = [];
-	enemy.rewardpreview.forEach((reward) => {
+	enemy.rewardpreview.forEach(reward => 
+	{
 		if (!possibleDrops.includes(reward.name)) possibleDrops.push(reward.name);
 	});
 
@@ -33,5 +35,5 @@ export = async (interaction: ChatInputCommandInteraction, enemy: Enemy) => {
 			}
 		);
 
-	await interaction.editReply({ embeds: [enemyEmbed] });
+	await interaction.editReply({ embeds: [enemyEmbed], });
 };

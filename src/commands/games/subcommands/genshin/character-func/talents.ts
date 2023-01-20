@@ -5,7 +5,7 @@ import {
 	EmbedBuilder,
 	InteractionCollector,
 	StringSelectMenuBuilder,
-	StringSelectMenuInteraction,
+	StringSelectMenuInteraction
 } from "discord.js";
 import { Character } from "genshin-db";
 import { toTitleCase } from "../../../../../lib/Utils";
@@ -13,7 +13,8 @@ import genshin from "genshin-db";
 import { color } from "../../../../../lib/Genshin";
 import { ShinanoPaginator } from "../../../../../lib/Pages";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	/**
 	 * Filtering
 	 */
@@ -22,25 +23,32 @@ export = async (interaction: ChatInputCommandInteraction) => {
 	);
 	let character: Character;
 
-	if (characterName.toLowerCase().includes("traveler")) {
+	if (characterName.toLowerCase().includes("traveler")) 
+	{
 		if (characterName.split(" ")[0] !== "Traveler")
 			characterName = toTitleCase(`Traveler (${characterName.split(" ")[0]})`);
 		character = genshin.characters("Aether");
-	} else {
+	}
+	else 
+	{
 		character = genshin.characters(characterName);
 
-		if (!character) {
+		if (!character) 
+		{
 			const noResult: EmbedBuilder = new EmbedBuilder()
 				.setColor("Red")
 				.setDescription("❌ | No character found!");
-			return interaction.editReply({ embeds: [noResult] });
+			return interaction.editReply({ embeds: [noResult], });
 		}
 	}
 
 	let embedColor;
-	if (characterName === "Aether" || characterName === "Lumine") {
+	if (characterName === "Aether" || characterName === "Lumine") 
+	{
 		embedColor = color(characterName.split(" ")[0]);
-	} else {
+	}
+	else 
+	{
 		embedColor = color(character);
 	}
 
@@ -53,12 +61,14 @@ export = async (interaction: ChatInputCommandInteraction) => {
 	let combatCount = 3;
 	if (talents.combatsp) combatCount++;
 
-	for (let i = 0; i < combatCount; i++) {
+	for (let i = 0; i < combatCount; i++) 
+	{
 		const embed: EmbedBuilder = new EmbedBuilder()
 			.setColor(embedColor)
 			.setThumbnail(character.images.icon);
 
-		switch (i + 1) {
+		switch (i + 1) 
+		{
 			case 1: {
 				embed
 					.setTitle(`${characterName}'s Talents | Normal Attack`)
@@ -92,7 +102,7 @@ export = async (interaction: ChatInputCommandInteraction) => {
 
 			case 4: {
 				embed.setTitle(`${characterName}'s Talents | SP Skill`).setFields({
-					name: `Alternate Sprint`,
+					name: "Alternate Sprint",
 					value: talents.combatsp.info,
 				});
 				break;
@@ -105,7 +115,8 @@ export = async (interaction: ChatInputCommandInteraction) => {
 	if (talents.passive3) passiveCount++;
 	if (talents.passive4) passiveCount++;
 
-	for (let i = 0; i < passiveCount; i++) {
+	for (let i = 0; i < passiveCount; i++) 
+	{
 		const embed: EmbedBuilder = new EmbedBuilder()
 			.setColor(embedColor)
 			.setTitle(`${characterName}'s Talents | Passive ${i + 1}`)
@@ -125,21 +136,24 @@ export = async (interaction: ChatInputCommandInteraction) => {
 	const costs = [];
 	const talentsCostsEmbeds: EmbedBuilder[] = [];
 
-	for (let level in talentCosts) {
+	for (let level in talentCosts) 
+	{
 		let matz = [];
-		talentCosts[level].forEach((item) => {
+		talentCosts[level].forEach(item => 
+		{
 			matz.push(`${item.count}x **${item.name}**`);
 		});
 		costs.push(matz.join("\n"));
 	}
 
-	for (let i = 0; i < costs.length; i++) {
+	for (let i = 0; i < costs.length; i++) 
+	{
 		talentsCostsEmbeds.push(
 			new EmbedBuilder()
 				.setColor(embedColor)
 				.setTitle(`${character.name}'s Talents Costs`)
 				.setThumbnail(character.images.icon)
-				.setFields({ name: `Level ${i + 2}`, value: costs[i] })
+				.setFields({ name: `Level ${i + 2}`, value: costs[i], })
 		);
 	}
 
@@ -189,24 +203,30 @@ export = async (interaction: ChatInputCommandInteraction) => {
 		time: 120000,
 	});
 
-	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id)) {
+	collector.on("collect", async i => 
+	{
+		if (!i.customId.endsWith(i.user.id)) 
+		{
 			await i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
-		} else {
+		}
+		else 
+		{
 			await i.deferUpdate();
 
 			const menuOptions = navigation.components[0].options;
 
-			for (let j = 0; j < menuOptions.length; j++) {
+			for (let j = 0; j < menuOptions.length; j++) 
+			{
 				menuOptions[j].data.value === i.values[0]
 					? menuOptions[j].setDefault(true)
 					: menuOptions[j].setDefault(false);
 			}
 
-			switch (i.values[0]) {
+			switch (i.values[0]) 
+			{
 				case "info": {
 					await ShinanoPaginator({
 						interaction,

@@ -2,7 +2,8 @@ import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { getALEXPTable } from "../../../../lib/AzurLane";
 import { ShinanoShip } from "../../../../structures/Ship";
 
-export = async (interaction: ChatInputCommandInteraction, AL: any) => {
+export = async (interaction: ChatInputCommandInteraction, AL: any) => 
+{
 	/**
 	 * Filtering
 	 */
@@ -19,24 +20,27 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 
 	if (cLevel > 125) cLevel = 125;
 	if (tLevel > 125) tLevel = 125;
-	if (cLevel == tLevel || tLevel < cLevel) {
+	if (cLevel == tLevel || tLevel < cLevel) 
+	{
 		const invalid: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("❌ | Invalid input for levels!");
-		return interaction.editReply({ embeds: [invalid] });
+		return interaction.editReply({ embeds: [invalid], });
 	}
 
 	const ship = await AL.ships.get(shipName);
-	if (!ship) {
+	if (!ship) 
+	{
 		const shipNotFound: EmbedBuilder = new EmbedBuilder()
 			.setDescription("❌ | Ship not found!")
 			.setColor("Red");
-		return interaction.reply({ embeds: [shipNotFound], ephemeral: true });
+		return interaction.reply({ embeds: [shipNotFound], ephemeral: true, });
 	}
 	const shinanoShip = new ShinanoShip(ship);
 
 	if (!flagshipStatus) flagshipStatus = false;
-	if (flagshipStatus) {
+	if (flagshipStatus) 
+	{
 		const flagshipHullType = [
 			"Battleship",
 			"Battlecruiser",
@@ -44,12 +48,13 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 			"Aircraft Carrier",
 			"Light Aircraft Carrier",
 			"Repair",
-			"Aviation Battleship",
+			"Aviation Battleship"
 		];
 		if (flagshipHullType.includes(ship.hullType)) expMultiplier = 0.5;
 	}
 
-	const chapter = AL.chapters.filter((chapter) => {
+	const chapter = AL.chapters.filter(chapter => 
+	{
 		return chapter.id === chapterNum;
 	});
 	const stage = chapter[0][stageNum].normal;
@@ -146,7 +151,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 				inline: true,
 			}
 		)
-		.setFooter({ text: "Numbers are averages and may vary in-game" });
+		.setFooter({ text: "Numbers are averages and may vary in-game", });
 
-	await interaction.editReply({ embeds: [infoEmbed] });
+	await interaction.editReply({ embeds: [infoEmbed], });
 };

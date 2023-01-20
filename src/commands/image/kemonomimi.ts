@@ -8,18 +8,19 @@ export default new ChatInputCommand({
 	description: "Girls with animal features (SFW)",
 	cooldown: 4500,
 	category: "Image",
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
 
 		const kemonomimiEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")
 			.setFooter({
 				text: `Requested by ${interaction.user.tag}`,
-				iconURL: interaction.user.displayAvatarURL({ forceStatic: false }),
+				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 			})
 			.setTimestamp()
 			.setImage(await neko.sfw.animalEars());
 
-		await interaction.editReply({ embeds: [kemonomimiEmbed] });
+		await interaction.editReply({ embeds: [kemonomimiEmbed], });
 	},
 });

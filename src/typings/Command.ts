@@ -5,7 +5,7 @@ import {
 	MessageApplicationCommandData,
 	MessageContextMenuCommandInteraction,
 	UserApplicationCommandData,
-	UserContextMenuCommandInteraction,
+	UserContextMenuCommandInteraction
 } from "discord.js";
 import { Shinano } from "../structures/Client";
 

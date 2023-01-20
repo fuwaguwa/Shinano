@@ -6,16 +6,17 @@ import {
 	InteractionCollector,
 	Message,
 	StringSelectMenuBuilder,
-	StringSelectMenuInteraction,
+	StringSelectMenuInteraction
 } from "discord.js";
 import {
 	gearColor,
 	gearFits,
 	gearSearch,
-	gearStats,
+	gearStats
 } from "../../../../lib/AzurLane";
 
-export = async (interaction: ChatInputCommandInteraction, AL: any) => {
+export = async (interaction: ChatInputCommandInteraction, AL: any) => 
+{
 	/**
 	 * Filtering gear
 	 */
@@ -24,13 +25,14 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 		.toLowerCase();
 	const gearFiltered = await gearSearch(gearName, AL);
 
-	if (gearFiltered.length === 0) {
+	if (gearFiltered.length === 0) 
+	{
 		const noResult: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
 				"Gear not found! Make sure you entered the gear's full name or spelt the gear's name properly!"
 			);
-		return interaction.editReply({ embeds: [noResult] });
+		return interaction.editReply({ embeds: [noResult], });
 	}
 	const gear: any = gearFiltered[0].item;
 
@@ -41,7 +43,8 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 	const statsEmbeds: EmbedBuilder[] = [];
 	const equippableEmbeds: EmbedBuilder[] = [];
 
-	for (let i = 0; i < gear.tiers.length; i++) {
+	for (let i = 0; i < gear.tiers.length; i++) 
+	{
 		const color = gearColor(gear, i);
 
 		/**
@@ -58,14 +61,15 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 				)
 				.setDescription(`Stars: ${gear.tiers[i].stars.stars}`)
 				.setFields(
-					{ name: "Nationality:", value: gear.nationality },
-					{ name: "Gear Type:", value: `${gear.category} | ${gear.type.name}` },
-					{ name: "Obtain From:", value: gear.misc.obtainedFrom }
+					{ name: "Nationality:", value: gear.nationality, },
+					{ name: "Gear Type:", value: `${gear.category} | ${gear.type.name}`, },
+					{ name: "Obtain From:", value: gear.misc.obtainedFrom, }
 				)
 		);
 
-		if (gear.misc.notes.length > 0) {
-			infoEmbeds[i].addFields({ name: "Notes:", value: gear.misc.notes });
+		if (gear.misc.notes.length > 0) 
+		{
+			infoEmbeds[i].addFields({ name: "Notes:", value: gear.misc.notes, });
 		}
 
 		/**
@@ -162,12 +166,15 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 	 * Collector
 	 */
 	let message: Message;
-	if (gear.tiers.length > 1) {
+	if (gear.tiers.length > 1) 
+	{
 		message = await interaction.editReply({
 			embeds: [infoEmbeds[0]],
 			components: [tiers, options],
 		});
-	} else {
+	}
+	else 
+	{
 		message = await interaction.editReply({
 			embeds: [infoEmbeds[0]],
 			components: [options],
@@ -182,27 +189,34 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 
 	let tierCount: number;
 
-	collector.on("collect", async (i) => {
+	collector.on("collect", async i => 
+	{
 		const customId = i.customId.split("-")[0];
 
-		if (!i.customId.endsWith(i.user.id)) {
+		if (!i.customId.endsWith(i.user.id)) 
+		{
 			await i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
-		} else {
+		}
+		else 
+		{
 			await i.deferUpdate();
 
-			if (customId === "TIERS") {
+			if (customId === "TIERS") 
+			{
 				const menuOptions = tiers.components[0].options;
 
-				for (let j = 0; j < menuOptions.length; j++) {
+				for (let j = 0; j < menuOptions.length; j++) 
+				{
 					menuOptions[j].data.value === i.values[0]
 						? menuOptions[j].setDefault(true)
 						: menuOptions[j].setDefault(false);
 				}
 
-				switch (i.values[0]) {
+				switch (i.values[0]) 
+				{
 					case "T1": {
 						await i.editReply({
 							embeds: [infoEmbeds[0]],
@@ -230,16 +244,20 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 						break;
 					}
 				}
-			} else {
+			}
+			else 
+			{
 				const menuOptions = options.components[0].options;
 
-				for (let j = 0; j < menuOptions.length; j++) {
+				for (let j = 0; j < menuOptions.length; j++) 
+				{
 					menuOptions[j].data.value === i.values[0]
 						? menuOptions[j].setDefault(true)
 						: menuOptions[j].setDefault(false);
 				}
 
-				switch (i.values[0]) {
+				switch (i.values[0]) 
+				{
 					case "info": {
 						await i.editReply({
 							embeds: [infoEmbeds[tierCount]],
@@ -273,7 +291,8 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) => {
 		}
 	});
 
-	collector.on("end", async (collected, reason) => {
+	collector.on("end", async (collected, reason) => 
+	{
 		tiers.components[0].setDisabled(true);
 		options.components[0].setDisabled(true);
 

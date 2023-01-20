@@ -3,7 +3,7 @@ import {
 	ButtonBuilder,
 	ButtonInteraction,
 	ButtonStyle,
-	EmbedBuilder,
+	EmbedBuilder
 } from "discord.js";
 import { Event } from "../structures/Event";
 import User from "../schemas/User";
@@ -19,25 +19,29 @@ const twitClient = new TwitterApi({
 });
 
 let EHOSTRetries: number = 0;
-function translateTweet(text: string, interaction: ButtonInteraction) {
+function translateTweet(text: string, interaction: ButtonInteraction) 
+{
 	translate(text, {
 		from: "ja",
 		to: "en",
 		requestFunction: fetch,
 	})
-		.then(async (translations) => {
+		.then(async translations => 
+		{
 			const translateEmbed: EmbedBuilder = new EmbedBuilder()
 				.setColor("#2f3136")
 				.setTitle("Translated Tweet")
 				.setDescription(translations.text)
-				.setFooter({ text: "Translated with Google Translate" });
+				.setFooter({ text: "Translated with Google Translate", });
 
-			await interaction.editReply({ embeds: [translateEmbed] });
+			await interaction.editReply({ embeds: [translateEmbed], });
 		})
-		.catch(async (err) => {
+		.catch(async err => 
+		{
 			console.error(err);
 
-			if (err.message.includes("EHOSTUNREACH") && EHOSTRetries < 3) {
+			if (err.message.includes("EHOSTUNREACH") && EHOSTRetries < 3) 
+			{
 				EHOSTRetries += 1;
 				return translateTweet(text, interaction);
 			}
@@ -54,7 +58,7 @@ function translateTweet(text: string, interaction: ButtonInteraction) {
 					new ButtonBuilder()
 						.setStyle(ButtonStyle.Link)
 						.setLabel("Support Server")
-						.setEmoji({ name: "⚙️" })
+						.setEmoji({ name: "⚙️", })
 						.setURL("https://discord.gg/NFkMxFeEWr")
 				);
 
@@ -65,10 +69,12 @@ function translateTweet(text: string, interaction: ButtonInteraction) {
 		});
 }
 
-export default new Event("interactionCreate", async (interaction) => {
+export default new Event("interactionCreate", async interaction => 
+{
 	if (!interaction.isButton()) return;
 
-	switch (true) {
+	switch (true) 
+	{
 		case interaction.customId === "NO-NSFW": {
 			const cantSee: EmbedBuilder = new EmbedBuilder()
 				.setColor("#2f3136")
@@ -88,22 +94,23 @@ export default new Event("interactionCreate", async (interaction) => {
 					}
 				)
 				.setImage("https://cdn.upload.systems/uploads/xI7OxDPg.gif");
-			return interaction.reply({ embeds: [cantSee], ephemeral: true });
+			return interaction.reply({ embeds: [cantSee], ephemeral: true, });
 		}
 
 		case interaction.customId === "VOTE-CHECK": {
-			const user = await User.findOne({ userId: interaction.user.id });
+			const user = await User.findOne({ userId: interaction.user.id, });
 
 			const voteLink: ActionRowBuilder<ButtonBuilder> =
 				new ActionRowBuilder<ButtonBuilder>().setComponents(
 					new ButtonBuilder()
 						.setStyle(ButtonStyle.Link)
 						.setLabel("Vote for Shinano!")
-						.setEmoji({ id: "1002849574517477447" })
+						.setEmoji({ id: "1002849574517477447", })
 						.setURL("https://top.gg/bot/1002193298229829682/vote")
 				);
 
-			if (!user.lastVoteTimestamp) {
+			if (!user.lastVoteTimestamp) 
+			{
 				// Haven't vote at all
 				const noVotes: EmbedBuilder = new EmbedBuilder()
 					.setColor("Red")
@@ -116,10 +123,12 @@ export default new Event("interactionCreate", async (interaction) => {
 					components: [voteLink],
 					ephemeral: true,
 				});
-			} else if (
+			}
+			else if (
 				Math.floor(Date.now() / 1000) - user.lastVoteTimestamp >
 				43200
-			) {
+			) 
+			{
 				// 12 hours has passed
 				const votable: EmbedBuilder = new EmbedBuilder()
 					.setColor("Green")
@@ -132,7 +141,9 @@ export default new Event("interactionCreate", async (interaction) => {
 					components: [voteLink],
 					ephemeral: true,
 				});
-			} else {
+			}
+			else 
+			{
 				// 12 hours has not passed
 				const unvotable: EmbedBuilder = new EmbedBuilder()
 					.setColor("Red")
@@ -142,12 +153,12 @@ export default new Event("interactionCreate", async (interaction) => {
 						}:R>, you can vote again <t:${user.lastVoteTimestamp + 43200}:R>`
 					)
 					.setTimestamp();
-				return interaction.reply({ embeds: [unvotable], ephemeral: true });
+				return interaction.reply({ embeds: [unvotable], ephemeral: true, });
 			}
 		}
 
 		case interaction.customId.includes("STWT"): {
-			await interaction.deferReply({ ephemeral: true });
+			await interaction.deferReply({ ephemeral: true, });
 
 			const tweetId = interaction.customId.split("-")[1];
 			const tweet = await twitClient.v2.singleTweet(tweetId);

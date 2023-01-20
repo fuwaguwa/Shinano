@@ -7,11 +7,12 @@ export default new ChatInputCommand({
 	description: "Make a dadjoke.",
 	cooldown: 4500,
 	category: "Fun",
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
 
 		const response = await fetch(
-			`https://dad-jokes.p.rapidapi.com/random/joke`,
+			"https://dad-jokes.p.rapidapi.com/random/joke",
 			{
 				method: "GET",
 				headers: {
@@ -28,6 +29,6 @@ export default new ChatInputCommand({
 				`**${dadjoke.body[0].setup}**\n${dadjoke.body[0].punchline}`
 			);
 
-		await interaction.editReply({ embeds: [dadjokeEmbed] });
+		await interaction.editReply({ embeds: [dadjokeEmbed], });
 	},
 });

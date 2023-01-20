@@ -11,17 +11,18 @@ export default new ChatInputCommand({
 			type: ApplicationCommandOptionType.User,
 			name: "user",
 			description: "The user you want the avatar from.",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		const user: User = interaction.options.getUser("user") || interaction.user;
 
 		const avatarEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("#2f3136")
 			.setDescription(`${user}'s avatar`)
-			.setImage(user.displayAvatarURL({ forceStatic: false, size: 1024 }))
-			.setFooter({ text: `UID: ${user.id}` });
+			.setImage(user.displayAvatarURL({ forceStatic: false, size: 1024, }))
+			.setFooter({ text: `UID: ${user.id}`, });
 
-		await interaction.reply({ embeds: [avatarEmbed] });
+		await interaction.reply({ embeds: [avatarEmbed], });
 	},
 });

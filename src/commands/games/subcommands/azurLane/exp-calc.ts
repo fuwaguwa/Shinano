@@ -1,7 +1,8 @@
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { getALEXPTable } from "../../../../lib/AzurLane";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	/**
 	 * Filtering Input
 	 */
@@ -12,11 +13,12 @@ export = async (interaction: ChatInputCommandInteraction) => {
 	if (currentLevel > 125) currentLevel = 125;
 	if (targetLevel > 125) targetLevel = 125;
 
-	if (currentLevel > targetLevel) {
+	if (currentLevel > targetLevel) 
+	{
 		const overboard: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("❌ | Current level cannot be bigger than target level!");
-		return interaction.editReply({ embeds: [overboard] });
+		return interaction.editReply({ embeds: [overboard], });
 	}
 
 	/**
@@ -25,16 +27,18 @@ export = async (interaction: ChatInputCommandInteraction) => {
 	const expNeeded: EmbedBuilder = new EmbedBuilder()
 		.setTitle("Experience Calculator")
 		.setColor("#2f3136");
-	if (currentLevel == targetLevel) {
+	if (currentLevel == targetLevel) 
+	{
 		expNeeded.setDescription(
 			`You will need **0 EXP** to get ${
 				rarity === "normal" ? "a Normal ship" : "an Ultra Rare ship"
 			} from LV${currentLevel} to LV${targetLevel}`
 		);
-		return interaction.editReply({ embeds: [expNeeded] });
+		return interaction.editReply({ embeds: [expNeeded], });
 	}
 
-	if (currentLevel == 0 || targetLevel == 0) {
+	if (currentLevel == 0 || targetLevel == 0) 
+	{
 		const tooLow: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
@@ -42,7 +46,7 @@ export = async (interaction: ChatInputCommandInteraction) => {
 					currentLevel == 0 ? "Ship's current level" : "Target level"
 				} must be bigger than 0!`
 			);
-		return interaction.editReply({ embeds: [tooLow] });
+		return interaction.editReply({ embeds: [tooLow], });
 	}
 
 	/**
@@ -60,5 +64,5 @@ export = async (interaction: ChatInputCommandInteraction) => {
 			rarity === "normal" ? "a Normal ship" : "an Ultra Rare ship"
 		} from level **${currentLevel}** to level **${targetLevel}**`
 	);
-	return interaction.editReply({ embeds: [expNeeded] });
+	return interaction.editReply({ embeds: [expNeeded], });
 };

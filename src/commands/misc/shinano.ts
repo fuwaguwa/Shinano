@@ -56,19 +56,21 @@ export default new ChatInputCommand({
 						{
 							name: "NSFW Commands",
 							value: "nsfw",
-						},
+						}
 					],
-				},
+				}
 			],
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
 			name: "lewd",
-			description: '"As a reward for your valiant efforts..."',
-		},
+			description: "\"As a reward for your valiant efforts...\"",
+		}
 	],
-	run: async ({ interaction }) => {
-		switch (interaction.options.getSubcommand()) {
+	run: async ({ interaction, }) => 
+	{
+		switch (interaction.options.getSubcommand()) 
+		{
 			case "info": {
 				return shinanoFunc.info(interaction);
 			}

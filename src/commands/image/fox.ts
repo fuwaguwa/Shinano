@@ -7,7 +7,8 @@ export default new ChatInputCommand({
 	description: "Generate an image of a fox!",
 	cooldown: 4500,
 	category: "Image",
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
 
 		const response = await fetch("https://randomfox.ca/floof/", {
@@ -20,9 +21,9 @@ export default new ChatInputCommand({
 			.setImage(fox.image)
 			.setFooter({
 				text: `Requested by ${interaction.user.tag}`,
-				iconURL: interaction.user.displayAvatarURL({ forceStatic: false }),
+				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 			});
 
-		await interaction.editReply({ embeds: [foxEmbed] });
+		await interaction.editReply({ embeds: [foxEmbed], });
 	},
 });

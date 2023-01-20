@@ -6,7 +6,8 @@ export default new UserCommand({
 	name: "Get Banner",
 	cooldown: 3000,
 	type: ApplicationCommandType.User,
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		const user: GuildMember = interaction.options.data[0].member as GuildMember;
 
 		if (!interaction.deferred) await interaction.deferReply();
@@ -21,11 +22,12 @@ export default new UserCommand({
 		);
 
 		const received = await response.json();
-		if (!received.banner) {
+		if (!received.banner) 
+		{
 			const failed: EmbedBuilder = new EmbedBuilder()
 				.setColor("Red")
 				.setDescription("❌ | User does not have a banner.");
-			return interaction.editReply({ embeds: [failed] });
+			return interaction.editReply({ embeds: [failed], });
 		}
 
 		let format = "png";
@@ -38,6 +40,6 @@ export default new UserCommand({
 				`https://cdn.discordapp.com/banners/${user.id}/${received.banner}.${format}?size=512`
 			);
 
-		await interaction.editReply({ embeds: [banner] });
+		await interaction.editReply({ embeds: [banner], });
 	},
 });

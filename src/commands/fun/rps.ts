@@ -9,12 +9,14 @@ import {
 	EmbedBuilder,
 	InteractionCollector,
 	Message,
-	User,
+	User
 } from "discord.js";
 import { ChatInputCommand } from "../../structures/Command";
 
-function choiceToEmoji(choice) {
-	switch (choice) {
+function choiceToEmoji(choice) 
+{
+	switch (choice) 
+	{
 		case "ROCK":
 			return "👊";
 		case "PAPER":
@@ -29,7 +31,8 @@ async function startDuel(
 	opponent: User,
 	message: Message,
 	rpsButtons: ActionRowBuilder<ButtonBuilder>
-) {
+) 
+{
 	let challengerChoice: string;
 	let opponentChoice: string;
 
@@ -39,7 +42,8 @@ async function startDuel(
 			time: 30000,
 		});
 
-	duel.on("collect", async (i) => {
+	duel.on("collect", async i => 
+	{
 		const choice = i.customId.split("-")[0];
 		const challengerId = i.customId.split("-")[1];
 		const opponentId = i.customId.split("-")[2];
@@ -47,13 +51,17 @@ async function startDuel(
 		/**
 		 * Opponent Turn
 		 */
-		if (!opponentChoice) {
-			if (i.user.id !== opponentId) {
+		if (!opponentChoice) 
+		{
+			if (i.user.id !== opponentId) 
+			{
 				await i.reply({
 					content: "This button is not for you!",
 					ephemeral: true,
 				});
-			} else {
+			}
+			else 
+			{
 				await i.deferUpdate();
 				opponentChoice = choice;
 
@@ -76,12 +84,15 @@ async function startDuel(
 		/**
 		 * Challenger Turn
 		 */
-		if (i.user.id !== challengerId) {
+		if (i.user.id !== challengerId) 
+		{
 			await i.reply({
 				content: "This button is not for you!",
 				ephemeral: true,
 			});
-		} else {
+		}
+		else 
+		{
 			await i.deferUpdate();
 			challengerChoice = choice;
 
@@ -92,34 +103,43 @@ async function startDuel(
 			 * Result
 			 */
 			const finalResult: EmbedBuilder = new EmbedBuilder().setColor("#2f3136");
-			if (challengerChoice === opponentChoice) {
+			if (challengerChoice === opponentChoice) 
+			{
 				finalResult.setDescription(
 					`\`${interaction.user.username}\` vs \`${opponent.username}\`\n\n` +
 						`${opponent.username} picked ${emojiOpponentChoice}\n` +
 						`${interaction.user.username} picked ${emojiChallengerChoice}\n` +
-						`It's a draw!`
+						"It's a draw!"
 				);
-			} else {
-				if (challengerChoice === opponentChoice) {
+			}
+			else 
+			{
+				if (challengerChoice === opponentChoice) 
+				{
 					finalResult.setDescription(
 						`\`${interaction.user.username}\` vs \`${opponent.username}\`\n\n` +
 							`${opponent.username} picked ${emojiOpponentChoice}\n` +
 							`${interaction.user.username} picked ${emojiChallengerChoice}\n` +
-							`It's a draw!`
+							"It's a draw!"
 					);
-				} else {
+				}
+				else 
+				{
 					if (
 						(challengerChoice === "ROCK" && opponentChoice === "PAPER") ||
 						(challengerChoice === "PAPER" && opponentChoice === "SCISSOR") ||
 						(challengerChoice === "SCISSOR" && opponentChoice === "ROCK")
-					) {
+					) 
+					{
 						finalResult.setDescription(
 							`\`${interaction.user.username}\` vs \`${opponent.username}\`\n\n` +
 								`${opponent.username} picked ${emojiOpponentChoice}\n` +
 								`${interaction.user.username} picked ${emojiChallengerChoice}\n` +
 								`${opponent.username} wins!`
 						);
-					} else {
+					}
+					else 
+					{
 						finalResult.setDescription(
 							`\`${interaction.user.username}\` vs \`${opponent.username}\`\n\n` +
 								`${opponent.username} picked ${emojiOpponentChoice}\n` +
@@ -132,7 +152,8 @@ async function startDuel(
 				/**
 				 * Disable Buttons
 				 */
-				for (let i = 0; i < 3; i++) {
+				for (let i = 0; i < 3; i++) 
+				{
 					rpsButtons.components[i]
 						.setStyle(ButtonStyle.Secondary)
 						.setDisabled(true);
@@ -146,11 +167,13 @@ async function startDuel(
 		}
 	});
 
-	duel.on("end", async (collected, reason) => {
+	duel.on("end", async (collected, reason) => 
+	{
 		// Timeout
-		if (reason !== "Finished!") {
+		if (reason !== "Finished!") 
+		{
 			await interaction.editReply({
-				content: `❌ | No interaction from user, duel ended!`,
+				content: "❌ | No interaction from user, duel ended!",
 			});
 		}
 	});
@@ -166,9 +189,10 @@ export default new ChatInputCommand({
 			type: ApplicationCommandOptionType.User,
 			name: "user",
 			description: "The user you want to play against.",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.isChatInputCommand())
 			throw new Error("Interaction is not from chat!");
 
@@ -178,7 +202,8 @@ export default new ChatInputCommand({
 			user &&
 			user.id !== "1002193298229829682" &&
 			user.id !== interaction.user.id
-		) {
+		) 
+		{
 			await interaction.reply(`<@${user.id}>`);
 
 			/**
@@ -203,17 +228,17 @@ export default new ChatInputCommand({
 						.setStyle(ButtonStyle.Primary)
 						.setDisabled(false)
 						.setCustomId(`ROCK-${interaction.user.id}-${user.id}`)
-						.setEmoji({ name: "👊" }),
+						.setEmoji({ name: "👊", }),
 					new ButtonBuilder()
 						.setStyle(ButtonStyle.Primary)
 						.setDisabled(false)
 						.setCustomId(`PAPER-${interaction.user.id}-${user.id}`)
-						.setEmoji({ name: "🖐" }),
+						.setEmoji({ name: "🖐", }),
 					new ButtonBuilder()
 						.setStyle(ButtonStyle.Primary)
 						.setDisabled(false)
 						.setCustomId(`SCISSOR-${interaction.user.id}-${user.id}`)
-						.setEmoji({ name: "✌" })
+						.setEmoji({ name: "✌", })
 				);
 
 			/**
@@ -237,17 +262,22 @@ export default new ChatInputCommand({
 					time: 30000,
 				});
 
-			acceptor.on("collect", async (i) => {
+			acceptor.on("collect", async i => 
+			{
 				const customId = i.customId.split("-")[0];
 
-				if (!i.customId.endsWith(i.user.id)) {
+				if (!i.customId.endsWith(i.user.id)) 
+				{
 					await i.reply({
 						content: "This button is not for you!",
 						ephemeral: true,
 					});
-				} else {
+				}
+				else 
+				{
 					await i.deferUpdate();
-					switch (customId) {
+					switch (customId) 
+					{
 						case "ACCEPT": {
 							const res: EmbedBuilder = new EmbedBuilder()
 								.setColor("#2f3136")
@@ -271,7 +301,7 @@ export default new ChatInputCommand({
 								.setDescription(`❌ \`${user.username}\` declined the duel!`);
 
 							await i.editReply({
-								content: ``,
+								content: "",
 								embeds: [declined],
 								components: [],
 							});
@@ -283,17 +313,23 @@ export default new ChatInputCommand({
 				}
 			});
 
-			acceptor.on("end", async (collected, reason) => {
-				if (reason !== "ACCEPTED" && reason !== "DECLINED") {
+			acceptor.on("end", async (collected, reason) => 
+			{
+				if (reason !== "ACCEPTED" && reason !== "DECLINED") 
+				{
 					const timeoutEmbed: EmbedBuilder = new EmbedBuilder()
 						.setColor("Red")
 						.setDescription(`❌ \`${user}\` did not respond!`);
-					await interaction.editReply({ embeds: [timeoutEmbed] });
-				} else if (reason === "ACCEPTED") {
+					await interaction.editReply({ embeds: [timeoutEmbed], });
+				}
+				else if (reason === "ACCEPTED") 
+				{
 					await startDuel(interaction, user, message, rpsButtons);
 				}
 			});
-		} else {
+		}
+		else 
+		{
 			if (!interaction.deferred) await interaction.deferReply();
 
 			/**
@@ -305,17 +341,17 @@ export default new ChatInputCommand({
 						.setStyle(ButtonStyle.Primary)
 						.setDisabled(false)
 						.setCustomId(`ROCK-${interaction.user.id}`)
-						.setEmoji({ name: "👊" }),
+						.setEmoji({ name: "👊", }),
 					new ButtonBuilder()
 						.setStyle(ButtonStyle.Primary)
 						.setDisabled(false)
 						.setCustomId(`PAPER-${interaction.user.id}`)
-						.setEmoji({ name: "🖐" }),
+						.setEmoji({ name: "🖐", }),
 					new ButtonBuilder()
 						.setStyle(ButtonStyle.Primary)
 						.setDisabled(false)
 						.setCustomId(`SCISSOR-${interaction.user.id}`)
-						.setEmoji({ name: "✌" })
+						.setEmoji({ name: "✌", })
 				);
 
 			/**
@@ -338,15 +374,19 @@ export default new ChatInputCommand({
 					time: 30000,
 				});
 
-			collector.on("collect", async (i) => {
+			collector.on("collect", async i => 
+			{
 				const customId = i.customId.split("-")[0];
 
-				if (!i.customId.endsWith(i.user.id)) {
+				if (!i.customId.endsWith(i.user.id)) 
+				{
 					await i.reply({
 						content: "This button is not for you!",
 						ephemeral: true,
 					});
-				} else {
+				}
+				else 
+				{
 					const allChoices = ["ROCK", "PAPER", "SCISSOR"];
 					const botChoice =
 						allChoices[Math.floor(Math.random() * allChoices.length)];
@@ -355,43 +395,53 @@ export default new ChatInputCommand({
 					const convertedBotChoice = choiceToEmoji(botChoice);
 
 					await i.deferUpdate();
-					for (let i = 0; i < 3; i++) {
+					for (let i = 0; i < 3; i++) 
+					{
 						rpsButtons.components[i].setDisabled(true);
 						if (
 							customId ===
 							rpsButtons.components[i].data["custom_id"].split("-")[0]
-						) {
+						) 
+						{
 							rpsButtons.components[i].setStyle(ButtonStyle.Success);
-						} else {
+						}
+						else 
+						{
 							rpsButtons.components[i].setStyle(ButtonStyle.Secondary);
 						}
 					}
 
-					if (customId === botChoice) {
+					if (customId === botChoice) 
+					{
 						res.setDescription(
 							`\`${interaction.user.username}\` vs \`Shinano\`\n\n` +
 								` I picked ${convertedBotChoice}\n` +
 								`You picked ${emojiChallengerChoice}\n` +
-								`It's a draw!`
+								"It's a draw!"
 						);
-					} else {
+					}
+					else 
+					{
 						if (
 							(customId === "ROCK" && botChoice === "PAPER") ||
 							(customId === "PAPER" && botChoice === "SCISSOR") ||
 							(customId === "SCISSOR" && botChoice === "ROCK")
-						) {
+						) 
+						{
 							res.setDescription(
 								`\`${interaction.user.username}\` vs \`Shinano\`\n\n` +
 									`I picked ${convertedBotChoice}\n` +
 									`You picked ${emojiChallengerChoice}\n` +
-									`I won!`
+									"I won!"
 							);
-						} else {
+						}
+						else 
+						{
 							res.setDescription(
 								`\`${interaction.user.username}\` vs \`Shinano\`\n\n` +
 									`I picked ${convertedBotChoice}\n` +
 									`You picked ${emojiChallengerChoice}\n` +
-									`You won!`
+									"You won!"
 							);
 						}
 					}
@@ -405,10 +455,13 @@ export default new ChatInputCommand({
 				}
 			});
 
-			collector.on("end", async (collected, reason) => {
+			collector.on("end", async (collected, reason) => 
+			{
 				// Timeout
-				if (reason !== "picked") {
-					for (let i = 0; i < 3; i++) {
+				if (reason !== "picked") 
+				{
+					for (let i = 0; i < 3; i++) 
+					{
 						rpsButtons.components[i]
 							.setDisabled(true)
 							.setStyle(ButtonStyle.Secondary);

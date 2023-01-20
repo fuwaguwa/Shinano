@@ -2,7 +2,8 @@ import fetch from "node-fetch";
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { client } from "../../../..";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	if (!interaction.deferred) await interaction.deferReply();
 
 	/**
@@ -48,5 +49,5 @@ export = async (interaction: ChatInputCommandInteraction) => {
 					`Total Votes: **${topggStats.points}**\n`,
 			}
 		);
-	await interaction.editReply({ embeds: [performance] });
+	await interaction.editReply({ embeds: [performance], });
 };

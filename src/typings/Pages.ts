@@ -2,7 +2,7 @@ import {
 	ActionRowBuilder,
 	ChatInputCommandInteraction,
 	EmbedBuilder,
-	StringSelectMenuBuilder,
+	StringSelectMenuBuilder
 } from "discord.js";
 
 export interface ShinanoPaginatorOptions {

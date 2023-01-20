@@ -7,7 +7,8 @@ export default new ChatInputCommand({
 	description: "Get an image of a cat!",
 	cooldown: 4000,
 	category: "Image",
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
 
 		const response = await fetch("https://api.thecatapi.com/v1/images/search", {
@@ -20,9 +21,9 @@ export default new ChatInputCommand({
 			.setImage(cat[0].url)
 			.setFooter({
 				text: `Requested by ${interaction.user.tag}`,
-				iconURL: interaction.user.displayAvatarURL({ forceStatic: false }),
+				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 			});
 
-		await interaction.editReply({ embeds: [catEmbed] });
+		await interaction.editReply({ embeds: [catEmbed], });
 	},
 });

@@ -13,9 +13,10 @@ export default new ChatInputCommand({
 			required: true,
 			name: "word",
 			description: "The word you want to define.",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.isChatInputCommand())
 			throw new Error("Interaction is not from chat!");
 
@@ -30,13 +31,14 @@ export default new ChatInputCommand({
 		);
 		const definition = await response.json();
 
-		if (definition.list.length == 0) {
+		if (definition.list.length == 0) 
+		{
 			const noResult: EmbedBuilder = new EmbedBuilder()
 				.setColor("Red")
 				.setDescription(
 					`❌ | No definition for the word \`${word}\` can be found!`
 				);
-			return interaction.editReply({ embeds: [noResult] });
+			return interaction.editReply({ embeds: [noResult], });
 		}
 
 		const wordInfo = definition.list[0];
@@ -52,6 +54,6 @@ export default new ChatInputCommand({
 				"https://cdn.donmai.us/sample/c0/37/__shinano_azur_lane_drawn_by_waa_okami__sample-c037f94c2287a60578bef71acf163865.jpg"
 			);
 
-		await interaction.editReply({ embeds: [definitionEmbed] });
+		await interaction.editReply({ embeds: [definitionEmbed], });
 	},
 });

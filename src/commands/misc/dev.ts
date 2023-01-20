@@ -20,7 +20,7 @@ export default new ChatInputCommand({
 					required: true,
 					name: "code",
 					description: "Code.",
-				},
+				}
 			],
 		},
 		{
@@ -38,7 +38,7 @@ export default new ChatInputCommand({
 					required: true,
 					name: "guild-id",
 					description: "Guild's ID",
-				},
+				}
 			],
 		},
 		{
@@ -51,7 +51,7 @@ export default new ChatInputCommand({
 					required: true,
 					name: "user",
 					description: "User to vote check.",
-				},
+				}
 			],
 		},
 		{
@@ -68,7 +68,7 @@ export default new ChatInputCommand({
 							type: ApplicationCommandOptionType.User,
 							name: "user",
 							description: "The user you want to inspect.",
-						},
+						}
 					],
 				},
 				{
@@ -81,9 +81,9 @@ export default new ChatInputCommand({
 							required: true,
 							name: "guild-id",
 							description: "The guild's ID.",
-						},
+						}
 					],
-				},
+				}
 			],
 		},
 		{
@@ -101,7 +101,7 @@ export default new ChatInputCommand({
 							required: true,
 							name: "user",
 							description: "User's to blacklist.",
-						},
+						}
 					],
 				},
 				{
@@ -114,7 +114,7 @@ export default new ChatInputCommand({
 							required: true,
 							name: "user",
 							description: "User's to unblacklist",
-						},
+						}
 					],
 				},
 				{
@@ -127,15 +127,17 @@ export default new ChatInputCommand({
 							required: true,
 							name: "user",
 							description: "User to the check in the blacklist.",
-						},
+						}
 					],
-				},
+				}
 			],
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
-		switch (interaction.options.getSubcommand()) {
+		switch (interaction.options.getSubcommand()) 
+		{
 			case "vote-check": {
 				return devFunc.voteCheck(interaction);
 			}
@@ -153,7 +155,8 @@ export default new ChatInputCommand({
 			}
 		}
 
-		switch (interaction.options.getSubcommandGroup()) {
+		switch (interaction.options.getSubcommandGroup()) 
+		{
 			case "inspect": {
 				return devFunc.inspect(interaction);
 			}

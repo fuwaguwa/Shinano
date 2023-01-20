@@ -7,4 +7,4 @@ import support from "./shinano/support";
 import vote from "./shinano/vote";
 import help from "./shinano/help";
 
-export default { info, lewd, pat, ping, stats, vote, support, help };
+export default { info, lewd, pat, ping, stats, vote, support, help, };

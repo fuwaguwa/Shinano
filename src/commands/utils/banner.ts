@@ -11,9 +11,10 @@ export default new ChatInputCommand({
 			type: ApplicationCommandOptionType.User,
 			name: "user",
 			description: "The user's you want the banner from",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		const user: User = interaction.options.getUser("user") || interaction.user;
 
 		if (!interaction.deferred) await interaction.deferReply();
@@ -28,11 +29,12 @@ export default new ChatInputCommand({
 		);
 
 		const received = await response.json();
-		if (!received.banner) {
+		if (!received.banner) 
+		{
 			const failed: EmbedBuilder = new EmbedBuilder()
 				.setColor("Red")
 				.setDescription("❌ | User does not have a banner.");
-			return interaction.editReply({ embeds: [failed] });
+			return interaction.editReply({ embeds: [failed], });
 		}
 
 		let format = "png";
@@ -45,6 +47,6 @@ export default new ChatInputCommand({
 				`https://cdn.discordapp.com/banners/${user.id}/${received.banner}.${format}?size=512`
 			);
 
-		await interaction.editReply({ embeds: [banner] });
+		await interaction.editReply({ embeds: [banner], });
 	},
 });

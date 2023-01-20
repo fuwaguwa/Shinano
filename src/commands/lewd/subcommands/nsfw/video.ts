@@ -1,7 +1,8 @@
 import { ChatInputCommandInteraction } from "discord.js";
 import fetch from "node-fetch";
 
-async function videoFetch(category) {
+async function videoFetch(category) 
+{
 	const response = await fetch(
 		`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/${category}?type=mp4`,
 		{
@@ -17,9 +18,10 @@ async function videoFetch(category) {
 	return responseJson.body.link;
 }
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	const videoCategory: string =
 		interaction.options.getString("video-category") || "random";
 
-	await interaction.editReply({ content: await videoFetch(videoCategory) });
+	await interaction.editReply({ content: await videoFetch(videoCategory), });
 };

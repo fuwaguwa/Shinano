@@ -4,24 +4,26 @@ import {
 	ButtonBuilder,
 	ButtonStyle,
 	ChatInputCommandInteraction,
-	EmbedBuilder,
+	EmbedBuilder
 } from "discord.js";
 
 export = async (
 	interaction: ChatInputCommandInteraction,
 	lewdEmbed: EmbedBuilder,
 	category: string
-) => {
-	const data = await Collection.findOne({ type: category });
+) => 
+{
+	const data = await Collection.findOne({ type: category, });
 	const image = data.links[Math.floor(Math.random() * data.size)];
 
-	if (!(image.link as string).endsWith("mp4")) {
+	if (!(image.link as string).endsWith("mp4")) 
+	{
 		lewdEmbed.setImage(image.link);
 
 		const imageLink = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
 				.setStyle(ButtonStyle.Link)
-				.setEmoji({ name: "🔗" })
+				.setEmoji({ name: "🔗", })
 				.setLabel("Image Link")
 				.setURL(image.link)
 		);
@@ -31,5 +33,5 @@ export = async (
 			components: [imageLink],
 		});
 	}
-	return interaction.editReply({ content: image.link });
+	return interaction.editReply({ content: image.link, });
 };

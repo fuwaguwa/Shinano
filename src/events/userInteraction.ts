@@ -4,7 +4,7 @@ import {
 	ButtonStyle,
 	Collection,
 	EmbedBuilder,
-	UserContextMenuCommandInteraction,
+	UserContextMenuCommandInteraction
 } from "discord.js";
 import { client } from "..";
 import { Event } from "../structures/Event";
@@ -19,11 +19,14 @@ let EHOSTRetries: number = 0;
 function runCommand(
 	command: UserCommandType,
 	interaction: UserContextMenuCommandInteraction
-) {
-	command.run({ client, interaction }).catch(async (err) => {
+) 
+{
+	command.run({ client, interaction, }).catch(async err => 
+	{
 		console.error(err);
 
-		if (err.message.includes("EHOSTUNREACH") && EHOSTRetries < 3) {
+		if (err.message.includes("EHOSTUNREACH") && EHOSTRetries < 3) 
+		{
 			EHOSTRetries += 1;
 			return runCommand(command, interaction);
 		}
@@ -40,23 +43,24 @@ function runCommand(
 				new ButtonBuilder()
 					.setStyle(ButtonStyle.Link)
 					.setLabel("Support Server")
-					.setEmoji({ name: "⚙️" })
+					.setEmoji({ name: "⚙️", })
 					.setURL("https://discord.gg/NFkMxFeEWr")
 			);
 
 		interaction.deferred
 			? await interaction.editReply({
-					embeds: [errorEmbed],
-					components: [button],
+				embeds: [errorEmbed],
+				components: [button],
 			  })
 			: await interaction.reply({
-					embeds: [errorEmbed],
-					components: [button],
+				embeds: [errorEmbed],
+				components: [button],
 			  });
 	});
 }
 
-export default new Event("interactionCreate", async (interaction) => {
+export default new Event("interactionCreate", async interaction => 
+{
 	if (!interaction.guild) return;
 	if (!interaction.isUserContextMenuCommand()) return;
 
@@ -64,48 +68,53 @@ export default new Event("interactionCreate", async (interaction) => {
 	if (!command)
 		return interaction.reply("You have used a non existent command");
 
-	if (command.cooldown) {
+	if (command.cooldown) 
+	{
 		/**
 		 * Cooldown Check
 		 */
 		if (Cooldown.has(`${command.name}${owner}`))
 			Cooldown.delete(`${command.name}${owner}`);
 
-		if (Cooldown.has(`${command.name}${interaction.user.id}`)) {
+		if (Cooldown.has(`${command.name}${interaction.user.id}`)) 
+		{
 			const cms = Cooldown.get(`${command.name}${interaction.user.id}`);
 			const onChillOut = new EmbedBuilder()
 				.setTitle("Slow Down!")
 				.setColor("Red")
 				.setDescription(
-					`You are on a \`${ms(cms - Date.now(), { long: true })}\` cooldown.`
+					`You are on a \`${ms(cms - Date.now(), { long: true, })}\` cooldown.`
 				);
-			return interaction.reply({ embeds: [onChillOut], ephemeral: true });
+			return interaction.reply({ embeds: [onChillOut], ephemeral: true, });
 		}
 
 		/**
 		 * Getting user and blacklist check
 		 */
-		let user = await User.findOne({ userId: interaction.user.id });
-		if (!user) {
+		let user = await User.findOne({ userId: interaction.user.id, });
+		if (!user) 
+		{
 			user = await User.create({
 				userId: interaction.user.id,
 				commandsExecuted: 0,
 			});
 		}
-		if (user.blacklisted == true) {
+		if (user.blacklisted == true) 
+		{
 			const blacklisted: EmbedBuilder = new EmbedBuilder()
 				.setColor("Red")
 				.setTitle("You have been blacklisted!")
 				.setDescription(
 					"Please contact us at the [support server](https://discord.gg/NFkMxFeEWr) for more information about your blacklist."
 				);
-			return interaction.reply({ embeds: [blacklisted] });
+			return interaction.reply({ embeds: [blacklisted], });
 		}
 
 		/**
 		 * Executing Command
 		 */
-		command.run({ client, interaction }).catch(async (err) => {
+		command.run({ client, interaction, }).catch(async err => 
+		{
 			const errorEmbed: EmbedBuilder = new EmbedBuilder()
 				.setColor("Red")
 				.setDescription(`**${err.name}**: ${err.message}`)
@@ -117,21 +126,21 @@ export default new Event("interactionCreate", async (interaction) => {
 					new ButtonBuilder()
 						.setStyle(ButtonStyle.Link)
 						.setLabel("Support Server")
-						.setEmoji({ name: "⚙️" })
+						.setEmoji({ name: "⚙️", })
 						.setURL("https://discord.gg/NFkMxFeEWr")
 				);
 
 			interaction.deferred
 				? await interaction.editReply({
-						embeds: [errorEmbed],
-						components: [button],
+					embeds: [errorEmbed],
+					components: [button],
 				  })
 				: await interaction.reply({
-						embeds: [errorEmbed],
-						components: [button],
+					embeds: [errorEmbed],
+					components: [button],
 				  });
 		});
-		await user.updateOne({ commandsExecuted: user.commandsExecuted + 1 });
+		await user.updateOne({ commandsExecuted: user.commandsExecuted + 1, });
 
 		/**
 		 * Applying Cooldown
@@ -140,7 +149,8 @@ export default new Event("interactionCreate", async (interaction) => {
 			`${command.name}${interaction.user.id}`,
 			Date.now() + command.cooldown
 		);
-		setTimeout(() => {
+		setTimeout(() => 
+		{
 			Cooldown.delete(`${command.name}${interaction.user.id}`);
 		}, command.cooldown);
 	}

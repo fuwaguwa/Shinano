@@ -5,7 +5,7 @@ import {
 	EmbedBuilder,
 	InteractionCollector,
 	StringSelectMenuBuilder,
-	StringSelectMenuInteraction,
+	StringSelectMenuInteraction
 } from "discord.js";
 import { ShinanoPaginator } from "./Pages";
 import { toTitleCase } from "./Utils";
@@ -15,8 +15,10 @@ import { toTitleCase } from "./Utils";
  * @param type shorten file type
  * @returns file type
  */
-function getFileType(type: string) {
-	switch (type) {
+function getFileType(type: string) 
+{
+	switch (type) 
+	{
 		case "j":
 			return "jpg";
 		case "p":
@@ -32,7 +34,8 @@ function getFileType(type: string) {
  * @param pageNumber page number
  * @returns page url
  */
-function getPageLink(doujin, pageNumber) {
+function getPageLink(doujin, pageNumber) 
+{
 	const type = getFileType(doujin.images.pages[pageNumber].t);
 	return `https://i.nhentai.net/galleries/${doujin.media_id}/${
 		pageNumber + 1
@@ -45,9 +48,11 @@ function getPageLink(doujin, pageNumber) {
  * @param title doujin's title
  * @returns embeds of doujin pages
  */
-function genDoujinPage(doujin, title) {
+function genDoujinPage(doujin, title) 
+{
 	const doujinPages: EmbedBuilder[] = [];
-	for (let i = 0; i < doujin.num_pages; i++) {
+	for (let i = 0; i < doujin.num_pages; i++) 
+	{
 		doujinPages.push(
 			new EmbedBuilder()
 				.setColor("#2f3136")
@@ -65,7 +70,8 @@ function genDoujinPage(doujin, title) {
  * @param doujin doujin
  * @returns categorized doujin tags
  */
-export function getDoujinTags(doujin) {
+export function getDoujinTags(doujin) 
+{
 	const doujinTags: string[] = [];
 	const doujinArtists: string[] = [];
 	const doujinParodies: string[] = [];
@@ -74,9 +80,11 @@ export function getDoujinTags(doujin) {
 	const doujinCategories: string[] = [];
 	const doujinGroups: string[] = [];
 
-	doujin.tags.forEach((tag) => {
+	doujin.tags.forEach(tag => 
+	{
 		let tagName = toTitleCase(tag.name);
-		switch (tag.type) {
+		switch (tag.type) 
+		{
 			case "tag":
 				doujinTags.push(tagName);
 				break;
@@ -118,7 +126,8 @@ export function getDoujinTags(doujin) {
  * @param tagInfo doujin's tags
  * @returns doujin embed
  */
-export function genDoujinEmbed(doujin, tagInfo) {
+export function genDoujinEmbed(doujin, tagInfo) 
+{
 	const doujinTitle =
 		doujin.title.pretty || doujin.title.english || doujin.title.japanese;
 	const doujinThumbnail = getPageLink(doujin, 0);
@@ -127,7 +136,7 @@ export function genDoujinEmbed(doujin, tagInfo) {
 		.setTitle(`${doujinTitle} | ${doujin.id}`)
 		.setThumbnail(doujinThumbnail)
 		.setColor("#2f3136")
-		.setDescription(`**Tags:**\n` + tagInfo.tags.join(", "))
+		.setDescription("**Tags:**\n" + tagInfo.tags.join(", "))
 		.setURL(`https://nhentai.net/g/${doujin.id}`);
 	if (tagInfo.characters.length != 0)
 		mainInfo.addFields({
@@ -166,9 +175,9 @@ export function genDoujinEmbed(doujin, tagInfo) {
 			inline: false,
 		});
 	mainInfo.addFields(
-		{ name: "Pages:", value: `${doujin.num_pages}`, inline: true },
-		{ name: "Favorites:", value: `${doujin.num_favorites}`, inline: true },
-		{ name: "Upload Date:", value: `<t:${doujin.upload_date}:D>`, inline: true }
+		{ name: "Pages:", value: `${doujin.num_pages}`, inline: true, },
+		{ name: "Favorites:", value: `${doujin.num_favorites}`, inline: true, },
+		{ name: "Upload Date:", value: `<t:${doujin.upload_date}:D>`, inline: true, }
 	);
 
 	return mainInfo;
@@ -182,7 +191,8 @@ export function genDoujinEmbed(doujin, tagInfo) {
 export async function displayDoujin(
 	interaction: ChatInputCommandInteraction,
 	doujin
-) {
+) 
+{
 	const doujinTitle =
 		doujin.title.pretty || doujin.title.english || doujin.title.japanese;
 	const tagInfo = getDoujinTags(doujin);
@@ -190,7 +200,8 @@ export async function displayDoujin(
 	/**
 	 * Filtering Tags
 	 */
-	const filter = tagInfo.tags.find((tag) => {
+	const filter = tagInfo.tags.find(tag => 
+	{
 		return (
 			tag.includes("Lolicon") ||
 			tag.includes("Guro") ||
@@ -203,13 +214,14 @@ export async function displayDoujin(
 		);
 	});
 
-	if (filter) {
+	if (filter) 
+	{
 		const blacklisted: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
 				`❌ | Shinano found that the doujin contains a blacklisted tag (\`${filter.toLowerCase()}\`) and will not be displaying it here!\n`
 			);
-		return interaction.editReply({ embeds: [blacklisted] });
+		return interaction.editReply({ embeds: [blacklisted], });
 	}
 
 	/**
@@ -256,18 +268,24 @@ export async function displayDoujin(
 
 	let lastPage: number = 0;
 
-	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(`${i.user.id}`)) {
+	collector.on("collect", async i => 
+	{
+		if (!i.customId.endsWith(`${i.user.id}`)) 
+		{
 			await i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
-		} else {
+		}
+		else 
+		{
 			const menu = navigation.components[0];
 
-			if (i.values) {
+			if (i.values) 
+			{
 				await i.deferUpdate();
-				switch (i.values[0]) {
+				switch (i.values[0]) 
+				{
 					case "info": {
 						menu.options[0].setDefault(true);
 						menu.options[1].setDefault(false);
@@ -283,7 +301,8 @@ export async function displayDoujin(
 						menu.options[0].setDefault(false);
 						menu.options[1].setDefault(true);
 
-						if (doujinPages) {
+						if (doujinPages) 
+						{
 							lastPage = await ShinanoPaginator({
 								interaction,
 								interactorOnly: true,
@@ -292,7 +311,9 @@ export async function displayDoujin(
 								menu: navigation,
 								time: 150000,
 							});
-						} else {
+						}
+						else 
+						{
 							const notAvailable: EmbedBuilder = new EmbedBuilder()
 								.setColor("Red")
 								.setDescription(

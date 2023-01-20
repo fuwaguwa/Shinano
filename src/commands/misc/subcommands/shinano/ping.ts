@@ -1,7 +1,8 @@
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { client } from "../../../..";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	const pingEmbed: EmbedBuilder = new EmbedBuilder()
 		.setTitle("Pong 🏓")
 		.setDescription(
@@ -10,5 +11,5 @@ export = async (interaction: ChatInputCommandInteraction) => {
 			}ms\nAPI Latency: ${Math.round(client.ws.ping)}ms`
 		)
 		.setColor("#2f3136");
-	await interaction.reply({ embeds: [pingEmbed] });
+	await interaction.reply({ embeds: [pingEmbed], });
 };

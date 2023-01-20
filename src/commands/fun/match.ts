@@ -18,9 +18,10 @@ export default new ChatInputCommand({
 			required: true,
 			name: "user2",
 			description: "Second Person.",
-		},
+		}
 	],
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		const person1: User = interaction.options.getUser("user1");
 		const person2: User = interaction.options.getUser("user2");
 
@@ -34,6 +35,6 @@ export default new ChatInputCommand({
 			.setDescription(
 				`${person1} and ${person2} love percentage: ${love}%\n\n${loveLevel}`
 			);
-		await interaction.reply({ embeds: [loveEmbed] });
+		await interaction.reply({ embeds: [loveEmbed], });
 	},
 });

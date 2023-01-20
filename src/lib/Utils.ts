@@ -2,7 +2,7 @@ import {
 	Guild,
 	AttachmentBuilder,
 	TextChannel,
-	VoiceChannel,
+	VoiceChannel
 } from "discord.js";
 import fetch from "node-fetch";
 import { client } from "..";
@@ -14,7 +14,8 @@ import { Canvas } from "canvas";
  * @param url image url
  * @returns boolean
  */
-export function isImage(url) {
+export function isImage(url) 
+{
 	return url.match(/^http[^\?]*.(jpg|jpeg|png)(\?(.*))?$/gim) != null;
 }
 
@@ -23,7 +24,8 @@ export function isImage(url) {
  * @param url image/GIF url
  * @returns boolean
  */
-export function isImageAndGif(url) {
+export function isImageAndGif(url) 
+{
 	return url.match(/^http[^\?]*.(jpg|jpeg|png|gif)(\?(.*))?$/gim) != null;
 }
 
@@ -32,11 +34,13 @@ export function isImageAndGif(url) {
  * @param str string to turn into title case
  * @returns title cased str
  */
-export function toTitleCase(str: string) {
+export function toTitleCase(str: string) 
+{
 	return str
 		.toLowerCase()
 		.split(" ")
-		.map((word) => {
+		.map(word => 
+		{
 			return word.charAt(0).toUpperCase() + word.slice(1);
 		})
 		.join(" ");
@@ -47,7 +51,8 @@ export function toTitleCase(str: string) {
  * @param duration ms
  * @returns HH:MM:SS
  */
-export function msToHmsFormat(duration) {
+export function msToHmsFormat(duration) 
+{
 	let seconds: string | number = Math.floor((duration / 1000) % 60);
 	let minutes: string | number = Math.floor((duration / (1000 * 60)) % 60);
 	let hours: string | number = Math.floor((duration / (1000 * 60 * 60)) % 24);
@@ -63,7 +68,8 @@ export function msToHmsFormat(duration) {
  * @param value boolean
  * @returns boolean
  */
-export function isNum(value) {
+export function isNum(value) 
+{
 	return !isNaN(value);
 }
 
@@ -73,8 +79,10 @@ export function isNum(value) {
  * @param obj obj
  * @returns formatted string
  */
-export function strFormat(str: string, obj: any[]) {
-	return str.replace(/\{\s*([^}\s]+)\s*\}/g, (m, p1, offset, string) => {
+export function strFormat(str: string, obj: any[]) 
+{
+	return str.replace(/\{\s*([^}\s]+)\s*\}/g, (m, p1, offset, string) => 
+	{
 		return obj[p1];
 	});
 }
@@ -85,10 +93,13 @@ export function strFormat(str: string, obj: any[]) {
  * @param array array of numbers
  * @returns closest number
  */
-export function closest(num: number, array: number[]) {
+export function closest(num: number, array: number[]) 
+{
 	let curr = array[0];
-	for (let i = 0; i < array.length; i++) {
-		if (Math.abs(num - array[i]) < Math.abs(num - curr)) {
+	for (let i = 0; i < array.length; i++) 
+	{
+		if (Math.abs(num - array[i]) < Math.abs(num - curr)) 
+		{
 			curr = array[i];
 		}
 	}
@@ -98,10 +109,11 @@ export function closest(num: number, array: number[]) {
 /**
  * Update server count on bot listings
  */
-export async function updateServerCount() {
+export async function updateServerCount() 
+{
 	if (client.user.id === "1002189046619045908") return "Not Main Bot";
 	// On Discord Services
-	await fetch(`https://api.discordservices.net/bot/1002193298229829682/stats`, {
+	await fetch("https://api.discordservices.net/bot/1002193298229829682/stats", {
 		method: "POST",
 		headers: {
 			Authorization: process.env.discordServicesApiKey,
@@ -112,7 +124,7 @@ export async function updateServerCount() {
 	});
 
 	// On Top.gg
-	await fetch(`https://top.gg/api/bots/1002193298229829682/stats`, {
+	await fetch("https://top.gg/api/bots/1002193298229829682/stats", {
 		method: "POST",
 		headers: {
 			"content-type": "application/json",
@@ -141,10 +153,12 @@ export async function createTable(options: {
 	dataSrc: any[];
 	columnSize?: number;
 	firstColumnSize?: number;
-}) {
+}) 
+{
 	// Structure
 	const tableColumns: any[] = [];
-	for (let i = 0; i < options.columns.length; i++) {
+	for (let i = 0; i < options.columns.length; i++) 
+	{
 		let column = {
 			title: options.columns[i],
 			dataIndex: options.columns[i],
@@ -155,10 +169,13 @@ export async function createTable(options: {
 			textFontSize: "29px",
 		};
 
-		if (i == 1 && options.firstColumnSize) {
-			column = Object.assign({ width: options.firstColumnSize }, column);
-		} else if (options.columnSize) {
-			column = Object.assign({ width: options.columnSize }, column);
+		if (i == 1 && options.firstColumnSize) 
+		{
+			column = Object.assign({ width: options.firstColumnSize, }, column);
+		}
+		else if (options.columnSize) 
+		{
+			column = Object.assign({ width: options.columnSize, }, column);
 		}
 
 		tableColumns.push(column);
@@ -177,7 +194,7 @@ export async function createTable(options: {
 
 	const statsMessage = await (channel as TextChannel).send({
 		files: [
-			new AttachmentBuilder(table.canvas.toBuffer(), { name: "image.png" }),
+			new AttachmentBuilder(table.canvas.toBuffer(), { name: "image.png", })
 		],
 	});
 	const statsImage = statsMessage.attachments.first().url;
@@ -189,10 +206,13 @@ export async function createTable(options: {
  * Pause for x ms
  * @param ms ms
  */
-export function sleep(ms: number) {
+export function sleep(ms: number) 
+{
 	let start = new Date().getTime();
-	for (let i = 0; i < 1e7; i++) {
-		if (new Date().getTime() - start > ms) {
+	for (let i = 0; i < 1e7; i++) 
+	{
+		if (new Date().getTime() - start > ms) 
+		{
 			break;
 		}
 	}
@@ -202,8 +222,9 @@ export function sleep(ms: number) {
  * Check NHentai IP for working one
  * @returns nhentaiIP
  */
-export async function getNHentaiIP() {
-	const response = await fetch(process.env.nhentaiIP, { method: "GET" });
+export async function getNHentaiIP() 
+{
+	const response = await fetch(process.env.nhentaiIP, { method: "GET", });
 	console.log(response);
 	if (response.status == 200 || response.status == 308)
 		return process.env.nhentaiIP;
@@ -215,7 +236,8 @@ export async function getNHentaiIP() {
  * @param category gif category
  * @returns reaction url
  */
-export async function getWaifuReactionGIF(category) {
+export async function getWaifuReactionGIF(category) 
+{
 	const response = await fetch(`https://waifu.pics/api/sfw/${category}`, {
 		method: "GET",
 	});
@@ -230,7 +252,8 @@ export async function getWaifuReactionGIF(category) {
  * @param category gif category
  * @returns reaction url
  */
-export async function getNekoReactionGIF(category) {
+export async function getNekoReactionGIF(category) 
+{
 	const response = await fetch("https://nekos.best/api/v2/dance");
 	const rep = await response.json();
 

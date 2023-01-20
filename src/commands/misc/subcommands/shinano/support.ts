@@ -3,10 +3,11 @@ import {
 	ButtonBuilder,
 	ButtonStyle,
 	ChatInputCommandInteraction,
-	EmbedBuilder,
+	EmbedBuilder
 } from "discord.js";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	const supportEmbed: EmbedBuilder = new EmbedBuilder()
 		.setColor("#2f3136")
 		.setDescription(
@@ -18,7 +19,7 @@ export = async (interaction: ChatInputCommandInteraction) => {
 			new ButtonBuilder()
 				.setStyle(ButtonStyle.Link)
 				.setLabel("Support Server")
-				.setEmoji({ name: "⚙️" })
+				.setEmoji({ name: "⚙️", })
 				.setURL("https://discord.gg/NFkMxFeEWr")
 		);
 

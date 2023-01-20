@@ -6,7 +6,7 @@ import {
 	ChatInputCommandCategoryList,
 	ChatInputCommandType,
 	MessageCommandType,
-	UserCommandType,
+	UserCommandType
 } from "../typings/Command";
 import { RegisterCommandsOptions } from "../typings/CommandRegistration";
 import {
@@ -15,13 +15,14 @@ import {
 	ClientEvents,
 	Collection,
 	EmbedBuilder,
-	TextChannel,
+	TextChannel
 } from "discord.js";
 import { startTweetListener } from "../lib/Twitter";
 
 const promiseGlob = promisify(glob);
 
-export class Shinano extends Client {
+export class Shinano extends Client 
+{
 	commands: Collection<string, ChatInputCommandType> = new Collection();
 	messageCommands: Collection<string, MessageCommandType> = new Collection();
 	userCommands: Collection<string, UserCommandType> = new Collection();
@@ -38,31 +39,37 @@ export class Shinano extends Client {
 		Dev: [],
 	};
 
-	constructor() {
+	constructor() 
+	{
 		super({
 			intents: 513,
 		});
 	}
 
-	start() {
+	start() 
+	{
 		this.registerModules();
 		this.connectToDatabase();
 		this.login(process.env.botToken);
 
 		// Error Catcher
-		process.on("unhandledRejection", async (err) => {
+		process.on("unhandledRejection", async err => 
+		{
 			console.error("Unhandled Promise Rejection:\n", err);
 		});
 
-		process.on("uncaughtException", async (err) => {
+		process.on("uncaughtException", async err => 
+		{
 			console.error("Uncaught Promise Exception:\n", err);
 		});
 
-		process.on("uncaughtExceptionMonitor", async (err) => {
+		process.on("uncaughtExceptionMonitor", async err => 
+		{
 			console.error("Uncaught Promise Exception (Monitor):\n", err);
 		});
 
-		process.on("multipleResolves", async (type, promise, reason) => {
+		process.on("multipleResolves", async (type, promise, reason) => 
+		{
 			if (!reason) return;
 			if (
 				reason.toLocaleString() ===
@@ -75,19 +82,21 @@ export class Shinano extends Client {
 			console.error("Multiple Resolves:\n", type, promise, reason);
 		});
 
-		(async () => {
+		(async () => 
+		{
 			// Heartbeat
 			const guild = await this.guilds.fetch("1002188088942022807");
 			const channel = await guild.channels.fetch("1027973574801227776");
 
 			const startEmbed: EmbedBuilder = new EmbedBuilder()
 				.setColor("Green")
-				.setDescription(`Shinano has been started!`)
+				.setDescription("Shinano has been started!")
 				.setTimestamp();
-			await (channel as TextChannel).send({ embeds: [startEmbed] });
+			await (channel as TextChannel).send({ embeds: [startEmbed], });
 
 			let uptime = 300000;
-			setInterval(async () => {
+			setInterval(async () => 
+			{
 				let totalSeconds = uptime / 1000;
 				totalSeconds %= 86400;
 
@@ -103,48 +112,58 @@ export class Shinano extends Client {
 						`Shinano has been running for \`${hours} hours, ${minutes} minutes, ${seconds} seconds\``
 					)
 					.setTimestamp();
-				await (channel as TextChannel).send({ embeds: [heartbeatEmbed] });
+				await (channel as TextChannel).send({ embeds: [heartbeatEmbed], });
 
 				uptime += 300000;
 			}, 300000);
 
 			// Azur Lane News
-			if (!process.env.guildId) {
+			if (!process.env.guildId) 
+			{
 				await startTweetListener();
 				console.log("Connected to Twitter stream!");
 			}
 		})();
 	}
 
-	private connectToDatabase() {
+	private connectToDatabase() 
+	{
 		mongoose
 			.connect(process.env.mongoDB)
-			.then(() => {
+			.then(() => 
+			{
 				console.log("Connected to database!");
 			})
-			.catch((err) => {
+			.catch(err => 
+			{
 				console.log(err);
 			});
 	}
 
-	private async importFile(filePath: string) {
+	private async importFile(filePath: string) 
+	{
 		return (await import(filePath))?.default;
 	}
 
 	private async registerCommands({
 		commands,
 		guildId,
-	}: RegisterCommandsOptions) {
-		if (guildId) {
+	}: RegisterCommandsOptions) 
+	{
+		if (guildId) 
+		{
 			this.guilds.cache.get(guildId)?.commands.set(commands);
 			console.log(`Registering Commands | Guild: ${guildId}`);
-		} else {
+		}
+		else 
+		{
 			this.application?.commands.set(commands);
 			console.log("Registering Commands | Global");
 		}
 	}
 
-	public async generateCommandList(): Promise<ChatInputCommandCategoryList> {
+	public async generateCommandList(): Promise<ChatInputCommandCategoryList> 
+	{
 		let commandsEmbed: ChatInputCommandCategoryList = {
 			Anime: [],
 			Fun: [],
@@ -156,7 +175,8 @@ export class Shinano extends Client {
 			Image: [],
 		};
 
-		for (const category in this.catagorizedCommands) {
+		for (const category in this.catagorizedCommands) 
+		{
 			let arr = [];
 			const embedArr: EmbedBuilder[] = [];
 
@@ -166,14 +186,20 @@ export class Shinano extends Client {
 					"AzurLane",
 					"GenshinImpact",
 					"Anime",
-					"Miscellaneous",
+					"Miscellaneous"
 				].includes(category)
-			) {
-				this.catagorizedCommands[category].forEach((command) => {
-					if (!command.options) {
+			) 
+			{
+				this.catagorizedCommands[category].forEach(command => 
+				{
+					if (!command.options) 
+					{
 						arr.push(command);
-					} else {
-						command.options.forEach((option) => {
+					}
+					else 
+					{
+						command.options.forEach(option => 
+						{
 							arr.push({
 								name: option.name,
 								description: option.description,
@@ -181,31 +207,36 @@ export class Shinano extends Client {
 						});
 					}
 				});
-			} else {
+			}
+			else 
+			{
 				arr = this.catagorizedCommands[category];
 			}
 
-			for (let i = 0; i < arr.length; i += 7) {
+			for (let i = 0; i < arr.length; i += 7) 
+			{
 				const arrChunk = arr.slice(i, i + 7);
 
-				let text: string = `/<command>\n\n`;
+				let text: string = "/<command>\n\n";
 
-				switch (category) {
+				switch (category) 
+				{
 					case "AzurLane":
-						text = `/azur-lane <command>\n\n`;
+						text = "/azur-lane <command>\n\n";
 						break;
 					case "GenshinImpact":
-						text = `/genshin <command>\n\n`;
+						text = "/genshin <command>\n\n";
 						break;
 					case "Anime":
-						text = `/anime <command>\n\n`;
+						text = "/anime <command>\n\n";
 						break;
 					case "Miscellaneous":
-						text = `/shinano <command>\n\n`;
+						text = "/shinano <command>\n\n";
 						break;
 				}
 
-				for (let i = 0; i < arrChunk.length; i++) {
+				for (let i = 0; i < arrChunk.length; i++) 
+				{
 					const command = arrChunk[i];
 					text +=
 						`**${command.name}**\n` +
@@ -222,7 +253,8 @@ export class Shinano extends Client {
 		return commandsEmbed;
 	}
 
-	private async registerModules() {
+	private async registerModules() 
+	{
 		// Registering Commands
 		const shinanoCommands: ApplicationCommandDataResolvable[] = [];
 
@@ -236,7 +268,8 @@ export class Shinano extends Client {
 			`${__dirname}/../menu/user/*/*{.ts,.js}`
 		);
 
-		commandFiles.forEach(async (filePath) => {
+		commandFiles.forEach(async filePath => 
+		{
 			const command: ChatInputCommandType = await this.importFile(filePath);
 			if (!command.name) return;
 
@@ -247,7 +280,8 @@ export class Shinano extends Client {
 			shinanoCommands.push(command);
 		});
 
-		messageFiles.forEach(async (filePath) => {
+		messageFiles.forEach(async filePath => 
+		{
 			const command: MessageCommandType = await this.importFile(filePath);
 			if (!command.name) return;
 
@@ -255,7 +289,8 @@ export class Shinano extends Client {
 			shinanoCommands.push(command);
 		});
 
-		userFiles.forEach(async (filePath) => {
+		userFiles.forEach(async filePath => 
+		{
 			const command: UserCommandType = await this.importFile(filePath);
 			if (!command.name) return;
 
@@ -263,7 +298,8 @@ export class Shinano extends Client {
 			shinanoCommands.push(command);
 		});
 
-		this.on("ready", () => {
+		this.on("ready", () => 
+		{
 			this.registerCommands({
 				commands: shinanoCommands,
 				guildId: process.env.guildId,
@@ -273,7 +309,8 @@ export class Shinano extends Client {
 		// Initiating Event Listeners
 		const eventFiles = await promiseGlob(`${__dirname}/../events/*{.ts,.js}`);
 
-		eventFiles.forEach(async (filePath) => {
+		eventFiles.forEach(async filePath => 
+		{
 			const event: Event<keyof ClientEvents> = await this.importFile(filePath);
 			this.on(event.event, event.run);
 		});

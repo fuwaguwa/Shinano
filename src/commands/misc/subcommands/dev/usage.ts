@@ -1,7 +1,8 @@
 import os from "os";
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	const memory = process.memoryUsage();
 	const performance: EmbedBuilder = new EmbedBuilder()
 		.setColor("#2f3136")
@@ -22,5 +23,5 @@ export = async (interaction: ChatInputCommandInteraction) => {
 					`Total Mem: ${(os.totalmem() / 1024 ** 2).toFixed(2)}MB`,
 			}
 		);
-	await interaction.editReply({ embeds: [performance] });
+	await interaction.editReply({ embeds: [performance], });
 };

@@ -2,7 +2,7 @@ import {
 	ActionRowBuilder,
 	ButtonBuilder,
 	ButtonStyle,
-	EmbedBuilder,
+	EmbedBuilder
 } from "discord.js";
 import { SauceOptions } from "../typings/Sauce";
 import { isImageAndGif } from "./Utils";
@@ -26,32 +26,35 @@ export async function findSauce({
 	interaction,
 	link,
 	ephemeral,
-}: SauceOptions) {
+}: SauceOptions) 
+{
 	/**
 	 * Filtering Inputs
 	 */
-	await interaction.deferReply({ ephemeral });
+	await interaction.deferReply({ ephemeral, });
 	let wait: EmbedBuilder = new EmbedBuilder()
 		.setTitle("Processing...")
 		.setColor("Green")
 		.setDescription(
 			"<a:lod:1021265223707000923> | Validating Link...\n<a:lod:1021265223707000923> | Searching For Sauce...\n<a:lod:1021265223707000923> | Filtering..."
 		);
-	await interaction.editReply({ embeds: [wait] });
+	await interaction.editReply({ embeds: [wait], });
 
-	if (!isImageAndGif(link)) {
+	if (!isImageAndGif(link)) 
+	{
 		const failed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("Must be an image/gif!");
-		return interaction.editReply({ embeds: [failed] });
+		return interaction.editReply({ embeds: [failed], });
 	}
 
 	const response = await fetch(link);
-	if (response.status !== 200) {
+	if (response.status !== 200) 
+	{
 		const failed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("Invalid image/gif link/file.");
-		return interaction.editReply({ embeds: [failed] });
+		return interaction.editReply({ embeds: [failed], });
 	}
 
 	/**
@@ -62,21 +65,22 @@ export async function findSauce({
 			"<a:lod:1021265223707000923> | Searching For Sauce...\n" +
 			"<a:lod:1021265223707000923> | Filtering..."
 	);
-	await interaction.editReply({ embeds: [wait] });
+	await interaction.editReply({ embeds: [wait], });
 
 	const results = await sClient(link);
 
 	/**
 	 * Filtering sauce
 	 */
-	if (results.length == 0) {
+	if (results.length == 0) 
+	{
 		const noResult: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("❌ | No results were found!")
 			.setImage(
 				"https://cdn.discordapp.com/attachments/977409556638474250/999486337822507058/akairo-azur-lane.gif"
 			);
-		return interaction.editReply({ embeds: [noResult] });
+		return interaction.editReply({ embeds: [noResult], });
 	}
 
 	const firstResult = results[0];
@@ -86,9 +90,10 @@ export async function findSauce({
 		.setColor("Random")
 		.setTitle("Sauce...Found?")
 		.setThumbnail(firstResult.thumbnail)
-		.setFooter({ text: "Similarity is displayed below." });
+		.setFooter({ text: "Similarity is displayed below.", });
 
-	if (raw.data.source && raw.header.index_name.includes("H-Anime")) {
+	if (raw.data.source && raw.header.index_name.includes("H-Anime")) 
+	{
 		/**
 		 * GIFs & Animations
 		 */
@@ -100,7 +105,9 @@ export async function findSauce({
 			name: "Estimated Timestamp: ",
 			value: raw.data.est_time,
 		});
-	} else {
+	}
+	else 
+	{
 		/**
 		 * For pixiv/danbooru
 		 */
@@ -131,7 +138,8 @@ export async function findSauce({
 	 */
 	// Limited to 5 results
 	const links: string[] = [];
-	for (let i = 0; i < 5; i++) {
+	for (let i = 0; i < 5; i++) 
+	{
 		const sauce = results[i];
 		links.push(`${sauce.url}|${sauce.similarity}%`);
 	}
@@ -141,55 +149,64 @@ export async function findSauce({
 			"✅ | Sauce Found!\n" +
 			"<a:lod:1021265223707000923> | Filtering..."
 	);
-	await interaction.editReply({ embeds: [wait] });
+	await interaction.editReply({ embeds: [wait], });
 
 	const sortedLinks = {};
-	links.forEach((link) => {
-		switch (true) {
+	links.forEach(link => 
+	{
+		switch (true) 
+		{
 			case link.includes("pixiv.net"): {
-				if (!sortedLinks["Pixiv"]) {
+				if (!sortedLinks["Pixiv"]) 
+				{
 					sortedLinks["Pixiv"] = link;
 				}
 				break;
 			}
 
 			case link.includes("danbooru.donmai.us"): {
-				if (!sortedLinks["Danbooru"]) {
+				if (!sortedLinks["Danbooru"]) 
+				{
 					sortedLinks["Danbooru"] = link;
 				}
 				break;
 			}
 
 			case link.includes("gelbooru.com"): {
-				if (!sortedLinks["Gelbooru"]) {
+				if (!sortedLinks["Gelbooru"]) 
+				{
 					sortedLinks["Gelbooru"] = link;
 				}
 				break;
 			}
 
 			case link.includes("konachan.com"): {
-				if (!sortedLinks["Konachan"]) {
+				if (!sortedLinks["Konachan"]) 
+				{
 					sortedLinks["Konachan"] = link;
 				}
 				break;
 			}
 
 			case link.includes("yande.re"): {
-				if (!sortedLinks["Yande.re"]) {
+				if (!sortedLinks["Yande.re"]) 
+				{
 					sortedLinks["Yande.re"] = link;
 				}
 				break;
 			}
 
 			case link.includes("fantia.jp"): {
-				if (!sortedLinks["Fantia"]) {
+				if (!sortedLinks["Fantia"]) 
+				{
 					sortedLinks["Fantia"] = link;
 				}
 				break;
 			}
 
 			case link.includes("anidb.net"): {
-				if (!sortedLinks["AniDB"]) {
+				if (!sortedLinks["AniDB"]) 
+				{
 					sortedLinks["AniDB"] = link;
 				}
 				break;
@@ -202,7 +219,8 @@ export async function findSauce({
 	 */
 	const sauceURLs: ActionRowBuilder<ButtonBuilder> =
 		new ActionRowBuilder<ButtonBuilder>();
-	for (const link in sortedLinks) {
+	for (const link in sortedLinks) 
+	{
 		const source = sortedLinks[link].split("|")[0];
 		const similarity = sortedLinks[link].split("|")[1];
 
@@ -210,7 +228,7 @@ export async function findSauce({
 			new ButtonBuilder()
 				.setLabel(`${link} (${similarity})`)
 				.setStyle(ButtonStyle.Link)
-				.setEmoji({ id: emojis[link] })
+				.setEmoji({ id: emojis[link], })
 				.setURL(source)
 		);
 	}
@@ -223,7 +241,7 @@ export async function findSauce({
 			"✅ | Searching For Sauce...\n" +
 			"✅ | Link Filtered!"
 	);
-	await interaction.editReply({ embeds: [wait] });
+	await interaction.editReply({ embeds: [wait], });
 
 	return interaction.editReply({
 		embeds: [resultEmbed],

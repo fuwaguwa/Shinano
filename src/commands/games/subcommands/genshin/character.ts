@@ -4,20 +4,23 @@ import info from "./character-func/info";
 import stats from "./character-func/stats";
 import talents from "./character-func/talents";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	const charName: string = interaction.options
 		.getString("character-name")
 		.toLowerCase();
 	const character = genshin.characters(charName);
 
-	if (!character) {
+	if (!character) 
+	{
 		const noResult: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("❌ | No character found!");
-		return interaction.editReply({ embeds: [noResult] });
+		return interaction.editReply({ embeds: [noResult], });
 	}
 
-	switch (interaction.options.getSubcommand()) {
+	switch (interaction.options.getSubcommand()) 
+	{
 		case "info": {
 			return info(interaction, character);
 		}

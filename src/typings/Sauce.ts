@@ -1,6 +1,6 @@
 import {
 	ChatInputCommandInteraction,
-	MessageContextMenuCommandInteraction,
+	MessageContextMenuCommandInteraction
 } from "discord.js";
 
 export interface SauceOptions {

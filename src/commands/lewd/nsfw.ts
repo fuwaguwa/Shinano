@@ -3,7 +3,7 @@ import {
 	ApplicationCommandOptionType,
 	ButtonBuilder,
 	ButtonStyle,
-	EmbedBuilder,
+	EmbedBuilder
 } from "discord.js";
 import { ChatInputCommand } from "../../structures/Command";
 import nsfwFunc from "./subcommands/nsfwSubs";
@@ -34,15 +34,15 @@ export default new ChatInputCommand({
 							description:
 								"The category you want FANBOX/Patreon content from. Ignore this option for random category.",
 							choices: [
-								{ name: "Shipgirls", value: "shipgirls" },
-								{ name: "Undies", value: "undies" },
-								{ name: "Elf", value: "elf" },
-								{ name: "Genshin", value: "genshin" },
-								{ name: "Kemonomimi", value: "kemonomimi" },
-								{ name: "Misc", value: "misc" },
-								{ name: "Uniform", value: "uniform" },
+								{ name: "Shipgirls", value: "shipgirls", },
+								{ name: "Undies", value: "undies", },
+								{ name: "Elf", value: "elf", },
+								{ name: "Genshin", value: "genshin", },
+								{ name: "Kemonomimi", value: "kemonomimi", },
+								{ name: "Misc", value: "misc", },
+								{ name: "Uniform", value: "uniform", }
 							],
-						},
+						}
 					],
 				},
 				{
@@ -56,16 +56,16 @@ export default new ChatInputCommand({
 							description:
 								"The category you want to be bombed with. Ignore this option for random category.",
 							choices: [
-								{ name: "GIF", value: "gif" },
-								{ name: "Shipgirls", value: "shipgirls" },
-								{ name: "Undies", value: "undies" },
-								{ name: "Elf", value: "elf" },
-								{ name: "Genshin", value: "genshin" },
-								{ name: "Kemonomimi", value: "kemonomimi" },
-								{ name: "Misc", value: "misc" },
-								{ name: "Uniform", value: "uniform" },
+								{ name: "GIF", value: "gif", },
+								{ name: "Shipgirls", value: "shipgirls", },
+								{ name: "Undies", value: "undies", },
+								{ name: "Elf", value: "elf", },
+								{ name: "Genshin", value: "genshin", },
+								{ name: "Kemonomimi", value: "kemonomimi", },
+								{ name: "Misc", value: "misc", },
+								{ name: "Uniform", value: "uniform", }
 							],
-						},
+						}
 					],
 				},
 				{
@@ -79,15 +79,15 @@ export default new ChatInputCommand({
 							description:
 								"The category you want to be bombed with. Ignore this option for random category.",
 							choices: [
-								{ name: "Shipgirls", value: "shipgirls" },
-								{ name: "Undies", value: "undies" },
-								{ name: "Elf", value: "elf" },
-								{ name: "Genshin", value: "genshin" },
-								{ name: "Kemonomimi", value: "kemonomimi" },
-								{ name: "Misc", value: "misc" },
-								{ name: "Uniform", value: "uniform" },
+								{ name: "Shipgirls", value: "shipgirls", },
+								{ name: "Undies", value: "undies", },
+								{ name: "Elf", value: "elf", },
+								{ name: "Genshin", value: "genshin", },
+								{ name: "Kemonomimi", value: "kemonomimi", },
+								{ name: "Misc", value: "misc", },
+								{ name: "Uniform", value: "uniform", }
 							],
-						},
+						}
 					],
 				},
 				{
@@ -128,7 +128,7 @@ export default new ChatInputCommand({
 				{
 					type: ApplicationCommandOptionType.Subcommand,
 					name: "oral",
-					description: 'Girls "playing the trumpet"',
+					description: "Girls \"playing the trumpet\"",
 				},
 				{
 					type: ApplicationCommandOptionType.Subcommand,
@@ -141,16 +141,16 @@ export default new ChatInputCommand({
 							description:
 								"The category you want GIFs from. Ignore this option for random category.",
 							choices: [
-								{ name: "High-Quality Random", value: "random" },
-								{ name: "Shipgirls", value: "shipgirls" },
-								{ name: "Undies", value: "undies" },
-								{ name: "Elf", value: "elf" },
-								{ name: "Genshin", value: "genshin" },
-								{ name: "Kemonomimi", value: "kemonomimi" },
-								{ name: "Misc", value: "misc" },
-								{ name: "Uniform", value: "uniform" },
+								{ name: "High-Quality Random", value: "random", },
+								{ name: "Shipgirls", value: "shipgirls", },
+								{ name: "Undies", value: "undies", },
+								{ name: "Elf", value: "elf", },
+								{ name: "Genshin", value: "genshin", },
+								{ name: "Kemonomimi", value: "kemonomimi", },
+								{ name: "Misc", value: "misc", },
+								{ name: "Uniform", value: "uniform", }
 							],
-						},
+						}
 					],
 				},
 				{
@@ -194,15 +194,15 @@ export default new ChatInputCommand({
 							description:
 								"The category you want videos from. Ignore this option for random category.",
 							choices: [
-								{ name: "⭐ Shipgirls", value: "shipgirls" },
-								{ name: "Undies", value: "undies" },
-								{ name: "Elf", value: "elf" },
-								{ name: "Genshin", value: "genshin" },
-								{ name: "Kemonomimi", value: "kemonomimi" },
-								{ name: "Misc", value: "misc" },
-								{ name: "Uniform", value: "uniform" },
+								{ name: "⭐ Shipgirls", value: "shipgirls", },
+								{ name: "Undies", value: "undies", },
+								{ name: "Elf", value: "elf", },
+								{ name: "Genshin", value: "genshin", },
+								{ name: "Kemonomimi", value: "kemonomimi", },
+								{ name: "Misc", value: "misc", },
+								{ name: "Uniform", value: "uniform", }
 							],
-						},
+						}
 					],
 				},
 				{
@@ -229,7 +229,7 @@ export default new ChatInputCommand({
 					type: ApplicationCommandOptionType.Subcommand,
 					name: "cunny",
 					description: "😺🐈",
-				},
+				}
 			],
 		},
 		{
@@ -281,24 +281,27 @@ export default new ChatInputCommand({
 					type: ApplicationCommandOptionType.Subcommand,
 					name: "video",
 					description: "Videos from RedGIFS.",
-				},
+				}
 			],
-		},
+		}
 	],
-	run: async ({ interaction, client }) => {
+	run: async ({ interaction, client, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
 		let lewdEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")
 			.setFooter({
 				text: `Requested by ${interaction.user.tag}`,
-				iconURL: interaction.user.displayAvatarURL({ forceStatic: false }),
+				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 			});
 
 		/**
 		 * Processing Command
 		 */
-		if (interaction.options.getSubcommandGroup() === "anime") {
-			switch (interaction.options.getSubcommand()) {
+		if (interaction.options.getSubcommandGroup() === "anime") 
+		{
+			switch (interaction.options.getSubcommand()) 
+			{
 				case "random": {
 					return nsfwFunc.random(interaction, lewdEmbed);
 				}
@@ -308,13 +311,17 @@ export default new ChatInputCommand({
 				}
 
 				case "fanbox-bomb": {
-					if (interaction.user.id !== "836215956346634270") {
-						try {
+					if (interaction.user.id !== "836215956346634270") 
+					{
+						try 
+						{
 							const guild = await client.guilds.fetch(
 								process.env.guildId || "1020960562710052895"
 							);
 							await guild.members.fetch(interaction.user.id);
-						} catch (error) {
+						}
+						catch (error) 
+						{
 							const exclusive: EmbedBuilder = new EmbedBuilder()
 								.setColor("Red")
 								.setTitle("Exclusive Command!")
@@ -326,7 +333,7 @@ export default new ChatInputCommand({
 									new ButtonBuilder()
 										.setStyle(ButtonStyle.Link)
 										.setLabel("Join Server!")
-										.setEmoji({ name: "🔗" })
+										.setEmoji({ name: "🔗", })
 										.setURL("https://discord.gg/NFkMxFeEWr")
 								);
 							return interaction.editReply({
@@ -383,10 +390,12 @@ export default new ChatInputCommand({
 					const waifu = await response.json();
 					lewdEmbed.setImage(waifu.link);
 
-					return interaction.editReply({ embeds: [lewdEmbed] });
+					return interaction.editReply({ embeds: [lewdEmbed], });
 				}
 			}
-		} else {
+		}
+		else 
+		{
 			let tag = interaction.options.getSubcommand();
 
 			if (tag === "cunny") tag = "pussy";
@@ -410,10 +419,10 @@ export default new ChatInputCommand({
 				(result.link as string).includes("redgifs") ||
 				(result.link as string).includes(".gifv")
 			)
-				return interaction.editReply({ content: result.link });
+				return interaction.editReply({ content: result.link, });
 			lewdEmbed.setImage(result.link);
 
-			return interaction.editReply({ embeds: [lewdEmbed] });
+			return interaction.editReply({ embeds: [lewdEmbed], });
 		}
 	},
 });

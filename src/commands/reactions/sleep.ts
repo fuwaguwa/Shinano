@@ -7,7 +7,8 @@ export default new ChatInputCommand({
 	description: "💤💤💤",
 	cooldown: 4000,
 	category: "Reactions",
-	run: async ({ interaction }) => {
+	run: async ({ interaction, }) => 
+	{
 		if (!interaction.deferred) await interaction.deferReply();
 
 		const reactionEmbed: EmbedBuilder = new EmbedBuilder()
@@ -15,6 +16,6 @@ export default new ChatInputCommand({
 			.setTitle(`Shh...${interaction.user} is sleeping!`)
 			.setImage(await getNekoReactionGIF(interaction.commandName));
 
-		await interaction.editReply({ embeds: [reactionEmbed] });
+		await interaction.editReply({ embeds: [reactionEmbed], });
 	},
 });

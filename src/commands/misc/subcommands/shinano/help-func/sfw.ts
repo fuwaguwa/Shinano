@@ -4,13 +4,14 @@ import {
 	ComponentType,
 	InteractionCollector,
 	StringSelectMenuBuilder,
-	StringSelectMenuInteraction,
+	StringSelectMenuInteraction
 } from "discord.js";
 import { client } from "../../../../..";
 import { ShinanoPaginator } from "../../../../../lib/Pages";
 import { ChatInputCommandCategoryList } from "../../../../../typings/Command";
 
-export = async (interaction: ChatInputCommandInteraction) => {
+export = async (interaction: ChatInputCommandInteraction) => 
+{
 	if (!interaction.deferred) await interaction.deferReply();
 
 	const allCommands: ChatInputCommandCategoryList =
@@ -110,17 +111,22 @@ export = async (interaction: ChatInputCommandInteraction) => {
 			time: 30000,
 		});
 
-	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id)) {
+	collector.on("collect", async i => 
+	{
+		if (!i.customId.endsWith(i.user.id)) 
+		{
 			await i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
-		} else {
+		}
+		else 
+		{
 			await i.deferUpdate();
 
 			const menu = navigation.components[0];
-			for (let j = 0; j < menu.options.length; j++) {
+			for (let j = 0; j < menu.options.length; j++) 
+			{
 				menu.options[j].data.value === i.values[0]
 					? menu.options[j].setDefault(true)
 					: menu.options[j].setDefault(false);

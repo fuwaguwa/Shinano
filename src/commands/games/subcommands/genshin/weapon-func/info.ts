@@ -4,13 +4,14 @@ import {
 	ComponentType,
 	InteractionCollector,
 	StringSelectMenuBuilder,
-	StringSelectMenuInteraction,
+	StringSelectMenuInteraction
 } from "discord.js";
 import { Weapon } from "genshin-db";
 import { ShinanoPaginator } from "../../../../../lib/Pages";
 import { ShinanoWeapon } from "../../../../../structures/Weapon";
 
-export = async (interaction: ChatInputCommandInteraction, weapon: Weapon) => {
+export = async (interaction: ChatInputCommandInteraction, weapon: Weapon) => 
+{
 	const weaponClass = new ShinanoWeapon(weapon);
 	const weaponInfo = weaponClass.getWeaponEmbeds();
 
@@ -54,24 +55,30 @@ export = async (interaction: ChatInputCommandInteraction, weapon: Weapon) => {
 
 	let acPage: number = 0;
 
-	collector.on("collect", async (i) => {
-		if (!i.customId.endsWith(i.user.id)) {
+	collector.on("collect", async i => 
+	{
+		if (!i.customId.endsWith(i.user.id)) 
+		{
 			await i.reply({
 				content: "This menu is not for you!",
 				ephemeral: true,
 			});
-		} else {
+		}
+		else 
+		{
 			await i.deferUpdate();
 
 			const menuOptions = navigation.components[0].options;
 
-			for (let j = 0; j < menuOptions.length; j++) {
+			for (let j = 0; j < menuOptions.length; j++) 
+			{
 				menuOptions[j].data.value === i.values[0]
 					? menuOptions[j].setDefault(true)
 					: menuOptions[j].setDefault(false);
 			}
 
-			switch (i.values[0]) {
+			switch (i.values[0]) 
+			{
 				case "info": {
 					await i.editReply({
 						embeds: [weaponInfo.generalInfo],
@@ -97,8 +104,9 @@ export = async (interaction: ChatInputCommandInteraction, weapon: Weapon) => {
 		}
 	});
 
-	collector.on("end", async (collected, reason) => {
+	collector.on("end", async (collected, reason) => 
+	{
 		navigation.components[0].setDisabled(true);
-		await interaction.editReply({ components: [navigation] });
+		await interaction.editReply({ components: [navigation], });
 	});
 };
