@@ -12,14 +12,14 @@ import sagiri from "sagiri";
 const sClient = sagiri(process.env.saucenaoApiKey);
 
 const emojis = {
-	Pixiv: "1003211984747118642",
-	Twitter: "1003211986697453680",
-	Danbooru: "1003212182156230686",
-	Gelbooru: "1003211988916252682",
+	Pixiv: "<:pixiv:1003211984747118642>",
+	Twitter: "<:twitter:1003211986697453680>",
+	Danbooru: "<:danbooru:1003212182156230686>",
+	Gelbooru: "<:gelbooru:1003211988916252682>",
 	"Yande.re": "🔪",
 	Konachan: "⭐",
-	Fantia: "1003211990673670194",
-	AniDB: "1003211992410107924",
+	Fantia: "<:fantia:1003211990673670194>",
+	AniDB: "<:anidb:1003211992410107924>",
 };
 
 export async function findSauce({
@@ -228,7 +228,7 @@ export async function findSauce({
 			new ButtonBuilder()
 				.setLabel(`${link} (${similarity})`)
 				.setStyle(ButtonStyle.Link)
-				.setEmoji({ id: emojis[link], })
+				.setEmoji(emojis[link])
 				.setURL(source)
 		);
 	}
