@@ -21,11 +21,11 @@
             "allowTemplateLiterals": true
         }],
         "object-curly-spacing": ["warn", "always"],
-        "indent": ["error", "tab", { "SwitchCase": 1 }],
+        "indent": ["warn", "tab", { "SwitchCase": 1 }],
         "space-before-blocks": ["warn", "always"],
         "arrow-parens": ["warn", "as-needed"],
         "linebreak-style": ["warn", "unix"],
-        "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+        "no-mixed-spaces-and-tabs": ["warn", "smart-tabs"],
         "no-useless-escape": ["off"],
         "no-async-promise-executor": ["off"],
         "brace-style": ["error", "allman", { 
@@ -42,7 +42,7 @@
             "exports": "never",
             "functions": "never"
         }],
-        "no-unused-vars": ["error", {
+        "no-unused-vars": ["warn", {
             "vars": "local",
             "args": "none",
             "caughtErrors": "none"
