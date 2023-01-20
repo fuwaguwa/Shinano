@@ -254,7 +254,7 @@ export async function getWaifuReactionGIF(category)
  */
 export async function getNekoReactionGIF(category) 
 {
-	const response = await fetch("https://nekos.best/api/v2/dance");
+	const response = await fetch(`https://nekos.best/api/v2/${category}`);
 	const rep = await response.json();
 
 	return rep.results[0].url;
