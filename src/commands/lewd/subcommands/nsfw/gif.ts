@@ -6,14 +6,29 @@ export = async (
 	lewdEmbed: EmbedBuilder
 ) => 
 {
-	let category = interaction.options.getString("category") || "random";
+	const gifTag: string = interaction.options.getString("gif-category");
 
-	category === "random"
-		? (category = "")
-		: (category = `?category=${category}`);
+	if (!gifTag) 
+	{
+		const response = await fetch(
+			"https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/gif",
+			{
+				method: "GET",
+				headers: {
+					Authorization: process.env.amagiApiKey,
+				},
+			}
+		);
+
+		const waifu = await response.json();
+
+		lewdEmbed.setImage(waifu.link);
+
+		return interaction.editReply({ embeds: [lewdEmbed], });
+	}
 
 	const response = await fetch(
-		`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/fanbox-bomb${category}`,
+		`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/${gifTag}?type=gif`,
 		{
 			method: "GET",
 			headers: {
@@ -21,9 +36,10 @@ export = async (
 			},
 		}
 	);
+
 	const waifu = await response.json();
 
-	return interaction.editReply({
-		content: waifu.links.map(item => item.link).join("\n"),
-	});
+	lewdEmbed.setImage(waifu.link);
+
+	return interaction.editReply({ embeds: [lewdEmbed], });
 };
