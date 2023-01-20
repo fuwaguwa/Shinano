@@ -21,7 +21,7 @@
         "discord.js": "^14.7.1",
         "dotenv": "^10.0.0",
         "fuse.js": "^6.6.2",
-        "genshin-db": "^4.3.4",
+        "genshin-db": "^4.3.5",
         "glob": "^7.2.0",
         "google-translate-api-x": "^10.5.2",
         "mongoose": "^6.3.4",
