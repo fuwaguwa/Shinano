@@ -110,7 +110,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 					: menu.options[j].setDefault(false);
 			}
 
-			await code(interaction, i.values[0]);
+			await code(interaction, nhentaiIP, i.values[0]);
 
 			collector.stop("Processed");
 		}

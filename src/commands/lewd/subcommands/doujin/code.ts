@@ -5,14 +5,16 @@ import { getNHentaiIP } from "../../../../lib/Utils";
 
 export = async (
 	interaction: ChatInputCommandInteraction,
+	nhentaiIP?: string,
 	nuclearLaunchCode?
 ) => 
 {
 	const code =
 		nuclearLaunchCode || interaction.options.getInteger("doujin-code");
-	const nhentaiIP = await getNHentaiIP();
 
-	const response = await fetch(`${nhentaiIP}/api/gallery/${code}`, {
+	const IP = nhentaiIP ? nhentaiIP : await getNHentaiIP();
+
+	const response = await fetch(`${IP}/api/gallery/${code}`, {
 		method: "GET",
 	});
 	const doujin = await response.json();
