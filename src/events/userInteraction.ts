@@ -113,33 +113,7 @@ export default new Event("interactionCreate", async interaction =>
 		/**
 		 * Executing Command
 		 */
-		command.run({ client, interaction, }).catch(async err => 
-		{
-			const errorEmbed: EmbedBuilder = new EmbedBuilder()
-				.setColor("Red")
-				.setDescription(`**${err.name}**: ${err.message}`)
-				.setFooter({
-					text: "Please use the command again or contact support!",
-				});
-			const button: ActionRowBuilder<ButtonBuilder> =
-				new ActionRowBuilder<ButtonBuilder>().setComponents(
-					new ButtonBuilder()
-						.setStyle(ButtonStyle.Link)
-						.setLabel("Support Server")
-						.setEmoji({ name: "⚙️", })
-						.setURL("https://discord.gg/NFkMxFeEWr")
-				);
-
-			interaction.deferred
-				? await interaction.editReply({
-					embeds: [errorEmbed],
-					components: [button],
-				  })
-				: await interaction.reply({
-					embeds: [errorEmbed],
-					components: [button],
-				  });
-		});
+		runCommand(command, interaction);
 		await user.updateOne({ commandsExecuted: user.commandsExecuted + 1, });
 
 		/**

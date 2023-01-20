@@ -1,6 +1,5 @@
 import {
 	ActionRowBuilder,
-	ButtonBuilder,
 	ChatInputCommandInteraction,
 	ComponentType,
 	EmbedBuilder,

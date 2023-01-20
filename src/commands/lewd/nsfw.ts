@@ -320,7 +320,7 @@ export default new ChatInputCommand({
 							);
 							await guild.members.fetch(interaction.user.id);
 						}
-						catch (error) 
+						catch (err) 
 						{
 							const exclusive: EmbedBuilder = new EmbedBuilder()
 								.setColor("Red")

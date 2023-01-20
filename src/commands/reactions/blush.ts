@@ -1,4 +1,4 @@
-import { EmbedBuilder, User } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { getWaifuReactionGIF } from "../../lib/Utils";
 import { ChatInputCommand } from "../../structures/Command";
 

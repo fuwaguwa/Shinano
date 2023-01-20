@@ -2,7 +2,6 @@ import {
 	ActionRowBuilder,
 	ButtonBuilder,
 	ButtonStyle,
-	Embed,
 	EmbedBuilder,
 	Guild,
 	TextChannel

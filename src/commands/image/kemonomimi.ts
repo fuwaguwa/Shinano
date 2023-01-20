@@ -1,5 +1,4 @@
 import { EmbedBuilder } from "discord.js";
-import fetch from "node-fetch";
 import { ChatInputCommand } from "../../structures/Command";
 import neko from "nekos-fun";
 

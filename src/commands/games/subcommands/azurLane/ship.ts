@@ -96,8 +96,6 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 
 	collector.on("collect", async i => 
 	{
-		const customId = i.customId.split("-")[0];
-
 		if (!i.customId.endsWith(i.user.id)) 
 		{
 			await i.reply({
@@ -160,6 +158,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 					skinPage = await ShinanoPaginator({
 						interaction,
 						menu: categories,
+						lastPage: skinPage,
 						interactorOnly: true,
 						pages: ship.skins,
 						time: 120000,
@@ -172,6 +171,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 					galleryPage = await ShinanoPaginator({
 						interaction,
 						menu: categories,
+						lastPage: galleryPage,
 						interactorOnly: true,
 						pages: ship.gallery,
 						time: 120000,
