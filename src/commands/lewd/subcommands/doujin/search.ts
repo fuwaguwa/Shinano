@@ -80,7 +80,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			time: 60000,
 		});
 
-	await ShinanoPaginator({
+	ShinanoPaginator({
 		interaction,
 		interactorOnly: true,
 		pages: doujinResults,
@@ -88,7 +88,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		time: 60000,
 	});
 
-	collector.on("collect", async i => 
+	collector.on("collect", async (i) => 
 	{
 		if (!i.customId.endsWith(i.user.id)) 
 		{

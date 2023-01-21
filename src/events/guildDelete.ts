@@ -3,7 +3,7 @@ import { client } from "..";
 import { updateServerCount } from "../lib/Utils";
 import { Event } from "../structures/Event";
 
-export default new Event("guildDelete", async guild => 
+export default new Event("guildDelete", async (guild) => 
 {
 	if (guild.id === "1004919883387121664") return;
 

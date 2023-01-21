@@ -189,7 +189,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 
 	let tierCount: number;
 
-	collector.on("collect", async i => 
+	collector.on("collect", async (i) => 
 	{
 		const customId = i.customId.split("-")[0];
 

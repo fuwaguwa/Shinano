@@ -8,7 +8,7 @@ export = async (interaction: ChatInputCommandInteraction, enemy: Enemy) =>
 	 * Drops
 	 */
 	const possibleDrops: string[] = [];
-	enemy.rewardpreview.forEach(reward => 
+	enemy.rewardpreview.forEach((reward) => 
 	{
 		if (!possibleDrops.includes(reward.name)) possibleDrops.push(reward.name);
 	});

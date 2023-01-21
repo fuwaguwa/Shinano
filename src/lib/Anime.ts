@@ -76,7 +76,7 @@ export async function animeInfo(
 
 	if (menu) 
 	{
-		await ShinanoPaginator({
+		ShinanoPaginator({
 			interaction,
 			interactorOnly: true,
 			time: 120000,
@@ -86,7 +86,7 @@ export async function animeInfo(
 	}
 	else 
 	{
-		await ShinanoPaginator({
+		ShinanoPaginator({
 			interaction,
 			interactorOnly: true,
 			time: 120000,

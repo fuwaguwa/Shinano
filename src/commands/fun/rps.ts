@@ -42,7 +42,7 @@ async function startDuel(
 			time: 30000,
 		});
 
-	duel.on("collect", async i => 
+	duel.on("collect", async (i) => 
 	{
 		const choice = i.customId.split("-")[0];
 		const challengerId = i.customId.split("-")[1];
@@ -262,7 +262,7 @@ export default new ChatInputCommand({
 					time: 30000,
 				});
 
-			acceptor.on("collect", async i => 
+			acceptor.on("collect", async (i) => 
 			{
 				const customId = i.customId.split("-")[0];
 
@@ -374,7 +374,7 @@ export default new ChatInputCommand({
 					time: 30000,
 				});
 
-			collector.on("collect", async i => 
+			collector.on("collect", async (i) => 
 			{
 				const customId = i.customId.split("-")[0];
 

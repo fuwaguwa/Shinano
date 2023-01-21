@@ -152,7 +152,7 @@ export async function findSauce({
 	await interaction.editReply({ embeds: [wait], });
 
 	const sortedLinks = {};
-	links.forEach(link => 
+	links.forEach((link) => 
 	{
 		switch (true) 
 		{

@@ -21,7 +21,7 @@ function runCommand(
 	interaction: UserContextMenuCommandInteraction
 ) 
 {
-	command.run({ client, interaction, }).catch(async err => 
+	command.run({ client, interaction, }).catch(async (err) => 
 	{
 		console.error(err);
 
@@ -59,7 +59,7 @@ function runCommand(
 	});
 }
 
-export default new Event("interactionCreate", async interaction => 
+export default new Event("interactionCreate", async (interaction) => 
 {
 	if (!interaction.guild) return;
 	if (!interaction.isUserContextMenuCommand()) return;

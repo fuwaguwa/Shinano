@@ -53,17 +53,17 @@ export class Shinano extends Client
 		this.login(process.env.botToken);
 
 		// Error Catcher
-		process.on("unhandledRejection", async err => 
+		process.on("unhandledRejection", async (err) => 
 		{
 			console.error("Unhandled Promise Rejection:\n", err);
 		});
 
-		process.on("uncaughtException", async err => 
+		process.on("uncaughtException", async (err) => 
 		{
 			console.error("Uncaught Promise Exception:\n", err);
 		});
 
-		process.on("uncaughtExceptionMonitor", async err => 
+		process.on("uncaughtExceptionMonitor", async (err) => 
 		{
 			console.error("Uncaught Promise Exception (Monitor):\n", err);
 		});
@@ -134,7 +134,7 @@ export class Shinano extends Client
 			{
 				console.log("Connected to database!");
 			})
-			.catch(err => 
+			.catch((err) => 
 			{
 				console.log(err);
 			});
@@ -190,7 +190,7 @@ export class Shinano extends Client
 				].includes(category)
 			) 
 			{
-				this.catagorizedCommands[category].forEach(command => 
+				this.catagorizedCommands[category].forEach((command) => 
 				{
 					if (!command.options) 
 					{
@@ -198,7 +198,7 @@ export class Shinano extends Client
 					}
 					else 
 					{
-						command.options.forEach(option => 
+						command.options.forEach((option) => 
 						{
 							arr.push({
 								name: option.name,
@@ -268,7 +268,7 @@ export class Shinano extends Client
 			`${__dirname}/../menu/user/*/*{.ts,.js}`
 		);
 
-		commandFiles.forEach(async filePath => 
+		commandFiles.forEach(async (filePath) => 
 		{
 			const command: ChatInputCommandType = await this.importFile(filePath);
 			if (!command.name) return;
@@ -280,7 +280,7 @@ export class Shinano extends Client
 			shinanoCommands.push(command);
 		});
 
-		messageFiles.forEach(async filePath => 
+		messageFiles.forEach(async (filePath) => 
 		{
 			const command: MessageCommandType = await this.importFile(filePath);
 			if (!command.name) return;
@@ -289,7 +289,7 @@ export class Shinano extends Client
 			shinanoCommands.push(command);
 		});
 
-		userFiles.forEach(async filePath => 
+		userFiles.forEach(async (filePath) => 
 		{
 			const command: UserCommandType = await this.importFile(filePath);
 			if (!command.name) return;
@@ -309,7 +309,7 @@ export class Shinano extends Client
 		// Initiating Event Listeners
 		const eventFiles = await promiseGlob(`${__dirname}/../events/*{.ts,.js}`);
 
-		eventFiles.forEach(async filePath => 
+		eventFiles.forEach(async (filePath) => 
 		{
 			const event: Event<keyof ClientEvents> = await this.importFile(filePath);
 			this.on(event.event, event.run);

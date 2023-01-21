@@ -94,7 +94,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	let skinPage: number = 0;
 	let galleryPage: number = 0;
 
-	collector.on("collect", async i => 
+	collector.on("collect", async (i) => 
 	{
 		if (!i.customId.endsWith(i.user.id)) 
 		{
@@ -155,26 +155,32 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 				}
 
 				case "skins": {
-					skinPage = await ShinanoPaginator({
+					ShinanoPaginator({
 						interaction,
 						menu: categories,
 						lastPage: skinPage,
 						interactorOnly: true,
 						pages: ship.skins,
 						time: 120000,
+					}).then((page) => 
+					{
+						skinPage = page;
 					});
 
 					break;
 				}
 
 				case "gallery": {
-					galleryPage = await ShinanoPaginator({
+					ShinanoPaginator({
 						interaction,
 						menu: categories,
 						lastPage: galleryPage,
 						interactorOnly: true,
 						pages: ship.gallery,
 						time: 120000,
+					}).then((page) => 
+					{
+						galleryPage = page;
 					});
 
 					break;

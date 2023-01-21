@@ -16,7 +16,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	 * Getting chapter
 	 */
 	const chapterNumber: string = interaction.options.getString("chapter-number");
-	const chapter = AL.chapters.filter(chapter => 
+	const chapter = AL.chapters.filter((chapter) => 
 	{
 		return chapter.id === chapterNumber;
 	});
@@ -29,7 +29,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	const normalLevels: EmbedBuilder[] = chapterInfo(info, "normal");
 	if (!info[1].hard) 
 	{
-		return await ShinanoPaginator({
+		return ShinanoPaginator({
 			interaction,
 			interactorOnly: true,
 			pages: normalLevels,
@@ -70,7 +70,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 		components: [menu],
 	});
 
-	await ShinanoPaginator({
+	ShinanoPaginator({
 		interaction,
 		interactorOnly: true,
 		pages: normalLevels,
@@ -84,7 +84,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 			time: 120000,
 		});
 
-	collector.on("collect", async i => 
+	collector.on("collect", async (i) => 
 	{
 		if (!i.customId.endsWith(i.user.id)) 
 		{
@@ -108,7 +108,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 			switch (i.values[0]) 
 			{
 				case "normal": {
-					await ShinanoPaginator({
+					ShinanoPaginator({
 						interaction,
 						interactorOnly: true,
 						pages: normalLevels,
@@ -120,7 +120,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 				}
 
 				case "hard": {
-					await ShinanoPaginator({
+					ShinanoPaginator({
 						interaction,
 						interactorOnly: true,
 						pages: hardLevels,

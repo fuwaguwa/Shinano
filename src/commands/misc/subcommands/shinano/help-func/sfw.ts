@@ -97,7 +97,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		components: [navigation],
 	});
 
-	await ShinanoPaginator({
+	ShinanoPaginator({
 		interaction,
 		menu: navigation,
 		pages: allCommands.Fun,
@@ -111,7 +111,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			time: 30000,
 		});
 
-	collector.on("collect", async i => 
+	collector.on("collect", async (i) => 
 	{
 		if (!i.customId.endsWith(i.user.id)) 
 		{
@@ -132,7 +132,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 					: menu.options[j].setDefault(false);
 			}
 
-			await ShinanoPaginator({
+			ShinanoPaginator({
 				interaction,
 				menu: navigation,
 				pages: allCommands[i.values[0]],

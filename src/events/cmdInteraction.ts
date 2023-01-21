@@ -22,7 +22,7 @@ function runCommand(
 	interaction: ChatInputCommandInteraction
 ) 
 {
-	command.run({ client, interaction, }).catch(async err => 
+	command.run({ client, interaction, }).catch(async (err) => 
 	{
 		console.error(err);
 
@@ -60,7 +60,7 @@ function runCommand(
 	});
 }
 
-export default new Event("interactionCreate", async interaction => 
+export default new Event("interactionCreate", async (interaction) => 
 {
 	if (!interaction.guild) return;
 	if (!interaction.isChatInputCommand()) return;
@@ -249,7 +249,7 @@ export default new Event("interactionCreate", async interaction =>
 		fullCommand = fullCommand + " " + options._subcommand;
 	if (options._hoistedOptions.length > 0) 
 	{
-		options._hoistedOptions.forEach(option => 
+		options._hoistedOptions.forEach((option) => 
 		{
 			option.attachment
 				? (fullCommand = `${fullCommand} ${option.name}:${option.attachment.proxyURL}`)

@@ -26,7 +26,7 @@ function translateTweet(text: string, interaction: ButtonInteraction)
 		to: "en",
 		requestFunction: fetch,
 	})
-		.then(async translations => 
+		.then(async (translations) => 
 		{
 			const translateEmbed: EmbedBuilder = new EmbedBuilder()
 				.setColor("#2f3136")
@@ -36,7 +36,7 @@ function translateTweet(text: string, interaction: ButtonInteraction)
 
 			await interaction.editReply({ embeds: [translateEmbed], });
 		})
-		.catch(async err => 
+		.catch(async (err) => 
 		{
 			console.error(err);
 
@@ -69,7 +69,7 @@ function translateTweet(text: string, interaction: ButtonInteraction)
 		});
 }
 
-export default new Event("interactionCreate", async interaction => 
+export default new Event("interactionCreate", async (interaction) => 
 {
 	if (!interaction.isButton()) return;
 

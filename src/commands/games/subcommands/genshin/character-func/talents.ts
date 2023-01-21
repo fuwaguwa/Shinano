@@ -139,7 +139,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	for (let level in talentCosts) 
 	{
 		let matz = [];
-		talentCosts[level].forEach(item => 
+		talentCosts[level].forEach((item) => 
 		{
 			matz.push(`${item.count}x **${item.name}**`);
 		});
@@ -195,15 +195,22 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			time: 120000,
 		});
 
-	await ShinanoPaginator({
+	let costPage: number = 0;
+	let infoPage: number = 0;
+
+	ShinanoPaginator({
 		interaction,
 		menu: navigation,
 		interactorOnly: true,
+		lastPage: infoPage,
 		pages: charTalentsEmbeds,
 		time: 120000,
+	}).then((page) => 
+	{
+		infoPage = page;
 	});
 
-	collector.on("collect", async i => 
+	collector.on("collect", async (i) => 
 	{
 		if (!i.customId.endsWith(i.user.id)) 
 		{
@@ -228,24 +235,32 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			switch (i.values[0]) 
 			{
 				case "info": {
-					await ShinanoPaginator({
+					ShinanoPaginator({
 						interaction,
 						menu: navigation,
+						lastPage: infoPage,
 						interactorOnly: true,
 						pages: charTalentsEmbeds,
 						time: 120000,
+					}).then((page) => 
+					{
+						infoPage = page;
 					});
 
 					break;
 				}
 
 				case "costs": {
-					await ShinanoPaginator({
+					ShinanoPaginator({
 						interaction,
 						menu: navigation,
+						lastPage: costPage,
 						interactorOnly: true,
 						pages: talentsCostsEmbeds,
 						time: 120000,
+					}).then((page) => 
+					{
+						costPage = page;
 					});
 
 					break;

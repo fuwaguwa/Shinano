@@ -55,7 +55,7 @@ export = async (interaction: ChatInputCommandInteraction, weapon: Weapon) =>
 
 	let acPage: number = 0;
 
-	collector.on("collect", async i => 
+	collector.on("collect", async (i) => 
 	{
 		if (!i.customId.endsWith(i.user.id)) 
 		{
@@ -89,13 +89,16 @@ export = async (interaction: ChatInputCommandInteraction, weapon: Weapon) =>
 				}
 
 				case "costs": {
-					acPage = await ShinanoPaginator({
+					ShinanoPaginator({
 						interaction,
 						menu: navigation,
 						interactorOnly: true,
 						lastPage: acPage,
 						pages: weaponInfo.ascensionCost,
 						time: 120000,
+					}).then((page) => 
+					{
+						acPage = page;
 					});
 
 					break;

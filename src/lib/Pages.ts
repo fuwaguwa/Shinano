@@ -96,7 +96,7 @@ export async function ShinanoPaginator({
 
 		const collector = await message.createMessageComponentCollector({ time, });
 
-		collector.on("collect", async i => 
+		collector.on("collect", async (i) => 
 		{
 			const customId = i.customId.split("-")[0];
 

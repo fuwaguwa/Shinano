@@ -14,7 +14,7 @@ async function getRandomDoujin(nhentaiIP)
 async function filterTag(doujin) 
 {
 	const tagInfo = getDoujinTags(doujin);
-	const filter = tagInfo.tags.find(tag => 
+	const filter = tagInfo.tags.find((tag) => 
 	{
 		return (
 			tag.includes("Lolicon") ||

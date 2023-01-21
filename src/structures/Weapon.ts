@@ -49,7 +49,7 @@ export class ShinanoWeapon
 			{
 				if (i == 0) 
 				{
-					weapon[`r${i + 1}`].forEach(stat => 
+					weapon[`r${i + 1}`].forEach((stat) => 
 					{
 						this.refinementStats.push(stat);
 					});
@@ -140,7 +140,7 @@ export class ShinanoWeapon
 		{
 			let materials = [];
 
-			weapon.costs[ascensionLevel].forEach(material => 
+			weapon.costs[ascensionLevel].forEach((material) => 
 			{
 				materials.push(`${material.count}x **${material.name}**`);
 			});
@@ -238,7 +238,7 @@ export class ShinanoWeapon
 		if (weapon.effect) 
 		{
 			const refStats: string[] = [];
-			weapon[`r${refinementLevel}`].forEach(stat => 
+			weapon[`r${refinementLevel}`].forEach((stat) => 
 			{
 				refStats.push(`**${stat}**`);
 			});

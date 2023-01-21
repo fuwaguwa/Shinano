@@ -86,7 +86,7 @@ export async function startTweetListener()
 
 	stream.autoReconnect = true;
 
-	stream.on(ETwitterStreamEvent.ConnectionError, err => 
+	stream.on(ETwitterStreamEvent.ConnectionError, (err) => 
 	{
 		console.log("Twitter: Connection Error", err);
 	});
@@ -98,11 +98,11 @@ export async function startTweetListener()
 	{
 		console.log("Twitter: Reconnected to stream");
 	});
-	stream.on(ETwitterStreamEvent.ReconnectAttempt, tries => 
+	stream.on(ETwitterStreamEvent.ReconnectAttempt, (tries) => 
 	{
 		console.log(`Twitter: Reconnection Attempt#${tries}`);
 	});
-	stream.on(ETwitterStreamEvent.ReconnectError, err => 
+	stream.on(ETwitterStreamEvent.ReconnectError, (err) => 
 	{
 		console.log("Twitter: Reconnect Error", err);
 	});

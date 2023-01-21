@@ -10,14 +10,14 @@ import { client } from "..";
 import { updateServerCount } from "../lib/Utils";
 import { Event } from "../structures/Event";
 
-export default new Event("guildCreate", async guild => 
+export default new Event("guildCreate", async (guild) => 
 {
 	await guild
 		.fetchAuditLogs({
 			type: 28,
 			limit: 1,
 		})
-		.then(async log => 
+		.then(async (log) => 
 		{
 			const logGuild: Guild = await client.guilds.fetch("1002188088942022807");
 			const ioChannel: TextChannel = (await logGuild.channels.fetch(
@@ -49,7 +49,7 @@ export default new Event("guildCreate", async guild =>
 	/**
 	 * Join message
 	 */
-	await guild.channels.cache.some(channel => 
+	await guild.channels.cache.some((channel) => 
 	{
 		if (
 			channel.name.includes("general") ||

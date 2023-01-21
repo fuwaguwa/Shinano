@@ -43,7 +43,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				.setCustomId(`CHARES-${interaction.user.id}`)
 				.setPlaceholder(`Character Search Results (${charResponse.length})`)
 		);
-	charResponse.forEach(result => 
+	charResponse.forEach((result) => 
 	{
 		results.components[0].addOptions({
 			label: `${result.name} | ${
@@ -63,7 +63,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			time: 120000,
 		});
 
-	collector.on("collect", async i => 
+	collector.on("collect", async (i) => 
 	{
 		if (!i.customId.endsWith(i.user.id)) 
 		{
@@ -85,7 +85,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			let VAs: string[] = [];
 			if (character && character.voices) 
 			{
-				character.voices.forEach(va => 
+				character.voices.forEach((va) => 
 				{
 					if (va.language !== "Japanese" && va.language !== "English") return;
 					VAs.push(`[${va.person.name}](${va.person.url})`);

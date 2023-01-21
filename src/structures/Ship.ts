@@ -389,7 +389,7 @@ export class ShinanoShip
 			.setThumbnail(ship.thumbnail)
 			.setTitle(`${ship.names.en}'s Skills`);
 
-		ship.skills.forEach(skill => 
+		ship.skills.forEach((skill) => 
 		{
 			let skillType: string;
 
@@ -491,7 +491,7 @@ export class ShinanoShip
 		const ship = this.ship;
 		let description: string;
 
-		ship.skins.forEach(skin => 
+		ship.skins.forEach((skin) => 
 		{
 			switch (skin.info.obtainedFrom.toLowerCase()) 
 			{
@@ -545,7 +545,7 @@ export class ShinanoShip
 
 		if (ship.gallery.length != 0) 
 		{
-			ship.gallery.forEach(image => 
+			ship.gallery.forEach((image) => 
 			{
 				this.gallery.push(
 					new EmbedBuilder()

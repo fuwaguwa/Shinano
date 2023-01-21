@@ -43,7 +43,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				.setCustomId(`RES-${interaction.user.id}`)
 				.setPlaceholder(`Anime Search Results (${animeResponse.length})`)
 		);
-	animeResponse.forEach(result => 
+	animeResponse.forEach((result) => 
 	{
 		results.components[0].addOptions({
 			label: `${result.title}`,
@@ -61,7 +61,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			time: 120000,
 		});
 
-	collector.on("collect", async i => 
+	collector.on("collect", async (i) => 
 	{
 		if (!i.customId.endsWith(i.user.id)) 
 		{

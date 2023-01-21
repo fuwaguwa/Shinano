@@ -63,7 +63,7 @@ export class ShinanoCharacter
 			.setTitle(`${charName ? charName : character.name}'s Constellations`)
 			.setThumbnail(character.images.icon);
 
-		consInfo.forEach(cons => 
+		consInfo.forEach((cons) => 
 		{
 			this.constellations.addFields({
 				name: cons.name,
@@ -183,7 +183,7 @@ export class ShinanoCharacter
 		{
 			let materials = [];
 
-			character.costs[ascensionLevel].forEach(material => 
+			character.costs[ascensionLevel].forEach((material) => 
 			{
 				materials.push(`${material.count}x **${material.name}**`);
 			});

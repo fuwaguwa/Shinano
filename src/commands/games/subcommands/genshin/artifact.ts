@@ -141,7 +141,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			time: 120000,
 		});
 
-	collector.on("collect", async i => 
+	collector.on("collect", async (i) => 
 	{
 		if (!i.customId.endsWith(i.user.id)) 
 		{

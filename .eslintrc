@@ -23,7 +23,9 @@
         "object-curly-spacing": ["warn", "always"],
         "indent": ["warn", "tab", { "SwitchCase": 1 }],
         "space-before-blocks": ["warn", "always"],
-        "arrow-parens": ["warn", "as-needed"],
+        "arrow-parens": ["warn", "as-needed", {
+            "requireForBlockBody": true
+        }],
         "linebreak-style": ["warn", "windows"],
         "no-mixed-spaces-and-tabs": ["warn", "smart-tabs"],
         "no-useless-escape": ["off"],

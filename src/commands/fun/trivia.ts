@@ -204,7 +204,7 @@ export default new ChatInputCommand({
 			time: 15000,
 		});
 
-		collector.on("collect", async i => 
+		collector.on("collect", async (i) => 
 		{
 			const answer = i.customId.split("-")[0];
 

@@ -53,7 +53,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 		if (flagshipHullType.includes(ship.hullType)) expMultiplier = 0.5;
 	}
 
-	const chapter = AL.chapters.filter(chapter => 
+	const chapter = AL.chapters.filter((chapter) => 
 	{
 		return chapter.id === chapterNum;
 	});

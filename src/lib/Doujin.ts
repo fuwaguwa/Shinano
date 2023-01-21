@@ -80,7 +80,7 @@ export function getDoujinTags(doujin)
 	const doujinCategories: string[] = [];
 	const doujinGroups: string[] = [];
 
-	doujin.tags.forEach(tag => 
+	doujin.tags.forEach((tag) => 
 	{
 		let tagName = toTitleCase(tag.name);
 		switch (tag.type) 
@@ -200,7 +200,7 @@ export async function displayDoujin(
 	/**
 	 * Filtering Tags
 	 */
-	const filter = tagInfo.tags.find(tag => 
+	const filter = tagInfo.tags.find((tag) => 
 	{
 		return (
 			tag.includes("Lolicon") ||
@@ -268,7 +268,7 @@ export async function displayDoujin(
 
 	let lastPage: number = 0;
 
-	collector.on("collect", async i => 
+	collector.on("collect", async (i) => 
 	{
 		if (!i.customId.endsWith(`${i.user.id}`)) 
 		{
@@ -303,13 +303,16 @@ export async function displayDoujin(
 
 						if (doujinPages) 
 						{
-							lastPage = await ShinanoPaginator({
+							ShinanoPaginator({
 								interaction,
 								interactorOnly: true,
 								pages: doujinPages,
 								lastPage,
 								menu: navigation,
 								time: 150000,
+							}).then((page) => 
+							{
+								lastPage = page;
 							});
 						}
 						else 

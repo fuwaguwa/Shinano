@@ -70,7 +70,7 @@ export function gearStats(gearStats, embed: EmbedBuilder)
 			case "aaguns": {
 				let guns: string[] = [];
 
-				gearStats[stat].stats.forEach(unit => 
+				gearStats[stat].stats.forEach((unit) => 
 				{
 					guns.push(unit.formatted);
 				});
@@ -83,7 +83,7 @@ export function gearStats(gearStats, embed: EmbedBuilder)
 			case "ordnance": {
 				let ordnances: string[] = [];
 
-				gearStats[stat].stats.forEach(unit => 
+				gearStats[stat].stats.forEach((unit) => 
 				{
 					ordnances.push(unit.formatted);
 				});
@@ -181,7 +181,7 @@ export function chapterInfo(chapterInfo, chapterMode)
 	{
 		const blueprints: string[] = [];
 
-		chapterInfo[i][chapterMode].blueprintDrops.forEach(blueprint => 
+		chapterInfo[i][chapterMode].blueprintDrops.forEach((blueprint) => 
 		{
 			const name = blueprint.tier + " " + blueprint.name;
 			blueprints.push(name);

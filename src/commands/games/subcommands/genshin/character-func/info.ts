@@ -65,7 +65,7 @@ export = async (
 	let consPage: number = 0;
 	let acPage: number = 0;
 
-	collector.on("collect", async i => 
+	collector.on("collect", async (i) => 
 	{
 		if (!i.customId.endsWith(i.user.id)) 
 		{
@@ -101,13 +101,16 @@ export = async (
 				case "constellations": {
 					if (characterInfo.travellerConstellations.length != 0) 
 					{
-						consPage = await ShinanoPaginator({
+						ShinanoPaginator({
 							interaction,
 							menu: navigation,
 							interactorOnly: true,
 							lastPage: consPage,
 							pages: characterInfo.travellerConstellations,
 							time: 120000,
+						}).then((page) => 
+						{
+							consPage = page;
 						});
 					}
 					else 
@@ -122,13 +125,16 @@ export = async (
 				}
 
 				case "costs": {
-					acPage = await ShinanoPaginator({
+					ShinanoPaginator({
 						interaction,
 						menu: navigation,
 						interactorOnly: true,
 						lastPage: acPage,
 						pages: characterInfo.ascensionCosts,
 						time: 120000,
+					}).then((page) => 
+					{
+						acPage = page;
 					});
 
 					break;
