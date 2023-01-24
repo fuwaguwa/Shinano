@@ -12,7 +12,7 @@ import fetch from "node-fetch";
 export default new ChatInputCommand({
 	name: "nsfw",
 	description: "NSFW Commands - Anime & IRL",
-	cooldown: 45000,
+	cooldown: 4000,
 	nsfw: true,
 	voteRequired: true,
 	category: "NSFW",
