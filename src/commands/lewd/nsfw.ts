@@ -170,7 +170,8 @@ export default new ChatInputCommand({
 				{
 					type: ApplicationCommandOptionType.Subcommand,
 					name: "undies",
-					description: "Undies, sportwears, swimsuits and bodysuits.",
+					description:
+						"Undies, sportwears, swimsuits, bodysuits and stockings/thigh highs.",
 				},
 				{
 					type: ApplicationCommandOptionType.Subcommand,
