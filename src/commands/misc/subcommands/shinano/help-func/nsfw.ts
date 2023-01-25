@@ -30,7 +30,8 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		.setTitle("NSFW Commands")
 		.setColor("#2f3136")
 		.setDescription(
-			"Tip: You can quickly type `/<tag>` or `/<category>` for the commands. E.g `/random`, `/irl`"
+			"Tip: You can quickly type `/<tag>` or `/<category>` for the commands. E.g `/thighs`, `/irl`\n" +
+				"You could also use the **up arrow key** to quickly type in the previous command that you have executed!"
 		)
 		.setFields(
 			{

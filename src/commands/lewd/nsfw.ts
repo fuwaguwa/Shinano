@@ -98,11 +98,13 @@ export default new ChatInputCommand({
 						{
 							type: ApplicationCommandOptionType.String,
 							name: "type",
+							required: true,
 							description:
 								"File type. Ignore this option for random file type.",
 							choices: [
+								{ name: "Video", value: "video", },
 								{ name: "GIF", value: "gif", },
-								{ name: "Video", value: "video", }
+								{ name: "Random", value: "random", }
 							],
 						},
 						{
