@@ -38,17 +38,21 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				value: "`sauce`",
 			},
 			{
-				name: "Porn Commands:",
+				name: "/nsfw irl | Porn Commands:",
 				value:
 					"`ass`, `a-level (anal)`, `breasts`, `cunny`, `cosplay`, `nut`, `oral (blowjob)`, `random`, `video`",
 			},
 			{
-				name: "Hentai Commands:",
+				name: "/nsfw anime | H-Animations:",
+				value: "`animation`",
+			},
+			{
+				name: "/nsfw anime | Hentai Commands:",
 				value:
 					"`ass`, `a-level (anal)`, `bomb`, `fanbox-bomb`, `breasts`, `cunny`, `feet`, `gif`, `nekomimi`, `nut`, `oral (blowjob)`, `paizuri`, `random`, `thighs`",
 			},
 			{
-				name: "Private Collection (High-Quality):",
+				name: "/nsfw anime | Private Collection (High-Quality):",
 				value:
 					"`elf`, `fanbox`, `genshin`, `kemonomimi`, `misc`, `shipgirls`, `undies`, `yuri`",
 			},

@@ -92,6 +92,38 @@ export default new ChatInputCommand({
 				},
 				{
 					type: ApplicationCommandOptionType.Subcommand,
+					name: "animation",
+					description: "When pictures are not enough...",
+					options: [
+						{
+							type: ApplicationCommandOptionType.String,
+							name: "type",
+							description:
+								"File type. Ignore this option for random file type.",
+							choices: [
+								{ name: "GIF", value: "gif", },
+								{ name: "Video", value: "video", }
+							],
+						},
+						{
+							type: ApplicationCommandOptionType.String,
+							name: "category",
+							description:
+								"The category you want animations from. Ignore this option for random category.",
+							choices: [
+								{ name: "Shipgirls", value: "shipgirls", },
+								{ name: "Undies", value: "undies", },
+								{ name: "Elf", value: "elf", },
+								{ name: "Genshin", value: "genshin", },
+								{ name: "Kemonomimi", value: "kemonomimi", },
+								{ name: "Misc", value: "misc", },
+								{ name: "Uniform", value: "uniform", }
+							],
+						}
+					],
+				},
+				{
+					type: ApplicationCommandOptionType.Subcommand,
 					name: "a-level",
 					description: "There's more than one hole.",
 				},
@@ -132,29 +164,6 @@ export default new ChatInputCommand({
 				},
 				{
 					type: ApplicationCommandOptionType.Subcommand,
-					name: "gif",
-					description: "In case pictures are not enough to your satisfaction.",
-					options: [
-						{
-							type: ApplicationCommandOptionType.String,
-							name: "gif-category",
-							description:
-								"The category you want GIFs from. Ignore this option for random category.",
-							choices: [
-								{ name: "High-Quality Random", value: "random", },
-								{ name: "Shipgirls", value: "shipgirls", },
-								{ name: "Undies", value: "undies", },
-								{ name: "Elf", value: "elf", },
-								{ name: "Genshin", value: "genshin", },
-								{ name: "Kemonomimi", value: "kemonomimi", },
-								{ name: "Misc", value: "misc", },
-								{ name: "Uniform", value: "uniform", }
-							],
-						}
-					],
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
 					name: "genshin",
 					description: "Genshin Girls",
 				},
@@ -182,28 +191,6 @@ export default new ChatInputCommand({
 					type: ApplicationCommandOptionType.Subcommand,
 					name: "elf",
 					description: "Thicc and pointy-eared.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "video",
-					description: "GIFs! WITH SOUND!",
-					options: [
-						{
-							type: ApplicationCommandOptionType.String,
-							name: "video-category",
-							description:
-								"The category you want videos from. Ignore this option for random category.",
-							choices: [
-								{ name: "⭐ Shipgirls", value: "shipgirls", },
-								{ name: "Undies", value: "undies", },
-								{ name: "Elf", value: "elf", },
-								{ name: "Genshin", value: "genshin", },
-								{ name: "Kemonomimi", value: "kemonomimi", },
-								{ name: "Misc", value: "misc", },
-								{ name: "Uniform", value: "uniform", }
-							],
-						}
-					],
 				},
 				{
 					type: ApplicationCommandOptionType.Subcommand,
@@ -288,7 +275,7 @@ export default new ChatInputCommand({
 	run: async ({ interaction, client, }) => 
 	{
 		if (!interaction.deferred) await interaction.deferReply();
-		let lewdEmbed: EmbedBuilder = new EmbedBuilder()
+		const lewdEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")
 			.setFooter({
 				text: `Requested by ${interaction.user.tag}`,
@@ -346,6 +333,10 @@ export default new ChatInputCommand({
 					return nsfwFunc.fanboxBomb(interaction);
 				}
 
+				case "animation": {
+					return nsfwFunc.animation(interaction);
+				}
+
 				case "fanbox": {
 					return nsfwFunc.fanbox(interaction, lewdEmbed);
 				}
@@ -363,10 +354,6 @@ export default new ChatInputCommand({
 						lewdEmbed,
 						interaction.options.getSubcommand()
 					);
-				}
-
-				case "gif": {
-					return nsfwFunc.gif(interaction, lewdEmbed);
 				}
 
 				default: {

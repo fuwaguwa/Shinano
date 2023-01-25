@@ -18,10 +18,7 @@ async function videoFetch(category)
 	return responseJson.body.link;
 }
 
-export = async (interaction: ChatInputCommandInteraction) => 
+export = async (interaction: ChatInputCommandInteraction, category: string) => 
 {
-	const videoCategory: string =
-		interaction.options.getString("video-category") || "random";
-
-	await interaction.editReply({ content: await videoFetch(videoCategory), });
+	await interaction.editReply({ content: await videoFetch(category), });
 };
