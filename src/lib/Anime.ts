@@ -53,9 +53,7 @@ export async function animeInfo(
 				value:
 					`**Rating**: ${anime.rating}\n` +
 					`**Genres**: ${genres.join(", ")}\n` +
-					`**JP Title**: ${
-						anime.title_japanese ? anime.title_japanese : "None"
-					}\n` +
+					`**JP Title**: ${anime.title_japanese || "None"}\n` +
 					`**Trailer**: ${
 						anime.trailer.url ? `[Trailer Link](${anime.trailer.url})` : "None"
 					}\n` +
@@ -104,13 +102,9 @@ export async function characterInfo(character, VAs)
 {
 	const characterEmbed: EmbedBuilder = new EmbedBuilder()
 		.setColor("Random")
-		.setTitle(
-			`${character.name} | ${
-				character.name_kanji ? character.name_kanji : "No Kanji Name"
-			}`
-		)
+		.setTitle(`${character.name} | ${character.name_kanji || "No Kanji Name"}`)
 		.setThumbnail(character.images.jpg.image_url)
-		.setDescription(character.about ? character.about : "No Biography Found");
+		.setDescription(character.about || "No Biography Found");
 
 	if (character.anime.length != 0) 
 	{

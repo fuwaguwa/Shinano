@@ -82,10 +82,7 @@ export class ShinanoWeapon
 		{
 			embed.addFields({
 				name: `Effect: ${this.weapon.effectname}`,
-				value: strFormat(
-					this.weapon.effect,
-					refStats ? refStats : this.refinementStats
-				),
+				value: strFormat(this.weapon.effect, refStats || this.refinementStats),
 			});
 		}
 	}

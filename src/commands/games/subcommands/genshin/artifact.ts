@@ -160,9 +160,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				case "info": {
 					for (let i = 0; i < menuOptions.length; i++) 
 					{
-						i == 0
-							? menuOptions[i].setDefault(true)
-							: menuOptions[i].setDefault(false);
+						menuOptions[i].setDefault(i == 0);
 					}
 
 					await interaction.editReply({
@@ -181,9 +179,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 
 					for (let i = 0; i < menuOptions.length; i++) 
 					{
-						i === defaultVal
-							? menuOptions[i].setDefault(true)
-							: menuOptions[i].setDefault(false);
+						menuOptions[i].setDefault(i === defaultVal);
 					}
 
 					await interaction.editReply({

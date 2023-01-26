@@ -42,9 +42,7 @@ export class ShinanoCharacter
 	{
 		const character = this.character;
 
-		const charCons = genshin.constellations(
-			charName ? charName : character.name
-		);
+		const charCons = genshin.constellations(charName || character.name);
 		const consInfo = [];
 
 		for (let cons in charCons) 
@@ -60,7 +58,7 @@ export class ShinanoCharacter
 
 		this.constellations = new EmbedBuilder()
 			.setColor(embedColor ? color(embedColor) : this.color)
-			.setTitle(`${charName ? charName : character.name}'s Constellations`)
+			.setTitle(`${charName || character.name}'s Constellations`)
 			.setThumbnail(character.images.icon);
 
 		consInfo.forEach((cons) => 

@@ -12,7 +12,7 @@ export = async (
 	const code =
 		nuclearLaunchCode || interaction.options.getInteger("doujin-code");
 
-	const IP = nhentaiIP ? nhentaiIP : await getNHentaiIP();
+	const IP = nhentaiIP || (await getNHentaiIP());
 
 	const response = await fetch(`${IP}/api/gallery/${code}`, {
 		method: "GET",

@@ -269,13 +269,13 @@ export class ShinanoShip
 			.setDescription(
 				`[Wiki Link](${ship.wikiUrl})\nDrawn by ${
 					ship.misc.artist.name
-				}\nVoiced by ${ship.misc.voice.name ? ship.misc.voice.name : "Unknown"}`
+				}\nVoiced by ${ship.misc.voice.name || "Unknown"}`
 			)
 			.setFields(
 				{ name: "Rarity:", value: ship.rarity, },
 				{
 					name: "Nationality:",
-					value: `${ship.nationality ? ship.nationality : "None"}`,
+					value: `${ship.nationality || "None"}`,
 				},
 				{ name: "Class:", value: ship.class, },
 				{ name: "Hull Type:", value: ship.hullType, }
@@ -530,7 +530,7 @@ export class ShinanoShip
 					.setTitle(`${ship.names.en}'s Skins`)
 					.setDescription(description)
 					.setColor(this.color)
-					.setImage(skin.bg ? skin.bg : skin.image)
+					.setImage(skin.bg || skin.image)
 					.setThumbnail(skin.chibi)
 			);
 		});

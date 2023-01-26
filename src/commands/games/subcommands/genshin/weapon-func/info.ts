@@ -72,9 +72,7 @@ export = async (interaction: ChatInputCommandInteraction, weapon: Weapon) =>
 
 			for (let j = 0; j < menuOptions.length; j++) 
 			{
-				menuOptions[j].data.value === i.values[0]
-					? menuOptions[j].setDefault(true)
-					: menuOptions[j].setDefault(false);
+				menuOptions[j].setDefault(menuOptions[j].data.value === i.values[0]);
 			}
 
 			switch (i.values[0]) 

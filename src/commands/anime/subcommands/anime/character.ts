@@ -46,9 +46,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	charResponse.forEach((result) => 
 	{
 		results.components[0].addOptions({
-			label: `${result.name} | ${
-				result.name_kanji ? result.name_kanji : "No Kanji Name"
-			}`,
+			label: `${result.name} | ${result.name_kanji || "No Kanji Name"}`,
 			value: `${result.mal_id}`,
 		});
 	});
@@ -97,9 +95,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			const menu = results.components[0];
 			for (let j = 0; j < menu.options.length; j++) 
 			{
-				menu.options[j].data.value === i.values[0]
-					? menu.options[j].setDefault(true)
-					: menu.options[j].setDefault(false);
+				menu.options[j].setDefault(menu.options[j].data.value === i.values[0]);
 			}
 
 			await i.editReply({

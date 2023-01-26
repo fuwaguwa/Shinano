@@ -104,9 +104,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			const menu = resultNavigation.components[0];
 			for (let j = 0; j < menu.options.length; j++) 
 			{
-				menu.options[j].data.value === i.values[0]
-					? menu.options[j].setDefault(true)
-					: menu.options[j].setDefault(false);
+				menu.options[j].setDefault(menu.options[j].data.value === i.values[0]);
 			}
 
 			await code(interaction, nhentaiIP, i.values[0]);

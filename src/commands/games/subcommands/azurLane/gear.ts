@@ -55,9 +55,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 				.setColor(color)
 				.setThumbnail(gear.image)
 				.setTitle(
-					`${gear.names["wiki"] ? gear.names["wiki"] : gear.names.en} | ${
-						gear.tiers[i].rarity
-					}`
+					`${gear.names["wiki"] || gear.names.en} | ${gear.tiers[i].rarity}`
 				)
 				.setDescription(`Stars: ${gear.tiers[i].stars.stars}`)
 				.setFields(
@@ -80,9 +78,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 				.setColor(color)
 				.setThumbnail(gear.image)
 				.setTitle(
-					`${gear.names["wiki"] ? gear.names["wiki"] : gear.names.en} | ${
-						gear.tiers[i].rarity
-					}`
+					`${gear.names["wiki"] || gear.names.en} | ${gear.tiers[i].rarity}`
 				)
 		);
 
@@ -95,7 +91,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 			new EmbedBuilder()
 				.setColor(color)
 				.setThumbnail(gear.image)
-				.setTitle(`${gear.names["wiki"] ? gear.names["wiki"] : gear.names.en}`)
+				.setTitle(`${gear.names["wiki"] || gear.names.en}`)
 				.setFields({
 					name: "Equippable By:",
 					value: gearFits(gear.fits).join("\n"),
@@ -162,6 +158,9 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 				)
 		);
 
+	const components: ActionRowBuilder<StringSelectMenuBuilder>[] =
+		gear.tiers.length > 1 ? [tiers, options] : [options];
+
 	/**
 	 * Collector
 	 */
@@ -210,9 +209,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 
 				for (let j = 0; j < menuOptions.length; j++) 
 				{
-					menuOptions[j].data.value === i.values[0]
-						? menuOptions[j].setDefault(true)
-						: menuOptions[j].setDefault(false);
+					menuOptions[j].setDefault(menuOptions[j].data.value === i.values[0]);
 				}
 
 				switch (i.values[0]) 
@@ -251,9 +248,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 
 				for (let j = 0; j < menuOptions.length; j++) 
 				{
-					menuOptions[j].data.value === i.values[0]
-						? menuOptions[j].setDefault(true)
-						: menuOptions[j].setDefault(false);
+					menuOptions[j].setDefault(menuOptions[j].data.value === i.values[0]);
 				}
 
 				switch (i.values[0]) 
@@ -261,7 +256,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 					case "info": {
 						await i.editReply({
 							embeds: [infoEmbeds[tierCount]],
-							components: gear.tiers.length > 1 ? [tiers, options] : [options],
+							components,
 						});
 
 						break;
@@ -270,7 +265,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 					case "stats": {
 						await i.editReply({
 							embeds: [statsEmbeds[tierCount]],
-							components: gear.tiers.length > 1 ? [tiers, options] : [options],
+							components,
 						});
 
 						break;
@@ -279,7 +274,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 					case "fits": {
 						await i.editReply({
 							embeds: [equippableEmbeds[tierCount]],
-							components: gear.tiers.length > 1 ? [tiers, options] : [options],
+							components,
 						});
 
 						break;
@@ -297,7 +292,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 		options.components[0].setDisabled(true);
 
 		await interaction.editReply({
-			components: gear.tiers.length > 1 ? [tiers, options] : [options],
+			components,
 		});
 	});
 };

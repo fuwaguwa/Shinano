@@ -13,9 +13,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		.setTitle(`${user.username}'s Info`)
 		.setDescription(
 			`User ID: **${userDB.userId}**\n` +
-				`Blacklisted: **${
-					userDB.blacklisted ? userDB.blacklisted : false
-				}**\n` +
+				`Blacklisted: **${userDB.blacklisted || false}**\n` +
 				`Commands Executed: **${userDB.commandsExecuted}**`
 		);
 
