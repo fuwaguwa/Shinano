@@ -88,12 +88,15 @@ export default new Event("interactionCreate", async (interaction) =>
 					{
 						name: "For Moderators/Administrators",
 						value:
-							"As said above, `/nsfw` command is **disabled by default**, meaning only people with **Administrator/Manage Webhooks** permission can use the command!\n\n" +
-							"If you want to **enable it for normal members**:\n" +
-							"Go to **Server Settings** > **Integrations** > **Shinano** > Search for `nsfw` > Enable it for **roles** and **channels** you want.",
+							"As said above, `/nsfw` command is **disabled by default**, meaning only people with **Administrator** permission can use the command!\n\n" +
+							"If you want to **enable it**:\n" +
+							"Go to **Server Settings** > **Integrations** > **Shinano** > Search for `nsfw` > Enable it for **roles** and **channels** you want.\n\n" +
+							"Make sure that the NSFW commands are disabled for all channels and only available in the channels that you want, see the gif below for an example!",
 					}
 				)
-				.setImage("https://cdn.upload.systems/uploads/xI7OxDPg.gif");
+				.setImage(
+					"https://cdn.discordapp.com/attachments/1002189321631187026/1068046004856819732/Discord_lhVlTgLx3R.gif"
+				);
 			return interaction.reply({ embeds: [cantSee], ephemeral: true, });
 		}
 
