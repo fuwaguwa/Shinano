@@ -13,7 +13,9 @@ export default new ChatInputCommand({
 
 		const reactionEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")
-			.setTitle(`${interaction.user} is cooking up something malicious...`)
+			.setDescription(
+				`${interaction.user} is cooking up something malicious...`
+			)
 			.setImage(await getNekoReactionGIF(interaction.commandName));
 
 		await interaction.editReply({ embeds: [reactionEmbed], });

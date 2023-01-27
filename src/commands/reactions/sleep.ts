@@ -13,7 +13,7 @@ export default new ChatInputCommand({
 
 		const reactionEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")
-			.setTitle(`Shh...${interaction.user} is sleeping!`)
+			.setDescription(`Shh...${interaction.user} is sleeping!`)
 			.setImage(await getNekoReactionGIF(interaction.commandName));
 
 		await interaction.editReply({ embeds: [reactionEmbed], });
