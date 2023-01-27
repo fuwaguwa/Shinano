@@ -1,12 +1,9 @@
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
-import fetch from "node-fetch";
+import SRA from "somerandomapi.js";
 
 export = async (interaction: ChatInputCommandInteraction) => 
 {
-	const response = await fetch("https://some-random-api.ml/animu/quote", {
-		method: "GET",
-	});
-	const quote = await response.json();
+	const quote = await SRA.animu.quote();
 
 	const quoteEmbed: EmbedBuilder = new EmbedBuilder()
 		.setColor("#2f3136")

@@ -5,6 +5,7 @@ import {
 	AttachmentBuilder,
 	EmbedBuilder
 } from "discord.js";
+import SRA, { CanvasMiscTweetTheme } from "somerandomapi.js";
 
 Canvas.registerFont("Upright.otf", { family: "Upright", });
 
@@ -205,7 +206,11 @@ export default new ChatInputCommand({
 	run: async ({ interaction, }) => 
 	{
 		const target = interaction.options.getUser("user") || interaction.user;
-		const avatar = target.displayAvatarURL({ size: 512, extension: "png", });
+		const avatar = target.displayAvatarURL({
+			size: 512,
+			extension: "png",
+			forceStatic: false,
+		});
 
 		if (!interaction.deferred) await interaction.deferReply();
 		let image: Buffer;
@@ -214,17 +219,21 @@ export default new ChatInputCommand({
 		switch (interaction.options.getSubcommand()) 
 		{
 			default: {
-				link = `https://some-random-api.ml/canvas/overlay/${interaction.options.getSubcommand()}?avatar=${avatar}`;
+				link = (
+					await SRA.canvas.overlay[interaction.options.getSubcommand()]({
+						imgUrl: avatar,
+					})
+				).imgUrl;
 				break;
 			}
 
 			case "horni-card": {
-				link = `https://some-random-api.ml/canvas/misc/horny?avatar=${avatar}`;
+				link = (await SRA.canvas.misc.hornyCard({ imgUrl: avatar, })).imgUrl;
 				break;
 			}
 
 			case "simp-card": {
-				link = `https://some-random-api.ml/canvas/misc/simpcard?avatar=${avatar}`;
+				link = (await SRA.canvas.misc.simpCard({ imgUrl: avatar, })).imgUrl;
 				break;
 			}
 
@@ -310,13 +319,9 @@ export default new ChatInputCommand({
 			}
 
 			case "namecard": {
-				const avatar = target.displayAvatarURL({
-					forceStatic: false,
-					extension: "png",
-				});
 				const birthday = interaction.options.getString("birthday");
-				const username = target.username.split(" ").join("%20");
-				let description = interaction.options.getString("signature");
+				const description = interaction.options.getString("signature");
+				const username = target.username;
 
 				if (
 					birthday.match(/^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|[1][0-2])$/i) ==
@@ -329,51 +334,46 @@ export default new ChatInputCommand({
 					return interaction.editReply({ embeds: [failed], });
 				}
 
-				let query = `avatar=${avatar}&birthday=${birthday}&username=${username}`;
-				if (description) 
-				{
-					description = description.split(" ").join("%20");
-					query += `&description=${description}`;
-				}
-
-				link = `https://some-random-api.ml/canvas/misc/namecard?${query}`;
+				link = SRA.canvas.misc.genshinNamecard({
+					imgUrl: avatar,
+					birthday,
+					username,
+					description,
+				}).imgUrl;
 				break;
 			}
 
 			case "comment": {
-				const content = interaction.options
-					.getString("content")
-					.split(" ")
-					.join("%20");
-				const username = target.username.split(" ").join("%20");
-				const query = `avatar=${avatar}&username=${username}&comment=${content}`;
+				const content = interaction.options.getString("content");
+				const username = target.username;
 
-				link = `https://some-random-api.ml/canvas/misc/youtube-comment?${query}`;
+				link = SRA.canvas.misc.youtubeComment({
+					username,
+					imgUrl: avatar,
+					comment: content,
+				}).imgUrl;
 				break;
 			}
 
 			case "tweet": {
-				const displayName = interaction.options
-					.getString("display-name")
-					.split(" ")
-					.join("%20");
-				const username = target.username.toLowerCase().split(" ").join("%20");
-				const content = interaction.options
-					.getString("content")
-					.split(" ")
-					.join("%20");
+				const displayName = interaction.options.getString("display-name");
+				const username = target.username.toLowerCase();
+				const content = interaction.options.getString("content");
 				const replies = interaction.options.getInteger("replies");
 				const retweets = interaction.options.getInteger("retweets");
 				const likes = interaction.options.getInteger("likes");
-				const theme = interaction.options.getString("theme");
+				const theme = interaction.options.getString("theme") || "light";
 
-				let query = `avatar=${avatar}&content=${content}&username=${username}&displayname=${displayName}&comment=${content}`;
-				if (replies) query += `&replies=${replies}`;
-				if (retweets) query += `&retweets=${retweets}`;
-				if (likes) query += `&likes=${likes}`;
-				if (theme) query += `&theme=${theme}`;
-
-				link = `https://some-random-api.ml/canvas/misc/tweet?${query}`;
+				link = SRA.canvas.misc.tweet({
+					displayName,
+					username,
+					content,
+					imgUrl: avatar,
+					repliesCount: replies,
+					retweetsCount: retweets,
+					likesCount: likes,
+					theme: theme as CanvasMiscTweetTheme,
+				}).imgUrl;
 				break;
 			}
 		}

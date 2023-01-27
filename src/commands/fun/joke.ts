@@ -1,6 +1,6 @@
-import fetch from "node-fetch";
 import { EmbedBuilder } from "discord.js";
 import { ChatInputCommand } from "../../structures/Command";
+import SRA from "somerandomapi.js";
 
 export default new ChatInputCommand({
 	name: "joke",
@@ -9,12 +9,9 @@ export default new ChatInputCommand({
 	category: "Fun",
 	run: async ({ interaction, }) => 
 	{
-		if (!interaction.deferred) await interaction.deferReply();
+		if (!interaction.deferred) interaction.deferReply();
 
-		const response = await fetch("https://some-random-api.ml/others/joke", {
-			method: "GET",
-		});
-		const jk = await response.json();
+		const jk = await SRA.others.joke();
 
 		const jokeEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("#2f3136")
