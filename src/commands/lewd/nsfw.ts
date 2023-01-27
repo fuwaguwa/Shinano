@@ -113,10 +113,10 @@ export default new ChatInputCommand({
 							description:
 								"The category you want animations from. Ignore this option for random category.",
 							choices: [
-								{ name: "Shipgirls", value: "shipgirls", },
+								{ name: "Shipgirls ⭐", value: "shipgirls", },
+								{ name: "Genshin ⭐", value: "genshin", },
 								{ name: "Undies", value: "undies", },
 								{ name: "Elf", value: "elf", },
-								{ name: "Genshin", value: "genshin", },
 								{ name: "Kemonomimi", value: "kemonomimi", },
 								{ name: "Misc", value: "misc", },
 								{ name: "Uniform", value: "uniform", }
