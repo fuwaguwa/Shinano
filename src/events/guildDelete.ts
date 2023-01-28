@@ -5,7 +5,7 @@ import { Event } from "../structures/Event";
 
 export default new Event("guildDelete", async (guild) => 
 {
-	if (guild.id === "1068135541360578590") return;
+	if (["1068135541360578590", "260978723455631373"].includes(guild.id)) return;
 
 	const logGuild: Guild = await client.guilds.fetch("1002188088942022807");
 	const ioChannel: TextChannel = (await logGuild.channels.fetch(
