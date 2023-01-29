@@ -7,7 +7,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		userId: interaction.options.getUser("user").id,
 	});
 
-	if (user.blacklisted == true) 
+	if (user.blacklisted) 
 	{
 		const blacklisted: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")

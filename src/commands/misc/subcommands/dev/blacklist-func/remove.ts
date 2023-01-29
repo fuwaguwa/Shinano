@@ -14,7 +14,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			.setDescription("User is not blacklisted!");
 		return interaction.editReply({ embeds: [noOne], });
 	}
-	else if (user.blacklisted == true) 
+	else if (user.blacklisted) 
 	{
 		await user.updateOne({ blacklisted: false, });
 	}

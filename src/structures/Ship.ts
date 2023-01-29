@@ -500,7 +500,7 @@ export class ShinanoShip
 						`**Skin Name**: ${skin.name}\n` +
 						"**Obtain From**: Skin Shop\n" +
 						`**Cost**: ${skin.info.cost} <:GEAMS:1002198674539036672>\n` +
-						`**Live2D?** ${skin.info.live2dModel == false ? "No" : "Yes"}\n` +
+						`**Live2D?** ${skin.info.live2dModel ? "Yes" : "No"}\n` +
 						`**Limited or Permanent**: ${
 							!skin.info.enLimited
 								? `${skin.info.enClient} on EN.`

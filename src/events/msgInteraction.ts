@@ -99,7 +99,7 @@ export default new Event("interactionCreate", async (interaction) =>
 				commandsExecuted: 0,
 			});
 		}
-		if (user.blacklisted == true) 
+		if (user.blacklisted) 
 		{
 			const blacklisted: EmbedBuilder = new EmbedBuilder()
 				.setColor("Red")
