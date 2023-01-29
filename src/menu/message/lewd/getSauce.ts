@@ -8,7 +8,7 @@ export default new MessageCommand({
 	type: ApplicationCommandType.Message,
 	run: async ({ interaction, }) => 
 	{
-		let ephemeral: boolean = (interaction.channel as TextChannel).nsfw;
+		let ephemeral: boolean = !(interaction.channel as TextChannel).nsfw;
 
 		let link: string;
 		interaction.options.data[0].message.attachments.size > 0
