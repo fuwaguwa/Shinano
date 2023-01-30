@@ -27,8 +27,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		return interaction.editReply({ embeds: [noPerm], });
 	}
 
-	const channel =
-		interaction.options.getChannel("channel") || interaction.channel;
+	const channel = interaction.options.getChannel("channel") as TextChannel;
 
 	if (
 		!interaction.guild.members.me

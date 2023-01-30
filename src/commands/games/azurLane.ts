@@ -216,6 +216,7 @@ export default new ChatInputCommand({
 						{
 							type: ApplicationCommandOptionType.Channel,
 							channelTypes: [ChannelType.GuildText],
+							required: true,
 							name: "channel",
 							description: "The channel for the bot to send tweets into.",
 						}
