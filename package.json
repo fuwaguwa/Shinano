@@ -33,7 +33,7 @@
         "sagiri": "^3.4.0",
         "somerandomapi.js": "^1.3.2",
         "table2canvas": "^1.3.0",
-        "twitter-api-v2": "^1.13.0"
+        "twitter-api-v2": "^1.14.1"
     },
     "devDependencies": {
         "@types/glob": "^8.0.1",
