@@ -29,6 +29,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			"The Multi-Purpose Azur Lane/Genshin Bot!\n\n" +
 				"Developer: [**Fuwafuwa**](https://github.com/fuwaguwa)\n" +
 				"Special Thanks: [**LaziestBoy**](https://github.com/kaisei-kto)\n\n" +
+				"Art by [SG](https://www.pixiv.net/en/users/34452206) and [Nagi Ria](https://twitter.com/nagi_lria)\n" +
 				`**APIs**: ${APIs.join(", ")}\n\n` +
 				"Liking the bot so far? Please **vote** and leave Shinano a **rating** on **top.gg**!"
 		);
