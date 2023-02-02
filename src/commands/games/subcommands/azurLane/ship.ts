@@ -22,7 +22,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 		const shipNotFound: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription("❌ | Ship not found!");
-		return interaction.reply({ embeds: [shipNotFound], ephemeral: true, });
+		return interaction.editReply({ embeds: [shipNotFound], });
 	}
 
 	const ship = await new ShinanoShip(shipInfo).getShipEmbeds();
