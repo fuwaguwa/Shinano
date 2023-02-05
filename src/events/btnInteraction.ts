@@ -7,16 +7,10 @@ import {
 } from "discord.js";
 import { Event } from "../structures/Event";
 import User from "../schemas/User";
-import { TwitterApi } from "twitter-api-v2";
 import translate from "google-translate-api-x";
 import fetch from "node-fetch";
-
-const twitClient = new TwitterApi({
-	appKey: process.env.twitterApiKey,
-	appSecret: process.env.twitterApiKeySecret,
-	accessToken: process.env.twitterAccessToken,
-	accessSecret: process.env.twitterAccessTokenSecret,
-});
+import fs from "fs";
+import path from "path";
 
 let EHOSTRetries: number = 0;
 function translateTweet(text: string, interaction: ButtonInteraction) 
@@ -164,9 +158,27 @@ export default new Event("interactionCreate", async (interaction) =>
 			await interaction.deferReply({ ephemeral: true, });
 
 			const tweetId = interaction.customId.split("-")[1];
-			const tweet = await twitClient.v2.singleTweet(tweetId);
+			fs.readFile(
+				path.join(__dirname, "..", "..", "tweetsInfo.json"),
+				"utf-8",
+				(err, data) => 
+				{
+					const json = JSON.parse(data);
+					const tweet = json.tweets.find(tweet => tweet.id == tweetId);
 
-			return translateTweet(tweet.data.text, interaction);
+					if (!tweet) 
+					{
+						const noTweet: EmbedBuilder = new EmbedBuilder()
+							.setColor("Red")
+							.setDescription(
+								"❌ | Tweet is currently in the database. Please click on the link and translate the tweet there."
+							);
+						return interaction.editReply({ embeds: [noTweet], });
+					}
+
+					return translateTweet(tweet.raw, interaction);
+				}
+			);
 		}
 	}
 });

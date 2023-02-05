@@ -17,7 +17,7 @@ import {
 	EmbedBuilder,
 	TextChannel
 } from "discord.js";
-import { startTweetListener } from "../lib/Twitter";
+import { fetchTweets } from "../lib/News";
 
 const promiseGlob = promisify(glob);
 
@@ -116,12 +116,16 @@ export class Shinano extends Client
 
 				uptime += 300000;
 			}, 300000);
+			console.log("Started heartbeat!");
 
 			// Azur Lane News
 			if (!process.env.guildId) 
 			{
-				await startTweetListener();
-				console.log("Connected to Twitter stream!");
+				setInterval(async () => 
+				{
+					await fetchTweets();
+				}, 120000);
+				console.log("Started tweet checker!");
 			}
 		})();
 	}
