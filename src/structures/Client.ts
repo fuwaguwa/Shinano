@@ -27,6 +27,8 @@ export class Shinano extends Client
 	messageCommands: Collection<string, MessageCommandType> = new Collection();
 	userCommands: Collection<string, UserCommandType> = new Collection();
 
+	connectedToDatabase: boolean = false;
+
 	catagorizedCommands = {
 		Anime: [],
 		Fun: [],
@@ -48,11 +50,81 @@ export class Shinano extends Client
 
 	start() 
 	{
+		this.startCatchingErrors();
 		this.registerModules();
 		this.connectToDatabase();
 		this.login(process.env.botToken);
 
-		// Error Catcher
+		(async () => 
+		{
+			await this.startHeartbeat();
+			await this.startFetchingTweets();
+		})();
+	}
+
+	private connectToDatabase() 
+	{
+		mongoose
+			.connect(process.env.mongoDB, {
+				keepAlive: true,
+				keepAliveInitialDelay: 300000,
+			})
+			.catch((err) => 
+			{
+				console.log(err);
+			});
+	}
+
+	private async startFetchingTweets() 
+	{
+		if (!process.env.guildId) 
+		{
+			setInterval(async () => 
+			{
+				await fetchTweets();
+			}, 120000);
+			console.log("Started tweet checker!");
+		}
+	}
+
+	private async startHeartbeat() 
+	{
+		const guild = await this.guilds.fetch("1002188088942022807");
+		const channel = await guild.channels.fetch("1027973574801227776");
+
+		const startEmbed: EmbedBuilder = new EmbedBuilder()
+			.setColor("Green")
+			.setDescription("Shinano has been started!")
+			.setTimestamp();
+		await (channel as TextChannel).send({ embeds: [startEmbed], });
+
+		let uptime = 300000;
+		setInterval(async () => 
+		{
+			let totalSeconds = uptime / 1000;
+			totalSeconds %= 86400;
+
+			let hours = Math.floor(totalSeconds / 3600);
+			totalSeconds %= 3600;
+
+			let minutes = Math.floor(totalSeconds / 60);
+			let seconds = Math.floor(totalSeconds % 60);
+
+			const heartbeatEmbed: EmbedBuilder = new EmbedBuilder()
+				.setColor("Grey")
+				.setDescription(
+					`Shinano has been running for \`${hours} hours, ${minutes} minutes, ${seconds} seconds\``
+				)
+				.setTimestamp();
+			await (channel as TextChannel).send({ embeds: [heartbeatEmbed], });
+
+			uptime += 300000;
+		}, 300000);
+		console.log("Started heartbeat!");
+	}
+
+	private startCatchingErrors() 
+	{
 		process.on("unhandledRejection", async (err) => 
 		{
 			console.error("Unhandled Promise Rejection:\n", err);
@@ -82,66 +154,31 @@ export class Shinano extends Client
 			console.error("Multiple Resolves:\n", type, promise, reason);
 		});
 
-		(async () => 
+		mongoose.connection.on("connecting", () => 
 		{
-			// Heartbeat
-			const guild = await this.guilds.fetch("1002188088942022807");
-			const channel = await guild.channels.fetch("1027973574801227776");
+			this.connectedToDatabase = true;
+			console.log("Connecting to the database...");
+		});
 
-			const startEmbed: EmbedBuilder = new EmbedBuilder()
-				.setColor("Green")
-				.setDescription("Shinano has been started!")
-				.setTimestamp();
-			await (channel as TextChannel).send({ embeds: [startEmbed], });
+		mongoose.connection.on("connected", () => 
+		{
+			console.log("Connected to the database!");
+		});
 
-			let uptime = 300000;
-			setInterval(async () => 
+		mongoose.connection.on("disconnected", () => 
+		{
+			console.log("Lost database connection...");
+			if (this.connectedToDatabase == false) 
 			{
-				let totalSeconds = uptime / 1000;
-				totalSeconds %= 86400;
-
-				let hours = Math.floor(totalSeconds / 3600);
-				totalSeconds %= 3600;
-
-				let minutes = Math.floor(totalSeconds / 60);
-				let seconds = Math.floor(totalSeconds % 60);
-
-				const heartbeatEmbed: EmbedBuilder = new EmbedBuilder()
-					.setColor("Grey")
-					.setDescription(
-						`Shinano has been running for \`${hours} hours, ${minutes} minutes, ${seconds} seconds\``
-					)
-					.setTimestamp();
-				await (channel as TextChannel).send({ embeds: [heartbeatEmbed], });
-
-				uptime += 300000;
-			}, 300000);
-			console.log("Started heartbeat!");
-
-			// Azur Lane News
-			if (!process.env.guildId) 
-			{
-				setInterval(async () => 
-				{
-					await fetchTweets();
-				}, 120000);
-				console.log("Started tweet checker!");
+				console.log("Attempting to reconnect to the database...");
+				this.connectToDatabase();
 			}
-		})();
-	}
+		});
 
-	private connectToDatabase() 
-	{
-		mongoose
-			.connect(process.env.mongoDB)
-			.then(() => 
-			{
-				console.log("Connected to database!");
-			})
-			.catch((err) => 
-			{
-				console.log(err);
-			});
+		mongoose.connection.on("reconnected", () => 
+		{
+			console.log("Reconnected to the database!");
+		});
 	}
 
 	private async importFile(filePath: string) 
