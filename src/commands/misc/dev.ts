@@ -25,6 +25,12 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
+			name: "members-count",
+			description:
+				"Shows the total members of all Shinano's guild (not total number of unique users)",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
 			name: "usage",
 			description: "Shows bot memory usage.",
 		},
@@ -152,6 +158,10 @@ export default new ChatInputCommand({
 
 			case "usage": {
 				return devFunc.usage(interaction);
+			}
+
+			case "members-count": {
+				return devFunc.membersCount(interaction);
 			}
 		}
 
