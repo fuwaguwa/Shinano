@@ -3,10 +3,16 @@ import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 
 export = async (interaction: ChatInputCommandInteraction) => 
 {
-	if (!interaction.isChatInputCommand()) return;
-
 	const user = interaction.options.getUser("user") || interaction.user;
 	const userDB = await User.findOne({ userId: user.id, });
+
+	if (!userDB) 
+	{
+		const noUser: EmbedBuilder = new EmbedBuilder()
+			.setColor("Red")
+			.setDescription("❌ | User does not exist in the database!");
+		return interaction.editReply({ embeds: [noUser], });
+	}
 
 	const infoEmbed: EmbedBuilder = new EmbedBuilder()
 		.setColor("#2f3136")
