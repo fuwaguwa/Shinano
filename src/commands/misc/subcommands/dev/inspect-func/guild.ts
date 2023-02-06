@@ -30,8 +30,6 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		return interaction.editReply({ embeds: [noResult], });
 	}
 
-	const botMembers = guild.members.cache.filter(member => member.user.bot);
-
 	const guildEmbed = new EmbedBuilder()
 		.setTitle(`${guild.name}`)
 		.setColor("#2f3136")
@@ -51,9 +49,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			},
 			{
 				name: "Member Count",
-				value: `**${guild.memberCount} Members** | **${
-					guild.memberCount - botMembers.size
-				} Users** and **${botMembers.size}** Bots`,
+				value: `**${guild.memberCount} Members**`,
 			}
 		)
 		.setFooter({ text: `Guild ID: ${guild.id}`, });
