@@ -4,7 +4,7 @@ import leave from "./dev/leave";
 import inspect from "./dev/inspect";
 import blacklist from "./dev/blacklist";
 import eval from "./dev/eval";
-import membersCount from "./dev/members-count";
+import memberCount from "./dev/memberCount";
 
 export default {
 	voteCheck,
@@ -13,5 +13,5 @@ export default {
 	inspect,
 	blacklist,
 	eval,
-	membersCount,
+	memberCount,
 };
