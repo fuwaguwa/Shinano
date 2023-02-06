@@ -31,6 +31,18 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
+			name: "top-guilds",
+			description: "See the top guilds for Shinano.",
+			options: [
+				{
+					type: ApplicationCommandOptionType.Integer,
+					name: "guild-num",
+					description: "Number of top guilds to display.",
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
 			name: "usage",
 			description: "Shows bot memory usage.",
 		},
@@ -162,6 +174,10 @@ export default new ChatInputCommand({
 
 			case "member-count": {
 				return devFunc.memberCount(interaction);
+			}
+
+			case "top-guilds": {
+				return devFunc.topGuilds(interaction);
 			}
 		}
 
