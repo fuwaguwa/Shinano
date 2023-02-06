@@ -34,6 +34,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 
 	const guildEmbed = new EmbedBuilder()
 		.setTitle(`${guild.name}`)
+		.setColor("#2f3136")
 		.setFields(
 			{
 				name: "Registered",
@@ -55,7 +56,6 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				} Users** and **${botMembers.size}** Bots`,
 			}
 		)
-		.setColor("#548ed1")
 		.setFooter({ text: `Guild ID: ${guild.id}`, });
 	if (guild.iconURL())
 		guildEmbed.setThumbnail(guild.iconURL({ forceStatic: false, size: 512, }));
