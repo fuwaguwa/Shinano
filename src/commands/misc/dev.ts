@@ -160,7 +160,7 @@ export default new ChatInputCommand({
 				return devFunc.usage(interaction);
 			}
 
-			case "members-count": {
+			case "member-count": {
 				return devFunc.memberCount(interaction);
 			}
 		}
