@@ -6,15 +6,12 @@ export = async (
 	lewdEmbed: EmbedBuilder
 ) => 
 {
-	const response = await fetch(
-		"https://AmagiAPI.fuwafuwa08.repl.co/nsfw/random",
-		{
-			method: "GET",
-			headers: {
-				Authorization: process.env.amagiApiKey,
-			},
-		}
-	);
+	const response = await fetch("https://Amagi.fuwafuwa08.repl.co/nsfw/random", {
+		method: "GET",
+		headers: {
+			Authorization: process.env.AmagiKey,
+		},
+	});
 	const waifu = await response.json();
 
 	if (!(waifu.link as string).endsWith("mp4")) 

@@ -23,11 +23,11 @@ export = async (
 	if (!category) 
 	{
 		const response = await fetch(
-			"https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/gif",
+			"https://Amagi.fuwafuwa08.repl.co/nsfw/public/gif",
 			{
 				method: "GET",
 				headers: {
-					Authorization: process.env.amagiApiKey,
+					Authorization: process.env.AmagiKey,
 				},
 			}
 		);
@@ -38,11 +38,11 @@ export = async (
 	else 
 	{
 		const response = await fetch(
-			`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/${category}?type=gif`,
+			`https://Amagi.fuwafuwa08.repl.co/nsfw/private/${category}?type=gif`,
 			{
 				method: "GET",
 				headers: {
-					Authorization: process.env.amagiApiKey,
+					Authorization: process.env.AmagiKey,
 				},
 			}
 		);

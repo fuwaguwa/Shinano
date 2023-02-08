@@ -7,11 +7,11 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	if (category === "gif") category = "random&type=gif";
 
 	const response = await fetch(
-		`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/bomb?category=${category}`,
+		`https://Amagi.fuwafuwa08.repl.co/nsfw/bomb?category=${category}`,
 		{
 			method: "GET",
 			headers: {
-				Authorization: process.env.amagiApiKey,
+				Authorization: process.env.AmagiKey,
 			},
 		}
 	);

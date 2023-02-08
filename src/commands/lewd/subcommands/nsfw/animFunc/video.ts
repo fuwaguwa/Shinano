@@ -4,11 +4,11 @@ import fetch from "node-fetch";
 async function videoFetch(category) 
 {
 	const response = await fetch(
-		`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/private/${category}?type=mp4`,
+		`https://Amagi.fuwafuwa08.repl.co/nsfw/private/${category}?type=mp4`,
 		{
 			method: "GET",
 			headers: {
-				Authorization: process.env.amagiApiKey,
+				Authorization: process.env.AmagiKey,
 			},
 		}
 	);
