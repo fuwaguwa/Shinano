@@ -369,11 +369,11 @@ export default new ChatInputCommand({
 					if (tag === "a-level") tag = "anal";
 
 					const response = await fetch(
-						`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/public/${tag}`,
+						`https://Amagi.fuwafuwa08.repl.co/nsfw/public/${tag}`,
 						{
 							method: "GET",
 							headers: {
-								Authorization: process.env.amagiApiKey,
+								Authorization: process.env.AmagiKey,
 							},
 						}
 					);
@@ -395,11 +395,11 @@ export default new ChatInputCommand({
 			if (tag === "a-level") tag = "anal";
 
 			const response = await fetch(
-				`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/porn/${tag}`,
+				`https://Amagi.fuwafuwa08.repl.co/nsfw/porn/${tag}`,
 				{
 					method: "GET",
 					headers: {
-						Authorization: process.env.amagiApiKey,
+						Authorization: process.env.AmagiKey,
 					},
 				}
 			);

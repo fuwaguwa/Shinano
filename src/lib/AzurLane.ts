@@ -10,11 +10,11 @@ import { toTitleCase } from "./Utils";
 export async function getALEXPTable() 
 {
 	const response = await fetch(
-		"https://AmagiAPI.fuwafuwa08.repl.co/azur-lane/ship-stats",
+		"https://Amagi.fuwafuwa08.repl.co/azur-lane/ship-stats",
 		{
 			method: "GET",
 			headers: {
-				Authorization: process.env.amagiApiKey,
+				Authorization: process.env.AmagiKey,
 			},
 		}
 	);

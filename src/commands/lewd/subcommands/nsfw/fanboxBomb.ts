@@ -10,11 +10,11 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		: (category = `?category=${category}`);
 
 	const response = await fetch(
-		`https://AmagiAPI.fuwafuwa08.repl.co/nsfw/fanbox-bomb${category}`,
+		`https://Amagi.fuwafuwa08.repl.co/nsfw/fanbox-bomb${category}`,
 		{
 			method: "GET",
 			headers: {
-				Authorization: process.env.amagiApiKey,
+				Authorization: process.env.AmagiKey,
 			},
 		}
 	);
