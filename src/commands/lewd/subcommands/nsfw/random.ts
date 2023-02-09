@@ -9,7 +9,7 @@ export = async (
 	const response = await fetch("https://Amagi.fuwafuwa08.repl.co/nsfw/random", {
 		method: "GET",
 		headers: {
-			Authorization: process.env.AmagiKey,
+			Authorization: process.env.amagiApiKey,
 		},
 	});
 	const waifu = await response.json();
