@@ -14,7 +14,7 @@ export async function getALEXPTable()
 		{
 			method: "GET",
 			headers: {
-				Authorization: process.env.AmagiKey,
+				Authorization: process.env.amagiApiKey,
 			},
 		}
 	);

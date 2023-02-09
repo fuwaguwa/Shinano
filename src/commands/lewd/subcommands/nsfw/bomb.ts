@@ -11,7 +11,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		{
 			method: "GET",
 			headers: {
-				Authorization: process.env.AmagiKey,
+				Authorization: process.env.amagiApiKey,
 			},
 		}
 	);

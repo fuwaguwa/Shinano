@@ -8,7 +8,7 @@ async function videoFetch(category)
 		{
 			method: "GET",
 			headers: {
-				Authorization: process.env.AmagiKey,
+				Authorization: process.env.amagiApiKey,
 			},
 		}
 	);

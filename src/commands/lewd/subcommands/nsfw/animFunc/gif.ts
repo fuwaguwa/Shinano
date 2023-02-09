@@ -27,7 +27,7 @@ export = async (
 			{
 				method: "GET",
 				headers: {
-					Authorization: process.env.AmagiKey,
+					Authorization: process.env.amagiApiKey,
 				},
 			}
 		);
@@ -42,7 +42,7 @@ export = async (
 			{
 				method: "GET",
 				headers: {
-					Authorization: process.env.AmagiKey,
+					Authorization: process.env.amagiApiKey,
 				},
 			}
 		);

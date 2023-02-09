@@ -373,7 +373,7 @@ export default new ChatInputCommand({
 						{
 							method: "GET",
 							headers: {
-								Authorization: process.env.AmagiKey,
+								Authorization: process.env.amagiApiKey,
 							},
 						}
 					);
@@ -399,7 +399,7 @@ export default new ChatInputCommand({
 				{
 					method: "GET",
 					headers: {
-						Authorization: process.env.AmagiKey,
+						Authorization: process.env.amagiApiKey,
 					},
 				}
 			);
