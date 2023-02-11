@@ -140,20 +140,6 @@ export class Shinano extends Client
 			console.error("Uncaught Promise Exception (Monitor):\n", err);
 		});
 
-		process.on("multipleResolves", async (type, promise, reason) => 
-		{
-			if (!reason) return;
-			if (
-				reason.toLocaleString() ===
-				"Error: Cannot perform IP discovery - socket closed"
-			)
-				return;
-			if (reason.toLocaleString() === "AbortError: The operation was aborted")
-				return;
-
-			console.error("Multiple Resolves:\n", type, promise, reason);
-		});
-
 		mongoose.connection.on("connecting", () => 
 		{
 			this.connectedToDatabase = true;
