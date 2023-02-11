@@ -350,8 +350,7 @@ export default new ChatInputCommand({
 				case "misc":
 				case "shipgirls":
 				case "undies":
-				case "uniform":
-				case "yuri": {
+				case "uniform": {
 					return nsfwFunc.privateColle(
 						interaction,
 						lewdEmbed,
