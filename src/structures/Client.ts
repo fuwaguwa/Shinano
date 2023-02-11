@@ -18,6 +18,7 @@ import {
 	TextChannel
 } from "discord.js";
 import { fetchTweets } from "../lib/News";
+import { restartBot } from "../lib/Utils";
 
 const promiseGlob = promisify(glob);
 
@@ -125,8 +126,19 @@ export class Shinano extends Client
 
 	private startCatchingErrors() 
 	{
-		process.on("unhandledRejection", async (err) => 
+		process.on("unhandledRejection", async (err: any) => 
 		{
+			/**
+			 * Unknow interaction and unknown message error
+			 * Usually caused by connection error in the VPS, haven't found any perma fix yet :(
+			 */
+			if (
+				["DiscordAPIError[10062]", "DiscordAPIError[10008]"].includes(err.name)
+			) 
+			{
+				console.error(err);
+				return restartBot();
+			}
 			console.error("Unhandled Promise Rejection:\n", err);
 		});
 
