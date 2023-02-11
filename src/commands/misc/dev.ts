@@ -73,6 +73,11 @@ export default new ChatInputCommand({
 			],
 		},
 		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "restart",
+			description: "Restart Shinano.",
+		},
+		{
 			type: ApplicationCommandOptionType.SubcommandGroup,
 			name: "inspect",
 			description: "inspection",
@@ -178,6 +183,10 @@ export default new ChatInputCommand({
 
 			case "top-guilds": {
 				return devFunc.topGuilds(interaction);
+			}
+
+			case "restart": {
+				return devFunc.restart(interaction);
 			}
 		}
 

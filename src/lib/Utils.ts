@@ -8,6 +8,7 @@ import fetch from "node-fetch";
 import { client } from "..";
 import t2c from "table2canvas";
 import { Canvas } from "canvas";
+import pm2 from "pm2";
 
 /**
  * Check if a link is a direct image link
@@ -258,4 +259,24 @@ export async function getNekoReactionGIF(category)
 	const rep = await response.json();
 
 	return rep.results[0].url;
+}
+
+/**
+ * Restart process with pm2
+ */
+export function restartBot() 
+{
+	pm2.connect((err) => 
+	{
+		if (err) return console.error(err);
+
+		pm2.restart("Shinano", (err, apps) => 
+		{
+			if (err) 
+			{
+				console.error(err);
+				return pm2.disconnect;
+			}
+		});
+	});
 }
