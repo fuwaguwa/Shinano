@@ -43,11 +43,14 @@ export default new Event("ready", async () =>
 		}
 	];
 
-	setInterval(() => 
+	const setPresence = () => 
 	{
 		const presence =
 			activitiesList[Math.floor(Math.random() * activitiesList.length)];
 
 		client.user.setActivity({ name: presence.message, type: presence.type, });
-	}, 30000);
+	};
+	setPresence();
+
+	setInterval(setPresence, 30000);
 });

@@ -6,6 +6,7 @@ import blacklist from "./dev/blacklist";
 import eval from "./dev/eval";
 import memberCount from "./dev/memberCount";
 import topGuilds from "./dev/topGuilds";
+import restart from "./dev/restart";
 
 export default {
 	voteCheck,
@@ -16,4 +17,5 @@ export default {
 	eval,
 	memberCount,
 	topGuilds,
+	restart,
 };
