@@ -35,7 +35,7 @@ export default new ChatInputCommand({
 								"The category you want FANBOX/Patreon content from. Ignore this option for random category.",
 							choices: [
 								{ name: "Shipgirls", value: "shipgirls", },
-								{ name: "Undies", value: "undies", },
+								{ name: "Undies ⭐", value: "undies", },
 								{ name: "Elf", value: "elf", },
 								{ name: "Genshin", value: "genshin", },
 								{ name: "Kemonomimi", value: "kemonomimi", },
@@ -80,7 +80,7 @@ export default new ChatInputCommand({
 								"The category you want to be bombed with. Ignore this option for random category.",
 							choices: [
 								{ name: "Shipgirls", value: "shipgirls", },
-								{ name: "Undies", value: "undies", },
+								{ name: "Undies ⭐", value: "undies", },
 								{ name: "Elf", value: "elf", },
 								{ name: "Genshin", value: "genshin", },
 								{ name: "Kemonomimi", value: "kemonomimi", },
