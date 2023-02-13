@@ -68,6 +68,20 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
+			name: "gacha",
+			description: "Build simulator for Azur Lane!",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					required: true,
+					name: "banner-name",
+					description:
+						"The name of the banner you wish to pull on (You can build 300 times per session!)",
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
 			name: "farm",
 			description:
 				"See the requirements for a ship to reach the target level at a certain stage.",
@@ -259,6 +273,10 @@ export default new ChatInputCommand({
 
 				case "gear": {
 					return azurLaneFunc.gear(interaction, AL);
+				}
+
+				case "gacha": {
+					return azurLaneFunc.gacha(interaction);
 				}
 			}
 		}
