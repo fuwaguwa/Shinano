@@ -275,8 +275,9 @@ export function restartBot()
 			if (err) 
 			{
 				console.error(err);
-				return pm2.disconnect;
+				return pm2.disconnect();
 			}
+			return pm2.disconnect();
 		});
 	});
 }
