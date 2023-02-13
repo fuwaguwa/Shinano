@@ -52,7 +52,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	/**
 	 * Calculating EXP Difference
 	 */
-	const data = await getALEXPTable();
+	const data: any = await getALEXPTable();
 
 	let table: number[];
 	rarity === "normal" ? (table = data.normal) : (table = data.ultraRare);

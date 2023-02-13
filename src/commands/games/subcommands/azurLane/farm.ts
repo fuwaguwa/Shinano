@@ -66,7 +66,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	if (ship.rarity === "Ultra Rare" || ship.rarity === "Decisive")
 		rarity = "ultra rare";
 
-	let data = await getALEXPTable();
+	let data: any = await getALEXPTable();
 	rarity === "normal" ? (data = data.normal) : (data = data.ultraRare);
 	const expDifference = data[tLevel - 1] - data[cLevel - 1];
 
