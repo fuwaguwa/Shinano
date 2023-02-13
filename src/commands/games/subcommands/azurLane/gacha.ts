@@ -205,13 +205,13 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			// Banner type => banner spendings
 			if (bannerInfo.type == 1) 
 			{
-				cubes += 1;
-				coins += 600;
+				cubes += 1 * numPulls;
+				coins += 600 * numPulls;
 			}
 			else 
 			{
-				cubes += 2;
-				coins += 1500;
+				cubes += 2 * numPulls;
+				coins += 1500 * numPulls;
 			}
 
 			const result: EmbedBuilder = new EmbedBuilder()
