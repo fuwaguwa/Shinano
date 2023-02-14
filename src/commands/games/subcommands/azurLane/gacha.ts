@@ -7,9 +7,9 @@ import {
 	EmbedBuilder
 } from "discord.js";
 import Fuse from "fuse.js";
-import gacha from "simple-gacha";
 import fs from "fs/promises";
 import path from "path";
+import { WeightedPicker } from "../../../../structures/WeightedPicker";
 
 export = async (interaction: ChatInputCommandInteraction) => 
 {
@@ -91,6 +91,8 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		});
 	}
 
+	const gacha = new WeightedPicker(bannerInfo.pool);
+
 	/**
 	 * Outputting
 	 */
@@ -168,9 +170,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 						continue;
 					}
 				}
-
-				const { pick, } = gacha.simple(bannerInfo.pool);
-				pullResults.push(Object.assign(pick, { times: 1, }));
+				pullResults.push(Object.assign(gacha.pick(), { times: 1, }));
 			}
 
 			// Filtering Pull
