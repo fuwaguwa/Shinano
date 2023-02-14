@@ -156,7 +156,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				{
 					pity++;
 
-					if (pity == 200) 
+					if (pity >= 200) 
 					{
 						pullResults.push(
 							Object.assign(
