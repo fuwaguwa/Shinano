@@ -405,11 +405,11 @@ export default new ChatInputCommand({
 			const result = await response.json();
 
 			if (
-				(result.link as string).includes("redgifs") ||
-				(result.link as string).includes(".gifv")
+				(result.body.link as string).includes("redgifs") ||
+				(result.body.link as string).includes(".gifv")
 			)
-				return interaction.editReply({ content: result.link, });
-			lewdEmbed.setImage(result.link);
+				return interaction.editReply({ content: result.body.link, });
+			lewdEmbed.setImage(result.body.link);
 
 			return interaction.editReply({ embeds: [lewdEmbed], });
 		}
