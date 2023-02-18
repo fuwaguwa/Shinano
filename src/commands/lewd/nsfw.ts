@@ -377,7 +377,7 @@ export default new ChatInputCommand({
 						}
 					);
 					const waifu = await response.json();
-					lewdEmbed.setImage(waifu.link);
+					lewdEmbed.setImage(waifu.body.link);
 
 					return interaction.editReply({ embeds: [lewdEmbed], });
 				}
