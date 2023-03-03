@@ -6,7 +6,7 @@ export = async (
 	lewdEmbed: EmbedBuilder
 ) => 
 {
-	const response = await fetch("https://Amagi.fuwafuwa08.repl.co/nsfw/random", {
+	const response = await fetch("https://Amagi.fuwafuwa08.repl.co/nsfw/private/random", {
 		method: "GET",
 		headers: {
 			Authorization: process.env.amagiApiKey,
@@ -14,10 +14,10 @@ export = async (
 	});
 	const waifu = await response.json();
 
-	if (!(waifu.link as string).endsWith("mp4")) 
+	if (!(waifu.body.link as string).endsWith("mp4")) 
 	{
-		lewdEmbed.setImage(waifu.link);
+		lewdEmbed.setImage(waifu.body.link);
 		return interaction.editReply({ embeds: [lewdEmbed], });
 	}
-	return interaction.editReply({ content: waifu.link, });
+	return interaction.editReply({ content: waifu.body.link, });
 };
