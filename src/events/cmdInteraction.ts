@@ -95,7 +95,7 @@ function runCommand(
 				},
 				{
 					name: "Error Message",
-					value: codeBlock(`**${err.name}**: ${err.message}`),
+					value: codeBlock(`${err.name}: ${err.message}`),
 				}
 			);
 
