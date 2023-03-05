@@ -13,6 +13,21 @@ export = async (
 	category: string
 ) => 
 {
+	if (category === "random") 
+	{
+		const allCategories = [
+			"elf",
+			"genshin",
+			"misc",
+			"shipgirls",
+			"undies",
+			"uniform",
+			"kemonomimi"
+		];
+
+		category = allCategories[Math.floor(Math.random() * allCategories.length)];
+	}
+
 	const data = await Collection.findOne({ type: category, });
 	const image = data.links[Math.floor(Math.random() * data.size)];
 
