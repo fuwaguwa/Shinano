@@ -3,7 +3,8 @@ import {
 	ButtonBuilder,
 	ButtonInteraction,
 	ButtonStyle,
-	EmbedBuilder
+	EmbedBuilder,
+	TextChannel
 } from "discord.js";
 import { Event } from "../structures/Event";
 import User from "../schemas/User";
@@ -186,7 +187,11 @@ export default new Event("interactionCreate", async (interaction) =>
 		case interaction.customId === "SAUCE": {
 			const link = interaction.message.components[0].components[0].data["url"];
 
-			await findSauce({ interaction, link, ephemeral: false, });
+			await findSauce({
+				interaction,
+				link,
+				ephemeral: !(interaction.channel as TextChannel).nsfw,
+			});
 		}
 	}
 });
