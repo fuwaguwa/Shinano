@@ -62,7 +62,7 @@ export default new Event("guildCreate", async (guild) =>
 				.setDescription(
 					"I am Shinano, a multi-purpose Discord bot designed to serve shikikans all over the world. " +
 						"Whether it is providing information about shipfus, query information in Genshin, or to entertain you, I can do it all while being half-asleep...zzz\n\n" +
-						"You can learn more about what I can do by using `/shinano help`. If you're experiencing any trouble with the bot, please join the support server down below!"
+						"You can learn more about what I can do by using </shinano help:1059059516081192961>. If you're experiencing any trouble with the bot, please join the support server down below!"
 				)
 				.setThumbnail(
 					"https://cdn.discordapp.com/avatars/1002193298229829682/14d86d9092130bb9b6dfc49af0a110b2.webp?size=1024"

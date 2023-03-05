@@ -1,4 +1,9 @@
-import { EmbedBuilder } from "discord.js";
+import {
+	ActionRowBuilder,
+	ButtonBuilder,
+	ButtonStyle,
+	EmbedBuilder
+} from "discord.js";
 import fetch from "node-fetch";
 import { ChatInputCommand } from "../../structures/Command";
 
@@ -23,6 +28,22 @@ export default new ChatInputCommand({
 			.setTimestamp()
 			.setImage(kitsunePic.results[0].url);
 
-		await interaction.editReply({ embeds: [foxgirlEmbed], });
+		const imageInfo = new ActionRowBuilder<ButtonBuilder>().addComponents(
+			new ButtonBuilder()
+				.setStyle(ButtonStyle.Link)
+				.setEmoji({ name: "🔗", })
+				.setLabel("Image Link")
+				.setURL(kitsunePic.results[0].url),
+			new ButtonBuilder()
+				.setStyle(ButtonStyle.Secondary)
+				.setEmoji({ name: "🔍", })
+				.setLabel("Get Sauce")
+				.setCustomId("SAUCE")
+		);
+
+		await interaction.editReply({
+			embeds: [foxgirlEmbed],
+			components: [imageInfo],
+		});
 	},
 });

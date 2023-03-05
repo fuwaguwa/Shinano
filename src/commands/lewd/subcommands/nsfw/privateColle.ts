@@ -20,17 +20,22 @@ export = async (
 	{
 		lewdEmbed.setImage(image.link);
 
-		const imageLink = new ActionRowBuilder<ButtonBuilder>().addComponents(
+		const imageInfo = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
 				.setStyle(ButtonStyle.Link)
 				.setEmoji({ name: "🔗", })
 				.setLabel("Image Link")
-				.setURL(image.link)
+				.setURL(image.link),
+			new ButtonBuilder()
+				.setStyle(ButtonStyle.Secondary)
+				.setEmoji({ name: "🔍", })
+				.setLabel("Get Sauce")
+				.setCustomId("SAUCE")
 		);
 
 		return interaction.editReply({
 			embeds: [lewdEmbed],
-			components: [imageLink],
+			components: [imageInfo],
 		});
 	}
 	return interaction.editReply({ content: image.link, });

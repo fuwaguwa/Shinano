@@ -12,9 +12,30 @@ import { Event } from "../structures/Event";
 import User from "../schemas/User";
 import ms from "ms";
 import { ChatInputCommandType } from "../typings/Command";
+import { codeBlock } from "discord.js";
 
 const Cooldown: Collection<string, number> = new Collection();
 const owner = "836215956346634270";
+
+function getFullCommand(interaction: ChatInputCommandInteraction) 
+{
+	let fullCommand = interaction.commandName;
+	const options: any = interaction.options;
+	if (options._group) fullCommand = fullCommand + " " + options._group;
+	if (options._subcommand)
+		fullCommand = fullCommand + " " + options._subcommand;
+	if (options._hoistedOptions.length > 0) 
+	{
+		options._hoistedOptions.forEach((option) => 
+		{
+			option.attachment
+				? (fullCommand = `${fullCommand} ${option.name}:${option.attachment.proxyURL}`)
+				: (fullCommand = `${fullCommand} ${option.name}:${option.value}`);
+		});
+	}
+
+	return fullCommand;
+}
 
 let EHOSTRetries: number = 0;
 function runCommand(
@@ -32,12 +53,17 @@ function runCommand(
 			return runCommand(command, interaction);
 		}
 
+		const guild = await client.guilds.fetch("1002188088942022807");
+		const channel = (await guild.channels.fetch(
+			"1081859286889660447"
+		)) as TextChannel;
+
 		EHOSTRetries = 0;
 		const errorEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(`**${err.name}**: ${err.message}`)
 			.setFooter({
-				text: "Please use the command again or contact support!",
+				text: "Please try executing again, error sent to developer!",
 			});
 		const button: ActionRowBuilder<ButtonBuilder> =
 			new ActionRowBuilder<ButtonBuilder>().setComponents(
@@ -46,6 +72,31 @@ function runCommand(
 					.setLabel("Support Server")
 					.setEmoji({ name: "⚙️", })
 					.setURL("https://discord.gg/NFkMxFeEWr")
+			);
+
+		const fullCommand = getFullCommand(interaction);
+		const errorLogMessage: EmbedBuilder = new EmbedBuilder()
+			.setColor("Red")
+			.setTitle("Error in execution!")
+			.setThumbnail(interaction.user.displayAvatarURL({ forceStatic: false, }))
+			.addFields(
+				{ name: "Command Name: ", value: `\`/${fullCommand}\``, },
+				{
+					name: "Guild Name | Guild ID",
+					value: `${interaction.guild.name} | ${interaction.guild.id}`,
+				},
+				{
+					name: "Channel Name | Channel ID",
+					value: `#${interaction.channel.name} | ${interaction.channel.id}`,
+				},
+				{
+					name: "User | User ID",
+					value: `${interaction.user.username}#${interaction.user.discriminator} | ${interaction.user.id}`,
+				},
+				{
+					name: "Error Message",
+					value: codeBlock(`**${err.name}**: ${err.message}`),
+				}
 			);
 
 		interaction.deferred
@@ -57,6 +108,8 @@ function runCommand(
 				embeds: [errorEmbed],
 				components: [button],
 			  });
+
+		await channel.send({ embeds: [errorLogMessage], });
 	});
 }
 
@@ -242,21 +295,7 @@ export default new Event("interactionCreate", async (interaction) =>
 		"1002189434797707304"
 	);
 
-	let fullCommand = interaction.commandName;
-	const options: any = interaction.options;
-	if (options._group) fullCommand = fullCommand + " " + options._group;
-	if (options._subcommand)
-		fullCommand = fullCommand + " " + options._subcommand;
-	if (options._hoistedOptions.length > 0) 
-	{
-		options._hoistedOptions.forEach((option) => 
-		{
-			option.attachment
-				? (fullCommand = `${fullCommand} ${option.name}:${option.attachment.proxyURL}`)
-				: (fullCommand = `${fullCommand} ${option.name}:${option.value}`);
-		});
-	}
-
+	const fullCommand = getFullCommand(interaction);
 	const commandExecuted: EmbedBuilder = new EmbedBuilder()
 		.setColor("#2f3136")
 		.setTitle("Command Executed!")

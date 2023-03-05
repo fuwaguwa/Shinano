@@ -11,6 +11,7 @@ import translate from "google-translate-api-x";
 import fetch from "node-fetch";
 import fs from "fs";
 import path from "path";
+import { findSauce } from "../lib/Sauce";
 
 let EHOSTRetries: number = 0;
 function translateTweet(text: string, interaction: ButtonInteraction) 
@@ -179,6 +180,13 @@ export default new Event("interactionCreate", async (interaction) =>
 					return translateTweet(tweet.raw, interaction);
 				}
 			);
+			break;
+		}
+
+		case interaction.customId === "SAUCE": {
+			const link = interaction.message.components[0].components[0].data["url"];
+
+			await findSauce({ interaction, link, ephemeral: false, });
 		}
 	}
 });
