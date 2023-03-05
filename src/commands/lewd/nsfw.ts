@@ -292,10 +292,6 @@ export default new ChatInputCommand({
 		{
 			switch (interaction.options.getSubcommand()) 
 			{
-				case "random": {
-					return nsfwFunc.random(interaction, lewdEmbed);
-				}
-
 				case "bomb": {
 					return nsfwFunc.bomb(interaction);
 				}
@@ -350,7 +346,8 @@ export default new ChatInputCommand({
 				case "misc":
 				case "shipgirls":
 				case "undies":
-				case "uniform": {
+				case "uniform":
+				case "random": {
 					return nsfwFunc.privateColle(
 						interaction,
 						lewdEmbed,
@@ -379,7 +376,23 @@ export default new ChatInputCommand({
 					const waifu = await response.json();
 					lewdEmbed.setImage(waifu.body.link);
 
-					return interaction.editReply({ embeds: [lewdEmbed], });
+					const imageInfo = new ActionRowBuilder<ButtonBuilder>().addComponents(
+						new ButtonBuilder()
+							.setStyle(ButtonStyle.Link)
+							.setEmoji({ name: "🔗", })
+							.setLabel("Image Link")
+							.setURL(waifu.body.link),
+						new ButtonBuilder()
+							.setStyle(ButtonStyle.Secondary)
+							.setEmoji({ name: "🔍", })
+							.setLabel("Get Sauce")
+							.setCustomId("SAUCE")
+					);
+
+					return interaction.editReply({
+						embeds: [lewdEmbed],
+						components: [imageInfo],
+					});
 				}
 			}
 		}

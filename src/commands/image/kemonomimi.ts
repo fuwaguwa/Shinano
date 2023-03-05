@@ -1,4 +1,9 @@
-import { EmbedBuilder } from "discord.js";
+import {
+	ActionRowBuilder,
+	ButtonBuilder,
+	ButtonStyle,
+	EmbedBuilder
+} from "discord.js";
 import { ChatInputCommand } from "../../structures/Command";
 import neko from "nekos-fun";
 
@@ -11,6 +16,7 @@ export default new ChatInputCommand({
 	{
 		if (!interaction.deferred) await interaction.deferReply();
 
+		const link = await neko.sfw.animalEars();
 		const kemonomimiEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")
 			.setFooter({
@@ -18,8 +24,24 @@ export default new ChatInputCommand({
 				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 			})
 			.setTimestamp()
-			.setImage(await neko.sfw.animalEars());
+			.setImage(link);
 
-		await interaction.editReply({ embeds: [kemonomimiEmbed], });
+		const imageInfo = new ActionRowBuilder<ButtonBuilder>().addComponents(
+			new ButtonBuilder()
+				.setStyle(ButtonStyle.Link)
+				.setEmoji({ name: "🔗", })
+				.setLabel("Image Link")
+				.setURL(link),
+			new ButtonBuilder()
+				.setStyle(ButtonStyle.Secondary)
+				.setEmoji({ name: "🔍", })
+				.setLabel("Get Sauce")
+				.setCustomId("SAUCE")
+		);
+
+		await interaction.editReply({
+			embeds: [kemonomimiEmbed],
+			components: [imageInfo],
+		});
 	},
 });

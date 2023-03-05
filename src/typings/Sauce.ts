@@ -1,4 +1,5 @@
 import {
+	ButtonInteraction,
 	ChatInputCommandInteraction,
 	MessageContextMenuCommandInteraction
 } from "discord.js";
@@ -6,7 +7,8 @@ import {
 export interface SauceOptions {
 	interaction:
 		| ChatInputCommandInteraction
-		| MessageContextMenuCommandInteraction;
+		| MessageContextMenuCommandInteraction
+		| ButtonInteraction;
 	link: string;
 	ephemeral: boolean;
 }
