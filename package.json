@@ -23,7 +23,7 @@
     "dotenv": "^16.0.3",
     "fuse.js": "^6.6.2",
     "genshin-db": "^4.3.6",
-    "glob": "^8.1.0",
+    "glob": "^9.2.1",
     "google-translate-api-x": "^10.5.2",
     "mongoose": "^6.9.0",
     "ms": "^2.1.3",
