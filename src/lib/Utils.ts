@@ -82,7 +82,7 @@ export function isNum(value)
  */
 export function strFormat(str: string, obj: any[]) 
 {
-	return str.replace(/\{\s*([^}\s]+)\s*\}/g, (m, p1, offset, string) => 
+	return str.replace(/\{\s*([^}\s]+)\s*\}/g, (m, p1) =>
 	{
 		return obj[p1];
 	});

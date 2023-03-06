@@ -22,7 +22,6 @@ export class ShinanoShip
 
 	/**
 	 * Get ship color based on ship rarity
-	 * @param ship ship
 	 */
 	public shipColor() 
 	{
@@ -42,7 +41,6 @@ export class ShinanoShip
 
 	/**
 	 * Get ship pools
-	 * @param ship ship
 	 * @param embed general info embed
 	 */
 	private pools(embed: EmbedBuilder) 
@@ -118,7 +116,7 @@ export class ShinanoShip
 	 * @param shipStats ship stats
 	 * @returns link to stats table
 	 */
-	private createStatsTable(shipStats) 
+	private static createStatsTable(shipStats)
 	{
 		// Structure
 		const columns: string[] = [
@@ -344,7 +342,7 @@ export class ShinanoShip
 			}
 		}
 
-		const statsTable = await this.createStatsTable(ship.stats);
+		const statsTable = await ShinanoShip.createStatsTable(ship.stats);
 		const statsEmbed: EmbedBuilder = new EmbedBuilder()
 			.setTitle(`${ship.names.en}'s Stats`)
 			.setColor(this.color)
@@ -471,7 +469,7 @@ export class ShinanoShip
 				)}s`;
 		}
 
-		const tech: EmbedBuilder = new EmbedBuilder()
+		this.tech = new EmbedBuilder()
 			.setColor(this.color)
 			.setTitle(`${ship.names.en}'s Fleet Stats`)
 			.setThumbnail(ship.thumbnail)
@@ -479,8 +477,6 @@ export class ShinanoShip
 				{ name: "Tech Points:", value: techPts, },
 				{ name: "Stats Bonus:", value: statsBonus, }
 			);
-
-		this.tech = tech;
 	}
 
 	/**

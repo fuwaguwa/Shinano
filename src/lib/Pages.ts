@@ -15,7 +15,7 @@ export async function ShinanoPaginator({
 	menu,
 }: ShinanoPaginatorOptions): Promise<number> 
 {
-	return new Promise(async (resolve, reject) => 
+	return new Promise(async (resolve) =>
 	{
 		let pageCount: number = lastPage || 0;
 		let menuId: string;

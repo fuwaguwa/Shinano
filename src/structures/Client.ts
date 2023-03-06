@@ -179,7 +179,7 @@ export class Shinano extends Client
 		});
 	}
 
-	private async importFile(filePath: string) 
+	private static async importFile(filePath: string)
 	{
 		return (await import(filePath))?.default;
 	}
@@ -309,7 +309,7 @@ export class Shinano extends Client
 
 		commandFiles.forEach(async (filePath) => 
 		{
-			const command: ChatInputCommandType = await this.importFile(filePath);
+			const command: ChatInputCommandType = await Shinano.importFile(filePath);
 			if (!command.name) return;
 
 			if (command.category !== "NSFW" && command.category !== "Dev")
@@ -321,7 +321,7 @@ export class Shinano extends Client
 
 		messageFiles.forEach(async (filePath) => 
 		{
-			const command: MessageCommandType = await this.importFile(filePath);
+			const command: MessageCommandType = await Shinano.importFile(filePath);
 			if (!command.name) return;
 
 			this.messageCommands.set(command.name, command);
@@ -330,7 +330,7 @@ export class Shinano extends Client
 
 		userFiles.forEach(async (filePath) => 
 		{
-			const command: UserCommandType = await this.importFile(filePath);
+			const command: UserCommandType = await Shinano.importFile(filePath);
 			if (!command.name) return;
 
 			this.userCommands.set(command.name, command);
@@ -350,7 +350,7 @@ export class Shinano extends Client
 
 		eventFiles.forEach(async (filePath) => 
 		{
-			const event: Event<keyof ClientEvents> = await this.importFile(filePath);
+			const event: Event<keyof ClientEvents> = await Shinano.importFile(filePath);
 			this.on(event.event, event.run);
 		});
 	}

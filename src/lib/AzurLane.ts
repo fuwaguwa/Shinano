@@ -18,8 +18,7 @@ export async function getALEXPTable()
 			},
 		}
 	);
-	const data = (await response.json()).body;
-	return data;
+	return (await response.json()).body;
 }
 
 /**
@@ -292,8 +291,7 @@ export async function gearSearch(gearName: string, AL: AzurAPI)
 		keys: ["names.en", "names.wiki"],
 	});
 
-	const result = searcher.search(gearName);
-	return result;
+	return searcher.search(gearName);
 }
 
 /**

@@ -73,6 +73,7 @@ export class ShinanoWeapon
 	/**
 	 * Add weapon effect to embed
 	 * @param embed weapon embed
+	 * @param refStats weapon refinement stats
 	 */
 	private includeEffect(embed: EmbedBuilder, refStats?: string[]) 
 	{
