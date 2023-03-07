@@ -74,7 +74,7 @@ export default new ChatInputCommand({
 
 						case "B": {
 							percentageA = 0;
-							percentageB = 0;
+							percentageB = 100;
 							break;
 						}
 					}
