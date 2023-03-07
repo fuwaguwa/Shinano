@@ -33,7 +33,7 @@ export = async (
 		);
 
 		const waifu = await response.json();
-		url = waifu.link;
+		url = waifu.body.link;
 	}
 	else 
 	{
