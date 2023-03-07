@@ -60,11 +60,6 @@ export default new ChatInputCommand({
 					],
 				}
 			],
-		},
-		{
-			type: ApplicationCommandOptionType.Subcommand,
-			name: "lewd",
-			description: "\"As a reward for your valiant efforts...\"",
 		}
 	],
 	run: async ({ interaction, }) => 
@@ -89,10 +84,6 @@ export default new ChatInputCommand({
 
 			case "vote": {
 				return shinanoFunc.vote(interaction);
-			}
-
-			case "lewd": {
-				return shinanoFunc.lewd(interaction);
 			}
 
 			case "support": {

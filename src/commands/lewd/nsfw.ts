@@ -19,258 +19,223 @@ export default new ChatInputCommand({
 	defaultMemberPermissions: "0",
 	options: [
 		{
-			type: ApplicationCommandOptionType.SubcommandGroup,
-			name: "anime",
-			description: "uwu",
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "fanbox",
+			description: "Images from artists' FANBOX/Patreon (High Quality)",
 			options: [
 				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "fanbox",
-					description: "Images from artists' FANBOX/Patreon (High Quality)",
-					options: [
-						{
-							type: ApplicationCommandOptionType.String,
-							name: "fanbox-category",
-							description:
-								"The category you want FANBOX/Patreon content from. Ignore this option for random category.",
-							choices: [
-								{ name: "Shipgirls", value: "shipgirls", },
-								{ name: "Undies ⭐", value: "undies", },
-								{ name: "Elf", value: "elf", },
-								{ name: "Genshin", value: "genshin", },
-								{ name: "Kemonomimi", value: "kemonomimi", },
-								{ name: "Misc", value: "misc", },
-								{ name: "Uniform", value: "uniform", }
-							],
-						}
-					],
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "bomb",
-					description: "Bombs you with lewdness!",
-					options: [
-						{
-							type: ApplicationCommandOptionType.String,
-							name: "category",
-							description:
-								"The category you want to be bombed with. Ignore this option for random category.",
-							choices: [
-								{ name: "GIF", value: "gif", },
-								{ name: "Shipgirls", value: "shipgirls", },
-								{ name: "Undies", value: "undies", },
-								{ name: "Elf", value: "elf", },
-								{ name: "Genshin", value: "genshin", },
-								{ name: "Kemonomimi", value: "kemonomimi", },
-								{ name: "Misc", value: "misc", },
-								{ name: "Uniform", value: "uniform", }
-							],
-						}
-					],
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "fanbox-bomb",
-					description: "Bombs you with XTRA lewdness!",
-					options: [
-						{
-							type: ApplicationCommandOptionType.String,
-							name: "category",
-							description:
-								"The category you want to be bombed with. Ignore this option for random category.",
-							choices: [
-								{ name: "Shipgirls", value: "shipgirls", },
-								{ name: "Undies ⭐", value: "undies", },
-								{ name: "Elf", value: "elf", },
-								{ name: "Genshin", value: "genshin", },
-								{ name: "Kemonomimi", value: "kemonomimi", },
-								{ name: "Misc", value: "misc", },
-								{ name: "Uniform", value: "uniform", }
-							],
-						}
-					],
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "animation",
-					description: "When pictures are not enough...",
-					options: [
-						{
-							type: ApplicationCommandOptionType.String,
-							name: "type",
-							required: true,
-							description:
-								"File type. Ignore this option for random file type.",
-							choices: [
-								{ name: "Video", value: "video", },
-								{ name: "GIF", value: "gif", },
-								{ name: "Random", value: "random", }
-							],
-						},
-						{
-							type: ApplicationCommandOptionType.String,
-							name: "category",
-							description:
-								"The category you want animations from. Ignore this option for random category.",
-							choices: [
-								{ name: "Shipgirls ⭐", value: "shipgirls", },
-								{ name: "Genshin ⭐", value: "genshin", },
-								{ name: "Undies", value: "undies", },
-								{ name: "Elf", value: "elf", },
-								{ name: "Kemonomimi", value: "kemonomimi", },
-								{ name: "Misc", value: "misc", },
-								{ name: "Uniform", value: "uniform", }
-							],
-						}
-					],
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "a-level",
-					description: "There's more than one hole.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "ass",
-					description: "Big booty.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "thighs",
-					description: "The best part of the leg.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "paizuri",
-					description: "Squished between thiccness.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "solo",
-					description: "Single Player Mode.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "nut",
-					description: "Baby gravy.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "random",
-					description: "Return images/GIFs/videos from a random category.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "oral",
-					description: "Girls \"playing the trumpet\"",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "genshin",
-					description: "Genshin Girls",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "undies",
+					type: ApplicationCommandOptionType.String,
+					name: "fanbox-category",
 					description:
-						"Undies, sportwears, swimsuits, bodysuits and stockings/thigh highs.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "kemonomimi",
-					description: "Fox girls, cat girls, bunny girls, succubus and more!",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "uniform",
-					description: "Maid, Office Lady, JK, you name it!",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "shipgirls",
-					description: "Shipgirls from Azur Lane!",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "elf",
-					description: "Thicc and pointy-eared.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "nekomimi",
-					description: "Catgirls!",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "feet",
-					description: "Shinano will not question your kink.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "breasts",
-					description: "Girls with huge jugs!",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "misc",
-					description: "Categories that are not mentioned here!",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "cunny",
-					description: "😺🐈",
+						"The category you want FANBOX/Patreon content from. Ignore this option for random category.",
+					choices: [
+						{ name: "Shipgirls", value: "shipgirls", },
+						{ name: "Undies ⭐", value: "undies", },
+						{ name: "Elf", value: "elf", },
+						{ name: "Genshin", value: "genshin", },
+						{ name: "Kemonomimi", value: "kemonomimi", },
+						{ name: "Misc", value: "misc", },
+						{ name: "Uniform", value: "uniform", }
+					],
 				}
 			],
 		},
 		{
-			type: ApplicationCommandOptionType.SubcommandGroup,
-			name: "irl",
-			description: "Real People.",
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "bomb",
+			description: "Bombs you with lewdness!",
 			options: [
 				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "ass",
-					description: "Big Booty IRL.",
+					type: ApplicationCommandOptionType.String,
+					name: "category",
+					description:
+						"The category you want to be bombed with. Ignore this option for random category.",
+					choices: [
+						{ name: "GIF", value: "gif", },
+						{ name: "Shipgirls", value: "shipgirls", },
+						{ name: "Undies", value: "undies", },
+						{ name: "Elf", value: "elf", },
+						{ name: "Genshin", value: "genshin", },
+						{ name: "Kemonomimi", value: "kemonomimi", },
+						{ name: "Misc", value: "misc", },
+						{ name: "Uniform", value: "uniform", }
+					],
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "fanbox-bomb",
+			description: "Bombs you with XTRA lewdness!",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: "category",
+					description:
+						"The category you want to be bombed with. Ignore this option for random category.",
+					choices: [
+						{ name: "Shipgirls", value: "shipgirls", },
+						{ name: "Undies ⭐", value: "undies", },
+						{ name: "Elf", value: "elf", },
+						{ name: "Genshin", value: "genshin", },
+						{ name: "Kemonomimi", value: "kemonomimi", },
+						{ name: "Misc", value: "misc", },
+						{ name: "Uniform", value: "uniform", }
+					],
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "animation",
+			description: "When pictures are not enough...",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: "type",
+					required: true,
+					description:
+						"File type. Ignore this option for random file type.",
+					choices: [
+						{ name: "Video", value: "video", },
+						{ name: "GIF", value: "gif", },
+						{ name: "Random", value: "random", }
+					],
 				},
 				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "nut",
-					description: "Special sauce from the meat.",
-				},
+					type: ApplicationCommandOptionType.String,
+					name: "category",
+					description:
+						"The category you want animations from. Ignore this option for random category.",
+					choices: [
+						{ name: "Shipgirls ⭐", value: "shipgirls", },
+						{ name: "Genshin ⭐", value: "genshin", },
+						{ name: "Undies", value: "undies", },
+						{ name: "Elf", value: "elf", },
+						{ name: "Kemonomimi", value: "kemonomimi", },
+						{ name: "Misc", value: "misc", },
+						{ name: "Uniform", value: "uniform", }
+					],
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "a-level",
+			description: "There's more than one hole.",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "ass",
+			description: "Big booty.",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "thighs",
+			description: "The best part of the leg.",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "paizuri",
+			description: "Squished between thiccness.",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "solo",
+			description: "Single Player Mode.",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "nut",
+			description: "Baby gravy.",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "random",
+			description: "Return images/GIFs/videos from a random category.",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "oral",
+			description: "Girls \"playing the trumpet\"",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "genshin",
+			description: "Genshin Girls",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "undies",
+			description:
+				"Undies, sportwears, swimsuits, bodysuits and stockings/thigh highs.",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "kemonomimi",
+			description: "Fox girls, cat girls, bunny girls, succubus and more!",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "uniform",
+			description: "Maid, Office Lady, JK, you name it!",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "shipgirls",
+			description: "Shipgirls from Azur Lane!",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "elf",
+			description: "Thicc and pointy-eared.",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "nekomimi",
+			description: "Catgirls!",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "feet",
+			description: "Shinano will not question your kink.",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "breasts",
+			description: "Girls with huge jugs!",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "misc",
+			description: "Categories that are not mentioned here!",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "cunny",
+			description: "😺🐈",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "irl",
+			description: "Not interested in anime girls? No problem!",
+			options: [
 				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "a-level",
-					description: "There's more than one hole",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "oral",
-					description: "The SUCC.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "breasts",
-					description: "Big and heavy.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "cunny",
-					description: "Down there.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "random",
-					description: "Return image/video from a random category.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "cosplay",
-					description: "Life imitates art.",
-				},
-				{
-					type: ApplicationCommandOptionType.Subcommand,
-					name: "video",
-					description: "Videos from RedGIFS.",
+					type: ApplicationCommandOptionType.String,
+					required: true,
+					name: "category",
+					description: "Category",
+					choices: [
+						{ name: "Random", value: "random", },
+						{ name: "Video", value: "video", },
+						{ name: "Ass", value: "ass", },
+						{ name: "Cum", value: "cum", },
+						{ name: "Anal", value: "anal", },
+						{ name: "Blowjob", value: "blowjob", },
+						{ name: "Boobs", value: "boobs", },
+						{ name: "Pussy", value: "pussy", },
+						{ name: "Cosplay", value: "cosplay", }
+					],
 				}
 			],
 		}
@@ -288,9 +253,10 @@ export default new ChatInputCommand({
 		/**
 		 * Processing Command
 		 */
-		if (interaction.options.getSubcommandGroup() === "anime") 
+		const subcommand = interaction.options.getSubcommand();
+		if (subcommand !== "irl")
 		{
-			switch (interaction.options.getSubcommand()) 
+			switch (subcommand)
 			{
 				case "bomb": {
 					return nsfwFunc.bomb(interaction);
@@ -398,13 +364,7 @@ export default new ChatInputCommand({
 		}
 		else 
 		{
-			let tag = interaction.options.getSubcommand();
-
-			if (tag === "cunny") tag = "pussy";
-			if (tag === "breasts") tag = "boobs";
-			if (tag === "nut") tag = "cum";
-			if (tag === "oral") tag = "blowjob";
-			if (tag === "a-level") tag = "anal";
+			let tag = interaction.options.getString("category");
 
 			const response = await fetch(
 				`https://Amagi.fuwafuwa08.repl.co/nsfw/porn/${tag}`,
