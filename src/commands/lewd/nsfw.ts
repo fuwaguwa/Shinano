@@ -329,6 +329,7 @@ export default new ChatInputCommand({
 					if (tag === "nut") tag = "cum";
 					if (tag === "oral") tag = "blowjob";
 					if (tag === "a-level") tag = "anal";
+					if (tag === "solo") tag = "masturbation";
 
 					const response = await fetch(
 						`https://Amagi.fuwafuwa08.repl.co/nsfw/public/${tag}`,
