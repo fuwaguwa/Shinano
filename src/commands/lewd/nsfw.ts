@@ -233,7 +233,8 @@ export default new ChatInputCommand({
 						{ name: "Blowjob", value: "blowjob", },
 						{ name: "Boobs", value: "boobs", },
 						{ name: "Pussy", value: "pussy", },
-						{ name: "Cosplay", value: "cosplay", }
+						{ name: "Cosplay", value: "cosplay", },
+						{ name: "Lingerie", value: "lingerie", }
 					],
 				}
 			],
