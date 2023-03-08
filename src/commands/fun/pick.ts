@@ -33,6 +33,31 @@ export default new ChatInputCommand({
 			type: ApplicationCommandOptionType.String,
 			name: "choice-5",
 			description: "Choice 5.",
+		},
+		{
+			type: ApplicationCommandOptionType.String,
+			name: "choice-6",
+			description: "Choice 6.",
+		},
+		{
+			type: ApplicationCommandOptionType.String,
+			name: "choice-7",
+			description: "Choice 7.",
+		},
+		{
+			type: ApplicationCommandOptionType.String,
+			name: "choice-8",
+			description: "Choice 8.",
+		},
+		{
+			type: ApplicationCommandOptionType.String,
+			name: "choice-9",
+			description: "Choice 9.",
+		},
+		{
+			type: ApplicationCommandOptionType.String,
+			name: "choice-10",
+			description: "Choice 10.",
 		}
 	],
 	run: async ({ interaction, }) => 
@@ -41,7 +66,7 @@ export default new ChatInputCommand({
 			throw new Error("Interaction is not from chat!");
 
 		const choices: string[] = [];
-		for (let i = 0; i < 5; i++) 
+		for (let i = 0; i < 10; i++) 
 		{
 			if (interaction.options.getString(`choice-${i + 1}`))
 				choices.push(interaction.options.getString(`choice-${i + 1}`));
