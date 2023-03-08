@@ -45,11 +45,6 @@ export default new ChatInputCommand({
 					],
 				}
 			],
-		},
-		{
-			type: ApplicationCommandOptionType.Subcommand,
-			name: "random",
-			description: "Get a random doujin.",
 		}
 	],
 	run: async ({ interaction, }) => 
@@ -59,10 +54,6 @@ export default new ChatInputCommand({
 		{
 			case "code": {
 				return doujinFunc.code(interaction);
-			}
-
-			case "random": {
-				return doujinFunc.random(interaction);
 			}
 
 			case "search": {
