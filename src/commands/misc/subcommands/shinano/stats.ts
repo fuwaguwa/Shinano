@@ -39,7 +39,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	 * Command List
 	 */
 	let commandsCount = 0;
-	for (const category in client.catagorizedCommands)
+	for (const category in client.catagorizedCommands) 
 	{
 		commandsCount += category.length;
 	}
@@ -66,8 +66,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			},
 			{
 				name: "API Status:",
-				value:
-					`Connected to Database: **${apiStatus.connectedToDatabase}**`,
+				value: `Connected to Database: **${apiStatus.connectedToDatabase}**`,
 			}
 		);
 	await interaction.editReply({ embeds: [performance], });

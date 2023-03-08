@@ -116,7 +116,7 @@ export class ShinanoShip
 	 * @param shipStats ship stats
 	 * @returns link to stats table
 	 */
-	private static createStatsTable(shipStats)
+	private static createStatsTable(shipStats) 
 	{
 		// Structure
 		const columns: string[] = [

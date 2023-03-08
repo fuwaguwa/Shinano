@@ -179,7 +179,7 @@ export class Shinano extends Client
 		});
 	}
 
-	private static async importFile(filePath: string)
+	private static async importFile(filePath: string) 
 	{
 		return (await import(filePath))?.default;
 	}
@@ -350,7 +350,9 @@ export class Shinano extends Client
 
 		eventFiles.forEach(async (filePath) => 
 		{
-			const event: Event<keyof ClientEvents> = await Shinano.importFile(filePath);
+			const event: Event<keyof ClientEvents> = await Shinano.importFile(
+				filePath
+			);
 			this.on(event.event, event.run);
 		});
 	}

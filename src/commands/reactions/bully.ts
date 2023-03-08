@@ -14,7 +14,7 @@ export default new ChatInputCommand({
 			description: "Person you want to bully",
 		}
 	],
-	run: async ({ interaction, }) =>
+	run: async ({ interaction, }) => 
 	{
 		if (!interaction.deferred) await interaction.deferReply();
 
@@ -23,9 +23,7 @@ export default new ChatInputCommand({
 			.setColor("Random")
 			.setImage(await getWaifuReactionGIF(interaction.commandName))
 			.setDescription(
-				user
-					? `${interaction.user} bullied ${user}!`
-					: "You bullied yourself?"
+				user ? `${interaction.user} bullied ${user}!` : "You bullied yourself?"
 			);
 
 		await interaction.editReply({ embeds: [reactionEmbed], });

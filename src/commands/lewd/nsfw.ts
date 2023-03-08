@@ -94,8 +94,7 @@ export default new ChatInputCommand({
 					type: ApplicationCommandOptionType.String,
 					name: "type",
 					required: true,
-					description:
-						"File type. Ignore this option for random file type.",
+					description: "File type. Ignore this option for random file type.",
 					choices: [
 						{ name: "Video", value: "video", },
 						{ name: "GIF", value: "gif", },
@@ -254,9 +253,9 @@ export default new ChatInputCommand({
 		 * Processing Command
 		 */
 		const subcommand = interaction.options.getSubcommand();
-		if (subcommand !== "irl")
+		if (subcommand !== "irl") 
 		{
-			switch (subcommand)
+			switch (subcommand) 
 			{
 				case "bomb": {
 					return nsfwFunc.bomb(interaction);

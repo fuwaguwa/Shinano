@@ -7,7 +7,7 @@ export default new ChatInputCommand({
 	description: "Nothing to do...",
 	cooldown: 4000,
 	category: "Reactions",
-	run: async ({ interaction, }) =>
+	run: async ({ interaction, }) => 
 	{
 		if (!interaction.deferred) await interaction.deferReply();
 

@@ -2,7 +2,8 @@ import { ChatInputCommand } from "../../structures/Command";
 import fetch from "node-fetch";
 import {
 	ActionRowBuilder,
-	ButtonBuilder, ButtonInteraction,
+	ButtonBuilder,
+	ButtonInteraction,
 	ButtonStyle,
 	ComponentType,
 	EmbedBuilder,
@@ -14,7 +15,7 @@ export default new ChatInputCommand({
 	description: "Would you rather...",
 	cooldown: 5000,
 	category: "Fun",
-	run: async({ interaction, }) => 
+	run: async ({ interaction, }) => 
 	{
 		if (!interaction.deferred) await interaction.deferReply();
 
@@ -24,13 +25,10 @@ export default new ChatInputCommand({
 		const wyrEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("#2f3136")
 			.setTitle("Would you rather...")
-			.setDescription(
-				`🅰️ ${wyr.optionA}\n\n` +
-				`🅱️ ${wyr.optionB}`
-			);
+			.setDescription(`🅰️ ${wyr.optionA}\n\n` + `🅱️ ${wyr.optionB}`);
 
-		const choices: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
-			.setComponents(
+		const choices: ActionRowBuilder<ButtonBuilder> =
+			new ActionRowBuilder<ButtonBuilder>().setComponents(
 				new ButtonBuilder()
 					.setStyle(ButtonStyle.Danger)
 					.setEmoji({ name: "🅰️", })
@@ -41,19 +39,26 @@ export default new ChatInputCommand({
 					.setCustomId(`B-${interaction.user.id}`)
 			);
 
-		const message = await interaction.editReply({ embeds: [wyrEmbed], components: [choices], });
-		const collector: InteractionCollector<ButtonInteraction> = await message.createMessageComponentCollector({
-			componentType: ComponentType.Button,
-			time: 20000,
+		const message = await interaction.editReply({
+			embeds: [wyrEmbed],
+			components: [choices],
 		});
+		const collector: InteractionCollector<ButtonInteraction> =
+			await message.createMessageComponentCollector({
+				componentType: ComponentType.Button,
+				time: 20000,
+			});
 
 		collector.on("collect", async (i) => 
 		{
-			if (!i.customId.endsWith(i.user.id))
+			if (!i.customId.endsWith(i.user.id)) 
 			{
-				await i.reply({ content: "This button is not for you!", ephemeral: true, });
+				await i.reply({
+					content: "This button is not for you!",
+					ephemeral: true,
+				});
 			}
-			else
+			else 
 			{
 				await i.deferUpdate();
 
@@ -62,7 +67,7 @@ export default new ChatInputCommand({
 				let percentageA;
 				let percentageB;
 
-				if (wyr.votesA == 0 || wyr.votesB == 0)
+				if (wyr.votesA == 0 || wyr.votesB == 0) 
 				{
 					switch (customId) 
 					{
@@ -79,23 +84,33 @@ export default new ChatInputCommand({
 						}
 					}
 				}
-				else
+				else 
 				{
-					percentageA = (wyr.votesA / (wyr.votesA + wyr.votesB) * 100).toFixed(1);
-					percentageB = (wyr.votesB / (wyr.votesA + wyr.votesB) * 100).toFixed(1);
+					percentageA = (
+						(wyr.votesA / (wyr.votesA + wyr.votesB)) *
+						100
+					).toFixed(1);
+					percentageB = (
+						(wyr.votesB / (wyr.votesA + wyr.votesB)) *
+						100
+					).toFixed(1);
 				}
 
-				switch (customId)
+				switch (customId) 
 				{
 					case "A": {
-						choices.components[0].setLabel(`${percentageA}%`).setStyle(ButtonStyle.Success);
+						choices.components[0]
+							.setLabel(`${percentageA}%`)
+							.setStyle(ButtonStyle.Success);
 						choices.components[1].setLabel(`${percentageB}%`);
 						break;
 					}
 
 					case "B": {
 						choices.components[0].setLabel(`${percentageA}%`);
-						choices.components[1].setLabel(`${percentageB}%`).setStyle(ButtonStyle.Success);
+						choices.components[1]
+							.setLabel(`${percentageB}%`)
+							.setStyle(ButtonStyle.Success);
 						break;
 					}
 				}
