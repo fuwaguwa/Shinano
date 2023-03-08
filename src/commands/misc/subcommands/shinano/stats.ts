@@ -36,6 +36,15 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	let seconds = Math.floor(totalSeconds % 60);
 
 	/**
+	 * Command List
+	 */
+	let commandsCount = 0;
+	for (const category in client.catagorizedCommands)
+	{
+		commandsCount += category.length;
+	}
+
+	/**
 	 * Output
 	 */
 	// Outputting Data
@@ -52,7 +61,8 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				value:
 					`Total Guilds: **${client.guilds.cache.size}**\n` +
 					`Current Votes: **${topggStats.monthlyPoints}**\n` +
-					`Total Votes: **${topggStats.points}**\n`,
+					`Total Votes: **${topggStats.points}**\n` +
+					`Commands Registered: **${commandsCount}**`,
 			},
 			{
 				name: "API Status:",
