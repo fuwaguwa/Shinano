@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon dist/index.js",
-    "eslint": "npx eslint --fix \"**/*.ts\"",
+    "eslint": "eslint --fix \"**/*.ts\"",
     "prettify": "prettier --write \"**/*.ts\"",
     "format": "npm run prettify && npm run eslint",
     "build": "tsc",

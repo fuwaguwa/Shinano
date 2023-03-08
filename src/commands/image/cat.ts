@@ -1,6 +1,6 @@
 import { EmbedBuilder } from "discord.js";
-import fetch from "node-fetch";
 import { ChatInputCommand } from "../../structures/Command";
+import SRA from "somerandomapi.js";
 
 export default new ChatInputCommand({
 	name: "cat",
@@ -11,14 +11,9 @@ export default new ChatInputCommand({
 	{
 		if (!interaction.deferred) await interaction.deferReply();
 
-		const response = await fetch("https://api.thecatapi.com/v1/images/search", {
-			method: "GET",
-		});
-		const cat = await response.json();
-
 		const catEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")
-			.setImage(cat[0].url)
+			.setImage((await SRA.animal.image({ animal: "cat", })).imgUrl)
 			.setFooter({
 				text: `Requested by ${interaction.user.tag}`,
 				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
