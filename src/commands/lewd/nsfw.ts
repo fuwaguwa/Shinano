@@ -165,7 +165,7 @@ export default new ChatInputCommand({
 					required: true,
 					description: "File type. Ignore this option for random file type.",
 					choices: [
-						{ name: "Video", value: "video", },
+						{ name: "Video", value: "mp4", },
 						{ name: "GIF", value: "gif", },
 						{ name: "Random", value: "random", }
 					],
