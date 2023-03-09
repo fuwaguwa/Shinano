@@ -4,10 +4,12 @@ import fetch from "node-fetch";
 export = async (interaction: ChatInputCommandInteraction) => 
 {
 	let category = interaction.options.getString("category") || "random";
-	let type = interaction.options.getString("type");
+	const type = interaction.options.getString("type");
+
+	if (type) category = category + `&type=${type}`;
 
 	const response = await fetch(
-		`https://Amagi.fuwafuwa08.repl.co/nsfw/bomb?category=${category}&type=${type}`,
+		`https://Amagi.fuwafuwa08.repl.co/nsfw/bomb?category=${category}`,
 		{
 			method: "GET",
 			headers: {

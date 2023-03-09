@@ -2,7 +2,8 @@ import {
 	ActionRowBuilder,
 	ApplicationCommandOptionType,
 	ButtonBuilder,
-	ButtonStyle, ChatInputCommandInteraction,
+	ButtonStyle,
+	ChatInputCommandInteraction,
 	EmbedBuilder
 } from "discord.js";
 import { ChatInputCommand } from "../../structures/Command";
@@ -10,18 +11,18 @@ import nsfwFunc from "./subcommands/nsfwSubs";
 import fetch from "node-fetch";
 import { client } from "../../index";
 
-async function checkMutual(interaction: ChatInputCommandInteraction)
+async function checkMutual(interaction: ChatInputCommandInteraction) 
 {
-	if (interaction.user.id !== "836215956346634270")
+	if (interaction.user.id !== "836215956346634270") 
 	{
-		try
+		try 
 		{
 			const guild = await client.guilds.fetch(
 				process.env.guildId || "1020960562710052895"
 			);
 			await guild.members.fetch(interaction.user.id);
 		}
-		catch (err)
+		catch (err) 
 		{
 			const exclusive: EmbedBuilder = new EmbedBuilder()
 				.setColor("Red")
@@ -87,7 +88,6 @@ export default new ChatInputCommand({
 					description:
 						"The category you want to be bombed with. Ignore this option for random category.",
 					choices: [
-						{ name: "GIF", value: "gif", },
 						{ name: "Shipgirls", value: "shipgirls", },
 						{ name: "Undies", value: "undies", },
 						{ name: "Elf", value: "elf", },
@@ -309,7 +309,7 @@ export default new ChatInputCommand({
 			],
 		}
 	],
-	run: async ({ interaction, }) =>
+	run: async ({ interaction, }) => 
 	{
 		if (!interaction.deferred) await interaction.deferReply();
 		const lewdEmbed: EmbedBuilder = new EmbedBuilder()
