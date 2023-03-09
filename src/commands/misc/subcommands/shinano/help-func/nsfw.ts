@@ -39,23 +39,23 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				value: "`sauce`",
 			},
 			{
-				name: "/nsfw irl | Porn Commands:",
-				value:
-					"`ass`, `a-level (anal)`, `breasts`, `cunny`, `cosplay`, `nut`, `oral (blowjob)`, `random`, `video`",
-			},
-			{
 				name: "/nsfw anime | H-Animations:",
 				value: "`animation`",
 			},
 			{
 				name: "/nsfw anime | Hentai Commands:",
 				value:
-					"`ass`, `a-level (anal)`, `bomb`, `fanbox-bomb`, `breasts`, `cunny`, `feet`, `gif`, `nekomimi`, `nut`, `oral (blowjob)`, `paizuri`, `random`, `thighs`",
+					"`ass`, `anal`, `bomb`, `fanbox-bomb`, `blowjob`, `boobs`, `cum`, `feet`, `gif`, `nekomimi`, `paizuri`, `pussy`, `random`, `thighs`",
 			},
 			{
 				name: "/nsfw anime | Private Collection (High-Quality):",
 				value:
 					"`elf`, `fanbox`, `genshin`, `kemonomimi`, `misc`, `shipgirls`, `undies`, `yuri`",
+			},
+			{
+				name: "/nsfw irl | Porn Commands:",
+				value:
+					"Run `/nsfw irl` for all categories.",
 			},
 			{
 				name: "Doujin",

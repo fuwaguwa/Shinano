@@ -120,7 +120,7 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: "a-level",
+			name: "anal",
 			description: "There's more than one hole.",
 		},
 		{
@@ -145,7 +145,7 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: "nut",
+			name: "cum",
 			description: "Baby gravy.",
 		},
 		{
@@ -155,7 +155,7 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: "oral",
+			name: "blowjob",
 			description: "Girls \"playing the trumpet\"",
 		},
 		{
@@ -201,7 +201,7 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: "breasts",
+			name: "boobs",
 			description: "Girls with huge jugs!",
 		},
 		{
@@ -211,7 +211,7 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: "cunny",
+			name: "pussy",
 			description: "😺🐈",
 		},
 		{
@@ -324,11 +324,6 @@ export default new ChatInputCommand({
 				default: {
 					let tag = interaction.options.getSubcommand();
 
-					if (tag === "cunny") tag = "pussy";
-					if (tag === "breasts") tag = "boobs";
-					if (tag === "nut") tag = "cum";
-					if (tag === "oral") tag = "blowjob";
-					if (tag === "a-level") tag = "anal";
 					if (tag === "solo") tag = "masturbation";
 
 					const response = await fetch(
