@@ -40,7 +40,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			},
 			{
 				name: "/nsfw anime | H-Animations:",
-				value: "`animation`",
+				value: "`animation`, `animation-bomb`",
 			},
 			{
 				name: "/nsfw anime | Hentai Commands:",
@@ -50,7 +50,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			{
 				name: "/nsfw anime | Private Collection (High-Quality):",
 				value:
-					"`elf`, `fanbox`, `genshin`, `kemonomimi`, `misc`, `shipgirls`, `undies`, `yuri`",
+					"`elf`, `fanbox`, `genshin`, `kemonomimi`, `misc`, `shipgirls`, `undies`",
 			},
 			{
 				name: "/nsfw irl | Porn Commands:",
