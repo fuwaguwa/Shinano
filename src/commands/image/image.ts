@@ -5,14 +5,14 @@ import {
 	AttachmentBuilder,
 	EmbedBuilder
 } from "discord.js";
-import SRA, { CanvasMiscTweetTheme } from "somerandomapi.js";
+import SRA, { CanvasMiscTweetTheme, CanvasMiscOogwayQuoteType } from "somerandomapi.js";
 
 Canvas.registerFont("Upright.otf", { family: "Upright", });
 
 export default new ChatInputCommand({
 	name: "image",
 	description: "Image Generation & Manipulation Commands",
-	cooldown: 7272,
+	cooldown: 7000,
 	category: "Image",
 	options: [
 		{
@@ -201,6 +201,134 @@ export default new ChatInputCommand({
 					],
 				}
 			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "pixelate",
+			description: "Make someone avatar looks lewd",
+			options: [
+				{
+					type: ApplicationCommandOptionType.User,
+					name: "user",
+					description: "User to pixelate.",
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "border",
+			description: "Add a LGBT+ border to someone avatar.",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					required: true,
+					name: "border-type",
+					description: "Border Type.",
+					choices: [
+						{ name: "LGBT", value: "lgbt", },
+						{ name: "Bisexual", value: "bisexual", },
+						{ name: "Non-binary", value: "nonbinary", },
+						{ name: "Pansexual", value: "pansexual", },
+						{ name: "Transgender", value: "transgender", },
+						{ name: "Lesbian", value: "lesbian", }
+					],
+				},
+				{
+					type: ApplicationCommandOptionType.String,
+					name: "user",
+					description: "User you want to add the border to.",
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "jpg",
+			description: "Feel the artifacts.",
+			options: [
+				{
+					type: ApplicationCommandOptionType.User,
+					name: "user",
+					description: "User to be jpg-ify.",
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "heart-crop",
+			description: "Crop someone avatar into a heart!",
+			options: [
+				{
+					type: ApplicationCommandOptionType.User,
+					name: "user",
+					description: "User to be cropped.",
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "lolice",
+			description: "Anti-PDF file gang.",
+			options: [
+				{
+					type: ApplicationCommandOptionType.User,
+					name: "user",
+					description: "The lolicon police.",
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "filter",
+			description: "Add some color filter to an avatar.",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					required: true,
+					name: "filter",
+					description: "The filter to be added over.",
+					choices: [
+						{ name: "Blurple", value: "discordBlurpify", },
+						{ name: "Sepia", value: "sepia", },
+						{ name: "Red", value: "redify", },
+						{ name: "Green", value: "greenify", },
+						{ name: "Blue", value: "blueify", },
+						{ name: "Invert", value: "invert", },
+						{ name: "Greyscale", value: "greyscale", },
+						{ name: "Invert and Greyscale", value: "invertGreyscale", }
+					],
+				},
+				{
+					type: ApplicationCommandOptionType.User,
+					name: "user",
+					description: "User to add the filter over.",
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "no",
+			description: "No <item>?",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					required: true,
+					name: "item",
+					description: "Item.",
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "oogway",
+			description: "Master Oogway's Wisdom.",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					required: true,
+					name: "wisdom",
+					description: "His wisdom.",
+				}
+			],
 		}
 	],
 	run: async ({ interaction, }) => 
@@ -224,6 +352,51 @@ export default new ChatInputCommand({
 						imgUrl: avatar,
 					})
 				).imgUrl;
+				break;
+			}
+
+			case "pixelate": {
+				link = (await SRA.canvas.misc.pixelate({ imgUrl: avatar, })).imgUrl;
+				break;
+			}
+
+			case "border": {
+				const borderType = interaction.options.getString("border-type");
+				link = (await SRA.canvas.misc[borderType]({ imgUrl: avatar, })).imgUrl;
+				break;
+			}
+
+			case "jpg": {
+				link = (await SRA.canvas.misc.jpg({ imgUrl: avatar, })).imgUrl;
+				break;
+			}
+
+			case "no": {
+				const text: string = interaction.options.getString("item");
+				link = (await SRA.canvas.misc.noBitches({ item: text, })).imgUrl;
+				break;
+			}
+
+			case "heart-crop": {
+				link = (await SRA.canvas.misc.heartCrop({ imgUrl: avatar, })).imgUrl;
+				break;
+			}
+
+			case "lolice": {
+				link = (await SRA.canvas.misc.lolice({ imgUrl: avatar, })).imgUrl;
+				break;
+			}
+			
+			case "filter": {
+				const filter = interaction.options.getString("filter");
+				link = (await SRA.canvas.filter[filter]({ imgUrl: avatar, })).imgUrl;
+				break;
+			}
+
+			case "oogway": {
+				const type = ["1", "2"][Math.floor(Math.random() * 2)];
+				const text = interaction.options.getString("wisdom");
+				link = (await SRA.canvas.misc.oogwayQuote({ type: type as CanvasMiscOogwayQuoteType, quote: text, })).imgUrl;
 				break;
 			}
 
