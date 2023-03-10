@@ -6,9 +6,9 @@ import {
 
 export interface SauceOptions {
 	interaction:
-		| ChatInputCommandInteraction
-		| MessageContextMenuCommandInteraction
-		| ButtonInteraction;
+	| ChatInputCommandInteraction
+	| MessageContextMenuCommandInteraction
+	| ButtonInteraction;
 	link: string;
 	ephemeral: boolean;
 }
