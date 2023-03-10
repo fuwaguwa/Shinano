@@ -2,7 +2,7 @@ import {
 	ActionRowBuilder,
 	ApplicationCommandOptionType,
 	ButtonBuilder,
-	ButtonStyle,
+	ButtonStyle, ChannelType,
 	ChatInputCommandInteraction,
 	EmbedBuilder
 } from "discord.js";
@@ -209,11 +209,6 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: "solo",
-			description: "Single Player Mode.",
-		},
-		{
-			type: ApplicationCommandOptionType.Subcommand,
 			name: "cum",
 			description: "Baby gravy.",
 		},
@@ -307,6 +302,32 @@ export default new ChatInputCommand({
 					],
 				}
 			],
+		},
+		{
+			type: ApplicationCommandOptionType.SubcommandGroup,
+			name: "autohentai",
+			description: "Automatically post hentai!",
+			options: [
+				{
+					type: ApplicationCommandOptionType.Subcommand,
+					name: "set",
+					description: "Automatically post hentai into a channel every 5 minutes!",
+					options: [
+						{
+							type: ApplicationCommandOptionType.Channel,
+							channelTypes: [ChannelType.GuildText],
+							required: true,
+							name: "channel",
+							description: "Channel for autohentai.",
+						}
+					],
+				},
+				{
+					type: ApplicationCommandOptionType.Subcommand,
+					name: "stop",
+					description: "Stop autohentai job in the server.",
+				}
+			],
 		}
 	],
 	run: async ({ interaction, }) => 
@@ -322,6 +343,12 @@ export default new ChatInputCommand({
 		/**
 		 * Processing Command
 		 */
+		if (interaction.options["_group"])
+		{
+			await checkMutual(interaction);
+			return nsfwFunc.autohentai(interaction);
+		}
+
 		const subcommand = interaction.options.getSubcommand();
 		if (subcommand !== "irl") 
 		{
