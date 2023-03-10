@@ -114,6 +114,9 @@ export async function postLewd()
 				continue;
 			}
 
+			doc.paused = false;
+			await doc.save();
+
 			await channel.send(chatOptions);
 		}
 		catch (error)
