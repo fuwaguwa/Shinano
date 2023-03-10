@@ -1,11 +1,7 @@
-import {
-	ChatInputCommandInteraction,
-	EmbedBuilder,
-	TextChannel
-} from "discord.js";
-import News from "../../../../../schemas/ALNews";
+import { ChatInputCommandInteraction, EmbedBuilder, TextChannel } from "discord.js";
+import Guild from "../../../../../schemas/AutoLewd";
 
-export = async (interaction: ChatInputCommandInteraction) => 
+export = async (interaction: ChatInputCommandInteraction) =>
 {
 	/**
 	 * Perm Check
@@ -17,7 +13,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	if (
 		!guildUserPerms.has("Administrator") &&
 		!guildUserPerms.has("ManageWebhooks")
-	) 
+	)
 	{
 		const noPerm: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
@@ -33,7 +29,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		!interaction.guild.members.me
 			.permissionsIn(channel)
 			.has("SendMessages")
-	) 
+	)
 	{
 		const noPerm: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
@@ -43,20 +39,30 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		return interaction.editReply({ embeds: [noPerm], });
 	}
 
+	if (!channel.nsfw)
+	{
+		const nsfw: EmbedBuilder = new EmbedBuilder()
+			.setColor("Red")
+			.setTitle("NSFW Command")
+			.setDescription("NSFW commands can only be used in NSFW channels.");
+		return interaction.editReply({ embeds: [nsfw], });
+	}
+
 	/**
-	 * Setting the channel to post news
+	 * Setting channel for autohentai
 	 */
-	const dbChannel = await News.findOne({ guildId: interaction.guild.id, });
+	const dbChannel = await Guild.findOne({ guildId: interaction.guild.id, });
 	dbChannel
-		? await dbChannel.updateOne({ channelId: channel.id, })
-		: await News.create({
+		? await dbChannel.update({ channelId: channel.id, commandUserId: interaction.user.id, })
+		: await Guild.create({
 			guildId: interaction.guild.id,
 			channelId: channel.id,
-		  });
+			commandUserId: interaction.user.id,
+		});
 	const done: EmbedBuilder = new EmbedBuilder()
 		.setColor("Green")
 		.setDescription(
-			`✅ | Shinano will now send the latest news/tweets about the game in <#${channel.id}>`
+			`✅ | Shinano will now post lewdies into <#${channel.id}> every 5 minutes!`
 		);
 	await interaction.editReply({ embeds: [done], });
-};
+}

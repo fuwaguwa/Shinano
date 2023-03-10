@@ -30,7 +30,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		.setTitle("NSFW Commands")
 		.setColor("#2f3136")
 		.setDescription(
-			"Tip: You can quickly type `/<tag>` or `/<category>` for the commands. E.g `/thighs`, `/irl`\n" +
+			"Tip: You can quickly type `/<tag>` for the commands. E.g `/thighs`, `/irl`\n" +
 				"You could also use the **up arrow key** to quickly type in the previous command that you have executed!"
 		)
 		.setFields(
@@ -39,21 +39,21 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				value: "`sauce`",
 			},
 			{
-				name: "/nsfw anime | H-Animations:",
-				value: "`animation`",
+				name: "H-Animations:",
+				value: "`animation`, `animation-bomb`",
 			},
 			{
-				name: "/nsfw anime | Hentai Commands:",
+				name: "Hentai Commands:",
 				value:
-					"`ass`, `anal`, `bomb`, `fanbox-bomb`, `blowjob`, `boobs`, `cum`, `feet`, `gif`, `nekomimi`, `paizuri`, `pussy`, `random`, `thighs`",
+					"`autohentai`, `ass`, `anal`, `bomb`, `fanbox-bomb`, `blowjob`, `boobs`, `cum`, `feet`, `gif`, `nekomimi`, `paizuri`, `pussy`, `random`, `thighs`",
 			},
 			{
-				name: "/nsfw anime | Private Collection (High-Quality):",
+				name: "Private Collection (High-Quality):",
 				value:
-					"`elf`, `fanbox`, `genshin`, `kemonomimi`, `misc`, `shipgirls`, `undies`, `yuri`",
+					"`elf`, `fanbox`, `genshin`, `kemonomimi`, `misc`, `shipgirls`, `undies`",
 			},
 			{
-				name: "/nsfw irl | Porn Commands:",
+				name: "Porn Commands:",
 				value:
 					"Run `/nsfw irl` for all categories.",
 			},

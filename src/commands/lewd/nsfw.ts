@@ -2,12 +2,49 @@ import {
 	ActionRowBuilder,
 	ApplicationCommandOptionType,
 	ButtonBuilder,
-	ButtonStyle,
+	ButtonStyle, ChannelType,
+	ChatInputCommandInteraction,
 	EmbedBuilder
 } from "discord.js";
 import { ChatInputCommand } from "../../structures/Command";
 import nsfwFunc from "./subcommands/nsfwSubs";
 import fetch from "node-fetch";
+import { client } from "../../index";
+
+async function checkMutual(interaction: ChatInputCommandInteraction) 
+{
+	if (interaction.user.id !== "836215956346634270") 
+	{
+		try 
+		{
+			const guild = await client.guilds.fetch(
+				process.env.guildId || "1020960562710052895"
+			);
+			await guild.members.fetch(interaction.user.id);
+		}
+		catch (err) 
+		{
+			const exclusive: EmbedBuilder = new EmbedBuilder()
+				.setColor("Red")
+				.setTitle("Exclusive Command!")
+				.setDescription(
+					"You have used a command exclusive to the members of the Shrine of Shinano server, join the server to use the command anywhere!"
+				);
+			const button: ActionRowBuilder<ButtonBuilder> =
+				new ActionRowBuilder<ButtonBuilder>().addComponents(
+					new ButtonBuilder()
+						.setStyle(ButtonStyle.Link)
+						.setLabel("Join Server!")
+						.setEmoji({ name: "🔗", })
+						.setURL("https://discord.gg/NFkMxFeEWr")
+				);
+			return interaction.editReply({
+				embeds: [exclusive],
+				components: [button],
+			});
+		}
+	}
+}
 
 export default new ChatInputCommand({
 	name: "nsfw",
@@ -51,7 +88,6 @@ export default new ChatInputCommand({
 					description:
 						"The category you want to be bombed with. Ignore this option for random category.",
 					choices: [
-						{ name: "GIF", value: "gif", },
 						{ name: "Shipgirls", value: "shipgirls", },
 						{ name: "Undies", value: "undies", },
 						{ name: "Elf", value: "elf", },
@@ -120,6 +156,39 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
+			name: "animation-bomb",
+			description: "Bombs you with animations!",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: "type",
+					required: true,
+					description: "File type. Ignore this option for random file type.",
+					choices: [
+						{ name: "Video", value: "mp4", },
+						{ name: "GIF", value: "gif", },
+						{ name: "Random", value: "random", }
+					],
+				},
+				{
+					type: ApplicationCommandOptionType.String,
+					name: "category",
+					description:
+						"The category you want animations from. Ignore this option for random category.",
+					choices: [
+						{ name: "Shipgirls ⭐", value: "shipgirls", },
+						{ name: "Genshin ⭐", value: "genshin", },
+						{ name: "Undies", value: "undies", },
+						{ name: "Elf", value: "elf", },
+						{ name: "Kemonomimi", value: "kemonomimi", },
+						{ name: "Misc", value: "misc", },
+						{ name: "Uniform", value: "uniform", }
+					],
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
 			name: "anal",
 			description: "There's more than one hole.",
 		},
@@ -137,11 +206,6 @@ export default new ChatInputCommand({
 			type: ApplicationCommandOptionType.Subcommand,
 			name: "paizuri",
 			description: "Squished between thiccness.",
-		},
-		{
-			type: ApplicationCommandOptionType.Subcommand,
-			name: "solo",
-			description: "Single Player Mode.",
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
@@ -238,9 +302,35 @@ export default new ChatInputCommand({
 					],
 				}
 			],
+		},
+		{
+			type: ApplicationCommandOptionType.SubcommandGroup,
+			name: "autohentai",
+			description: "Automatically post hentai!",
+			options: [
+				{
+					type: ApplicationCommandOptionType.Subcommand,
+					name: "set",
+					description: "Automatically post hentai into a channel every 5 minutes!",
+					options: [
+						{
+							type: ApplicationCommandOptionType.Channel,
+							channelTypes: [ChannelType.GuildText],
+							required: true,
+							name: "channel",
+							description: "Channel for autohentai.",
+						}
+					],
+				},
+				{
+					type: ApplicationCommandOptionType.Subcommand,
+					name: "stop",
+					description: "Stop autohentai job in the server.",
+				}
+			],
 		}
 	],
-	run: async ({ interaction, client, }) => 
+	run: async ({ interaction, }) => 
 	{
 		if (!interaction.deferred) await interaction.deferReply();
 		const lewdEmbed: EmbedBuilder = new EmbedBuilder()
@@ -253,6 +343,12 @@ export default new ChatInputCommand({
 		/**
 		 * Processing Command
 		 */
+		if (interaction.options["_group"])
+		{
+			await checkMutual(interaction);
+			return nsfwFunc.autohentai(interaction);
+		}
+
 		const subcommand = interaction.options.getSubcommand();
 		if (subcommand !== "irl") 
 		{
@@ -263,39 +359,13 @@ export default new ChatInputCommand({
 				}
 
 				case "fanbox-bomb": {
-					if (interaction.user.id !== "836215956346634270") 
-					{
-						try 
-						{
-							const guild = await client.guilds.fetch(
-								process.env.guildId || "1020960562710052895"
-							);
-							await guild.members.fetch(interaction.user.id);
-						}
-						catch (err) 
-						{
-							const exclusive: EmbedBuilder = new EmbedBuilder()
-								.setColor("Red")
-								.setTitle("Exclusive Command!")
-								.setDescription(
-									"You have used a command exclusive to the members of the Shrine of Shinano server, join the server to use the command anywhere!"
-								);
-							const button: ActionRowBuilder<ButtonBuilder> =
-								new ActionRowBuilder<ButtonBuilder>().addComponents(
-									new ButtonBuilder()
-										.setStyle(ButtonStyle.Link)
-										.setLabel("Join Server!")
-										.setEmoji({ name: "🔗", })
-										.setURL("https://discord.gg/NFkMxFeEWr")
-								);
-							return interaction.editReply({
-								embeds: [exclusive],
-								components: [button],
-							});
-						}
-					}
-
+					await checkMutual(interaction);
 					return nsfwFunc.fanboxBomb(interaction);
+				}
+
+				case "animation-bomb": {
+					await checkMutual(interaction);
+					return nsfwFunc.bomb(interaction);
 				}
 
 				case "animation": {
