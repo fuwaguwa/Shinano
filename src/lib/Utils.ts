@@ -220,19 +220,6 @@ export function sleep(ms: number)
 }
 
 /**
- * Check NHentai IP for working one
- * @returns nhentaiIP
- */
-export async function getNHentaiIP() 
-{
-	const response = await fetch(process.env.nhentaiIP, { method: "GET", });
-	console.log(response);
-	if (response.status == 200 || response.status == 308)
-		return process.env.nhentaiIP;
-	return "https://nhentai.net";
-}
-
-/**
  * Get reaction gif from waifu.pics
  * @param category gif category
  * @returns reaction url
