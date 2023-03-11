@@ -8,9 +8,8 @@ import {
 	StringSelectMenuInteraction
 } from "discord.js";
 import fetch from "node-fetch";
-import { genDoujinEmbed, getDoujinTags } from "../../../../lib/Doujin";
+import { genDoujinEmbed } from "../../../../lib/Doujin";
 import { ShinanoPaginator } from "../../../../lib/Pages";
-import { getNHentaiIP } from "../../../../lib/Utils";
 import code from "./code";
 
 export = async (interaction: ChatInputCommandInteraction) => 
@@ -18,18 +17,16 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	/**
 	 * Getting doujin info
 	 */
-	const nhentaiIP = await getNHentaiIP();
 	const name: string = interaction.options.getString("search-query");
 	const sorting: string = interaction.options.getString("sorting") || "popular";
 	const blacklist: string =
 		"-lolicon -scat -guro -insect -shotacon -amputee -vomit -vore";
 	const response = await fetch(
-		`${nhentaiIP}/api/galleries/search?query=${name} ${blacklist}&sort=${sorting}`,
-		{ method: "GET", }
+		`https://amagi.fuwafuwa08.repl.co/doujin/search/?query=${name} ${blacklist}&sorting=${sorting}`
 	);
 	const searchResults = await response.json();
 
-	if (searchResults.error || searchResults.result.length == 0) 
+	if (searchResults.error || searchResults.body.length == 0)
 	{
 		const noResult: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
@@ -42,9 +39,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	 */
 	const doujinResults: EmbedBuilder[] = [];
 
-	let count: number = 10;
-	if (searchResults.result.length < 10) count = searchResults.result.length;
-
+	let count: number = searchResults.body.length;
 	const resultNavigation: ActionRowBuilder<StringSelectMenuBuilder> =
 		new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
 			new StringSelectMenuBuilder()
@@ -56,10 +51,9 @@ export = async (interaction: ChatInputCommandInteraction) =>
 
 	for (let i = 0; i < count; i++) 
 	{
-		const result = searchResults.result[i];
-		const tagsInfo = getDoujinTags(result);
-
-		doujinResults.push(genDoujinEmbed(result, tagsInfo));
+		const result = searchResults.body[i];
+		
+		doujinResults.push(genDoujinEmbed({ body: result, }));
 
 		resultNavigation.components[0].addOptions({
 			label: `Page ${i + 1} | ${result.id}`,
@@ -107,7 +101,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				menu.options[j].setDefault(menu.options[j].data.value === i.values[0]);
 			}
 
-			await code(interaction, nhentaiIP, i.values[0]);
+			await code(interaction, i.values[0]);
 
 			collector.stop("Processed");
 		}

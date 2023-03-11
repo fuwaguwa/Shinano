@@ -8,39 +8,6 @@ import {
 	StringSelectMenuInteraction
 } from "discord.js";
 import { ShinanoPaginator } from "./Pages";
-import { toTitleCase } from "./Utils";
-
-/**
- * Get file type
- * @param type shorten file type
- * @returns file type
- */
-function getFileType(type: string) 
-{
-	switch (type) 
-	{
-		case "j":
-			return "jpg";
-		case "p":
-			return "png";
-		case "g":
-			return "gif";
-	}
-}
-
-/**
- * Get doujin page url
- * @param doujin doujin
- * @param pageNumber page number
- * @returns page url
- */
-function getPageLink(doujin, pageNumber) 
-{
-	const type = getFileType(doujin.images.pages[pageNumber].t);
-	return `https://i.nhentai.net/galleries/${doujin.media_id}/${
-		pageNumber + 1
-	}.${type}`;
-}
 
 /**
  * Generate doujin pages from doujin
@@ -51,133 +18,76 @@ function getPageLink(doujin, pageNumber)
 function genDoujinPage(doujin, title) 
 {
 	const doujinPages: EmbedBuilder[] = [];
-	for (let i = 0; i < doujin.num_pages; i++) 
+	for (let i = 0; i < doujin.body.pagesNumber; i++)
 	{
 		doujinPages.push(
 			new EmbedBuilder()
 				.setColor("#2f3136")
 				.setDescription(
-					`**[${title} | ${doujin.id}](https://nhentai.net/g/${doujin.id}/${i})**`
+					`**[${title} | ${doujin.body.id}](${doujin.body.pages[i]})**`
 				)
-				.setImage(getPageLink(doujin, i))
+				.setImage(doujin.body.pages[i])
 		);
 	}
 	return doujinPages;
 }
 
 /**
- * Get doujin tags
- * @param doujin doujin
- * @returns categorized doujin tags
- */
-export function getDoujinTags(doujin) 
-{
-	const doujinTags: string[] = [];
-	const doujinArtists: string[] = [];
-	const doujinParodies: string[] = [];
-	const doujinChars: string[] = [];
-	const doujinLang: string[] = [];
-	const doujinCategories: string[] = [];
-	const doujinGroups: string[] = [];
-
-	doujin.tags.forEach((tag) => 
-	{
-		let tagName = toTitleCase(tag.name);
-		switch (tag.type) 
-		{
-			case "tag":
-				doujinTags.push(tagName);
-				break;
-			case "artist":
-				doujinArtists.push(tagName);
-				break;
-			case "parody":
-				doujinParodies.push(tagName);
-				break;
-			case "character":
-				doujinChars.push(tagName);
-				break;
-			case "language":
-				doujinLang.push(tagName);
-				break;
-			case "category":
-				doujinCategories.push(tagName);
-				break;
-			case "group":
-				doujinGroups.push(tagName);
-				break;
-		}
-	});
-
-	return {
-		tags: doujinTags,
-		artists: doujinArtists,
-		parodies: doujinParodies,
-		characters: doujinChars,
-		languages: doujinLang,
-		categories: doujinCategories,
-		groups: doujinGroups,
-	};
-}
-
-/**
  * Generate embed of information for a doujin
  * @param doujin doujin
- * @param tagInfo doujin's tags
  * @returns doujin embed
  */
-export function genDoujinEmbed(doujin, tagInfo) 
+export function genDoujinEmbed(doujin)
 {
 	const doujinTitle =
-		doujin.title.pretty || doujin.title.english || doujin.title.japanese;
-	const doujinThumbnail = getPageLink(doujin, 0);
+		doujin.body.title.pretty || doujin.body.title.english || doujin.body.title.japanese;
 
 	const mainInfo: EmbedBuilder = new EmbedBuilder()
-		.setTitle(`${doujinTitle} | ${doujin.id}`)
-		.setThumbnail(doujinThumbnail)
+		.setTitle(`${doujinTitle} | ${doujin.body.id}`)
+		.setThumbnail(doujin.body.pages[0])
 		.setColor("#2f3136")
-		.setDescription("**Tags:**\n" + tagInfo.tags.join(", "))
-		.setURL(`https://nhentai.net/g/${doujin.id}`);
-	if (tagInfo.characters.length != 0)
+		.setDescription("**Tags:**\n" + doujin.body.tags.tags.join(", "))
+		.setURL(`https://nhentai.net/g/${doujin.body.id}`);
+	if (doujin.body.tags.characters.length != 0)
 		mainInfo.addFields({
 			name: "Characters:",
-			value: tagInfo.characters.join(", "),
+			value: doujin.body.tags.characters.join(", "),
 			inline: false,
 		});
-	if (tagInfo.parodies.length != 0)
+	if (doujin.body.tags.parodies.length != 0)
 		mainInfo.addFields({
 			name: "Parodies:",
-			value: tagInfo.parodies.join(", "),
+			value: doujin.body.tags.parodies.join(", "),
 			inline: false,
 		});
-	if (tagInfo.languages.length != 0)
+	if (doujin.body.tags.languages.length != 0)
 		mainInfo.addFields({
 			name: "Languages:",
-			value: tagInfo.languages.join(", "),
+			value: doujin.body.tags.languages.join(", "),
 			inline: false,
 		});
-	if (tagInfo.categories.length != 0)
+	if (doujin.body.tags.categories.length != 0)
 		mainInfo.addFields({
 			name: "Categories:",
-			value: tagInfo.categories.join(", "),
+			value: doujin.body.tags.categories.join(", "),
 			inline: false,
 		});
-	if (tagInfo.artists.length != 0)
+	if (doujin.body.tags.artists.length != 0)
 		mainInfo.addFields({
 			name: "Artists:",
-			value: tagInfo.artists.join(", "),
+			value: doujin.body.tags.artists.join(", "),
 			inline: false,
 		});
-	if (tagInfo.groups.length != 0)
+	if (doujin.body.tags.groups.length != 0)
 		mainInfo.addFields({
 			name: "Groups:",
-			value: tagInfo.groups.join(", "),
+			value: doujin.body.tags.groups.join(", "),
 			inline: false,
 		});
 	mainInfo.addFields(
-		{ name: "Pages:", value: `${doujin.num_pages}`, inline: true, },
-		{ name: "Favorites:", value: `${doujin.num_favorites}`, inline: true, },
-		{ name: "Upload Date:", value: `<t:${doujin.upload_date}:D>`, inline: true, }
+		{ name: "Pages:", value: `${doujin.body.pagesNumber}`, inline: true, },
+		{ name: "Favorites:", value: `${doujin.body.favourites}`, inline: true, },
+		{ name: "Upload Date:", value: `<t:${doujin.body.uploadTimestamp}:D>`, inline: true, }
 	);
 
 	return mainInfo;
@@ -194,13 +104,12 @@ export async function displayDoujin(
 ) 
 {
 	const doujinTitle =
-		doujin.title.pretty || doujin.title.english || doujin.title.japanese;
-	const tagInfo = getDoujinTags(doujin);
+		doujin.body.title.pretty || doujin.body.title.english || doujin.body.title.japanese;
 
 	/**
 	 * Filtering Tags
 	 */
-	const filter = tagInfo.tags.find((tag) => 
+	const filter = doujin.body.tags.tags.find((tag) =>
 	{
 		return (
 			tag.includes("Lolicon") ||
@@ -227,9 +136,9 @@ export async function displayDoujin(
 	/**
 	 * Components
 	 */
-	const mainInfo = await genDoujinEmbed(doujin, tagInfo);
+	const mainInfo = await genDoujinEmbed(doujin);
 	let doujinPages: EmbedBuilder[];
-	if (doujin.num_pages <= 150) doujinPages = genDoujinPage(doujin, doujinTitle);
+	if (doujin.body.pagesNumber <= 150) doujinPages = genDoujinPage(doujin, doujinTitle);
 
 	const navigation: ActionRowBuilder<StringSelectMenuBuilder> =
 		new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
@@ -321,7 +230,7 @@ export async function displayDoujin(
 								.setColor("Red")
 								.setDescription(
 									"Unfortunately, we only support doujins that are under 150 pages long. Instead, you can read this doujin " +
-										`[here](https://nhentai.net/g/${doujin.id})`
+										`[here](https://nhentai.net/g/${doujin.body.id})`
 								);
 							await i.editReply({
 								embeds: [notAvailable],

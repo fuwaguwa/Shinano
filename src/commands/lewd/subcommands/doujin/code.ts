@@ -1,22 +1,16 @@
 import fetch from "node-fetch";
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { displayDoujin } from "../../../../lib/Doujin";
-import { getNHentaiIP } from "../../../../lib/Utils";
 
 export = async (
 	interaction: ChatInputCommandInteraction,
-	nhentaiIP?: string,
 	nuclearLaunchCode?
 ) => 
 {
 	const code =
 		nuclearLaunchCode || interaction.options.getInteger("doujin-code");
 
-	const IP = nhentaiIP || (await getNHentaiIP());
-
-	const response = await fetch(`${IP}/api/gallery/${code}`, {
-		method: "GET",
-	});
+	const response = await fetch(`https://amagi.fuwafuwa08.repl.co/doujin/get/?id=${code}`);
 	const doujin = await response.json();
 
 	if (doujin.error) 
