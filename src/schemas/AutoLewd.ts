@@ -11,7 +11,7 @@ const NSFW = new mongoose.Schema({
 		unique: true,
 		required: true,
 	},
-	commandUserId: {
+	identifier: {
 		type: String,
 		unique: true,
 		required: true,

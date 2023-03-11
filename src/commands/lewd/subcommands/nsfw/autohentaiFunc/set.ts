@@ -53,11 +53,11 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	 */
 	const dbChannel = await Guild.findOne({ guildId: interaction.guild.id, });
 	dbChannel
-		? await dbChannel.update({ channelId: channel.id, commandUserId: interaction.user.id, })
+		? await dbChannel.update({ channelId: channel.id, identifier: `${interaction.guild.id}|${interaction.user.id}`, })
 		: await Guild.create({
 			guildId: interaction.guild.id,
 			channelId: channel.id,
-			commandUserId: interaction.user.id,
+			identifier: `${interaction.guild.id}|${interaction.user.id}`,
 		});
 	const done: EmbedBuilder = new EmbedBuilder()
 		.setColor("Green")
