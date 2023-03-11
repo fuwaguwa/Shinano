@@ -82,7 +82,7 @@ export async function postLewd()
 
 			const userId = doc.identifier.split("|")[1];
 			const user = await User.findOne({ userId: userId, });
-			if (userId !== "836215956346634270" && Math.floor(Date.now() / 1000) - user.lastVoteTimestamp > 43200 && doc.paused)
+			if (userId !== "836215956346634270" && Math.floor(Date.now() / 1000) - user.lastVoteTimestamp > 43200 && !doc.paused)
 			{
 				const paused: EmbedBuilder = new EmbedBuilder()
 					.setColor("Red")
@@ -114,7 +114,7 @@ export async function postLewd()
 				continue;
 			}
 
-			if (!doc.paused)
+			if (doc.paused)
 			{
 				doc.paused = false;
 				await doc.save();
