@@ -86,7 +86,7 @@ export function genDoujinEmbed(doujin)
 		});
 	mainInfo.addFields(
 		{ name: "Pages:", value: `${doujin.body.pagesNumber}`, inline: true, },
-		{ name: "Favorites:", value: `${doujin.body.favourites}`, inline: true, },
+		{ name: "Favorites:", value: `${doujin.body.favorites}`, inline: true, },
 		{ name: "Upload Date:", value: `<t:${doujin.body.uploadTimestamp}:D>`, inline: true, }
 	);
 
