@@ -2,7 +2,8 @@ import {
 	ActionRowBuilder,
 	ApplicationCommandOptionType,
 	ButtonBuilder,
-	ButtonStyle, ChannelType,
+	ButtonStyle,
+	ChannelType,
 	ChatInputCommandInteraction,
 	EmbedBuilder
 } from "discord.js";
@@ -68,11 +69,11 @@ export default new ChatInputCommand({
 					choices: [
 						{ name: "Shipgirls", value: "shipgirls", },
 						{ name: "Undies ⭐", value: "undies", },
+						{ name: "Uniform ⭐", value: "uniform", },
 						{ name: "Elf", value: "elf", },
 						{ name: "Genshin", value: "genshin", },
 						{ name: "Kemonomimi", value: "kemonomimi", },
-						{ name: "Misc", value: "misc", },
-						{ name: "Uniform", value: "uniform", }
+						{ name: "Misc", value: "misc", }
 					],
 				}
 			],
@@ -112,11 +113,11 @@ export default new ChatInputCommand({
 					choices: [
 						{ name: "Shipgirls", value: "shipgirls", },
 						{ name: "Undies ⭐", value: "undies", },
+						{ name: "Uniform ⭐", value: "uniform", },
 						{ name: "Elf", value: "elf", },
 						{ name: "Genshin", value: "genshin", },
 						{ name: "Kemonomimi", value: "kemonomimi", },
-						{ name: "Misc", value: "misc", },
-						{ name: "Uniform", value: "uniform", }
+						{ name: "Misc", value: "misc", }
 					],
 				}
 			],
@@ -311,7 +312,8 @@ export default new ChatInputCommand({
 				{
 					type: ApplicationCommandOptionType.Subcommand,
 					name: "set",
-					description: "Automatically post hentai into a channel every 5 minutes!",
+					description:
+						"Automatically post hentai into a channel every 5 minutes!",
 					options: [
 						{
 							type: ApplicationCommandOptionType.Channel,
@@ -343,7 +345,7 @@ export default new ChatInputCommand({
 		/**
 		 * Processing Command
 		 */
-		if (interaction.options["_group"])
+		if (interaction.options["_group"]) 
 		{
 			await checkMutual(interaction);
 			return nsfwFunc.autohentai(interaction);
