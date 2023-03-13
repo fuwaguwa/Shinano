@@ -187,14 +187,25 @@ export default new Event("interactionCreate", async (interaction) =>
 			break;
 		}
 
-		case interaction.customId === "SAUCE": {
+		case interaction.customId.includes("SAUCE"): {
 			const link = interaction.message.components[0].components[0].data["url"];
 
-			await findSauce({
-				interaction,
-				link,
-				ephemeral: !(interaction.channel as TextChannel).nsfw,
-			});
+			if (interaction.customId.split("-")[1] === "EPH") 
+			{
+				await findSauce({
+					interaction,
+					link,
+					ephemeral: true,
+				});
+			}
+			else 
+			{
+				await findSauce({
+					interaction,
+					link,
+					ephemeral: !(interaction.channel as TextChannel).nsfw,
+				});
+			}
 		}
 	}
 
