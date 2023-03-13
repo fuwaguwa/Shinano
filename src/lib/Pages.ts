@@ -31,12 +31,12 @@ export async function ShinanoPaginator({
 				new ButtonBuilder()
 					.setStyle(ButtonStyle.Primary)
 					.setEmoji({ id: "1002197527732437052", })
-					.setDisabled(true)
+					.setDisabled(pageCount == 0)
 					.setCustomId(`FIRST-${interaction.user.id}`),
 				new ButtonBuilder()
 					.setStyle(ButtonStyle.Primary)
 					.setEmoji({ id: "1002197531335327805", })
-					.setDisabled(true)
+					.setDisabled(pageCount == 0)
 					.setCustomId(`BACK-${interaction.user.id}`),
 				new ButtonBuilder()
 					.setStyle(ButtonStyle.Secondary)
@@ -69,7 +69,7 @@ export async function ShinanoPaginator({
 			pagingButtons[3].setDisabled(true);
 			pagingButtons[4].setDisabled(true);
 		}
-		else 
+		else if (pageCount == 0)
 		{
 			pagingButtons[0].setDisabled(true);
 			pagingButtons[1].setDisabled(true);
@@ -93,6 +93,8 @@ export async function ShinanoPaginator({
 				components: [paginatorNavigation],
 			});
 		}
+
+		if (pages.length == 1) return;
 
 		const collector = await message.createMessageComponentCollector({ time, });
 

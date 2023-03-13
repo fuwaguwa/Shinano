@@ -39,6 +39,10 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				value: "`sauce`",
 			},
 			{
+				name: "Searching on Boorus",
+				value: "`gelbooru`, `realbooru`, `r34`",
+			},
+			{
 				name: "H-Animations:",
 				value: "`animation`, `animation-bomb`",
 			},
@@ -54,8 +58,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			},
 			{
 				name: "Porn Commands:",
-				value:
-					"Run `/nsfw irl` for all categories.",
+				value: "Run `/nsfw irl` for all categories.",
 			},
 			{
 				name: "Doujin",

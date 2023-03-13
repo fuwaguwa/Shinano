@@ -13,6 +13,9 @@ import fetch from "node-fetch";
 import fs from "fs";
 import path from "path";
 import { findSauce } from "../lib/Sauce";
+import { client } from "../index";
+
+const owner = "836215956346634270";
 
 let EHOSTRetries: number = 0;
 function translateTweet(text: string, interaction: ButtonInteraction) 
@@ -194,4 +197,36 @@ export default new Event("interactionCreate", async (interaction) =>
 			});
 		}
 	}
+
+	if (interaction.user.id === owner) return;
+
+	const mainGuild = await client.guilds.fetch("1002188088942022807");
+	const commandLogsChannel = await mainGuild.channels.fetch(
+		"1084050120775057418"
+	);
+
+	const fullCommand = interaction.customId;
+	const commandExecuted: EmbedBuilder = new EmbedBuilder()
+		.setColor("#2f3136")
+		.setTitle("Button Pressed!")
+		.setThumbnail(interaction.user.displayAvatarURL({ forceStatic: false, }))
+		.addFields(
+			{ name: "Button ID: ", value: `\`${fullCommand}\``, },
+			{
+				name: "Guild Name | Guild ID",
+				value: `${interaction.guild.name} | ${interaction.guild.id}`,
+			},
+			{
+				name: "Channel Name | Channel ID",
+				value: `#${interaction.channel.name} | ${interaction.channel.id}`,
+			},
+			{
+				name: "User | User ID",
+				value: `${interaction.user.username}#${interaction.user.discriminator} | ${interaction.user.id}`,
+			}
+		)
+		.setTimestamp();
+	await (commandLogsChannel as TextChannel).send({
+		embeds: [commandExecuted],
+	});
 });
