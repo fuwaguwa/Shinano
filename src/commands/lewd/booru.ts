@@ -52,7 +52,7 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: "rule34",
+			name: "r34",
 			description: "Search for an image on the Rule34 image board!",
 			options: [
 				{
@@ -136,7 +136,7 @@ export default new ChatInputCommand({
 			case "gelbooru":
 				siteUrl = "https://gelbooru.com/index.php?page=post&s=view&id=";
 				break;
-			case "rule34":
+			case "r34":
 				siteUrl = "https://rule34.xxx/index.php?page=post&s=view&id=";
 				break;
 			case "realbooru":
@@ -211,12 +211,15 @@ export default new ChatInputCommand({
 
 		const booruEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")
-			.setDescription(message)
 			.setImage(result.fileUrl)
 			.setFooter({
 				text: `Requested by ${interaction.user.tag}`,
 				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 			});
+
+		if (message.length > 2000) return interaction.editReply({ content: message, embeds: [booruEmbed], components: [links], });
+
+		booruEmbed.setDescription(message);
 		await interaction.editReply({ embeds: [booruEmbed], components: [links], });
 	},
 });
