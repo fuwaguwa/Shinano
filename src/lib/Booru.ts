@@ -85,12 +85,11 @@ export async function searchBooru(
 
 	const result = booruResult[0];
 
-	let message = "**Requested Tag(s)**: ||";
+	let message = "**Requested Tag(s)**:";
 	query.forEach((tag) => 
 	{
 		message += ` \`${tag}\` `;
 	});
-	message += "||";
 
 	message += "\n\n**Post Tags**: ||";
 	result.tags.forEach((tag) => 
@@ -205,7 +204,7 @@ export async function searchBooru(
 	const collector: InteractionCollector<ButtonInteraction> =
 		await chatMessage.createMessageComponentCollector({
 			componentType: ComponentType.Button,
-			time: 20000,
+			time: 25000,
 		});
 
 	collector.on("collect", async (i) => 
