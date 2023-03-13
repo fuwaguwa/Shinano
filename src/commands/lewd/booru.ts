@@ -158,7 +158,8 @@ export default new ChatInputCommand({
 			"-ryona",
 			"-death",
 			"-vore",
-			"-torture"
+			"-torture",
+			"-pokephilia"
 		];
 		const booruResult = await booru.search(site, query.concat(obligatory), {
 			limit: 1,
@@ -217,7 +218,12 @@ export default new ChatInputCommand({
 				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 			});
 
-		if (message.length > 2000) return interaction.editReply({ content: message, embeds: [booruEmbed], components: [links], });
+		if (message.length > 2000)
+			return interaction.editReply({
+				content: message,
+				embeds: [booruEmbed],
+				components: [links],
+			});
 
 		booruEmbed.setDescription(message);
 		await interaction.editReply({ embeds: [booruEmbed], components: [links], });
