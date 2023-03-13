@@ -144,6 +144,7 @@ export default new ChatInputCommand({
 				break;
 		}
 
+		// Tried my best since blue archive content is used quite a lot
 		const obligatory: string[] = [
 			"sort:score",
 			"-loli",
@@ -159,7 +160,24 @@ export default new ChatInputCommand({
 			"-death",
 			"-vore",
 			"-torture",
-			"-pokephilia"
+			"-pokephilia",
+			"-koharu_(blue_archive)",
+			"-miyu_(blue_archive)",
+			"-mutsuki_(blue_archive)",
+			"-hina_(blue_archive)",
+			"-iori_(blue_archive)",
+			"-neru_(blue_archive)",
+			"-hoshino_(blue_archive)",
+			"-izuna_(blue_archive)",
+			"-kisaski_(blue_archive)",
+			"-hifumi_(blue_archive)",
+			"-iroha_(blue_archive)",
+			"-aris_(blue_archive)",
+			"-klee_(genshin_impact)",
+			"-nahida_(genshin_impact)",
+			"-diona_(genshin_impact)",
+			"-sayu_(genshin_impact)",
+			"-hilichurl_(genshin_impact)"
 		];
 		const booruResult = await booru.search(site, query.concat(obligatory), {
 			limit: 1,
