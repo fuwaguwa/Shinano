@@ -5,7 +5,10 @@ import {
 	AttachmentBuilder,
 	EmbedBuilder
 } from "discord.js";
-import SRA, { CanvasMiscTweetTheme, CanvasMiscOogwayQuoteType } from "somerandomapi.js";
+import SRA, {
+	CanvasMiscTweetTheme,
+	CanvasMiscOogwayQuoteType
+} from "somerandomapi.js";
 
 Canvas.registerFont("Upright.otf", { family: "Upright", });
 
@@ -386,7 +389,7 @@ export default new ChatInputCommand({
 				link = (await SRA.canvas.misc.lolice({ imgUrl: avatar, })).imgUrl;
 				break;
 			}
-			
+
 			case "filter": {
 				const filter = interaction.options.getString("filter");
 				link = (await SRA.canvas.filter[filter]({ imgUrl: avatar, })).imgUrl;
@@ -396,7 +399,12 @@ export default new ChatInputCommand({
 			case "oogway": {
 				const type = ["1", "2"][Math.floor(Math.random() * 2)];
 				const text = interaction.options.getString("wisdom");
-				link = (await SRA.canvas.misc.oogwayQuote({ type: type as CanvasMiscOogwayQuoteType, quote: text, })).imgUrl;
+				link = (
+					await SRA.canvas.misc.oogwayQuote({
+						type: type as CanvasMiscOogwayQuoteType,
+						quote: text,
+					})
+				).imgUrl;
 				break;
 			}
 

@@ -18,7 +18,7 @@ import { ShinanoPaginator } from "./Pages";
 function genDoujinPage(doujin, title) 
 {
 	const doujinPages: EmbedBuilder[] = [];
-	for (let i = 0; i < doujin.body.pagesNumber; i++)
+	for (let i = 0; i < doujin.body.pagesNumber; i++) 
 	{
 		doujinPages.push(
 			new EmbedBuilder()
@@ -37,10 +37,12 @@ function genDoujinPage(doujin, title)
  * @param doujin doujin
  * @returns doujin embed
  */
-export function genDoujinEmbed(doujin)
+export function genDoujinEmbed(doujin) 
 {
 	const doujinTitle =
-		doujin.body.title.pretty || doujin.body.title.english || doujin.body.title.japanese;
+		doujin.body.title.pretty ||
+		doujin.body.title.english ||
+		doujin.body.title.japanese;
 
 	const mainInfo: EmbedBuilder = new EmbedBuilder()
 		.setTitle(`${doujinTitle} | ${doujin.body.id}`)
@@ -87,7 +89,11 @@ export function genDoujinEmbed(doujin)
 	mainInfo.addFields(
 		{ name: "Pages:", value: `${doujin.body.pagesNumber}`, inline: true, },
 		{ name: "Favorites:", value: `${doujin.body.favorites}`, inline: true, },
-		{ name: "Upload Date:", value: `<t:${doujin.body.uploadTimestamp}:D>`, inline: true, }
+		{
+			name: "Upload Date:",
+			value: `<t:${doujin.body.uploadTimestamp}:D>`,
+			inline: true,
+		}
 	);
 
 	return mainInfo;
@@ -104,12 +110,14 @@ export async function displayDoujin(
 ) 
 {
 	const doujinTitle =
-		doujin.body.title.pretty || doujin.body.title.english || doujin.body.title.japanese;
+		doujin.body.title.pretty ||
+		doujin.body.title.english ||
+		doujin.body.title.japanese;
 
 	/**
 	 * Filtering Tags
 	 */
-	const filter = doujin.body.tags.tags.find((tag) =>
+	const filter = doujin.body.tags.tags.find((tag) => 
 	{
 		return (
 			tag.includes("Lolicon") ||
@@ -138,7 +146,8 @@ export async function displayDoujin(
 	 */
 	const mainInfo = await genDoujinEmbed(doujin);
 	let doujinPages: EmbedBuilder[];
-	if (doujin.body.pagesNumber <= 150) doujinPages = genDoujinPage(doujin, doujinTitle);
+	if (doujin.body.pagesNumber <= 150)
+		doujinPages = genDoujinPage(doujin, doujinTitle);
 
 	const navigation: ActionRowBuilder<StringSelectMenuBuilder> =
 		new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(

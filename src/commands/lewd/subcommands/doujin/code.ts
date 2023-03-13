@@ -10,7 +10,9 @@ export = async (
 	const code =
 		nuclearLaunchCode || interaction.options.getInteger("doujin-code");
 
-	const response = await fetch(`https://amagi.fuwafuwa08.repl.co/doujin/get/?id=${code}`);
+	const response = await fetch(
+		`https://amagi.fuwafuwa08.repl.co/doujin/get/?id=${code}`
+	);
 	const doujin = await response.json();
 
 	if (doujin.error) 

@@ -89,7 +89,7 @@ export class Shinano extends Client
 		}
 	}
 
-	private async startHeartbeatAndLewd()
+	private async startHeartbeatAndLewd() 
 	{
 		const guild = await this.guilds.fetch("1002188088942022807");
 		const channel = await guild.channels.fetch("1027973574801227776");
@@ -120,13 +120,13 @@ export class Shinano extends Client
 				.setTimestamp();
 			await (channel as TextChannel).send({ embeds: [heartbeatEmbed], });
 
-			if (!process.env.guildId)
+			if (!process.env.guildId) 
 			{
 				await postLewd();
 			}
 
 			uptime += 300000;
-		}, 300000 );
+		}, 300000);
 
 		console.log("Started heartbeat!");
 	}

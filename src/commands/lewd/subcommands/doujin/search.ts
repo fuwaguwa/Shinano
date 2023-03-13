@@ -26,7 +26,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	);
 	const searchResults = await response.json();
 
-	if (searchResults.error || searchResults.body.length == 0)
+	if (searchResults.error || searchResults.body.length == 0) 
 	{
 		const noResult: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
@@ -52,7 +52,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	for (let i = 0; i < count; i++) 
 	{
 		const result = searchResults.body[i];
-		
+
 		doujinResults.push(genDoujinEmbed({ body: result, }));
 
 		resultNavigation.components[0].addOptions({

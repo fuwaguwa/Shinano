@@ -2,18 +2,25 @@ import {
 	ActionRowBuilder,
 	ButtonBuilder,
 	ButtonInteraction,
-	ButtonStyle, ComponentType,
+	ButtonStyle,
+	ComponentType,
 	EmbedBuilder,
-	InteractionCollector, Message
+	InteractionCollector,
+	Message
 } from "discord.js";
 import { BooruInteraction } from "../typings/Booru";
 import User from "../schemas/User";
 const booru = require("booru");
 
-export async function searchBooru(interaction: BooruInteraction, query: string[], site: string, mode?: string)
+export async function searchBooru(
+	interaction: BooruInteraction,
+	query: string[],
+	site: string,
+	mode?: string
+) 
 {
 	let siteUrl;
-	switch (site)
+	switch (site) 
 	{
 		case "gelbooru":
 			siteUrl = "https://gelbooru.com/index.php?page=post&s=view&id=";
@@ -68,7 +75,7 @@ export async function searchBooru(interaction: BooruInteraction, query: string[]
 		random: true,
 	});
 
-	if (booruResult.length == 0)
+	if (booruResult.length == 0) 
 	{
 		const noResult: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
@@ -79,14 +86,14 @@ export async function searchBooru(interaction: BooruInteraction, query: string[]
 	const result = booruResult[0];
 
 	let message = "**Requested Tag(s)**: ||";
-	query.forEach((tag) =>
+	query.forEach((tag) => 
 	{
 		message += ` \`${tag}\` `;
 	});
 	message += "||";
 
-	message +=  "\n\n**Post Tags**: ||";
-	result.tags.forEach((tag) =>
+	message += "\n\n**Post Tags**: ||";
+	result.tags.forEach((tag) => 
 	{
 		message += ` \`${tag}\` `;
 	});
@@ -100,26 +107,34 @@ export async function searchBooru(interaction: BooruInteraction, query: string[]
 				.setEmoji({ name: "🔗", })
 				.setURL(siteUrl + result.id)
 		);
-	const load: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
-		.setComponents(
+	const load: ActionRowBuilder<ButtonBuilder> =
+		new ActionRowBuilder<ButtonBuilder>().setComponents(
 			new ButtonBuilder()
 				.setStyle(ButtonStyle.Secondary)
 				.setLabel("Load More")
 				.setCustomId(`LMORE-${interaction.user.id}`)
 		);
-	if (result.source)
+	if (result.source) 
 	{
 		links.addComponents(
 			new ButtonBuilder()
 				.setStyle(ButtonStyle.Link)
 				.setLabel("Sauce Link")
 				.setEmoji({ name: "🔍", })
-				.setURL(Array.isArray(result.source) && result.source.length > 0 ? result.source[0] : result.source)
+				.setURL(
+					Array.isArray(result.source) && result.source.length > 0
+						? result.source[0]
+						: result.source
+				)
 		);
 	}
 
 	const user = await User.findOne({ userId: interaction.user.id, });
-	if (!user || !user.lastVoteTimestamp || Math.floor(Date.now() / 1000) - user.lastVoteTimestamp > 43200)
+	if (
+		!user ||
+		!user.lastVoteTimestamp ||
+		Math.floor(Date.now() / 1000) - user.lastVoteTimestamp > 43200
+	) 
 	{
 		load.components[0].setLabel("Load More (Vote to Use)").setDisabled(true);
 		load.addComponents(
@@ -133,20 +148,20 @@ export async function searchBooru(interaction: BooruInteraction, query: string[]
 
 	let chatMessage: Message;
 
-	if ([".mp4", "webm"].includes(result.fileUrl.slice(-4)))
+	if ([".mp4", "webm"].includes(result.fileUrl.slice(-4))) 
 	{
 		chatMessage =
 			mode === "followUp"
 				? await interaction.followUp({
 					content: message + "\n\n" + result.fileUrl,
 					components: [links, load],
-				})
+				  })
 				: await interaction.editReply({
 					content: message + "\n\n" + result.fileUrl,
 					components: [links, load],
-				});
+				  });
 	}
-	else
+	else 
 	{
 		const booruEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")
@@ -156,51 +171,53 @@ export async function searchBooru(interaction: BooruInteraction, query: string[]
 				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 			});
 
-		if (message.length >= 2000)
+		if (message.length >= 2000) 
 		{
-			chatMessage = mode === "followUp"
-				? await interaction.followUp({
-					content: message,
-					embeds: [booruEmbed],
-					components: [links, load],
-				})
-				: await interaction.editReply({
-					content: message,
-					embeds: [booruEmbed],
-					components: [links, load],
-				});
+			chatMessage =
+				mode === "followUp"
+					? await interaction.followUp({
+						content: message,
+						embeds: [booruEmbed],
+						components: [links, load],
+					  })
+					: await interaction.editReply({
+						content: message,
+						embeds: [booruEmbed],
+						components: [links, load],
+					  });
 		}
-		else
+		else 
 		{
 			booruEmbed.setDescription(message);
-			chatMessage = mode === "followUp"
-				? await interaction.followUp({
-					embeds: [booruEmbed],
-					components: [links, load],
-				})
-				: await interaction.editReply({
-					embeds: [booruEmbed],
-					components: [links, load],
-				});
+			chatMessage =
+				mode === "followUp"
+					? await interaction.followUp({
+						embeds: [booruEmbed],
+						components: [links, load],
+					  })
+					: await interaction.editReply({
+						embeds: [booruEmbed],
+						components: [links, load],
+					  });
 		}
 	}
 
-
-	const collector: InteractionCollector<ButtonInteraction> = await chatMessage.createMessageComponentCollector({
-		componentType: ComponentType.Button,
-		time: 20000,
-	});
+	const collector: InteractionCollector<ButtonInteraction> =
+		await chatMessage.createMessageComponentCollector({
+			componentType: ComponentType.Button,
+			time: 20000,
+		});
 
 	collector.on("collect", async (i) => 
 	{
-		if (!i.customId.endsWith(i.user.id))
+		if (!i.customId.endsWith(i.user.id)) 
 		{
 			await i.reply({
 				content: "This button is not for you!",
 				ephemeral: true,
 			});
 		}
-		else
+		else 
 		{
 			await i.deferUpdate();
 			await searchBooru(interaction, query, site, "followUp");
@@ -208,12 +225,9 @@ export async function searchBooru(interaction: BooruInteraction, query: string[]
 		}
 	});
 
-	collector.on("end", async (collected, reason) =>
+	collector.on("end", async (collected, reason) => 
 	{
 		load.components[0].setDisabled(true);
 		await chatMessage.edit({ components: [links, load], });
 	});
-
-
-
 }
