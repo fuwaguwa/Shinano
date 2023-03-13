@@ -1,20 +1,13 @@
 import { ChatInputCommand } from "../../structures/Command";
-import {
-	ActionRowBuilder,
-	ApplicationCommandOptionType,
-	ButtonBuilder,
-	ButtonStyle,
-	EmbedBuilder
-} from "discord.js";
+import { ApplicationCommandOptionType } from "discord.js";
 import { searchBooru } from "../../lib/Booru";
-const booru = require("booru");
 
 export default new ChatInputCommand({
 	name: "booru",
 	description: "Search for content on booru image boards!",
 	nsfw: true,
 	voteRequired: false,
-	cooldown: 5555,
+	cooldown: 8000,
 	category: "NSFW",
 	options: [
 		{
@@ -94,7 +87,7 @@ export default new ChatInputCommand({
 					type: ApplicationCommandOptionType.String,
 					required: true,
 					name: "tag-1",
-					description: "Tag for the image/video, e.g: onlyfans, jav",
+					description: "Tag for the image/video, e.g: onlyfans, japanese",
 				},
 				{
 					type: ApplicationCommandOptionType.String,
@@ -124,7 +117,7 @@ export default new ChatInputCommand({
 		if (!interaction.deferred) await interaction.deferReply();
 
 		const query: string[] = [];
-		for (let i = 0; i < 5; i++)
+		for (let i = 0; i < 5; i++) 
 		{
 			const tag = interaction.options.getString(`tag-${i + 1}`);
 			if (tag) query.push(tag);
