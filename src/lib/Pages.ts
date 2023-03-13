@@ -94,6 +94,8 @@ export async function ShinanoPaginator({
 			});
 		}
 
+		if (pages.length == 1) return;
+
 		const collector = await message.createMessageComponentCollector({ time, });
 
 		collector.on("collect", async (i) => 
