@@ -188,7 +188,7 @@ export async function searchBooru(interaction: BooruInteraction, query: string[]
 
 	const collector: InteractionCollector<ButtonInteraction> = await chatMessage.createMessageComponentCollector({
 		componentType: ComponentType.Button,
-		time: 10000,
+		time: 20000,
 	});
 
 	collector.on("collect", async (i) => 
