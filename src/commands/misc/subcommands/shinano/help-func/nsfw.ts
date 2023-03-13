@@ -39,6 +39,10 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				value: "`sauce`",
 			},
 			{
+				name: "Searching on Boorus",
+				value: "`gelbooru`, `realbooru`, `rule34`",
+			},
+			{
 				name: "H-Animations:",
 				value: "`animation`, `animation-bomb`",
 			},
