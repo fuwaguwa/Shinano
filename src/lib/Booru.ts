@@ -136,11 +136,10 @@ export async function searchBooru(interaction: BooruInteraction, query: string[]
 	if ([".mp4", "webm"].includes(result.fileUrl.slice(-4)))
 	{
 		chatMessage =
-			mode === "reply"
-				? await interaction.reply({
+			mode === "followUp"
+				? await interaction.followUp({
 					content: message + "\n\n" + result.fileUrl,
 					components: [links, load],
-					fetchReply: true,
 				})
 				: await interaction.editReply({
 					content: message + "\n\n" + result.fileUrl,
@@ -159,12 +158,11 @@ export async function searchBooru(interaction: BooruInteraction, query: string[]
 
 		if (message.length >= 2000)
 		{
-			chatMessage = mode === "reply"
-				? await interaction.reply({
+			chatMessage = mode === "followUp"
+				? await interaction.followUp({
 					content: message,
 					embeds: [booruEmbed],
 					components: [links, load],
-					fetchReply: true,
 				})
 				: await interaction.editReply({
 					content: message,
@@ -175,11 +173,10 @@ export async function searchBooru(interaction: BooruInteraction, query: string[]
 		else
 		{
 			booruEmbed.setDescription(message);
-			chatMessage = mode === "reply"
-				? await interaction.reply({
+			chatMessage = mode === "followUp"
+				? await interaction.followUp({
 					embeds: [booruEmbed],
 					components: [links, load],
-					fetchReply: true,
 				})
 				: await interaction.editReply({
 					embeds: [booruEmbed],
@@ -191,7 +188,7 @@ export async function searchBooru(interaction: BooruInteraction, query: string[]
 
 	const collector: InteractionCollector<ButtonInteraction> = await chatMessage.createMessageComponentCollector({
 		componentType: ComponentType.Button,
-		time: 60000,
+		time: 10000,
 	});
 
 	collector.on("collect", async (i) => 
@@ -205,15 +202,16 @@ export async function searchBooru(interaction: BooruInteraction, query: string[]
 		}
 		else
 		{
-			await searchBooru(i, query, site, "reply");
-			collector.stop();
+			await i.deferUpdate();
+			await searchBooru(interaction, query, site, "followUp");
+			return collector.stop();
 		}
 	});
 
-	collector.on("stop", async (collected, reason) => 
+	collector.on("end", async (collected, reason) =>
 	{
 		load.components[0].setDisabled(true);
-		await interaction.editReply({ components: [links, load], });
+		await chatMessage.edit({ components: [links, load], });
 	});
 
 
