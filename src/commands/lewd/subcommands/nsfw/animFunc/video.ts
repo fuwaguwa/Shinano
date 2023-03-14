@@ -1,5 +1,9 @@
-import { ChatInputCommandInteraction } from "discord.js";
+import {
+	ActionRowBuilder,
+	ButtonBuilder
+} from "discord.js";
 import fetch from "node-fetch";
+import { LoadableNSFWInteraction } from "../../../../../typings/Sauce";
 
 async function videoFetch(category) 
 {
@@ -18,7 +22,20 @@ async function videoFetch(category)
 	return responseJson.body.link;
 }
 
-export = async (interaction: ChatInputCommandInteraction, category: string) => 
+export = async (
+	interaction: LoadableNSFWInteraction,
+	category: string,
+	load: ActionRowBuilder<ButtonBuilder>,
+	mode?: string
+) => 
 {
-	await interaction.editReply({ content: await videoFetch(category), });
+	return mode === "followUp"
+		? await interaction.followUp({
+			content: await videoFetch(category),
+			components: [load],
+		  })
+		: await interaction.editReply({
+			content: await videoFetch(category),
+			components: [load],
+		  });
 };

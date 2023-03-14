@@ -3,13 +3,15 @@ import {
 	ActionRowBuilder,
 	ButtonBuilder,
 	ButtonStyle,
-	ChatInputCommandInteraction,
 	EmbedBuilder
 } from "discord.js";
+import { LoadableNSFWInteraction } from "../../../../../typings/Sauce";
 
 export = async (
-	interaction: ChatInputCommandInteraction,
-	category?: string
+	interaction: LoadableNSFWInteraction,
+	load: ActionRowBuilder<ButtonBuilder>,
+	category?: string,
+	mode?: string
 ) => 
 {
 	const lewdEmbed: EmbedBuilder = new EmbedBuilder()
@@ -61,8 +63,13 @@ export = async (
 		);
 	lewdEmbed.setImage(url);
 
-	return interaction.editReply({
-		embeds: [lewdEmbed],
-		components: [imageLink],
-	});
+	return mode === "followUp"
+		? await interaction.followUp({
+			embeds: [lewdEmbed],
+			components: [imageLink, load],
+		  })
+		: await interaction.editReply({
+			embeds: [lewdEmbed],
+			components: [imageLink, load],
+		  });
 };

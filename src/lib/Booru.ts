@@ -8,12 +8,13 @@ import {
 	InteractionCollector,
 	Message
 } from "discord.js";
-import { BooruInteraction } from "../typings/Booru";
 import User from "../schemas/User";
+import { LoadableNSFWInteraction } from "../typings/Sauce";
+import { cooldownCheck, setCooldown } from "../events/btnInteraction";
 const booru = require("booru");
 
 export async function searchBooru(
-	interaction: BooruInteraction,
+	interaction: LoadableNSFWInteraction,
 	query: string[],
 	site: string,
 	mode?: string
@@ -218,9 +219,14 @@ export async function searchBooru(
 		}
 		else 
 		{
+			if (await cooldownCheck("LMORE", i)) return;
+
 			await i.deferUpdate();
 			await searchBooru(interaction, query, site, "followUp");
-			return collector.stop();
+
+			setCooldown("LMORE", i);
+
+			return collector.stop(); 
 		}
 	});
 
