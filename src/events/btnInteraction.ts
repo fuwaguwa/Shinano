@@ -3,6 +3,7 @@ import {
 	ButtonBuilder,
 	ButtonInteraction,
 	ButtonStyle,
+	Collection,
 	EmbedBuilder,
 	TextChannel
 } from "discord.js";
@@ -14,7 +15,9 @@ import fs from "fs";
 import path from "path";
 import { findSauce } from "../lib/Sauce";
 import { client } from "../index";
+import ms from "ms";
 
+const Cooldown: Collection<string, number> = new Collection();
 const owner = "836215956346634270";
 
 let EHOSTRetries: number = 0;
@@ -66,6 +69,37 @@ function translateTweet(text: string, interaction: ButtonInteraction)
 				components: [button],
 			});
 		});
+}
+
+export async function cooldownCheck(
+	id: string,
+	interaction: ButtonInteraction
+) 
+{
+	if (Cooldown.has(`${id}${owner}`)) Cooldown.delete(`${id}${owner}`);
+
+	if (Cooldown.has(`${id}${interaction.user.id}`)) 
+	{
+		const cms = Cooldown.get(`${id}${interaction.user.id}`);
+		const onChillOut = new EmbedBuilder()
+			.setTitle("Slow Down!")
+			.setColor("Red")
+			.setDescription(
+				`You are on a \`${ms(cms - Date.now(), { long: true, })}\` cooldown.`
+			);
+		await interaction.reply({ embeds: [onChillOut], ephemeral: true, });
+		return true;
+	}
+	return false;
+}
+
+export function setCooldown(id: string, interaction: ButtonInteraction) 
+{
+	Cooldown.set(`${id}${interaction.user.id}`, Date.now() + 5000);
+	setTimeout(() => 
+	{
+		Cooldown.delete(`${id}${interaction.user.id}`);
+	}, 4500);
 }
 
 export default new Event("interactionCreate", async (interaction) => 
@@ -187,14 +221,29 @@ export default new Event("interactionCreate", async (interaction) =>
 			break;
 		}
 
-		case interaction.customId === "SAUCE": {
-			const link = interaction.message.components[0].components[0].data["url"];
+		case interaction.customId.includes("SAUCE"): {
+			if (await cooldownCheck("SAUCE", interaction)) return;
 
-			await findSauce({
-				interaction,
-				link,
-				ephemeral: !(interaction.channel as TextChannel).nsfw,
-			});
+			const link = interaction.message.components[0].components[0].data["url"];
+ 
+			if (interaction.customId.split("-")[1] === "EPH") 
+			{
+				await findSauce({
+					interaction,
+					link,
+					ephemeral: true,
+				});
+			}
+			else 
+			{
+				await findSauce({
+					interaction,
+					link,
+					ephemeral: !(interaction.channel as TextChannel).nsfw,
+				});
+			}
+
+			setCooldown("SAUCE", interaction);
 		}
 	}
 

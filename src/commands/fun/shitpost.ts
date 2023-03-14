@@ -20,9 +20,11 @@ export default new ChatInputCommand({
 			allowVideo: true,
 		});
 
-		if (result.is_video)
+		if (result.is_video) 
 		{
-			return interaction.editReply({ content: "https://reddit.com" + result.permalink, });
+			return interaction.editReply({
+				content: "https://reddit.com" + result.permalink,
+			});
 		}
 
 		const shitpostEmbed: EmbedBuilder = new EmbedBuilder()

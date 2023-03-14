@@ -69,7 +69,7 @@ export async function ShinanoPaginator({
 			pagingButtons[3].setDisabled(true);
 			pagingButtons[4].setDisabled(true);
 		}
-		else if (pageCount == 0)
+		else if (pageCount == 0) 
 		{
 			pagingButtons[0].setDisabled(true);
 			pagingButtons[1].setDisabled(true);

@@ -1,8 +1,7 @@
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import Guild from "../../../../../schemas/AutoLewd";
 
-
-export = async (interaction: ChatInputCommandInteraction) =>
+export = async (interaction: ChatInputCommandInteraction) => 
 {
 	/**
 	 * Perm Check
@@ -14,7 +13,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	if (
 		!guildUserPerms.has("Administrator") &&
 		!guildUserPerms.has("ManageWebhooks")
-	)
+	) 
 	{
 		const noPerm: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
@@ -28,13 +27,11 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	 * Channel Check
 	 */
 	const dbChannel = await Guild.findOne({ guildId: interaction.guild.id, });
-	if (!dbChannel)
+	if (!dbChannel) 
 	{
 		const none: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
-			.setDescription(
-				"❌ | You haven't set-up Shinano to post lewdies!"
-			);
+			.setDescription("❌ | You haven't set-up Shinano to post lewdies!");
 		return interaction.editReply({ embeds: [none], });
 	}
 
@@ -49,4 +46,4 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			"✅ | Shinano will no longer send lewdies into the server!"
 		);
 	await interaction.editReply({ embeds: [deleted], });
-}
+};

@@ -12,3 +12,5 @@ export interface SauceOptions {
 	link: string;
 	ephemeral: boolean;
 }
+
+export type LoadableNSFWInteraction = ChatInputCommandInteraction | ButtonInteraction;

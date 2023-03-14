@@ -1,26 +1,36 @@
+import { LoadableNSFWInteraction } from "../../../../typings/Sauce";
+import fetch from "node-fetch";
 import {
 	ActionRowBuilder,
 	ButtonBuilder,
 	ButtonInteraction,
 	ButtonStyle,
 	ComponentType,
+	EmbedBuilder,
 	InteractionCollector,
 	Message
 } from "discord.js";
-import gif from "./animFunc/gif";
-import video from "./animFunc/video";
 import { cooldownCheck, setCooldown } from "../../../../events/btnInteraction";
 import nsfwSubs from "../nsfwSubs";
-import { LoadableNSFWInteraction } from "../../../../typings/Sauce";
 
 export = async (
 	interaction: LoadableNSFWInteraction,
-	fileType: string,
-	category: string,
+	lewdEmbed: EmbedBuilder,
+	tag: string,
 	mode?: string
 ) => 
 {
-	let message: Message;
+	const response = await fetch(
+		`https://Amagi.fuwafuwa08.repl.co/nsfw/porn/${tag}`,
+		{
+			method: "GET",
+			headers: {
+				Authorization: process.env.amagiApiKey,
+			},
+		}
+	);
+	const result = await response.json();
+
 	const load: ActionRowBuilder<ButtonBuilder> =
 		new ActionRowBuilder<ButtonBuilder>().setComponents(
 			new ButtonBuilder()
@@ -29,20 +39,37 @@ export = async (
 				.setCustomId(`LMORE-${interaction.user.id}`)
 		);
 
-	if (fileType === "video") 
+	let message: Message;
+
+	if (
+		(result.body.link as string).includes("redgifs") ||
+		(result.body.link as string).includes(".gifv")
+	) 
 	{
-		message = await video(interaction, category, load, mode);
+		message =
+			mode === "followUp"
+				? await interaction.followUp({
+					content: result.body.link,
+					components: [load], 
+				  })
+				: await interaction.editReply({
+					content: result.body.link,
+					components: [load],
+				  });
 	}
 	else 
 	{
-		if (category === "random") 
-		{
-			message = await gif(interaction, load, null, mode);
-		}
-		else 
-		{
-			message = await gif(interaction, load, category, mode);
-		}
+		lewdEmbed.setImage(result.body.link);
+		message =
+			mode === "followUp"
+				? await interaction.followUp({
+					embeds: [lewdEmbed],
+					components: [load],
+				  })
+				: await interaction.editReply({
+					embeds: [lewdEmbed],
+					components: [load],
+				  });
 	}
 
 	const collector: InteractionCollector<ButtonInteraction> =
@@ -65,7 +92,7 @@ export = async (
 			if (await cooldownCheck("LMORE", i)) return;
 
 			await i.deferUpdate();
-			await nsfwSubs.animation(i, fileType, category, "followUp");
+			await nsfwSubs.irl(i, lewdEmbed, tag, "followUp");
 
 			setCooldown("LMORE", i);
 
@@ -76,23 +103,6 @@ export = async (
 	collector.on("end", async (collected, reason) => 
 	{
 		load.components[0].setDisabled(true);
-
-		const components = [];
-		if (message.components[0].components[0].data["url"]) 
-		{
-			components.push(
-				new ActionRowBuilder<ButtonBuilder>().addComponents(
-					new ButtonBuilder()
-						.setStyle(ButtonStyle.Link)
-						.setEmoji({ name: "🔗", })
-						.setLabel("Image Link")
-						.setURL(message.components[0].components[0].data["url"])
-				)
-			);
-		}
-
-		components.push(load);
-
-		await message.edit({ components: components, });
+		await message.edit({ components: [load], });
 	});
 };

@@ -9,7 +9,6 @@ import {
 } from "discord.js";
 import { ChatInputCommand } from "../../structures/Command";
 import nsfwFunc from "./subcommands/nsfwSubs";
-import fetch from "node-fetch";
 import { client } from "../../index";
 
 async function checkMutual(interaction: ChatInputCommandInteraction) 
@@ -50,7 +49,7 @@ async function checkMutual(interaction: ChatInputCommandInteraction)
 export default new ChatInputCommand({
 	name: "nsfw",
 	description: "NSFW Commands - Anime & IRL",
-	cooldown: 4000,
+	cooldown: 4500,
 	nsfw: true,
 	voteRequired: true,
 	category: "NSFW",
@@ -226,7 +225,7 @@ export default new ChatInputCommand({
 		{
 			type: ApplicationCommandOptionType.Subcommand,
 			name: "genshin",
-			description: "Genshin Girls",
+			description: "Genshin Girls!",
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
@@ -371,11 +370,31 @@ export default new ChatInputCommand({
 				}
 
 				case "animation": {
-					return nsfwFunc.animation(interaction);
+					const fileType: string =
+						interaction.options.getString("type") === "random"
+							? ["video", "gif"][Math.floor(Math.random() * 2)]
+							: interaction.options.getString("type");
+					const category: string =
+						interaction.options.getString("category") || "random";
+
+					return nsfwFunc.animation(interaction, fileType, category);
 				}
 
 				case "fanbox": {
-					return nsfwFunc.fanbox(interaction, lewdEmbed);
+					const tags = [
+						"elf",
+						"genshin",
+						"kemonomimi",
+						"shipgirls",
+						"undies",
+						"misc",
+						"uniform"
+					];
+					const tag =
+						interaction.options.getString("fanbox-category") ||
+						tags[Math.floor(Math.random() * tags.length)];
+
+					return nsfwFunc.fanbox(interaction, lewdEmbed, tag);
 				}
 
 				case "elf":
@@ -398,35 +417,7 @@ export default new ChatInputCommand({
 
 					if (tag === "solo") tag = "masturbation";
 
-					const response = await fetch(
-						`https://Amagi.fuwafuwa08.repl.co/nsfw/public/${tag}`,
-						{
-							method: "GET",
-							headers: {
-								Authorization: process.env.amagiApiKey,
-							},
-						}
-					);
-					const waifu = await response.json();
-					lewdEmbed.setImage(waifu.body.link);
-
-					const imageInfo = new ActionRowBuilder<ButtonBuilder>().addComponents(
-						new ButtonBuilder()
-							.setStyle(ButtonStyle.Link)
-							.setEmoji({ name: "🔗", })
-							.setLabel("Image Link")
-							.setURL(waifu.body.link),
-						new ButtonBuilder()
-							.setStyle(ButtonStyle.Secondary)
-							.setEmoji({ name: "🔍", })
-							.setLabel("Get Sauce")
-							.setCustomId("SAUCE")
-					);
-
-					return interaction.editReply({
-						embeds: [lewdEmbed],
-						components: [imageInfo],
-					});
+					return nsfwFunc.def(interaction, lewdEmbed, tag);
 				}
 			}
 		}
@@ -434,25 +425,7 @@ export default new ChatInputCommand({
 		{
 			let tag = interaction.options.getString("category");
 
-			const response = await fetch(
-				`https://Amagi.fuwafuwa08.repl.co/nsfw/porn/${tag}`,
-				{
-					method: "GET",
-					headers: {
-						Authorization: process.env.amagiApiKey,
-					},
-				}
-			);
-			const result = await response.json();
-
-			if (
-				(result.body.link as string).includes("redgifs") ||
-				(result.body.link as string).includes(".gifv")
-			)
-				return interaction.editReply({ content: result.body.link, });
-			lewdEmbed.setImage(result.body.link);
-
-			return interaction.editReply({ embeds: [lewdEmbed], });
+			return nsfwFunc.irl(interaction, lewdEmbed, tag);
 		}
 	},
 });

@@ -22,15 +22,16 @@ const allCategories = [
 	"kemonomimi"
 ];
 
-export async function postLewd()
+export async function postLewd() 
 {
-	const category = allCategories[Math.floor(Math.random() * allCategories.length)];
+	const category =
+		allCategories[Math.floor(Math.random() * allCategories.length)];
 	const data = await Collection.findOne({ type: category, });
 	const image = data.links[Math.floor(Math.random() * data.size)];
 
 	let chatOptions: MessageCreateOptions;
 
-	if (!(image.link as string).endsWith("mp4"))
+	if (!(image.link as string).endsWith("mp4")) 
 	{
 		const lewdEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")
@@ -49,7 +50,7 @@ export async function postLewd()
 				.setStyle(ButtonStyle.Secondary)
 				.setEmoji({ name: "🔍", })
 				.setLabel("Get Sauce")
-				.setCustomId("SAUCE")
+				.setCustomId("SAUCE-EPH")
 		);
 
 		chatOptions = {
@@ -57,21 +58,23 @@ export async function postLewd()
 			components: [imageInfo],
 		};
 	}
-	else
+	else 
 	{
 		chatOptions = {
 			content: image.link,
 		};
 	}
 
-	for await (let doc of Guild.find())
+	for await (let doc of Guild.find()) 
 	{
-		try
+		try 
 		{
 			const guild = await client.guilds.fetch(doc.guildId);
-			const channel = (await guild.channels.fetch(doc.channelId)) as TextChannel;
+			const channel = (await guild.channels.fetch(
+				doc.channelId
+			)) as TextChannel;
 
-			if (!channel.nsfw)
+			if (!channel.nsfw) 
 			{
 				const nsfw: EmbedBuilder = new EmbedBuilder()
 					.setColor("Red")
@@ -82,14 +85,19 @@ export async function postLewd()
 
 			const userId = doc.identifier.split("|")[1];
 			const user = await User.findOne({ userId: userId, });
-			if (userId !== "836215956346634270" && Math.floor(Date.now() / 1000) - user.lastVoteTimestamp > 43200)
+			if (
+				userId !== "836215956346634270" &&
+				Math.floor(Date.now() / 1000) - user.lastVoteTimestamp > 43200
+			) 
 			{
-				if (!doc.paused)
+				if (!doc.paused) 
 				{
 					const paused: EmbedBuilder = new EmbedBuilder()
 						.setColor("Red")
 						.setTitle("Autohentai has been paused...")
-						.setDescription("You will have to vote for Shinano again for her to continue posting lewds!");
+						.setDescription(
+							"You will have to vote for Shinano again for her to continue posting lewds!"
+						);
 					const voteLink: ActionRowBuilder<ButtonBuilder> =
 						new ActionRowBuilder<ButtonBuilder>().setComponents(
 							new ButtonBuilder()
@@ -117,7 +125,7 @@ export async function postLewd()
 				continue;
 			}
 
-			if (doc.paused)
+			if (doc.paused) 
 			{
 				doc.paused = false;
 				await doc.save();
@@ -125,7 +133,7 @@ export async function postLewd()
 
 			await channel.send(chatOptions);
 		}
-		catch (error)
+		catch (error) 
 		{
 			console.warn(error);
 		}

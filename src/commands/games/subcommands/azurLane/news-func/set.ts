@@ -30,9 +30,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const channel = interaction.options.getChannel("channel") as TextChannel;
 
 	if (
-		!interaction.guild.members.me
-			.permissionsIn(channel)
-			.has("SendMessages")
+		!interaction.guild.members.me.permissionsIn(channel).has("SendMessages")
 	) 
 	{
 		const noPerm: EmbedBuilder = new EmbedBuilder()
