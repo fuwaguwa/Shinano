@@ -69,7 +69,7 @@ export = async (
 			load.components[0].setDisabled(true);
 
 			const components = [];
-			if (message.components[0].components[0].data["url"])
+			if (message.components[0].components[0].data["url"]) 
 			{
 				components.push(
 					new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -91,6 +91,32 @@ export = async (
 			setCooldown("LMORE", i);
 
 			return collector.stop();
+		}
+	});
+
+	collector.on("end", async (collected, reason) => 
+	{
+		if (reason !== "done") 
+		{
+			load.components[0].setDisabled(true);
+
+			const components = [];
+			if (message.components[0].components[0].data["url"]) 
+			{
+				components.push(
+					new ActionRowBuilder<ButtonBuilder>().addComponents(
+						new ButtonBuilder()
+							.setStyle(ButtonStyle.Link)
+							.setEmoji({ name: "🔗", })
+							.setLabel("Image Link")
+							.setURL(message.components[0].components[0].data["url"])
+					)
+				);
+			}
+
+			components.push(load);
+
+			await message.edit({ components: components, });
 		}
 	});
 };

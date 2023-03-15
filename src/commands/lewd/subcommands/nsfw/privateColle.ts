@@ -51,7 +51,7 @@ export = async (
 
 	if (!(image.link as string).endsWith("mp4")) 
 	{
-		lewdEmbed.setImage(image.link);
+		lewdEmbed.setImage(image.link).setColor("Random");
 
 		imageInfo = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
@@ -104,7 +104,7 @@ export = async (
 			await i.reply({
 				content: "This button is not for you!",
 				ephemeral: true,
-			}); 
+			});
 		}
 		else 
 		{
@@ -113,13 +113,26 @@ export = async (
 			await i.deferUpdate();
 
 			load.components[0].setDisabled(true);
-			await message.edit({ components: imageInfo ? [imageInfo, load] : [load], });
+			await message.edit({
+				components: imageInfo ? [imageInfo, load] : [load],
+			});
 
 			await nsfwSubs.privateColle(i, lewdEmbed, category, "followUp");
 
 			setCooldown("LMORE", i);
 
-			return collector.stop();
+			return collector.stop("done");
+		}
+	});
+
+	collector.on("end", async (collected, reason) => 
+	{
+		if (reason !== "done") 
+		{
+			load.components[0].setDisabled(true);
+			await message.edit({
+				components: imageInfo ? [imageInfo, load] : [load],
+			});
 		}
 	});
 };

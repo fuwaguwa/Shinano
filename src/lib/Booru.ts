@@ -89,17 +89,18 @@ export async function searchBooru(
 
 	const result = booruResult[0];
 	let message = "**Requested Tag(s)**:";
-	query.forEach((tag) => 
+	query.forEach((tag, i) =>
 	{
-		message += ` \`${tag}\` `;
+		message += ` \`${tag}\``;
+		if (i != query.length - 1) message += ", ";
 	});
 
-	message += "\n\n**Post Tags**: ||";
-	result.tags.forEach((tag) => 
-	{
-		message += ` \`${tag}\` `;
-	});
-	message += "||";
+	// message += "\n\n**Post Tags**: ||";
+	// result.tags.forEach((tag) =>
+	// {
+	// 	message += ` \`${tag}\` `;
+	// });
+	// message += "||";
 
 	const links: ActionRowBuilder<ButtonBuilder> =
 		new ActionRowBuilder<ButtonBuilder>().setComponents(
@@ -125,9 +126,19 @@ export async function searchBooru(
 				.setEmoji({ name: "🔍", })
 				.setURL(
 					Array.isArray(result.source) && result.source.length > 0
-						? result.source[0]
+						? result.source[1]
 						: result.source
 				)
+		);
+	}
+	else 
+	{
+		links.addComponents(
+			new ButtonBuilder()
+				.setStyle(ButtonStyle.Secondary)
+				.setCustomId("SAUCE")
+				.setLabel("Get Sauce")
+				.setEmoji({ name: "🔍", })
 		);
 	}
 
@@ -149,9 +160,10 @@ export async function searchBooru(
 	}
 
 	let chatMessage: Message;
-	if ([".mp4", "webm"].includes(result.fileUrl.slice(-4)))
+	if ([".mp4", "webm"].includes(result.fileUrl.slice(-4))) 
 	{
-		if (message.length >= 2000) return searchBooru(interaction, query, site, mode);
+		if (message.length >= 2000)
+			return searchBooru(interaction, query, site, mode);
 		chatMessage =
 			mode === "followUp"
 				? await interaction.followUp({
@@ -232,7 +244,16 @@ export async function searchBooru(
 
 			setCooldown("LMORE", i);
 
-			return collector.stop(); 
+			return collector.stop("done");
+		}
+	});
+
+	collector.on("end", async (collected, reason) => 
+	{
+		if (reason !== "done") 
+		{
+			load.components[0].setDisabled(true);
+			await chatMessage.edit({ components: [links, load], });
 		}
 	});
 }

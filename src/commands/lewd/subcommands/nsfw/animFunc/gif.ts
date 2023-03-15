@@ -61,7 +61,7 @@ export = async (
 				.setLabel("Image Link")
 				.setURL(url)
 		);
-	lewdEmbed.setImage(url);
+	lewdEmbed.setImage(url).setColor("Random");
 
 	return mode === "followUp"
 		? await interaction.followUp({

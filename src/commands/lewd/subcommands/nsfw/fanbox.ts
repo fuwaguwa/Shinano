@@ -32,7 +32,7 @@ export = async (
 				.setCustomId(`LMORE-${interaction.user.id}`)
 		);
 
-	lewdEmbed.setImage(item.link);
+	lewdEmbed.setImage(item.link).setColor("Random");
 	const imageLink: ActionRowBuilder<ButtonBuilder> =
 		new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
@@ -81,8 +81,16 @@ export = async (
 
 			setCooldown("LMORE", i);
 
-			return collector.stop();
+			return collector.stop("done");
 		}
 	});
 
+	collector.on("end", async (collected, reason) => 
+	{
+		if (reason !== "done")
+		{
+			load.components[0].setDisabled(true);
+			await message.edit({ components: [load], });
+		}
+	});
 };
