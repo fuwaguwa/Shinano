@@ -92,17 +92,15 @@ export = async (
 			if (await cooldownCheck("LMORE", i)) return;
 
 			await i.deferUpdate();
+
+			load.components[0].setDisabled(true);
+			await message.edit({ components: [load], });
+
 			await nsfwSubs.irl(i, lewdEmbed, tag, "followUp");
 
 			setCooldown("LMORE", i);
 
 			return collector.stop();
 		}
-	});
-
-	collector.on("end", async (collected, reason) => 
-	{
-		load.components[0].setDisabled(true);
-		await message.edit({ components: [load], });
 	});
 };

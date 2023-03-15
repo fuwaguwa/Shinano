@@ -1,6 +1,9 @@
 import {
-	Guild,
 	AttachmentBuilder,
+	ButtonInteraction,
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+	Guild,
 	TextChannel,
 	VoiceChannel
 } from "discord.js";
@@ -198,9 +201,7 @@ export async function createTable(options: {
 			new AttachmentBuilder(table.canvas.toBuffer(), { name: "image.png", })
 		],
 	});
-	const statsImage = statsMessage.attachments.first().url;
-
-	return statsImage;
+	return statsMessage.attachments.first().url;
 }
 
 /**
@@ -267,4 +268,26 @@ export function restartBot()
 			return pm2.disconnect();
 		});
 	});
+}
+
+
+/**
+ * Check channel NSFW
+ * @param interaction interaction
+ */
+export async function checkNSFW(interaction: ChatInputCommandInteraction | ButtonInteraction)
+{
+	if (!(interaction.channel as TextChannel).nsfw)
+	{
+		const nsfwCommand: EmbedBuilder = new EmbedBuilder()
+			.setColor("Red")
+			.setTitle("NSFW Command")
+			.setDescription("NSFW commands can only be used in NSFW channels.");
+		interaction.deferred
+			? await interaction.editReply({ embeds: [nsfwCommand], })
+			: await interaction.reply({ embeds: [nsfwCommand], ephemeral: true, });
+		return false;
+	}
+
+	return true;
 }

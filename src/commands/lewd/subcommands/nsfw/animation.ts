@@ -65,34 +65,32 @@ export = async (
 			if (await cooldownCheck("LMORE", i)) return;
 
 			await i.deferUpdate();
+
+			load.components[0].setDisabled(true);
+
+			const components = [];
+			if (message.components[0].components[0].data["url"])
+			{
+				components.push(
+					new ActionRowBuilder<ButtonBuilder>().addComponents(
+						new ButtonBuilder()
+							.setStyle(ButtonStyle.Link)
+							.setEmoji({ name: "🔗", })
+							.setLabel("Image Link")
+							.setURL(message.components[0].components[0].data["url"])
+					)
+				);
+			}
+
+			components.push(load);
+
+			await message.edit({ components: components, });
+
 			await nsfwSubs.animation(i, fileType, category, "followUp");
 
 			setCooldown("LMORE", i);
 
 			return collector.stop();
 		}
-	});
-
-	collector.on("end", async (collected, reason) => 
-	{
-		load.components[0].setDisabled(true);
-
-		const components = [];
-		if (message.components[0].components[0].data["url"]) 
-		{
-			components.push(
-				new ActionRowBuilder<ButtonBuilder>().addComponents(
-					new ButtonBuilder()
-						.setStyle(ButtonStyle.Link)
-						.setEmoji({ name: "🔗", })
-						.setLabel("Image Link")
-						.setURL(message.components[0].components[0].data["url"])
-				)
-			);
-		}
-
-		components.push(load);
-
-		await message.edit({ components: components, });
 	});
 };
