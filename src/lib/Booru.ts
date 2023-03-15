@@ -32,6 +32,9 @@ export async function searchBooru(
 		case "realbooru":
 			siteUrl = "https://realbooru.com/index.php?page=post&s=view&id=";
 			break;
+		case "safebooru":
+			siteUrl = "https://safebooru.org/index.php?page=post&s=view&id=";
+			break;
 	}
 
 	// Tried my best since blue archive content is used quite a lot
@@ -85,7 +88,6 @@ export async function searchBooru(
 	}
 
 	const result = booruResult[0];
-
 	let message = "**Requested Tag(s)**:";
 	query.forEach((tag) => 
 	{
@@ -147,9 +149,9 @@ export async function searchBooru(
 	}
 
 	let chatMessage: Message;
-
-	if ([".mp4", "webm"].includes(result.fileUrl.slice(-4))) 
+	if ([".mp4", "webm"].includes(result.fileUrl.slice(-4)))
 	{
+		if (message.length >= 2000) return searchBooru(interaction, query, site, mode);
 		chatMessage =
 			mode === "followUp"
 				? await interaction.followUp({
@@ -222,17 +224,15 @@ export async function searchBooru(
 			if (await cooldownCheck("LMORE", i)) return;
 
 			await i.deferUpdate();
+
+			load.components[0].setDisabled(true);
+			await chatMessage.edit({ components: [links, load], });
+
 			await searchBooru(interaction, query, site, "followUp");
 
 			setCooldown("LMORE", i);
 
 			return collector.stop(); 
 		}
-	});
-
-	collector.on("end", async (collected, reason) => 
-	{
-		load.components[0].setDisabled(true);
-		await chatMessage.edit({ components: [links, load], });
 	});
 }
