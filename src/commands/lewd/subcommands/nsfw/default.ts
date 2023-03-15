@@ -84,7 +84,16 @@ export = async (interaction: LoadableNSFWInteraction, lewdEmbed: EmbedBuilder, t
 
 			setCooldown("LMORE", i);
 
-			return collector.stop();
+			return collector.stop("done");
+		}
+	});
+
+	collector.on("end", async (collected, reason) => 
+	{
+		if (reason !== "done")
+		{
+			load.components[0].setDisabled(true);
+			await message.edit({ components: [load], });
 		}
 	});
 }

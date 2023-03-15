@@ -149,9 +149,10 @@ export async function searchBooru(
 	}
 
 	let chatMessage: Message;
-	if ([".mp4", "webm"].includes(result.fileUrl.slice(-4)))
+	if ([".mp4", "webm"].includes(result.fileUrl.slice(-4))) 
 	{
-		if (message.length >= 2000) return searchBooru(interaction, query, site, mode);
+		if (message.length >= 2000)
+			return searchBooru(interaction, query, site, mode);
 		chatMessage =
 			mode === "followUp"
 				? await interaction.followUp({
@@ -232,7 +233,16 @@ export async function searchBooru(
 
 			setCooldown("LMORE", i);
 
-			return collector.stop(); 
+			return collector.stop("done");
+		}
+	});
+
+	collector.on("end", async (collected, reason) => 
+	{
+		if (reason !== "done")
+		{
+			load.components[0].setDisabled(true);
+			await chatMessage.edit({ components: [links, load], });
 		}
 	});
 }
