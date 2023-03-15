@@ -76,6 +76,10 @@ export = async (interaction: LoadableNSFWInteraction, lewdEmbed: EmbedBuilder, t
 			if (await cooldownCheck("LMORE", i)) return;
 
 			await i.deferUpdate();
+
+			load.components[0].setDisabled(true);
+			await message.edit({ components: [imageInfo, load], });
+
 			await nsfwSubs.def(i, lewdEmbed, tag, "followUp");
 
 			setCooldown("LMORE", i);
@@ -83,11 +87,4 @@ export = async (interaction: LoadableNSFWInteraction, lewdEmbed: EmbedBuilder, t
 			return collector.stop();
 		}
 	});
-
-	collector.on("end", async (collected, reason) =>
-	{
-		load.components[0].setDisabled(true);
-		await message.edit({ components: [imageInfo, load], });
-	});
-
 }

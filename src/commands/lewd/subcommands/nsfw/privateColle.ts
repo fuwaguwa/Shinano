@@ -111,17 +111,15 @@ export = async (
 			if (await cooldownCheck("LMORE", i)) return;
 
 			await i.deferUpdate();
+
+			load.components[0].setDisabled(true);
+			await message.edit({ components: imageInfo ? [imageInfo, load] : [load], });
+
 			await nsfwSubs.privateColle(i, lewdEmbed, category, "followUp");
 
 			setCooldown("LMORE", i);
 
 			return collector.stop();
 		}
-	});
-
-	collector.on("end", async (collected, reason) => 
-	{
-		load.components[0].setDisabled(true);
-		await message.edit({ components: imageInfo ? [imageInfo, load] : [load], });
 	});
 };
