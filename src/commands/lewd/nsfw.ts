@@ -335,7 +335,6 @@ export default new ChatInputCommand({
 	{
 		if (!interaction.deferred) await interaction.deferReply();
 		const lewdEmbed: EmbedBuilder = new EmbedBuilder()
-			.setColor("Random")
 			.setFooter({
 				text: `Requested by ${interaction.user.tag}`,
 				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),

@@ -51,7 +51,7 @@ export = async (
 
 	if (!(image.link as string).endsWith("mp4")) 
 	{
-		lewdEmbed.setImage(image.link);
+		lewdEmbed.setImage(image.link).setColor("Random");
 
 		imageInfo = new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
@@ -104,7 +104,7 @@ export = async (
 			await i.reply({
 				content: "This button is not for you!",
 				ephemeral: true,
-			}); 
+			});
 		}
 		else 
 		{
@@ -113,7 +113,9 @@ export = async (
 			await i.deferUpdate();
 
 			load.components[0].setDisabled(true);
-			await message.edit({ components: imageInfo ? [imageInfo, load] : [load], });
+			await message.edit({
+				components: imageInfo ? [imageInfo, load] : [load],
+			});
 
 			await nsfwSubs.privateColle(i, lewdEmbed, category, "followUp");
 

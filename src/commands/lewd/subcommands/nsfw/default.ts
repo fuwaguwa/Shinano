@@ -24,7 +24,7 @@ export = async (interaction: LoadableNSFWInteraction, lewdEmbed: EmbedBuilder, t
 		}
 	);
 	const waifu = await response.json();
-	lewdEmbed.setImage(waifu.body.link);
+	lewdEmbed.setImage(waifu.body.link).setColor("Random");
 
 	const load: ActionRowBuilder<ButtonBuilder> =
 		new ActionRowBuilder<ButtonBuilder>().setComponents(

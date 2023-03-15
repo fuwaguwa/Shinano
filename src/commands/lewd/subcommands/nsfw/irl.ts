@@ -50,7 +50,7 @@ export = async (
 			mode === "followUp"
 				? await interaction.followUp({
 					content: result.body.link,
-					components: [load], 
+					components: [load],
 				  })
 				: await interaction.editReply({
 					content: result.body.link,
@@ -59,7 +59,7 @@ export = async (
 	}
 	else 
 	{
-		lewdEmbed.setImage(result.body.link);
+		lewdEmbed.setImage(result.body.link).setColor("Random");
 		message =
 			mode === "followUp"
 				? await interaction.followUp({

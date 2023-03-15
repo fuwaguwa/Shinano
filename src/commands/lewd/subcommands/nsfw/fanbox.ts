@@ -32,7 +32,7 @@ export = async (
 				.setCustomId(`LMORE-${interaction.user.id}`)
 		);
 
-	lewdEmbed.setImage(item.link);
+	lewdEmbed.setImage(item.link).setColor("Random");
 	const imageLink: ActionRowBuilder<ButtonBuilder> =
 		new ActionRowBuilder<ButtonBuilder>().addComponents(
 			new ButtonBuilder()
@@ -84,5 +84,4 @@ export = async (
 			return collector.stop();
 		}
 	});
-
 };
