@@ -89,7 +89,7 @@ export async function searchBooru(
 
 	const result = booruResult[0];
 	let message = "**Requested Tag(s)**:";
-	query.forEach((tag, i) =>
+	query.forEach((tag, i) => 
 	{
 		message += ` \`${tag}\``;
 		if (i != query.length - 1) message += ", ";
@@ -124,11 +124,7 @@ export async function searchBooru(
 				.setStyle(ButtonStyle.Link)
 				.setLabel("Sauce Link")
 				.setEmoji({ name: "🔍", })
-				.setURL(
-					Array.isArray(result.source) && result.source.length > 0
-						? result.source[1]
-						: result.source
-				)
+				.setURL(Array.isArray(result.source) ? result.source[0] : result.source)
 		);
 	}
 	else 
