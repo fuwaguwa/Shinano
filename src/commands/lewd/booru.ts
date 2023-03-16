@@ -7,7 +7,7 @@ export default new ChatInputCommand({
 	name: "booru",
 	description: "Search for content on booru image boards!",
 	voteRequired: false,
-	cooldown: 8000,
+	cooldown: 7500,
 	category: "NSFW",
 	options: [
 		{
@@ -120,7 +120,8 @@ export default new ChatInputCommand({
 					type: ApplicationCommandOptionType.String,
 					required: true,
 					name: "tag-1",
-					description: "Tag for the image/video, e.g: shinano_(azur_lane), jean_(genshin_impact)",
+					description:
+						"Tag for the image/video, e.g: shinano_(azur_lane), jean_(genshin_impact)",
 				},
 				{
 					type: ApplicationCommandOptionType.String,
