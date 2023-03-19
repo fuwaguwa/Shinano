@@ -19,7 +19,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	 * Database Info
 	 */
 	let voteTime: number | string;
-	let voteStatus: boolean | string = false;
+	let voteStatus: boolean | string = true;
 
 	const voteUser = await User.findOne({ userId: user.id, });
 
@@ -28,7 +28,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		const currentTime = Math.floor(Date.now() / 1000);
 		voteTime = voteUser.lastVoteTimestamp;
 
-		if (currentTime - voteUser.lastVoteTimestamp >= 43200) voteStatus = true;
+		if (currentTime - voteUser.lastVoteTimestamp >= 43200) voteStatus = false;
 	}
 	else 
 	{
@@ -63,7 +63,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			{
 				name: "Shinano Database:",
 				value:
-					`Votable: ${voteStatus}\n` +
+					`Voted: ${voteStatus}\n` +
 					`Last Voted: ${
 						typeof voteTime != "string"
 							? `<t:${voteTime}:R> | <t:${voteTime}>`
