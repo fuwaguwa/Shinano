@@ -94,8 +94,8 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: "horni-card",
-			description: "Grant someone the horni card",
+			name: "horny-card",
+			description: "Grant someone the horny card",
 			options: [
 				{
 					type: ApplicationCommandOptionType.User,
@@ -408,7 +408,7 @@ export default new ChatInputCommand({
 				break;
 			}
 
-			case "horni-card": {
+			case "horny-card": {
 				link = (await SRA.canvas.misc.hornyCard({ imgUrl: avatar, })).imgUrl;
 				break;
 			}
