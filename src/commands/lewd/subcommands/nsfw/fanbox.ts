@@ -8,10 +8,10 @@ import {
 	ButtonInteraction,
 	ComponentType
 } from "discord.js";
-import Collection from "../../../../schemas/PrivateCollection";
 import { LoadableNSFWInteraction } from "../../../../typings/Sauce";
 import { cooldownCheck, setCooldown } from "../../../../events/btnInteraction";
 import nsfwSubs from "../nsfwSubs";
+import Image from "../../../../schemas/Image";
 
 export = async (
 	interaction: LoadableNSFWInteraction,
@@ -20,9 +20,12 @@ export = async (
 	mode?: string
 ) => 
 {
-	const data = await Collection.findOne({ type: tag, });
-	const response = data.links.filter(item => item.link.includes("_FANBOX"));
-	const item = response[Math.floor(Math.random() * response.length)];
+	const item = (
+		await Image.aggregate([
+			{ $match: { category: tag, fanbox: true, }, },
+			{ $sample: { size: 1, }, }
+		])
+	)[0];
 
 	const load: ActionRowBuilder<ButtonBuilder> =
 		new ActionRowBuilder<ButtonBuilder>().setComponents(
@@ -87,7 +90,7 @@ export = async (
 
 	collector.on("end", async (collected, reason) => 
 	{
-		if (reason !== "done")
+		if (reason !== "done") 
 		{
 			load.components[0].setDisabled(true);
 			await message.edit({ components: [load], });
