@@ -1,6 +1,6 @@
 import Guild from "../schemas/AutoLewd";
 import User from "../schemas/User";
-import Collection from "../schemas/PrivateCollection";
+import Image from "../schemas/Image";
 import {
 	ActionRowBuilder,
 	ButtonBuilder,
@@ -12,22 +12,9 @@ import {
 import { client } from "../index";
 import { toTitleCase } from "./Utils";
 
-const allCategories = [
-	"elf",
-	"genshin",
-	"misc",
-	"shipgirls",
-	"undies",
-	"uniform",
-	"kemonomimi"
-];
-
 export async function postLewd() 
 {
-	const category =
-		allCategories[Math.floor(Math.random() * allCategories.length)];
-	const data = await Collection.findOne({ type: category, });
-	const image = data.links[Math.floor(Math.random() * data.size)];
+	const image = (await Image.aggregate([{ $sample: { size: 1, }, }]))[0];
 
 	let chatOptions: MessageCreateOptions;
 

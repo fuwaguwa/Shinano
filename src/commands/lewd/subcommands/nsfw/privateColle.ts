@@ -1,4 +1,3 @@
-import Collection from "../../../../schemas/PrivateCollection";
 import {
 	ActionRowBuilder,
 	ButtonBuilder,
@@ -12,6 +11,7 @@ import {
 import { LoadableNSFWInteraction } from "../../../../typings/Sauce";
 import nsfwSubs from "../nsfwSubs";
 import { cooldownCheck, setCooldown } from "../../../../events/btnInteraction";
+import Image from "../../../../schemas/Image";
 
 export = async (
 	interaction: LoadableNSFWInteraction,
@@ -20,23 +20,21 @@ export = async (
 	mode?: string
 ) => 
 {
+	let image;
+
 	if (category === "random") 
 	{
-		const allCategories = [
-			"elf",
-			"genshin",
-			"misc",
-			"shipgirls",
-			"undies",
-			"uniform",
-			"kemonomimi"
-		];
-
-		category = allCategories[Math.floor(Math.random() * allCategories.length)];
+		image = (await Image.aggregate([{ $sample: { size: 1, }, }]))[0];
 	}
-
-	const data = await Collection.findOne({ type: category, });
-	const image = data.links[Math.floor(Math.random() * data.size)];
+	else 
+	{
+		image = (
+			await Image.aggregate([
+				{ $match: { category: category, }, },
+				{ $sample: { size: 1, }, }
+			])
+		)[0];
+	}
 
 	const load: ActionRowBuilder<ButtonBuilder> =
 		new ActionRowBuilder<ButtonBuilder>().setComponents(
