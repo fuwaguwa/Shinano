@@ -1,4 +1,3 @@
-import expCalculator from "./azurLane/exp-calc";
 import farm from "./azurLane/farm";
 import prCompletion from "./azurLane/pr-completion";
 import news from "./azurLane/news";
@@ -8,7 +7,6 @@ import gear from "./azurLane/gear";
 import gacha from "./azurLane/gacha";
 
 export default {
-	expCalculator,
 	farm,
 	prCompletion,
 	news,

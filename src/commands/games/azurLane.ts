@@ -148,36 +148,6 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: "exp",
-			description:
-				"Calculate the EXP needed for the ship to reach the target level.",
-			options: [
-				{
-					type: ApplicationCommandOptionType.String,
-					required: true,
-					name: "rarity",
-					description: "Rarity of the ship",
-					choices: [
-						{ name: "Normal", value: "normal", },
-						{ name: "Ultra Rare", value: "ultraRare", }
-					],
-				},
-				{
-					type: ApplicationCommandOptionType.Integer,
-					required: true,
-					name: "current-level",
-					description: "The ship's current level (Max 125)",
-				},
-				{
-					type: ApplicationCommandOptionType.Integer,
-					required: true,
-					name: "target-level",
-					description: "The level you want the ship to reach (Max 125)",
-				}
-			],
-		},
-		{
-			type: ApplicationCommandOptionType.Subcommand,
 			name: "pr-completion",
 			description: "Calculate your PR completion!",
 			options: [
@@ -251,10 +221,6 @@ export default new ChatInputCommand({
 		{
 			switch (interaction.options.getSubcommand()) 
 			{
-				case "exp": {
-					return azurLaneFunc.expCalculator(interaction);
-				}
-
 				case "pr-completion": {
 					return azurLaneFunc.prCompletion(interaction, AL);
 				}

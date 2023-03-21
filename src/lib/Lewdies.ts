@@ -16,9 +16,9 @@ export async function queryPrivateImage(
 	fanbox?
 ) 
 {
-	if (imageCategory === "random") 
+	if (imageCategory === "random")
 	{
-		if (!["gif", "mp4"].includes(imageFormat) && !fanbox)
+		if (!["gif", "mp4"].includes(imageFormat) && !fanbox && ![undefined, "animation", "random"].includes(imageCategory) )
 			return queryRandom(size);
 		imageCategory =
 			privateGifTags[Math.floor(Math.random() * privateGifTags.length)];
@@ -35,20 +35,32 @@ export async function queryPrivateImage(
 			return result.length > 1 ? result : result[0];
 		}
 
-		case imageFormat != undefined: {
-			const result = await Image.aggregate([
-				{ $match: { category: imageCategory, format: imageFormat, }, },
-				{ $sample: { size: size || 1, }, }
-			]);
-
-			return result.length > 1 ? result : result[0];
-		}
-
 		default: {
-			const result = await Image.aggregate([
-				{ $match: { category: imageCategory, }, },
-				{ $sample: { size: size || 5, }, }
-			]);
+			let result;
+
+			if (imageFormat === "animation")
+			{
+				const formatType = ["gif", "mp4"];
+
+				result = await Image.aggregate([
+					{ $match: { category: imageCategory, format: { $in: formatType, }, }, },
+					{ $sample: { size: size || 1, }, }
+				]);
+			}
+			else if (imageFormat === "random" || imageFormat == undefined)
+			{
+				result = await Image.aggregate([
+					{ $match: { category: imageCategory, }, },
+					{ $sample: { size: size || 5, }, }
+				]);
+			}
+			else
+			{
+				result = await Image.aggregate([
+					{ $match: { category: imageCategory, format: imageFormat, }, },
+					{ $sample: { size: size || 1, }, }
+				]);
+			}
 
 			return result.length > 1 ? result : result[0];
 		}
