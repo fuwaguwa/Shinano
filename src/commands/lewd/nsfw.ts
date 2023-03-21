@@ -167,7 +167,7 @@ export default new ChatInputCommand({
 					choices: [
 						{ name: "Video", value: "mp4", },
 						{ name: "GIF", value: "gif", },
-						{ name: "Random", value: "random", }
+						{ name: "Random", value: "animation", }
 					],
 				},
 				{
