@@ -25,6 +25,19 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
+			name: "exec",
+			description: "N/A - Developer Only",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					required: true,
+					name: "cmd",
+					description: "Command.",
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
 			name: "member-count",
 			description:
 				"Shows the total members of all Shinano's guild (not total number of unique users)",
@@ -187,6 +200,10 @@ export default new ChatInputCommand({
 
 			case "restart": {
 				return devFunc.restart(interaction);
+			}
+
+			case "exec": {
+				return devFunc.exec(interaction);
 			}
 		}
 
