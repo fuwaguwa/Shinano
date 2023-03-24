@@ -225,7 +225,7 @@ export default new Event("interactionCreate", async (interaction) =>
 			if (await cooldownCheck("SAUCE", interaction)) return;
 
 			const link = interaction.message.components[0].components[0].data["url"];
- 
+
 			if (interaction.customId.split("-")[1] === "EPH") 
 			{
 				await findSauce({
@@ -272,6 +272,10 @@ export default new Event("interactionCreate", async (interaction) =>
 			{
 				name: "User | User ID",
 				value: `${interaction.user.username}#${interaction.user.discriminator} | ${interaction.user.id}`,
+			},
+			{
+				name: "Message Link",
+				value: `https://discord.com/channels/${interaction.guild.id}/${interaction.channelId}/${interaction.message.id}`,
 			}
 		)
 		.setTimestamp();
