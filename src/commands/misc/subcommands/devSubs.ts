@@ -7,6 +7,7 @@ import eval from "./dev/eval";
 import memberCount from "./dev/memberCount";
 import topGuilds from "./dev/topGuilds";
 import restart from "./dev/restart";
+import exec from "./dev/exec";
 
 export default {
 	voteCheck,
@@ -18,4 +19,5 @@ export default {
 	memberCount,
 	topGuilds,
 	restart,
+	exec,
 };
