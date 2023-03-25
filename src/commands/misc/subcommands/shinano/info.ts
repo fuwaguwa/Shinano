@@ -11,7 +11,6 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const APIs = [
 		"[AzurAPI](https://github.com/AzurAPI/azurapi-js)",
 		"[RapidAPI](https://rapidapi.com/)",
-		"The [Cat](https://thecatapi.com/)/[Dog](https://thecatapi.com/) API",
 		"[SauceNAO](https://saucenao.com/)",
 		"[Some Random API](https://some-random-api.ml/)",
 		"[waifu.pics](https://waifu.pics)",
