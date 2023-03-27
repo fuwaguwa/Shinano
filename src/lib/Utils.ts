@@ -303,39 +303,36 @@ export async function checkNSFW(
  */
 export async function checkMutual(interaction: ChatInputCommandInteraction) 
 {
-	if (interaction.user.id !== "836215956346634270") 
+	try 
 	{
-		try 
-		{
-			const guild = await client.guilds.fetch(
-				process.env.guildId || "1020960562710052895"
+		const guild = await client.guilds.fetch(
+			process.env.guildId || "1020960562710052895"
+		);
+		await guild.members.fetch(interaction.user.id);
+
+		return true;
+	}
+	catch (err) 
+	{
+		const exclusive: EmbedBuilder = new EmbedBuilder()
+			.setColor("Red")
+			.setTitle("Exclusive Command!")
+			.setDescription(
+				"You have used a command exclusive to the members of the Shrine of Shinano server, join the server to use the command anywhere!"
 			);
-			await guild.members.fetch(interaction.user.id);
+		const button: ActionRowBuilder<ButtonBuilder> =
+			new ActionRowBuilder<ButtonBuilder>().addComponents(
+				new ButtonBuilder()
+					.setStyle(ButtonStyle.Link)
+					.setLabel("Join Server!")
+					.setEmoji({ name: "🔗", })
+					.setURL("https://discord.gg/NFkMxFeEWr")
+			);
+		await interaction.editReply({
+			embeds: [exclusive],
+			components: [button],
+		});
 
-			return true;
-		}
-		catch (err) 
-		{
-			const exclusive: EmbedBuilder = new EmbedBuilder()
-				.setColor("Red")
-				.setTitle("Exclusive Command!")
-				.setDescription(
-					"You have used a command exclusive to the members of the Shrine of Shinano server, join the server to use the command anywhere!"
-				);
-			const button: ActionRowBuilder<ButtonBuilder> =
-				new ActionRowBuilder<ButtonBuilder>().addComponents(
-					new ButtonBuilder()
-						.setStyle(ButtonStyle.Link)
-						.setLabel("Join Server!")
-						.setEmoji({ name: "🔗", })
-						.setURL("https://discord.gg/NFkMxFeEWr")
-				);
-			await interaction.editReply({
-				embeds: [exclusive],
-				components: [button],
-			});
-
-			return false;
-		}
+		return false;
 	}
 }
