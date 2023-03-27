@@ -117,14 +117,23 @@ export async function searchBooru(
 				.setLabel("Load More")
 				.setCustomId(`LMORE-${interaction.user.id}`)
 		);
-	if (result.source) 
+
+	// god i hate regex
+	if (
+		result.source &&
+		result.source.match(
+			new RegExp(
+				/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi
+			)
+		)
+	) 
 	{
 		links.addComponents(
 			new ButtonBuilder()
 				.setStyle(ButtonStyle.Link)
 				.setLabel("Sauce Link")
 				.setEmoji({ name: "🔍", })
-				.setURL(Array.isArray(result.source) ? result.source[0] : result.source)
+				.setURL(result.source)
 		);
 	}
 	else 
@@ -158,8 +167,6 @@ export async function searchBooru(
 	let chatMessage: Message;
 	if ([".mp4", "webm"].includes(result.fileUrl.slice(-4))) 
 	{
-		if (message.length >= 2000)
-			return searchBooru(interaction, query, site, mode);
 		chatMessage =
 			mode === "followUp"
 				? await interaction.followUp({
@@ -215,7 +222,7 @@ export async function searchBooru(
 	const collector: InteractionCollector<ButtonInteraction> =
 		await chatMessage.createMessageComponentCollector({
 			componentType: ComponentType.Button,
-			time: 25000,
+			time: 40000,
 		});
 
 	collector.on("collect", async (i) => 

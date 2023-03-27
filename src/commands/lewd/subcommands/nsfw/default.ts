@@ -4,7 +4,8 @@ import {
 	ActionRowBuilder,
 	ButtonBuilder,
 	ButtonInteraction,
-	ButtonStyle, ComponentType,
+	ButtonStyle,
+	ComponentType,
 	EmbedBuilder,
 	InteractionCollector,
 	Message
@@ -12,7 +13,12 @@ import {
 import { cooldownCheck, setCooldown } from "../../../../events/btnInteraction";
 import nsfwSubs from "../nsfwSubs";
 
-export = async (interaction: LoadableNSFWInteraction, lewdEmbed: EmbedBuilder, tag: string, mode?: string) => 
+export = async (
+	interaction: LoadableNSFWInteraction,
+	lewdEmbed: EmbedBuilder,
+	tag: string,
+	mode?: string
+) => 
 {
 	const response = await fetch(
 		`https://Amagi.fuwafuwa08.repl.co/nsfw/public/${tag}`,
@@ -46,32 +52,33 @@ export = async (interaction: LoadableNSFWInteraction, lewdEmbed: EmbedBuilder, t
 			.setCustomId("SAUCE")
 	);
 
-	const message: Message = mode === "followUp"
-		? await interaction.followUp({
-			embeds: [lewdEmbed],
-			components: [imageInfo, load],
-		})
-		: await interaction.editReply({
-			embeds: [lewdEmbed],
-			components: [imageInfo, load],
-		});
+	const message: Message =
+		mode === "followUp"
+			? await interaction.followUp({
+				embeds: [lewdEmbed],
+				components: [imageInfo, load],
+			  })
+			: await interaction.editReply({
+				embeds: [lewdEmbed],
+				components: [imageInfo, load],
+			  });
 
 	const collector: InteractionCollector<ButtonInteraction> =
 		await message.createMessageComponentCollector({
 			componentType: ComponentType.Button,
-			time: 25000,
+			time: 40000,
 		});
 
-	collector.on("collect", async (i) =>
+	collector.on("collect", async (i) => 
 	{
-		if (!i.customId.endsWith(i.user.id))
+		if (!i.customId.endsWith(i.user.id)) 
 		{
 			await i.reply({
 				content: "This button is not for you!",
 				ephemeral: true,
 			});
 		}
-		else
+		else 
 		{
 			if (await cooldownCheck("LMORE", i)) return;
 
@@ -90,10 +97,10 @@ export = async (interaction: LoadableNSFWInteraction, lewdEmbed: EmbedBuilder, t
 
 	collector.on("end", async (collected, reason) => 
 	{
-		if (reason !== "done")
+		if (reason !== "done") 
 		{
 			load.components[0].setDisabled(true);
 			await message.edit({ components: [load], });
 		}
 	});
-}
+};

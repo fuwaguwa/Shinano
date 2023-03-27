@@ -48,7 +48,7 @@ export = async (
 	const collector: InteractionCollector<ButtonInteraction> =
 		await message.createMessageComponentCollector({
 			componentType: ComponentType.Button,
-			time: 25000,
+			time: 40000,
 		});
 
 	collector.on("collect", async (i) => 
