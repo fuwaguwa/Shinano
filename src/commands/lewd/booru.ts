@@ -18,29 +18,9 @@ export default new ChatInputCommand({
 				{
 					type: ApplicationCommandOptionType.String,
 					required: true,
-					name: "tag-1",
+					name: "tags",
 					description:
-						"Tag for the image/animation, e.g: shinano_(azur_lane), jean_(genshin_impact)",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-2",
-					description: "Tag for the image/animation",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-3",
-					description: "Tag for the image/animation",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-4",
-					description: "Tag for the image/animation",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-5",
-					description: "Tag for the image/animation",
+						"Tags for the image/animation, seperate the tags by commas, e.g: shinano_(azur_lane), thighs",
 				}
 			],
 		},
@@ -52,29 +32,9 @@ export default new ChatInputCommand({
 				{
 					type: ApplicationCommandOptionType.String,
 					required: true,
-					name: "tag-1",
+					name: "tags",
 					description:
-						"Tag for the image/animation, e.g: shinano_(azur_lane), jean_(genshin_impact)",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-2",
-					description: "Tag for the image/animation",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-3",
-					description: "Tag for the image/animation",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-4",
-					description: "Tag for the image/animation",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-5",
-					description: "Tag for the image/animation",
+						"Tags for the image/animation, seperate the tags by commas, e.g: shinano_(azur_lane), thighs",
 				}
 			],
 		},
@@ -86,28 +46,9 @@ export default new ChatInputCommand({
 				{
 					type: ApplicationCommandOptionType.String,
 					required: true,
-					name: "tag-1",
-					description: "Tag for the image/video, e.g: onlyfans, japanese",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-2",
-					description: "Tag for the image/video",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-3",
-					description: "Tag for the image/video",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-4",
-					description: "Tag for the image/video",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-5",
-					description: "Tag for the image/video",
+					name: "tags",
+					description:
+						"Tags for the image/video, seperate the tags by commas, e.g: onlyfans, japanese",
 				}
 			],
 		},
@@ -119,29 +60,9 @@ export default new ChatInputCommand({
 				{
 					type: ApplicationCommandOptionType.String,
 					required: true,
-					name: "tag-1",
+					name: "tags",
 					description:
-						"Tag for the image/video, e.g: shinano_(azur_lane), jean_(genshin_impact)",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-2",
-					description: "Tag for the image/video",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-3",
-					description: "Tag for the image/video",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-4",
-					description: "Tag for the image/video",
-				},
-				{
-					type: ApplicationCommandOptionType.String,
-					name: "tag-5",
-					description: "Tag for the image/video",
+						"Tags for the image/animation, seperate the tags by commas, e.g: shinano_(azur_lane), thighs",
 				}
 			],
 		}
@@ -153,12 +74,10 @@ export default new ChatInputCommand({
 		const site = interaction.options.getSubcommand();
 		if (site !== "safebooru" && !(await checkNSFW(interaction))) return;
 
-		const query: string[] = [];
-		for (let i = 0; i < 5; i++) 
-		{
-			const tag = interaction.options.getString(`tag-${i + 1}`);
-			if (tag) query.push(tag);
-		}
+		const query: string[] = interaction.options
+			.getString("tags")
+			.split(",")
+			.map(tag => tag.trim());
 
 		return searchBooru(interaction, query, site);
 	},
