@@ -18,7 +18,13 @@ export async function fetchTweets()
 		.then(res => res.json())
 		.then((json) => 
 		{
-			const tweetJsonDir = path.join(__dirname, "..", "..", "tweetsInfo.json");
+			const tweetJsonDir = path.join(
+				__dirname,
+				"..",
+				"..",
+				"data",
+				"tweetsInfo.json"
+			);
 
 			fs.readFile(tweetJsonDir, "utf-8", (err, data) => 
 			{
