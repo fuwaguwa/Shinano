@@ -198,7 +198,7 @@ export default new Event("interactionCreate", async (interaction) =>
 
 			const tweetId = interaction.customId.split("-")[1];
 			fs.readFile(
-				path.join(__dirname, "..", "..", "tweetsInfo.json"),
+				path.join(__dirname, "..", "..", "data", "tweetsInfo.json"),
 				"utf-8",
 				(err, data) => 
 				{
