@@ -1,50 +1,11 @@
 import {
-	ActionRowBuilder,
 	ApplicationCommandOptionType,
-	ButtonBuilder,
-	ButtonStyle,
 	ChannelType,
-	ChatInputCommandInteraction,
 	EmbedBuilder
 } from "discord.js";
 import { ChatInputCommand } from "../../structures/Command";
 import nsfwFunc from "./subcommands/nsfwSubs";
-import { client } from "../../index";
-
-async function checkMutual(interaction: ChatInputCommandInteraction) 
-{
-	if (interaction.user.id !== "836215956346634270") 
-	{
-		try 
-		{
-			const guild = await client.guilds.fetch(
-				process.env.guildId || "1020960562710052895"
-			);
-			await guild.members.fetch(interaction.user.id);
-		}
-		catch (err) 
-		{
-			const exclusive: EmbedBuilder = new EmbedBuilder()
-				.setColor("Red")
-				.setTitle("Exclusive Command!")
-				.setDescription(
-					"You have used a command exclusive to the members of the Shrine of Shinano server, join the server to use the command anywhere!"
-				);
-			const button: ActionRowBuilder<ButtonBuilder> =
-				new ActionRowBuilder<ButtonBuilder>().addComponents(
-					new ButtonBuilder()
-						.setStyle(ButtonStyle.Link)
-						.setLabel("Join Server!")
-						.setEmoji({ name: "🔗", })
-						.setURL("https://discord.gg/NFkMxFeEWr")
-				);
-			return interaction.editReply({
-				embeds: [exclusive],
-				components: [button],
-			});
-		}
-	}
-}
+import { checkMutual } from "../../lib/Utils";
 
 export default new ChatInputCommand({
 	name: "nsfw",
@@ -334,97 +295,100 @@ export default new ChatInputCommand({
 	run: async ({ interaction, }) => 
 	{
 		if (!interaction.deferred) await interaction.deferReply();
-		const lewdEmbed: EmbedBuilder = new EmbedBuilder()
-			.setFooter({
-				text: `Requested by ${interaction.user.tag}`,
-				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
-			});
+		const lewdEmbed: EmbedBuilder = new EmbedBuilder().setFooter({
+			text: `Requested by ${interaction.user.tag}`,
+			iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
+		});
 
 		/**
 		 * Processing Command
 		 */
 		if (interaction.options["_group"]) 
 		{
-			await checkMutual(interaction);
-			return nsfwFunc.autohentai(interaction);
-		}
-
-		const subcommand = interaction.options.getSubcommand();
-		if (subcommand !== "irl") 
-		{
-			switch (subcommand) 
-			{
-				case "bomb": {
-					return nsfwFunc.bomb(interaction);
-				}
-
-				case "fanbox-bomb": {
-					await checkMutual(interaction);
-					return nsfwFunc.fanboxBomb(interaction);
-				}
-
-				case "animation-bomb": {
-					await checkMutual(interaction);
-					return nsfwFunc.bomb(interaction);
-				}
-
-				case "animation": {
-					const fileType: string =
-						interaction.options.getString("type") === "random"
-							? ["video", "gif"][Math.floor(Math.random() * 2)]
-							: interaction.options.getString("type");
-					const category: string =
-						interaction.options.getString("category") || "random";
-
-					return nsfwFunc.animation(interaction, fileType, category);
-				}
-
-				case "fanbox": {
-					const tags = [
-						"elf",
-						"genshin",
-						"kemonomimi",
-						"shipgirls",
-						"undies",
-						"misc",
-						"uniform"
-					];
-					const tag =
-						interaction.options.getString("fanbox-category") ||
-						tags[Math.floor(Math.random() * tags.length)];
-
-					return nsfwFunc.fanbox(interaction, lewdEmbed, tag);
-				}
-
-				case "elf":
-				case "genshin":
-				case "kemonomimi":
-				case "misc":
-				case "shipgirls":
-				case "undies":
-				case "uniform":
-				case "random": {
-					return nsfwFunc.privateColle(
-						interaction,
-						lewdEmbed,
-						interaction.options.getSubcommand()
-					);
-				}
-
-				default: {
-					let tag = interaction.options.getSubcommand();
-
-					if (tag === "solo") tag = "masturbation";
-
-					return nsfwFunc.def(interaction, lewdEmbed, tag);
-				}
-			}
+			if (await checkMutual(interaction))
+				return nsfwFunc.autohentai(interaction);
 		}
 		else 
 		{
-			let tag = interaction.options.getString("category");
+			const subcommand = interaction.options.getSubcommand();
+			if (subcommand !== "irl") 
+			{
+				switch (subcommand) 
+				{
+					case "bomb": {
+						return nsfwFunc.bomb(interaction);
+					}
 
-			return nsfwFunc.irl(interaction, lewdEmbed, tag);
+					case "fanbox-bomb": {
+						if (await checkMutual(interaction))
+							return nsfwFunc.fanboxBomb(interaction);
+						break;
+					}
+
+					case "animation-bomb": {
+						if (await checkMutual(interaction))
+							return nsfwFunc.bomb(interaction);
+						break;
+					}
+
+					case "animation": {
+						const fileType: string =
+							interaction.options.getString("type") === "random"
+								? ["video", "gif"][Math.floor(Math.random() * 2)]
+								: interaction.options.getString("type");
+						const category: string =
+							interaction.options.getString("category") || "random";
+
+						return nsfwFunc.animation(interaction, fileType, category);
+					}
+
+					case "fanbox": {
+						const tags = [
+							"elf",
+							"genshin",
+							"kemonomimi",
+							"shipgirls",
+							"undies",
+							"misc",
+							"uniform"
+						];
+						const tag =
+							interaction.options.getString("fanbox-category") ||
+							tags[Math.floor(Math.random() * tags.length)];
+
+						return nsfwFunc.fanbox(interaction, lewdEmbed, tag);
+					}
+
+					case "elf":
+					case "genshin":
+					case "kemonomimi":
+					case "misc":
+					case "shipgirls":
+					case "undies":
+					case "uniform":
+					case "random": {
+						return nsfwFunc.privateColle(
+							interaction,
+							lewdEmbed,
+							interaction.options.getSubcommand()
+						);
+					}
+
+					default: {
+						let tag = interaction.options.getSubcommand();
+
+						if (tag === "solo") tag = "masturbation";
+
+						return nsfwFunc.def(interaction, lewdEmbed, tag);
+					}
+				}
+			}
+			else 
+			{
+				let tag = interaction.options.getString("category");
+
+				return nsfwFunc.irl(interaction, lewdEmbed, tag);
+			}
 		}
 	},
 });

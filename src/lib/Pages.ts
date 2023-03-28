@@ -12,6 +12,7 @@ export async function ShinanoPaginator({
 	pages,
 	time,
 	lastPage,
+	messagePayloads,
 	menu,
 }: ShinanoPaginatorOptions): Promise<number> 
 {
@@ -81,17 +82,39 @@ export async function ShinanoPaginator({
 		let message: Message;
 		if (menu) 
 		{
-			message = await interaction.editReply({
-				embeds: [pages[pageCount]],
-				components: [menu, paginatorNavigation],
-			});
+			if (messagePayloads) 
+			{
+				message = await interaction.editReply(
+					Object.assign(messagePayloads[pageCount], {
+						components: [menu, paginatorNavigation],
+					})
+				);
+			}
+			else 
+			{
+				message = await interaction.editReply({
+					embeds: [pages[pageCount]],
+					components: [menu, paginatorNavigation],
+				});
+			}
 		}
 		else 
 		{
-			message = await interaction.editReply({
-				embeds: [pages[pageCount]],
-				components: [paginatorNavigation],
-			});
+			if (messagePayloads) 
+			{
+				message = await interaction.editReply(
+					Object.assign(messagePayloads[pageCount], {
+						components: [paginatorNavigation],
+					})
+				);
+			}
+			else 
+			{
+				message = await interaction.editReply({
+					embeds: [pages[pageCount]],
+					components: [paginatorNavigation],
+				});
+			}
 		}
 
 		if (pages.length == 1) return;
@@ -183,16 +206,42 @@ export async function ShinanoPaginator({
 				/**
 				 * Updating Message
 				 */
-				menu
-					? await i.editReply({
-						embeds: [pages[pageCount]],
-						components: [menu, paginatorNavigation],
-					  })
-					: await i.editReply({
-						embeds: [pages[pageCount]],
-						components: [paginatorNavigation],
-					  });
-
+				if (menu) 
+				{
+					if (messagePayloads) 
+					{
+						await i.editReply(
+							Object.assign(messagePayloads[pageCount], {
+								components: [menu, paginatorNavigation],
+							})
+						);
+					}
+					else 
+					{
+						await i.editReply({
+							embeds: [pages[pageCount]],
+							components: [menu, paginatorNavigation],
+						});
+					}
+				}
+				else 
+				{
+					if (messagePayloads) 
+					{
+						await i.editReply(
+							Object.assign(messagePayloads[pageCount], {
+								components: [paginatorNavigation],
+							})
+						);
+					}
+					else 
+					{
+						await i.editReply({
+							embeds: [pages[pageCount]],
+							components: [paginatorNavigation],
+						});
+					}
+				}
 				collector.resetTimer();
 			}
 		});

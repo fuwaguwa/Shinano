@@ -1,6 +1,9 @@
 import {
+	ActionRowBuilder,
 	AttachmentBuilder,
+	ButtonBuilder,
 	ButtonInteraction,
+	ButtonStyle,
 	ChatInputCommandInteraction,
 	EmbedBuilder,
 	Guild,
@@ -270,14 +273,15 @@ export function restartBot()
 	});
 }
 
-
 /**
  * Check channel NSFW
  * @param interaction interaction
  */
-export async function checkNSFW(interaction: ChatInputCommandInteraction | ButtonInteraction)
+export async function checkNSFW(
+	interaction: ChatInputCommandInteraction | ButtonInteraction
+) 
 {
-	if (!(interaction.channel as TextChannel).nsfw)
+	if (!(interaction.channel as TextChannel).nsfw) 
 	{
 		const nsfwCommand: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
@@ -290,4 +294,45 @@ export async function checkNSFW(interaction: ChatInputCommandInteraction | Butto
 	}
 
 	return true;
+}
+
+/**
+ * Check if an user is in the Shinano server
+ * @param interaction
+ * @returns boolean
+ */
+export async function checkMutual(interaction: ChatInputCommandInteraction) 
+{
+	try 
+	{
+		const guild = await client.guilds.fetch(
+			process.env.guildId || "1020960562710052895"
+		);
+		await guild.members.fetch(interaction.user.id);
+
+		return true;
+	}
+	catch (err) 
+	{
+		const exclusive: EmbedBuilder = new EmbedBuilder()
+			.setColor("Red")
+			.setTitle("Exclusive Command!")
+			.setDescription(
+				"You have used a command exclusive to the members of the Shrine of Shinano server, join the server to use the command anywhere!"
+			);
+		const button: ActionRowBuilder<ButtonBuilder> =
+			new ActionRowBuilder<ButtonBuilder>().addComponents(
+				new ButtonBuilder()
+					.setStyle(ButtonStyle.Link)
+					.setLabel("Join Server!")
+					.setEmoji({ name: "🔗", })
+					.setURL("https://discord.gg/NFkMxFeEWr")
+			);
+		await interaction.editReply({
+			embeds: [exclusive],
+			components: [button],
+		});
+
+		return false;
+	}
 }

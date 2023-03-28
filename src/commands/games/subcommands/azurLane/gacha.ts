@@ -15,7 +15,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 {
 	const banners = JSON.parse(
 		await fs.readFile(
-			path.join(__dirname, "..", "..", "..", "..", "data", "banner.json"),
+			path.join(__dirname, "..", "..", "..", "..", "..", "data", "banner.json"),
 			"utf-8"
 		)
 	);
@@ -177,9 +177,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			const filteredPulls = [];
 			pullResults.forEach((pull) => 
 			{
-				const appeared = filteredPulls.find(
-					fPull => fPull.name === pull.name
-				);
+				const appeared = filteredPulls.find(fPull => fPull.name === pull.name);
 				appeared
 					? filteredPulls[filteredPulls.indexOf(appeared)].times++
 					: filteredPulls.push(pull);
