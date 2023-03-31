@@ -237,7 +237,7 @@ export default new ChatInputCommand({
 					],
 				},
 				{
-					type: ApplicationCommandOptionType.String,
+					type: ApplicationCommandOptionType.User,
 					name: "user",
 					description: "User you want to add the border to.",
 				}
