@@ -5,6 +5,7 @@ import {
 	ActionRowBuilder
 } from "discord.js";
 import { ShinanoPaginatorOptions } from "../typings/Pages";
+import { pageCollectors } from "../events/cmdInteraction";
 
 export async function ShinanoPaginator({
 	interaction,
@@ -120,6 +121,8 @@ export async function ShinanoPaginator({
 		if (pages.length == 1) return;
 
 		const collector = await message.createMessageComponentCollector({ time, });
+
+		pageCollectors.set(interaction.user.id, collector);
 
 		collector.on("collect", async (i) => 
 		{

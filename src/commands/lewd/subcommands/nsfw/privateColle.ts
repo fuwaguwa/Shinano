@@ -12,6 +12,7 @@ import { LoadableNSFWInteraction } from "../../../../typings/Sauce";
 import nsfwSubs from "../nsfwSubs";
 import { cooldownCheck, setCooldown } from "../../../../events/btnInteraction";
 import Image from "../../../../schemas/Image";
+import { collectors } from "../../../../events/cmdInteraction";
 
 export = async (
 	interaction: LoadableNSFWInteraction,
@@ -94,6 +95,8 @@ export = async (
 			componentType: ComponentType.Button,
 			time: 40000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	collector.on("collect", async (i) => 
 	{

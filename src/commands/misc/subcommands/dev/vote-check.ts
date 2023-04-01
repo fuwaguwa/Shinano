@@ -10,6 +10,7 @@ import {
 	InteractionCollector
 } from "discord.js";
 import fetch from "node-fetch";
+import { collectors } from "../../../../events/cmdInteraction";
 
 export = async (interaction: ChatInputCommandInteraction) => 
 {
@@ -94,6 +95,8 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			componentType: ComponentType.Button,
 			time: 60000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	collector.on("collect", async (i) => 
 	{

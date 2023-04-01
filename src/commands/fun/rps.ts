@@ -12,6 +12,7 @@ import {
 	User
 } from "discord.js";
 import { ChatInputCommand } from "../../structures/Command";
+import { collectors } from "../../events/cmdInteraction";
 
 function choiceToEmoji(choice) 
 {
@@ -373,6 +374,8 @@ export default new ChatInputCommand({
 					componentType: ComponentType.Button,
 					time: 30000,
 				});
+
+			collectors.set(interaction.user.id, collector);
 
 			collector.on("collect", async (i) => 
 			{

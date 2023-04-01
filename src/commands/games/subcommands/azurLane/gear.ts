@@ -14,6 +14,7 @@ import {
 	gearSearch,
 	gearStats
 } from "../../../../lib/AzurLane";
+import { collectors } from "../../../../events/cmdInteraction";
 
 export = async (interaction: ChatInputCommandInteraction, AL: any) => 
 {
@@ -185,6 +186,8 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 			componentType: ComponentType.StringSelect,
 			time: 120000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	let tierCount: number;
 

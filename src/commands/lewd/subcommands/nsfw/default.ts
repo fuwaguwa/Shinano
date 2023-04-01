@@ -12,6 +12,7 @@ import {
 } from "discord.js";
 import { cooldownCheck, setCooldown } from "../../../../events/btnInteraction";
 import nsfwSubs from "../nsfwSubs";
+import { collectors } from "../../../../events/cmdInteraction";
 
 export = async (
 	interaction: LoadableNSFWInteraction,
@@ -69,6 +70,8 @@ export = async (
 			time: 40000,
 		});
 
+	collectors.set(interaction.user.id, collector);
+
 	collector.on("collect", async (i) => 
 	{
 		if (!i.customId.endsWith(i.user.id)) 
@@ -100,7 +103,7 @@ export = async (
 		if (reason !== "done") 
 		{
 			load.components[0].setDisabled(true);
-			await message.edit({ components: [load], });
+			await message.edit({ components: [imageInfo, load], });
 		}
 	});
 };

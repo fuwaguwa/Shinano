@@ -5,7 +5,8 @@ import {
 	ActionRowBuilder,
 	ButtonBuilder,
 	ButtonStyle,
-	ChatInputCommandInteraction
+	ChatInputCommandInteraction,
+	InteractionCollector
 } from "discord.js";
 import { client } from "..";
 import { Event } from "../structures/Event";
@@ -15,6 +16,8 @@ import { ChatInputCommandType } from "../typings/Command";
 import { codeBlock } from "discord.js";
 
 const Cooldown: Collection<string, number> = new Collection();
+export const collectors: Collection<string, InteractionCollector<any>> = new Collection<string, InteractionCollector<any>>();
+export const pageCollectors: Collection<string, InteractionCollector<any>> = new Collection<string, InteractionCollector<any>>();
 const owner = "836215956346634270";
 
 function getFullCommand(interaction: ChatInputCommandInteraction) 
@@ -140,6 +143,23 @@ export default new Event("interactionCreate", async (interaction) =>
 					`You are on a \`${ms(cms - Date.now(), { long: true, })}\` cooldown.`
 				);
 			return interaction.reply({ embeds: [onChillOut], ephemeral: true, });
+		}
+
+		/**
+		 * Collectors Check
+		 */
+		if (collectors.has(interaction.user.id)) 
+		{
+			const collector = collectors.get(interaction.user.id);
+			if (!collector.ended) collector.stop();
+			collectors.delete(interaction.user.id);
+		}
+
+		if (pageCollectors.has(interaction.user.id)) 
+		{
+			const pageCollector = pageCollectors.get(interaction.user.id);
+			if (!pageCollector.ended) pageCollector.stop();
+			pageCollectors.delete(interaction.user.id);
 		}
 
 		/**

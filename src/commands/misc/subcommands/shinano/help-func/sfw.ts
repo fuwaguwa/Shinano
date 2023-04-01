@@ -9,6 +9,7 @@ import {
 import { client } from "../../../../..";
 import { ShinanoPaginator } from "../../../../../lib/Pages";
 import { ChatInputCommandCategoryList } from "../../../../../typings/Command";
+import { collectors } from "../../../../../events/cmdInteraction";
 
 export = async (interaction: ChatInputCommandInteraction) => 
 {
@@ -110,6 +111,8 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			componentType: ComponentType.StringSelect,
 			time: 30000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	collector.on("collect", async (i) => 
 	{

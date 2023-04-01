@@ -9,6 +9,7 @@ import {
 import { Character } from "genshin-db";
 import { ShinanoPaginator } from "../../../../../lib/Pages";
 import { ShinanoCharacter } from "../../../../../structures/Character";
+import { collectors } from "../../../../../events/cmdInteraction";
 
 export = async (
 	interaction: ChatInputCommandInteraction,
@@ -61,6 +62,8 @@ export = async (
 			componentType: ComponentType.StringSelect,
 			time: 120000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	let consPage: number = 0;
 	let acPage: number = 0;

@@ -9,6 +9,7 @@ import {
 	StringSelectMenuInteraction
 } from "discord.js";
 import { animeInfo } from "../../../../lib/Anime";
+import { collectors } from "../../../../events/cmdInteraction";
 
 export = async (interaction: ChatInputCommandInteraction) => 
 {
@@ -60,6 +61,8 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			componentType: ComponentType.StringSelect,
 			time: 120000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	collector.on("collect", async (i) => 
 	{

@@ -38,8 +38,6 @@ export default new ChatInputCommand({
 	],
 	run: async ({ interaction, }) => 
 	{
-		if (!interaction.deferred) await interaction.deferReply();
-
 		let link: string;
 		interaction.options.getSubcommand() === "link"
 			? (link = interaction.options.getString("link"))
