@@ -30,8 +30,8 @@ export default new ChatInputCommand({
 						{ name: "Shipgirls", value: "shipgirls", },
 						{ name: "Undies ⭐", value: "undies", },
 						{ name: "Uniform ⭐", value: "uniform", },
+						{ name: "Genshin ⭐", value: "genshin", },
 						{ name: "Elf", value: "elf", },
-						{ name: "Genshin", value: "genshin", },
 						{ name: "Kemonomimi", value: "kemonomimi", },
 						{ name: "Misc", value: "misc", }
 					],
@@ -74,8 +74,8 @@ export default new ChatInputCommand({
 						{ name: "Shipgirls", value: "shipgirls", },
 						{ name: "Undies ⭐", value: "undies", },
 						{ name: "Uniform ⭐", value: "uniform", },
+						{ name: "Genshin ⭐", value: "genshin", },
 						{ name: "Elf", value: "elf", },
-						{ name: "Genshin", value: "genshin", },
 						{ name: "Kemonomimi", value: "kemonomimi", },
 						{ name: "Misc", value: "misc", }
 					],
