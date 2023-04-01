@@ -307,7 +307,7 @@ export function gearColor(gear, tier: number)
 	if (gear.tiers[tier].rarity === "Rare") color = "#03dbfc";
 	if (gear.tiers[tier].rarity === "Elite") color = "#ec18f0";
 	if (gear.tiers[tier].rarity === "Super Rare") color = "#eff233";
-	if (gear.tiers[tier].rarity === "Ultra Rare") color = "BLACK";
+	if (gear.tiers[tier].rarity === "Ultra Rare") color = "#000000";
 
 	return color;
 }
