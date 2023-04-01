@@ -9,6 +9,7 @@ import {
 } from "discord.js";
 import fetch from "node-fetch";
 import { characterInfo } from "../../../../lib/Anime";
+import { collectors } from "../../../../events/cmdInteraction";
 
 export = async (interaction: ChatInputCommandInteraction) => 
 {
@@ -60,6 +61,8 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			componentType: ComponentType.StringSelect,
 			time: 120000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	collector.on("collect", async (i) => 
 	{

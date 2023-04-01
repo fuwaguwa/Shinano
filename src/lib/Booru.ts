@@ -11,6 +11,7 @@ import {
 import User from "../schemas/User";
 import { LoadableNSFWInteraction } from "../typings/Sauce";
 import { cooldownCheck, setCooldown } from "../events/btnInteraction";
+import { collectors } from "../events/cmdInteraction";
 const booru = require("booru");
 
 export async function searchBooru(
@@ -224,6 +225,8 @@ export async function searchBooru(
 			componentType: ComponentType.Button,
 			time: 40000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	collector.on("collect", async (i) => 
 	{

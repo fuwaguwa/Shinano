@@ -9,6 +9,7 @@ import {
 	EmbedBuilder,
 	InteractionCollector
 } from "discord.js";
+import { collectors } from "../../events/cmdInteraction";
 
 export default new ChatInputCommand({
 	name: "would-you-rather",
@@ -48,6 +49,8 @@ export default new ChatInputCommand({
 				componentType: ComponentType.Button,
 				time: 20000,
 			});
+
+		collectors.set(interaction.user.id, collector);
 
 		collector.on("collect", async (i) => 
 		{

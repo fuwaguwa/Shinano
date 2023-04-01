@@ -8,6 +8,7 @@ import {
 	StringSelectMenuInteraction
 } from "discord.js";
 import { ShinanoPaginator } from "./Pages";
+import { collectors } from "../events/cmdInteraction";
 
 /**
  * Generate doujin pages from doujin
@@ -183,6 +184,8 @@ export async function displayDoujin(
 			componentType: ComponentType.StringSelect,
 			time: 150000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	let lastPage: number = 0;
 

@@ -8,6 +8,7 @@ import {
 } from "discord.js";
 import fetch from "node-fetch";
 import { ChatInputCommand } from "../../structures/Command";
+import { collectors } from "../../events/cmdInteraction";
 
 async function getQuestion(category: string, difficulty: string) 
 {
@@ -203,6 +204,8 @@ export default new ChatInputCommand({
 			componentType: ComponentType.Button,
 			time: 15000,
 		});
+
+		collectors.set(interaction.user.id, collector);
 
 		collector.on("collect", async (i) => 
 		{

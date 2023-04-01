@@ -12,6 +12,7 @@ import { toTitleCase } from "../../../../../lib/Utils";
 import genshin from "genshin-db";
 import { color } from "../../../../../lib/Genshin";
 import { ShinanoPaginator } from "../../../../../lib/Pages";
+import { collectors } from "../../../../../events/cmdInteraction";
 
 export = async (interaction: ChatInputCommandInteraction) => 
 {
@@ -194,6 +195,8 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			componentType: ComponentType.StringSelect,
 			time: 120000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	let costPage: number = 0;
 	let infoPage: number = 0;

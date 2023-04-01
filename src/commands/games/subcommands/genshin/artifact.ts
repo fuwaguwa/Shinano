@@ -10,6 +10,7 @@ import {
 import genshin from "genshin-db";
 import { rarityColor } from "../../../../lib/Genshin";
 import { toTitleCase } from "../../../../lib/Utils";
+import { collectors } from "../../../../events/cmdInteraction";
 
 export = async (interaction: ChatInputCommandInteraction) => 
 {
@@ -140,6 +141,8 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			componentType: ComponentType.StringSelect,
 			time: 120000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	collector.on("collect", async (i) => 
 	{

@@ -9,6 +9,7 @@ import {
 import { Weapon } from "genshin-db";
 import { ShinanoPaginator } from "../../../../../lib/Pages";
 import { ShinanoWeapon } from "../../../../../structures/Weapon";
+import { collectors } from "../../../../../events/cmdInteraction";
 
 export = async (interaction: ChatInputCommandInteraction, weapon: Weapon) => 
 {
@@ -52,6 +53,8 @@ export = async (interaction: ChatInputCommandInteraction, weapon: Weapon) =>
 			componentType: ComponentType.StringSelect,
 			time: 120000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	let acPage: number = 0;
 

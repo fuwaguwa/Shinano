@@ -9,6 +9,7 @@ import {
 } from "discord.js";
 import { ShinanoPaginator } from "../../../../lib/Pages";
 import { ShinanoShip } from "../../../../structures/Ship";
+import { collectors } from "../../../../events/cmdInteraction";
 
 export = async (interaction: ChatInputCommandInteraction, AL: any) => 
 {
@@ -90,6 +91,8 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 			componentType: ComponentType.StringSelect,
 			time: 120000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	let skinPage: number = 0;
 	let galleryPage: number = 0;

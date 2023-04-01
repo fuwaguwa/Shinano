@@ -12,6 +12,7 @@ import {
 } from "discord.js";
 import { cooldownCheck, setCooldown } from "../../../../events/btnInteraction";
 import nsfwSubs from "../nsfwSubs";
+import { collectors } from "../../../../events/cmdInteraction";
 
 export = async (
 	interaction: LoadableNSFWInteraction,
@@ -77,6 +78,8 @@ export = async (
 			componentType: ComponentType.Button,
 			time: 40000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	collector.on("collect", async (i) => 
 	{

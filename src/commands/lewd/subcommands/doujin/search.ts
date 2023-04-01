@@ -11,6 +11,7 @@ import fetch from "node-fetch";
 import { genDoujinEmbed } from "../../../../lib/Doujin";
 import { ShinanoPaginator } from "../../../../lib/Pages";
 import code from "./code";
+import { collectors } from "../../../../events/cmdInteraction";
 
 export = async (interaction: ChatInputCommandInteraction) => 
 {
@@ -73,6 +74,8 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			componentType: ComponentType.StringSelect,
 			time: 60000,
 		});
+
+	collectors.set(interaction.user.id, collector);
 
 	ShinanoPaginator({
 		interaction,
