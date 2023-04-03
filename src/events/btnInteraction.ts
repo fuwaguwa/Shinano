@@ -247,6 +247,10 @@ export default new Event("interactionCreate", async (interaction) =>
 		}
 	}
 
+
+	/**
+	 * Logging button interaction
+	 */
 	if (interaction.user.id === owner) return;
 
 	const mainGuild = await client.guilds.fetch("1002188088942022807");
