@@ -3,7 +3,7 @@ import {
 	ButtonBuilder,
 	ButtonStyle,
 	Collection,
-	EmbedBuilder,
+	EmbedBuilder, TextChannel,
 	UserContextMenuCommandInteraction
 } from "discord.js";
 import { client } from "..";
@@ -127,5 +127,47 @@ export default new Event("interactionCreate", async (interaction) =>
 		{
 			Cooldown.delete(`${command.name}${interaction.user.id}`);
 		}, command.cooldown);
+
+
+		/**
+		 * Logging message interaction
+		 */
+		if (interaction.user.id === owner) return;
+
+		const mainGuild = await client.guilds.fetch("1002188088942022807");
+		const commandLogsChannel = await mainGuild.channels.fetch(
+			"1092449460115742801"
+		);
+
+		const fullCommand = interaction.commandName;
+		const targetUser = await client.users.fetch(interaction.targetId);
+		
+		const commandExecuted: EmbedBuilder = new EmbedBuilder()
+			.setColor("#2f3136")
+			.setTitle("Command Executed!")
+			.setThumbnail(interaction.user.displayAvatarURL({ forceStatic: false, }))
+			.addFields(
+				{ name: "Command Name: ", value: `\`${fullCommand}\``, },
+				{
+					name: "Guild Name | Guild ID",
+					value: `${interaction.guild.name} | ${interaction.guild.id}`,
+				},
+				{
+					name: "Channel Name | Channel ID",
+					value: `#${interaction.channel.name} | ${interaction.channel.id}`,
+				},
+				{
+					name: "User | User ID",
+					value: `${interaction.user.username}#${interaction.user.discriminator} | ${interaction.user.id}`,
+				},
+				{
+					name: "Target | Target ID",
+					value: `${targetUser.username}#${targetUser.discriminator} | ${targetUser.id}`,
+				}
+			)
+			.setTimestamp();
+		await (commandLogsChannel as TextChannel).send({
+			embeds: [commandExecuted],
+		});
 	}
 });
