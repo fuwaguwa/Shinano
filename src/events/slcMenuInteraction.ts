@@ -9,7 +9,7 @@ export default new Event("interactionCreate", async (interaction) =>
 	if (!interaction.isStringSelectMenu()) return;
 
 	/**
-	 * Logging message interaction
+	 * Logging menu interaction
 	 */
 	if (interaction.user.id === owner) return;
 
