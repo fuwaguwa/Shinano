@@ -135,17 +135,20 @@ export async function searchBooru(
 		)
 	) 
 	{
-		links.addComponents(
-			new ButtonBuilder()
-				.setStyle(ButtonStyle.Link)
-				.setLabel("Sauce Link")
-				.setEmoji({ name: "🔍", })
-				.setURL(
-					result.source.includes("https://")
-						? result.source
-						: "https://" + result.source
-				)
-		);
+		if (result.source.length <= 512)
+		{
+			links.addComponents(
+				new ButtonBuilder()
+					.setStyle(ButtonStyle.Link)
+					.setLabel("Sauce Link")
+					.setEmoji({ name: "🔍", })
+					.setURL(
+						result.source.includes("https://")
+							? result.source
+							: "https://" + result.source
+					)
+			);
+		}
 	}
 	else 
 	{
