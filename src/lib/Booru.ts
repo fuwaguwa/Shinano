@@ -38,6 +38,9 @@ export async function searchBooru(
 			break;
 	}
 
+	/**
+	 * Filtering results
+	 */
 	// Tried my best since blue archive content is used quite a lot
 	const obligatory: string[] = [
 		"sort:score",
@@ -103,6 +106,9 @@ export async function searchBooru(
 	// });
 	// message += "||";
 
+	/**
+	 * Preparing buttons
+	 */
 	const links: ActionRowBuilder<ButtonBuilder> =
 		new ActionRowBuilder<ButtonBuilder>().setComponents(
 			new ButtonBuilder()
@@ -129,13 +135,20 @@ export async function searchBooru(
 		)
 	) 
 	{
-		links.addComponents(
-			new ButtonBuilder()
-				.setStyle(ButtonStyle.Link)
-				.setLabel("Sauce Link")
-				.setEmoji({ name: "🔍", })
-				.setURL(result.source)
-		);
+		if (result.source.length <= 512)
+		{
+			links.addComponents(
+				new ButtonBuilder()
+					.setStyle(ButtonStyle.Link)
+					.setLabel("Sauce Link")
+					.setEmoji({ name: "🔍", })
+					.setURL(
+						result.source.includes("https://")
+							? result.source
+							: "https://" + result.source
+					)
+			);
+		}
 	}
 	else 
 	{
@@ -165,6 +178,9 @@ export async function searchBooru(
 		);
 	}
 
+	/**
+	 * Sending
+	 */
 	let chatMessage: Message;
 	if ([".mp4", "webm"].includes(result.fileUrl.slice(-4))) 
 	{
@@ -220,6 +236,9 @@ export async function searchBooru(
 		}
 	}
 
+	/**
+	 * Processing loadmore requests
+	 */
 	const collector: InteractionCollector<ButtonInteraction> =
 		await chatMessage.createMessageComponentCollector({
 			componentType: ComponentType.Button,
