@@ -192,7 +192,7 @@ export async function createTable(options: {
 		canvas: new Canvas(4, 4),
 		columns: tableColumns,
 		dataSource: options.dataSrc,
-		bgColor: "#2f3136",
+		bgColor: "#2b2d31",
 	});
 
 	// Uploading the image + returning the link

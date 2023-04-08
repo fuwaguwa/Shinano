@@ -30,12 +30,12 @@ export async function animeInfo(
 	const endDate = Math.floor(new Date(anime.aired.to).getTime() / 1000);
 
 	const synopsisEmbed: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setThumbnail(anime.images.jpg.large_image_url)
 		.setTitle(`${anime.title} | Synopsis`)
 		.setDescription(`*${anime.synopsis || "No Sypnosis Can Be Found"}*`);
 	const generalInfoEmbed: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setThumbnail(anime.images.jpg.large_image_url)
 		.setTitle(`${anime.title} | General Info`)
 		.addFields(

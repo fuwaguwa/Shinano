@@ -67,7 +67,7 @@ async function startDuel(
 				opponentChoice = choice;
 
 				const res: EmbedBuilder = new EmbedBuilder()
-					.setColor("#2f3136")
+					.setColor("#2b2d31")
 					.setDescription(
 						`\`${interaction.user.username}\` vs \`${opponent.username}\`\n\n${interaction.user}, make your choice!`
 					);
@@ -103,7 +103,7 @@ async function startDuel(
 			/**
 			 * Result
 			 */
-			const finalResult: EmbedBuilder = new EmbedBuilder().setColor("#2f3136");
+			const finalResult: EmbedBuilder = new EmbedBuilder().setColor("#2b2d31");
 			if (challengerChoice === opponentChoice) 
 			{
 				finalResult.setDescription(
@@ -246,7 +246,7 @@ export default new ChatInputCommand({
 			 * Accepting/Declining The Duel
 			 */
 			const AoDEmbed: EmbedBuilder = new EmbedBuilder()
-				.setColor("#2f3136")
+				.setColor("#2b2d31")
 				.setTitle("⚔ It's Time To D-D-D-DUEL!")
 				.setDescription(
 					`${user}\n**${interaction.user.username} challenged you to a game of RPS!**\nReact to this message to accept or decline the duel!`
@@ -281,7 +281,7 @@ export default new ChatInputCommand({
 					{
 						case "ACCEPT": {
 							const res: EmbedBuilder = new EmbedBuilder()
-								.setColor("#2f3136")
+								.setColor("#2b2d31")
 								.setDescription(
 									`\`${interaction.user.username}\` vs \`${user.username}\`\n\n${user}, make your choice!`
 								);
@@ -359,7 +359,7 @@ export default new ChatInputCommand({
 			 * Collector
 			 */
 			const res: EmbedBuilder = new EmbedBuilder()
-				.setColor("#2f3136")
+				.setColor("#2b2d31")
 				.setDescription(
 					`\`${interaction.user.username}\` vs \`Shinano\`\n\nMake your choice!`
 				);
@@ -470,7 +470,7 @@ export default new ChatInputCommand({
 							.setStyle(ButtonStyle.Secondary);
 					}
 					const res: EmbedBuilder = new EmbedBuilder()
-						.setColor("#2f3136")
+						.setColor("#2b2d31")
 						.setDescription(
 							`\`${interaction.user.username}\` vs \`Shinano\`\n\nUser didn't make a choice!`
 						);

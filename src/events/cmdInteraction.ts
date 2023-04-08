@@ -16,8 +16,14 @@ import { ChatInputCommandType } from "../typings/Command";
 import { codeBlock } from "discord.js";
 
 const Cooldown: Collection<string, number> = new Collection();
-export const collectors: Collection<string, InteractionCollector<any>> = new Collection<string, InteractionCollector<any>>();
-export const pageCollectors: Collection<string, InteractionCollector<any>> = new Collection<string, InteractionCollector<any>>();
+export const collectors: Collection<
+string,
+InteractionCollector<any>
+> = new Collection<string, InteractionCollector<any>>();
+export const pageCollectors: Collection<
+string,
+InteractionCollector<any>
+> = new Collection<string, InteractionCollector<any>>();
 const owner = "836215956346634270";
 
 function getFullCommand(interaction: ChatInputCommandInteraction) 
@@ -317,7 +323,7 @@ export default new Event("interactionCreate", async (interaction) =>
 
 	const fullCommand = getFullCommand(interaction);
 	const commandExecuted: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setTitle("Command Executed!")
 		.setThumbnail(interaction.user.displayAvatarURL({ forceStatic: false, }))
 		.addFields(

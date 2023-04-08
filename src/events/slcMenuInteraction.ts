@@ -20,7 +20,7 @@ export default new Event("interactionCreate", async (interaction) =>
 
 	const fullCommand = interaction.customId;
 	const commandExecuted: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setTitle("Command Executed!")
 		.setThumbnail(interaction.user.displayAvatarURL({ forceStatic: false, }))
 		.addFields(

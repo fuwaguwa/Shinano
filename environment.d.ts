@@ -17,6 +17,7 @@ declare global {
 			twitterAccessToken: string;
 			twitterAccessTokenSecret: string;
 			nhentaiIP: string;
+			topggWebhook: string;
 		}
 	}
 }

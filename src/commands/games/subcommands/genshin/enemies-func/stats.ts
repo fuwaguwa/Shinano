@@ -18,7 +18,7 @@ export = async (interaction: ChatInputCommandInteraction, enemy: Enemy) =>
 	 */
 	const enemyStatsEmbed: EmbedBuilder = new EmbedBuilder()
 		.setTitle(`${enemy.name} | Level ${level}`)
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.addFields({
 			name: "Enemy's Stats:",
 			value:

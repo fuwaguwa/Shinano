@@ -55,7 +55,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	if (topggResult.voted == 1) topggVoteStatus = true;
 
 	const voteEmbed: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.addFields(
 			{
 				name: "Top.gg Database:",

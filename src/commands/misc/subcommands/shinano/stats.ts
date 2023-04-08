@@ -49,7 +49,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	 */
 	// Outputting Data
 	const performance: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setTitle("Shinano's Stats")
 		.addFields(
 			{

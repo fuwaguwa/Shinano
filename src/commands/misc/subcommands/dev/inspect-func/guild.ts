@@ -32,7 +32,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 
 	const guildEmbed = new EmbedBuilder()
 		.setTitle(`${guild.name}`)
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setFields(
 			{
 				name: "Registered",

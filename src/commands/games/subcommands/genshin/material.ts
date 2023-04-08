@@ -25,7 +25,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	 * Displaying
 	 */
 	const materialEmbed: EmbedBuilder = new EmbedBuilder()
-		.setColor(material.rarity ? rarityColor(material) : "#2f3136")
+		.setColor(material.rarity ? rarityColor(material) : "#2b2d31")
 		.setTitle(material.name)
 		.setThumbnail(material.images.redirect)
 		.setDescription(

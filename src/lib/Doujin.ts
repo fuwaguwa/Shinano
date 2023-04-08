@@ -23,7 +23,7 @@ function genDoujinPage(doujin, title)
 	{
 		doujinPages.push(
 			new EmbedBuilder()
-				.setColor("#2f3136")
+				.setColor("#2b2d31")
 				.setDescription(
 					`**[${title} | ${doujin.body.id}](${doujin.body.pages[i]})**`
 				)
@@ -48,7 +48,7 @@ export function genDoujinEmbed(doujin)
 	const mainInfo: EmbedBuilder = new EmbedBuilder()
 		.setTitle(`${doujinTitle} | ${doujin.body.id}`)
 		.setThumbnail(doujin.body.pages[0])
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setDescription("**Tags:**\n" + doujin.body.tags.tags.join(", "))
 		.setURL(`https://nhentai.net/g/${doujin.body.id}`);
 	if (doujin.body.tags.characters.length != 0)

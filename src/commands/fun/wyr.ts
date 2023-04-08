@@ -24,7 +24,7 @@ export default new ChatInputCommand({
 		const wyr = await response.json();
 
 		const wyrEmbed: EmbedBuilder = new EmbedBuilder()
-			.setColor("#2f3136")
+			.setColor("#2b2d31")
 			.setTitle("Would you rather...")
 			.setDescription(`🅰️ ${wyr.optionA}\n\n` + `🅱️ ${wyr.optionB}`);
 

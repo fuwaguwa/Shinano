@@ -135,18 +135,17 @@ export async function searchBooru(
 		)
 	) 
 	{
-		if (result.source.length <= 512)
+		if (
+			result.source.length <= 512 &&
+			!result.source.toLowerCase().includes("newgrounds")
+		) 
 		{
 			links.addComponents(
 				new ButtonBuilder()
 					.setStyle(ButtonStyle.Link)
 					.setLabel("Sauce Link")
 					.setEmoji({ name: "🔍", })
-					.setURL(
-						result.source.includes("https://")
-							? result.source
-							: "https://" + result.source
-					)
+					.setURL(result.source)
 			);
 		}
 	}

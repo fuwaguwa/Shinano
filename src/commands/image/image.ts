@@ -567,7 +567,7 @@ export default new ChatInputCommand({
 		else 
 		{
 			const embed: EmbedBuilder = new EmbedBuilder()
-				.setColor("#2f3136")
+				.setColor("#2b2d31")
 				.setImage(link);
 			await interaction.editReply({ embeds: [embed], });
 		}

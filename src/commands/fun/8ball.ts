@@ -43,7 +43,7 @@ export default new ChatInputCommand({
 		];
 
 		const response: EmbedBuilder = new EmbedBuilder()
-			.setColor("#2f3136")
+			.setColor("#2b2d31")
 			.setDescription(
 				`> **${interaction.options.getString("question")}**\n` +
 					responses[Math.floor(Math.random() * responses.length)]

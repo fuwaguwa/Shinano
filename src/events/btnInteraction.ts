@@ -31,7 +31,7 @@ function translateTweet(text: string, interaction: ButtonInteraction)
 		.then(async (translations) => 
 		{
 			const translateEmbed: EmbedBuilder = new EmbedBuilder()
-				.setColor("#2f3136")
+				.setColor("#2b2d31")
 				.setTitle("Translated Tweet")
 				.setDescription(translations.text)
 				.setFooter({ text: "Translated with Google Translate", });
@@ -110,7 +110,7 @@ export default new Event("interactionCreate", async (interaction) =>
 	{
 		case interaction.customId === "NO-NSFW": {
 			const cantSee: EmbedBuilder = new EmbedBuilder()
-				.setColor("#2f3136")
+				.setColor("#2b2d31")
 				.setTitle("Enabling The NSFW Commands")
 				.addFields(
 					{
@@ -247,7 +247,6 @@ export default new Event("interactionCreate", async (interaction) =>
 		}
 	}
 
-
 	/**
 	 * Logging button interaction
 	 */
@@ -260,7 +259,7 @@ export default new Event("interactionCreate", async (interaction) =>
 
 	const fullCommand = interaction.customId;
 	const commandExecuted: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setTitle("Button Pressed!")
 		.setThumbnail(interaction.user.displayAvatarURL({ forceStatic: false, }))
 		.addFields(

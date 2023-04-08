@@ -18,7 +18,7 @@ export default new ChatInputCommand({
 		const user: User = interaction.options.getUser("user") || interaction.user;
 
 		const avatarEmbed: EmbedBuilder = new EmbedBuilder()
-			.setColor("#2f3136")
+			.setColor("#2b2d31")
 			.setDescription(`${user}'s avatar`)
 			.setImage(user.displayAvatarURL({ forceStatic: false, size: 1024, }))
 			.setFooter({ text: `UID: ${user.id}`, });

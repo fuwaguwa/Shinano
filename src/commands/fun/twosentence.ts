@@ -21,7 +21,7 @@ export default new ChatInputCommand({
 		});
 
 		const postEmbed: EmbedBuilder = new EmbedBuilder()
-			.setColor("#2f3136")
+			.setColor("#2b2d31")
 			.setDescription(`**${post.title}**\n${post.selftext}`);
 
 		await interaction.editReply({ embeds: [postEmbed], });

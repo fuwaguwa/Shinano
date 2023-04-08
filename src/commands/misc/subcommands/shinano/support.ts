@@ -9,7 +9,7 @@ import {
 export = async (interaction: ChatInputCommandInteraction) => 
 {
 	const supportEmbed: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setDescription(
 			"If you got any issue with the bot, please contact us in the support server down below!"
 		);

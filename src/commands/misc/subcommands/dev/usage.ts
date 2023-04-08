@@ -5,7 +5,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 {
 	const memory = process.memoryUsage();
 	const performance: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setTitle("Memory Stats")
 		.addFields(
 			{

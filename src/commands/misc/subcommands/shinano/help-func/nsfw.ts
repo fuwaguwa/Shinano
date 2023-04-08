@@ -28,7 +28,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 
 	const nsfwHelpEmbed: EmbedBuilder = new EmbedBuilder()
 		.setTitle("NSFW Commands")
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setDescription(
 			"Tip: You can quickly type `/<tag>` for the commands. E.g `/thighs`, `/irl`\n" +
 				"You could also use the **up arrow key** to quickly type in the previous command that you have executed!"

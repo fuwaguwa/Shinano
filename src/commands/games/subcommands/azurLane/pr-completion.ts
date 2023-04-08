@@ -66,7 +66,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	}
 	else 
 	{
-		color = "#2f3136";
+		color = "#2b2d31";
 		prTable = data.DR;
 		prFSTable = data["DR-FS"];
 		prFSTableTotal = data["DR-FS-TOTAL"];

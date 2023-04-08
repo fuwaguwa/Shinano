@@ -188,7 +188,7 @@ export function chapterInfo(chapterInfo, chapterMode)
 
 		levels.push(
 			new EmbedBuilder()
-				.setColor(chapterMode === "normal" ? "#2f3136" : "Red")
+				.setColor(chapterMode === "normal" ? "#2b2d31" : "Red")
 				.setTitle(`${title} | ${chapterInfo[i][chapterMode].code}`)
 				.setDescription(
 					`**${chapterInfo[i][chapterMode].title}**\n` +

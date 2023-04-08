@@ -15,7 +15,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	}
 
 	const infoEmbed: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setTitle(`${user.username}'s Info`)
 		.setDescription(
 			`User ID: **${userDB.userId}**\n` +

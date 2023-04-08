@@ -3,7 +3,8 @@ import {
 	ButtonBuilder,
 	ButtonStyle,
 	Collection,
-	EmbedBuilder, TextChannel,
+	EmbedBuilder,
+	TextChannel,
 	UserContextMenuCommandInteraction
 } from "discord.js";
 import { client } from "..";
@@ -128,7 +129,6 @@ export default new Event("interactionCreate", async (interaction) =>
 			Cooldown.delete(`${command.name}${interaction.user.id}`);
 		}, command.cooldown);
 
-
 		/**
 		 * Logging message interaction
 		 */
@@ -141,9 +141,9 @@ export default new Event("interactionCreate", async (interaction) =>
 
 		const fullCommand = interaction.commandName;
 		const targetUser = await client.users.fetch(interaction.targetId);
-		
+
 		const commandExecuted: EmbedBuilder = new EmbedBuilder()
-			.setColor("#2f3136")
+			.setColor("#2b2d31")
 			.setTitle("Command Executed!")
 			.setThumbnail(interaction.user.displayAvatarURL({ forceStatic: false, }))
 			.addFields(

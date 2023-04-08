@@ -34,7 +34,7 @@ export default new UserCommand({
 		if (received.banner.substring(0, 2) === "a_") format = "gif";
 
 		const banner: EmbedBuilder = new EmbedBuilder()
-			.setColor("#2f3136")
+			.setColor("#2b2d31")
 			.setDescription(`${user}'s Banner`)
 			.setImage(
 				`https://cdn.discordapp.com/banners/${user.id}/${received.banner}.${format}?size=512`
