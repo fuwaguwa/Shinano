@@ -99,13 +99,6 @@ export async function searchBooru(
 		if (i != query.length - 1) message += ", ";
 	});
 
-	// message += "\n\n**Post Tags**: ||";
-	// result.tags.forEach((tag) =>
-	// {
-	// 	message += ` \`${tag}\` `;
-	// });
-	// message += "||";
-
 	/**
 	 * Preparing buttons
 	 */
@@ -125,29 +118,19 @@ export async function searchBooru(
 				.setCustomId(`LMORE-${interaction.user.id}`)
 		);
 
-	// god i hate regex
 	if (
 		result.source &&
-		result.source.match(
-			new RegExp(
-				/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi
-			)
-		)
+		result.source.match(new RegExp("^(http|https)://", "i")) &&
+		result.source.length <= 512
 	) 
 	{
-		if (
-			result.source.length <= 512 &&
-			!result.source.toLowerCase().includes("newgrounds")
-		) 
-		{
-			links.addComponents(
-				new ButtonBuilder()
-					.setStyle(ButtonStyle.Link)
-					.setLabel("Sauce Link")
-					.setEmoji({ name: "🔍", })
-					.setURL(result.source)
-			);
-		}
+		links.addComponents(
+			new ButtonBuilder()
+				.setStyle(ButtonStyle.Link)
+				.setLabel("Sauce Link")
+				.setEmoji({ name: "🔍", })
+				.setURL(result.source)
+		);
 	}
 	else 
 	{
