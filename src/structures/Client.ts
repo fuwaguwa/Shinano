@@ -390,7 +390,7 @@ export class Shinano extends Client
 				}
 
 				embedArr.push(
-					new EmbedBuilder().setColor("#2f3136").setDescription(text)
+					new EmbedBuilder().setColor("#2b2d31").setDescription(text)
 				);
 			}
 

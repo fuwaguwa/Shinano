@@ -11,7 +11,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	if (!interaction.deferred) await interaction.deferReply();
 
 	const voteEmbed: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setDescription(
 			"You can vote for Shinano using the buttons below. Thank you for the support!\n"
 		);

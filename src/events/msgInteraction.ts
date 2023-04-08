@@ -4,7 +4,8 @@ import {
 	ButtonStyle,
 	Collection,
 	EmbedBuilder,
-	MessageContextMenuCommandInteraction, TextChannel
+	MessageContextMenuCommandInteraction,
+	TextChannel
 } from "discord.js";
 import { client } from "..";
 import { Event } from "../structures/Event";
@@ -129,7 +130,6 @@ export default new Event("interactionCreate", async (interaction) =>
 		}, command.cooldown);
 	}
 
-
 	/**
 	 * Logging message interaction
 	 */
@@ -142,7 +142,7 @@ export default new Event("interactionCreate", async (interaction) =>
 
 	const fullCommand = interaction.commandName;
 	const commandExecuted: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setTitle("Command Executed!")
 		.setThumbnail(interaction.user.displayAvatarURL({ forceStatic: false, }))
 		.addFields(

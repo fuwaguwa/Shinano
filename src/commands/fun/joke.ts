@@ -14,7 +14,7 @@ export default new ChatInputCommand({
 		const jk = await SRA.others.joke();
 
 		const jokeEmbed: EmbedBuilder = new EmbedBuilder()
-			.setColor("#2f3136")
+			.setColor("#2b2d31")
 			.setDescription(jk.joke);
 
 		await interaction.editReply({ embeds: [jokeEmbed], });

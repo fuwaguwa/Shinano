@@ -10,7 +10,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	});
 
 	const countEmbed: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setDescription(`Total Guild Members: **${count.toLocaleString()}**`);
 
 	await interaction.editReply({ embeds: [countEmbed], });

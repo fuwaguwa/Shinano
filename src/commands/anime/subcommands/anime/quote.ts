@@ -6,7 +6,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const quote = await SRA.animu.quote();
 
 	const quoteEmbed: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setDescription(
 			`> *${quote.sentence}*\n\n` + `**${quote.character}** - *${quote.anime}*`
 		);

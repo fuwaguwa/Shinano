@@ -10,7 +10,7 @@ export default new UserCommand({
 		const user: GuildMember = interaction.options.data[0].member as GuildMember;
 
 		const idEmbed: EmbedBuilder = new EmbedBuilder()
-			.setColor("#2f3136")
+			.setColor("#2b2d31")
 			.setDescription(`${user} ID: **${user.id}**`);
 
 		await interaction.reply({ embeds: [idEmbed], });

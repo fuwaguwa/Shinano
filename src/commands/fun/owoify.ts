@@ -37,7 +37,7 @@ export default new ChatInputCommand({
 		const owo = (await response.json()).owo;
 
 		const owoEmbed: EmbedBuilder = new EmbedBuilder()
-			.setColor("#2f3136")
+			.setColor("#2b2d31")
 			.setDescription(`> ${owo}\n\n` + `- ${interaction.user}`);
 
 		await interaction.editReply({ embeds: [owoEmbed], });

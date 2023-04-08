@@ -43,7 +43,7 @@ export default new ChatInputCommand({
 
 		const wordInfo = definition.list[0];
 		const definitionEmbed: EmbedBuilder = new EmbedBuilder()
-			.setColor("#2f3136")
+			.setColor("#2b2d31")
 			.setTitle(`"${wordInfo.word}"`)
 			.setDescription(wordInfo.definition)
 			.setFooter({

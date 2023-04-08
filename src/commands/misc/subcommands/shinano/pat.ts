@@ -3,7 +3,7 @@ import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 export = async (interaction: ChatInputCommandInteraction) => 
 {
 	const headpat: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setDescription(
 			[
 				"\"Aah... My ears are sensitive...\"",

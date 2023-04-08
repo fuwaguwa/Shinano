@@ -58,7 +58,7 @@ export default new Event("guildCreate", async (guild) =>
 		) 
 		{
 			const helloEmbed: EmbedBuilder = new EmbedBuilder()
-				.setColor("#2f3136")
+				.setColor("#2b2d31")
 				.setDescription(
 					"I am Shinano, a multi-purpose Discord bot designed to serve shikikans all over the world. " +
 						"Whether it is providing information about shipfus, query information in Genshin, or to entertain you, I can do it all while being half-asleep...zzz\n\n" +

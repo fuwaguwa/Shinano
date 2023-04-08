@@ -73,7 +73,7 @@ export default new ChatInputCommand({
 		}
 
 		const pickEmbed: EmbedBuilder = new EmbedBuilder()
-			.setColor("#2f3136")
+			.setColor("#2b2d31")
 			.setDescription(
 				`> **${choices.join(", ")}**\n` +
 					`I pick...**${choices[Math.floor(Math.random() * choices.length)]}**!`

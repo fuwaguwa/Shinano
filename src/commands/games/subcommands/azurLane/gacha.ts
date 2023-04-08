@@ -98,7 +98,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	 * Outputting
 	 */
 	const bannerEmbed: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setTitle(`${bannerInfo.name} Banner`);
 	if (bannerInfo.image) bannerEmbed.setImage(bannerInfo.image);
 	if (bannerInfo.rateUps.length > 0)
@@ -218,7 +218,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			}
 
 			const result: EmbedBuilder = new EmbedBuilder()
-				.setColor("#2f3136")
+				.setColor("#2b2d31")
 				.setTitle(`${bannerInfo.name} Banner | Build Results`)
 				.setDescription(description)
 				.setFooter({

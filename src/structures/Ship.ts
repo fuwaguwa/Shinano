@@ -34,7 +34,7 @@ export class ShinanoShip
 		if (ship.rarity === "Super Rare" || ship.rarity === "Priority")
 			color = "#eff233";
 		if (ship.rarity === "Ultra Rare" || ship.rarity === "Decisive")
-			color = "#2f3136";
+			color = "#2b2d31";
 
 		return color;
 	}

@@ -22,7 +22,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	];
 
 	const shinanoEmbed: EmbedBuilder = new EmbedBuilder()
-		.setColor("#2f3136")
+		.setColor("#2b2d31")
 		.setTitle("Shinano")
 		.setDescription(
 			"The Multi-Purpose Azur Lane/Genshin Bot!\n\n" +

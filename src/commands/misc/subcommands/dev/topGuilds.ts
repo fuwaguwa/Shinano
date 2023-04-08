@@ -35,7 +35,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 
 		topGuildEmbeds.push(
 			new EmbedBuilder()
-				.setColor("#2f3136")
+				.setColor("#2b2d31")
 				.setTitle("Top Shinano Guild")
 				.addFields({
 					name: guild.name,

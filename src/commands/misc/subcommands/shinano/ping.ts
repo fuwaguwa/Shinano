@@ -10,6 +10,6 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				Date.now() - interaction.createdTimestamp
 			}ms\nAPI Latency: ${Math.round(client.ws.ping)}ms`
 		)
-		.setColor("#2f3136");
+		.setColor("#2b2d31");
 	await interaction.reply({ embeds: [pingEmbed], });
 };

@@ -18,7 +18,7 @@ export default new ChatInputCommand({
 		const user: User = interaction.options.getUser("user") || interaction.user;
 
 		const idEmbed: EmbedBuilder = new EmbedBuilder()
-			.setColor("#2f3136")
+			.setColor("#2b2d31")
 			.setDescription(`${user} ID: **${user.id}**`);
 
 		await interaction.reply({ embeds: [idEmbed], });
