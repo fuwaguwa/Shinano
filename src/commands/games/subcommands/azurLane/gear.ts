@@ -189,7 +189,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 
 	collectors.set(interaction.user.id, collector);
 
-	let tierCount: number;
+	let tierCount: number = 0;
 
 	collector.on("collect", async (i) => 
 	{
@@ -222,6 +222,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 							embeds: [infoEmbeds[0]],
 							components: [tiers, options],
 						});
+						tierCount = 0;
 
 						break;
 					}
@@ -231,6 +232,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 							embeds: [infoEmbeds[1]],
 							components: [tiers, options],
 						});
+						tierCount = 1;
 
 						break;
 					}
@@ -240,6 +242,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 							embeds: [infoEmbeds[2]],
 							components: [tiers, options],
 						});
+						tierCount = 2;
 
 						break;
 					}
