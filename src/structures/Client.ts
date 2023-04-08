@@ -20,6 +20,13 @@ import {
 import { fetchTweets } from "../lib/News";
 import { restartBot } from "../lib/Utils";
 import { postLewd } from "../lib/AutoLewd";
+import http from "http";
+import express from "express";
+import rateLimit from "express-rate-limit";
+import fetch from "node-fetch";
+import bodyParser from "body-parser";
+import APIUser from "../schemas/APIUser";
+import User from "../schemas/User";
 
 const promiseGlob = promisify(glob);
 
@@ -56,6 +63,7 @@ export class Shinano extends Client
 		this.registerModules();
 		this.connectToDatabase();
 		this.login(process.env.botToken);
+		this.startAPI();
 
 		(async () => 
 		{
@@ -129,6 +137,98 @@ export class Shinano extends Client
 		}, 300000);
 
 		console.log("Started heartbeat!");
+	}
+
+	private startAPI() 
+	{
+		const app = express();
+
+		app.use(
+			rateLimit({
+				windowMs: 1000,
+				max: 5,
+			})
+		);
+		app.use(express.urlencoded({ extended: false, }));
+		app.use(bodyParser.urlencoded({ extended: false, }));
+		app.use(bodyParser.json());
+
+		app.get("/", (req, res) => 
+		{
+			res.status(200).send({
+				shinano: "https://top.gg/bot/1002193298229829682",
+			});
+		});
+
+		app.post("/", async (req, res) => 
+		{
+			const auth = req.get("authorization");
+			if (!auth)
+				return res
+					.status(403)
+					.send({ status: 403, error: "Missing Authorization Header!", });
+
+			const amagiUser = await APIUser.findOne({ apiKey: auth, });
+			if (!amagiUser)
+				return res
+					.status(403)
+					.send({ status: 403, error: "Invalid Authorization!", });
+
+			res.sendStatus(200);
+
+			const user = req.body.user;
+			const shinanoUser = await User.findOne({ userId: user, });
+			const timestamp = Math.floor(Date.now() / 1000);
+
+			if (!shinanoUser) 
+			{
+				await User.create({
+					userId: user,
+					commandsExecuted: 0,
+					lastVoteTimestamp: timestamp,
+				});
+			}
+			else 
+			{
+				await shinanoUser.updateOne({
+					lastVoteTimestamp: timestamp,
+				});
+			}
+
+			await fetch(process.env.topggWebhook, {
+				method: "POST",
+				headers: {
+					Authorization: amagiUser.apiKey,
+				},
+				body: JSON.stringify(req.body),
+			});
+
+			try 
+			{
+				const fetchedUser = await this.users.fetch(user);
+
+				const thanks: EmbedBuilder = new EmbedBuilder()
+					.setColor("#2b2d31")
+					.setDescription(
+						`Thank you for voting! You can now enjoy Shinano's features to the fullest extent! Shinano can be voted again <t:${
+							timestamp + 43200
+						}:R>`
+					);
+				await fetchedUser.send({ embeds: [thanks], });
+			}
+			catch (err) 
+			{
+				console.error(err);
+			}
+		});
+
+		const server = http.createServer(app);
+		const PORT = 8950;
+
+		server.listen(PORT, () => 
+		{
+			console.log(`API active at port: ${PORT}`);
+		});
 	}
 
 	private startCatchingErrors() 
