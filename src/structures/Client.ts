@@ -210,10 +210,9 @@ export class Shinano extends Client
 				const thanks: EmbedBuilder = new EmbedBuilder()
 					.setColor("#2b2d31")
 					.setDescription(
-						`Thank you for voting! You can now enjoy Shinano's features to the fullest extent! Shinano can be voted again <t:${
-							timestamp + 43200
-						}:R>`
-					);
+						"Thank you for voting! You can now enjoy Shinano's features to the fullest extent!"
+					)
+					.setTimestamp();
 				await fetchedUser.send({ embeds: [thanks], });
 			}
 			catch (err) 
