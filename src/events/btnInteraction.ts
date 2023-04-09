@@ -224,7 +224,7 @@ export default new Event("interactionCreate", async (interaction) =>
 		case interaction.customId.includes("SAUCE"): {
 			if (await cooldownCheck("SAUCE", interaction)) return;
 
-			const link = interaction.message.components[0].components[0].data["url"];
+			const link = interaction.message.embeds[0].data.image.url;
 
 			if (interaction.customId.split("-")[1] === "EPH") 
 			{

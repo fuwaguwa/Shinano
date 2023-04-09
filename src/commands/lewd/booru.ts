@@ -7,7 +7,7 @@ export default new ChatInputCommand({
 	name: "booru",
 	description: "Search for content on booru image boards!",
 	voteRequired: false,
-	cooldown: 7500,
+	cooldown: 8000,
 	category: "NSFW",
 	options: [
 		{

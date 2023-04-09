@@ -150,11 +150,11 @@ export async function searchBooru(
 		Math.floor(Date.now() / 1000) - user.lastVoteTimestamp > 43200
 	) 
 	{
-		load.components[0].setLabel("Load More (Vote to Use)").setDisabled(true);
+		load.components[0].setLabel("Load More (Lower CD)").setDisabled(true);
 		load.addComponents(
 			new ButtonBuilder()
 				.setStyle(ButtonStyle.Link)
-				.setLabel("Vote for Shinano!")
+				.setLabel("Vote to use button!")
 				.setEmoji({ id: "1002849574517477447", })
 				.setURL("https://top.gg/bot/1002193298229829682/vote")
 		);
