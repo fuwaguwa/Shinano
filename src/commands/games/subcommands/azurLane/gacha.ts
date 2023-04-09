@@ -28,7 +28,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const bannerSearch = new Fuse(banners.allBanners, { keys: ["name"], });
 	const reqBanner: any = bannerSearch.search(bannerName);
 
-	if (reqBanner == 0) 
+	if (reqBanner.length == 0) 
 	{
 		const error: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
