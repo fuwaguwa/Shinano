@@ -70,7 +70,7 @@ export async function findSauce({
 	const results = await sClient(link);
 
 	/**
-	 * Filtering sauce
+	 * Processing
 	 */
 	if (results.length == 0) 
 	{
@@ -81,56 +81,6 @@ export async function findSauce({
 				"https://cdn.discordapp.com/attachments/977409556638474250/999486337822507058/akairo-azur-lane.gif"
 			);
 		return interaction.editReply({ embeds: [noResult], });
-	}
-
-	const firstResult = results[0];
-	const raw = firstResult.raw;
-
-	const resultEmbed: EmbedBuilder = new EmbedBuilder()
-		.setColor("Random")
-		.setTitle("Sauce...Found?")
-		.setThumbnail(firstResult.thumbnail)
-		.setFooter({ text: "Similarity is displayed below.", });
-
-	if (raw.data.source && raw.header.index_name.includes("H-Anime")) 
-	{
-		/**
-		 * GIFs & Animations
-		 */
-		resultEmbed.addFields({
-			name: "Sauce: ",
-			value: raw.data.source,
-		});
-		resultEmbed.addFields({
-			name: "Estimated Timestamp: ",
-			value: raw.data.est_time,
-		});
-	}
-	else 
-	{
-		/**
-		 * For pixiv/danbooru
-		 */
-		if (raw.data.member_name)
-			resultEmbed.addFields({
-				name: "Artist: ",
-				value: raw.data.member_name,
-			});
-		if (raw.data.creator)
-			resultEmbed.addFields({
-				name: "Artist: ",
-				value: `${raw.data.creator}`,
-			});
-		if (raw.data.characters)
-			resultEmbed.addFields({
-				name: "Character: ",
-				value: raw.data.characters,
-			});
-		if (raw.data.user_name)
-			resultEmbed.addFields({
-				name: "Artist: ",
-				value: raw.data.user_name,
-			});
 	}
 
 	/**
@@ -144,12 +94,159 @@ export async function findSauce({
 		links.push(`${sauce.url}|${sauce.similarity}%`);
 	}
 
+	/**
+	 * Filtering
+	 */
 	wait.setDescription(
 		"✅ | Valid Link!\n" +
 			"✅ | Sauce Found!\n" +
 			"<a:lod:1021265223707000923> | Filtering..."
 	);
 	await interaction.editReply({ embeds: [wait], });
+
+	const firstResult = results[0];
+	const resultEmbed: EmbedBuilder = new EmbedBuilder()
+		.setColor("#2b2d31")
+		.setTitle("Sauce...Found?")
+		.setThumbnail(firstResult.thumbnail)
+		.setFooter({ text: "Similarity is displayed below.", });
+
+	if (
+		firstResult.raw.data.source &&
+		firstResult.raw.header.index_name.includes("H-Anime")
+	) 
+	{
+		/**
+		 * GIFs & Animations
+		 */
+		resultEmbed.addFields({
+			name: "Sauce: ",
+			value: firstResult.raw.data.source,
+		});
+		resultEmbed.addFields({
+			name: "Estimated Timestamp: ",
+			value: firstResult.raw.data.est_time,
+		});
+	}
+	else 
+	{
+		/**
+		 * For other sources
+		 */
+		const danbooru = results.find(result => result.site === "Danbooru");
+		const gelbooru = results.find(result => result.site === "Gelbooru");
+		const yandere = results.find(result => result.site === "Yande.re");
+		const konachan = results.find(result => result.site === "Konachan");
+		const pixiv = results.find(result => result.site === "Pixiv");
+
+		let infoFound: number = 0;
+
+		if (danbooru) 
+		{
+			infoFound++;
+
+			const info = danbooru.raw.data;
+			let result = "";
+
+			for (const data in info) 
+			{
+				if (data === "creator" && info[data].length > 0)
+					result += `**Artist**: ${info[data]}\n`;
+				if (data === "material" && info[data].length > 0)
+					result += `**Material**: ${info[data]}\n`;
+				if (data === "characters" && info[data].length > 0)
+					result += `**Characters**: ${info[data]}\n`;
+			}
+
+			resultEmbed.addFields({ name: "Danbooru:", value: result, inline: true, });
+		}
+
+		if (gelbooru) 
+		{
+			infoFound++;
+
+			const info = gelbooru.raw.data;
+			let result = "";
+
+			for (const data in info) 
+			{
+				if (data === "creator" && info[data].length > 0)
+					result += `**Artist**: ${info[data]}\n`;
+				if (data === "material" && info[data].length > 0)
+					result += `**Material**: ${info[data]}\n`;
+				if (data === "characters" && info[data].length > 0)
+					result += `**Characters**: ${info[data]}\n`;
+			}
+
+			resultEmbed.addFields({ name: "Gelbooru:", value: result, });
+		}
+
+		if (pixiv) 
+		{
+			infoFound++;
+
+			const info = pixiv.raw.data;
+			let result = "";
+
+			for (const data in info) 
+			{
+				if (data === "title") result += `**Title**: ${info[data]}\n`;
+				if (data === "member_name") result += `**Artist**: ${info[data]}\n`;
+				if (data === "member_id") result += `**Artist ID**: ${info[data]}\n`;
+			}
+
+			resultEmbed.addFields({
+				name: "Pixiv:",
+				value: result,
+				inline: infoFound % 2 == 0,
+			});
+		}
+
+		if (yandere) 
+		{
+			infoFound++;
+
+			const info = yandere.raw.data;
+			let result = "";
+
+			for (const data in info) 
+			{
+				if (data === "creator" && info[data].length > 0)
+					result += `**Artist**: ${info[data]}\n`;
+				if (data === "material" && info[data].length > 0)
+					result += `**Material**: ${info[data]}\n`;
+				if (data === "characters" && info[data].length > 0)
+					result += `**Characters**: ${info[data]}\n`;
+			}
+
+			resultEmbed.addFields({
+				name: "Yande.re:",
+				value: result,
+			});
+		}
+
+		if (konachan && infoFound < 4) 
+		{
+			const info = konachan.raw.data;
+			let result = "";
+
+			for (const data in info) 
+			{
+				if (data === "creator" && info[data].length > 0)
+					result += `**Artist**: ${info[data]}\n`;
+				if (data === "material" && info[data].length > 0)
+					result += `**Material**: ${info[data]}\n`;
+				if (data === "characters" && info[data].length > 0)
+					result += `**Characters**: ${info[data]}\n`;
+			}
+
+			resultEmbed.addFields({
+				name: "Konachan:",
+				value: result,
+				inline: infoFound % 2 == 1,
+			});
+		}
+	}
 
 	const sortedLinks = {};
 	links.forEach((link) => 
