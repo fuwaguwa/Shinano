@@ -1,26 +1,6 @@
-import {
-	ActionRowBuilder,
-	ButtonBuilder
-} from "discord.js";
-import fetch from "node-fetch";
+import { ActionRowBuilder, ButtonBuilder } from "discord.js";
 import { LoadableNSFWInteraction } from "../../../../../typings/Sauce";
-
-async function videoFetch(category) 
-{
-	const response = await fetch(
-		`https://Amagi.fuwafuwa08.repl.co/nsfw/private/${category}?type=mp4`,
-		{
-			method: "GET",
-			headers: {
-				Authorization: process.env.amagiApiKey,
-			},
-		}
-	);
-
-	const responseJson = await response.json();
-	if (!responseJson.body) return videoFetch(category);
-	return responseJson.body.link;
-}
+import Image from "../../../../../schemas/Image";
 
 export = async (
 	interaction: LoadableNSFWInteraction,
@@ -29,13 +9,25 @@ export = async (
 	mode?: string
 ) => 
 {
+	let match = {
+		format: "mp4",
+	};
+
+	if (category !== "random") Object.assign(match, { category: category, });
+
+	const image = (
+		await Image.aggregate([{ $match: match, }, { $sample: { size: 1, }, }])
+	)[0];
+
+	console.log(image);
+
 	return mode === "followUp"
 		? await interaction.followUp({
-			content: await videoFetch(category),
+			content: image.link,
 			components: [load],
 		  })
 		: await interaction.editReply({
-			content: await videoFetch(category),
+			content: image.link,
 			components: [load],
 		  });
 };
