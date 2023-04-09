@@ -129,7 +129,7 @@ export async function searchBooru(
 				.setStyle(ButtonStyle.Link)
 				.setLabel("Sauce Link")
 				.setEmoji({ name: "🔍", })
-				.setURL(result.source)
+				.setURL(result.source.split(" ")[0])
 		);
 	}
 	else 
