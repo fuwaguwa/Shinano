@@ -106,7 +106,7 @@ export async function findSauce({
 
 	const firstResult = results[0];
 	const resultEmbed: EmbedBuilder = new EmbedBuilder()
-		.setColor("Random")
+		.setColor("#2b2d31")
 		.setTitle("Sauce...Found?")
 		.setThumbnail(firstResult.thumbnail)
 		.setFooter({ text: "Similarity is displayed below.", });
