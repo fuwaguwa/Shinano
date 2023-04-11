@@ -6,6 +6,7 @@ import {
 	EmbedBuilder
 } from "discord.js";
 import { LoadableNSFWInteraction } from "../../../../../typings/Sauce";
+import Image from "../../../../../schemas/Image";
 
 export = async (
 	interaction: LoadableNSFWInteraction,
@@ -39,18 +40,14 @@ export = async (
 	}
 	else 
 	{
-		const response = await fetch(
-			`https://Amagi.fuwafuwa08.repl.co/nsfw/private/${category}?type=gif`,
-			{
-				method: "GET",
-				headers: {
-					Authorization: process.env.amagiApiKey,
-				},
-			}
-		);
+		const image = (
+			await Image.aggregate([
+				{ $match: { category: category, format: "gif", }, },
+				{ $sample: { size: 1, }, }
+			])
+		)[0];
 
-		const waifu = await response.json();
-		url = waifu.body.link;
+		url = image.link;
 	}
 
 	const imageLink: ActionRowBuilder<ButtonBuilder> =

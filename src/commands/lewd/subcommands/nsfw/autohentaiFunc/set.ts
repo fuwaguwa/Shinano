@@ -67,7 +67,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const done: EmbedBuilder = new EmbedBuilder()
 		.setColor("Green")
 		.setDescription(
-			`✅ | Shinano will now post lewdies into <#${channel.id}> every 5 minutes!`
+			`✅ | Shinano will now post lewdies into <#${channel.id}> every 5 minutes! She won't start posting right away, and please make sure she has permission to send message in that channel!`
 		);
 	await interaction.editReply({ embeds: [done], });
 };
