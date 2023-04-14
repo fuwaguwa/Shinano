@@ -20,8 +20,12 @@ export async function queryPrivateImage(
 	switch (true) 
 	{
 		case fanbox == true: {
+			let match = { fanbox: true, };
+			if (imageCategory !== "random")
+				match = Object.assign(match, { category: imageCategory, });
+
 			const result = await Image.aggregate([
-				{ $match: { category: imageCategory, fanbox: true, }, },
+				{ $match: match, },
 				{ $sample: { size: size || 1, }, }
 			]);
 
@@ -46,10 +50,11 @@ export async function queryPrivateImage(
 			}
 			else if (imageFormat === "random" || imageFormat == undefined) 
 			{
-				result = await Image.aggregate([
-					{ $match: { category: imageCategory, }, },
-					{ $sample: { size: size || 5, }, }
-				]);
+				const aggregate: any = [{ $sample: { size: size || 5, }, }];
+				if (imageCategory !== "random")
+					aggregate.push({ $match: { category: imageCategory, }, });
+
+				result = await Image.aggregate(aggregate);
 			}
 			else 
 			{
