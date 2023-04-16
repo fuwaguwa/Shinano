@@ -50,9 +50,9 @@ export async function queryPrivateImage(
 			}
 			else if (imageFormat === "random" || imageFormat == undefined) 
 			{
-				const aggregate: any = [{ $sample: { size: size || 5, }, }];
+				const aggregate: any = [{ $sample: { size: size || 1, }, }];
 				if (imageCategory !== "random")
-					aggregate.push({ $match: { category: imageCategory, }, });
+					aggregate.unshift({ $match: { category: imageCategory, }, });
 
 				result = await Image.aggregate(aggregate);
 			}
@@ -67,7 +67,7 @@ export async function queryPrivateImage(
 					{ $sample: { size: size || 1, }, }
 				]);
 			}
-
+			console.log(result);
 			return result.length > 1 ? result : result[0];
 		}
 	}
