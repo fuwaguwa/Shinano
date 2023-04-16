@@ -2,14 +2,12 @@ import { ApplicationCommandType, EmbedBuilder, GuildMember } from "discord.js";
 import { UserCommand } from "../../../structures/Command";
 
 export default new UserCommand({
-	name: "Get Avatar",
+	name: "Get Guild Avatar",
 	type: ApplicationCommandType.User,
 	cooldown: 3000,
 	run: async ({ interaction, client, }) => 
 	{
-		const guildUser: GuildMember = interaction.options.data[0]
-			.member as GuildMember;
-		const user = await client.users.fetch(guildUser);
+		const user: GuildMember = interaction.options.data[0].member as GuildMember;
 
 		const avatarEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("#2b2d31")
