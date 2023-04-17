@@ -48,10 +48,22 @@ export default new ChatInputCommand({
 		}
 		else 
 		{
-			const guildUser: GuildMember = await interaction.guild.members.fetch(
-				user
-			);
-			link = guildUser.displayAvatarURL({ forceStatic: false, size: 1024, });
+			try 
+			{
+				const guildUser: GuildMember = await interaction.guild.members.fetch(
+					user
+				);
+				link = guildUser.displayAvatarURL({ forceStatic: false, size: 1024, });
+			}
+			catch (error) 
+			{
+				const errorEmbed: EmbedBuilder = new EmbedBuilder()
+					.setColor("Red")
+					.setDescription(
+						"❌ | User is not in the guild, please use `/avatar global` instead!"
+					);
+				return interaction.reply({ embeds: [errorEmbed], });
+			}
 		}
 
 		const avatarEmbed: EmbedBuilder = new EmbedBuilder()
