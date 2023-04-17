@@ -21,7 +21,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const name: string = interaction.options.getString("search-query");
 	const sorting: string = interaction.options.getString("sorting") || "popular";
 	const blacklist: string =
-		"-lolicon -scat -guro -insect -shotacon -amputee -vomit -vore";
+		"-lolicon -scat -guro -insect -shotacon -amputee -vomit -vore -bestiality";
 	const response = await fetch(
 		`https://amagi.fuwafuwa08.repl.co/doujin/search/?query=${name} ${blacklist}&sorting=${sorting}`
 	);
