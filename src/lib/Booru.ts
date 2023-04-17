@@ -58,6 +58,8 @@ export async function searchBooru(
 		"-vore",
 		"-torture",
 		"-pokephilia",
+		"-animal_genitalia",
+		"-anthro",
 		"-koharu_(blue_archive)",
 		"-miyu_(blue_archive)",
 		"-mutsuki_(blue_archive)",
