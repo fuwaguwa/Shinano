@@ -134,12 +134,12 @@ export async function searchBooru(
 				.setURL(result.source.split(" ")[0])
 		);
 	}
-	else 
+	else if (![".mp4", "webm"].includes(result.fileUrl.slice(-4))) 
 	{
 		links.addComponents(
 			new ButtonBuilder()
 				.setStyle(ButtonStyle.Secondary)
-				.setCustomId("SAUCE")
+				.setCustomId(`SAUCE-${interaction.user.id}`)
 				.setLabel("Get Sauce")
 				.setEmoji({ name: "🔍", })
 		);
