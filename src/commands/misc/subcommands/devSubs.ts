@@ -8,6 +8,7 @@ import memberCount from "./dev/memberCount";
 import topGuilds from "./dev/topGuilds";
 import restart from "./dev/restart";
 import exec from "./dev/exec";
+import tweet from "./dev/tweet";
 
 export default {
 	voteCheck,
@@ -20,4 +21,5 @@ export default {
 	topGuilds,
 	restart,
 	exec,
+	tweet,
 };
