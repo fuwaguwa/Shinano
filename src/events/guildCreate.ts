@@ -12,8 +12,6 @@ import { Event } from "../structures/Event";
 
 export default new Event("guildCreate", async (guild) => 
 {
-	if (guild.id === "1101522020291842189") return;
-
 	await guild
 		.fetchAuditLogs({
 			type: 28,
