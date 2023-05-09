@@ -68,7 +68,7 @@ export class Shinano extends Client
 		(async () => 
 		{
 			await this.startHeartbeatAndLewd();
-			await this.startFetchingTweets();
+			// await this.startFetchingTweets();
 		})();
 	}
 
