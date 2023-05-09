@@ -91,6 +91,19 @@ export default new ChatInputCommand({
 			description: "Restart Shinano.",
 		},
 		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "tweet",
+			description: "N/A",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					name: "url",
+					description: "N/A",
+					required: true,
+				}
+			],
+		},
+		{
 			type: ApplicationCommandOptionType.SubcommandGroup,
 			name: "inspect",
 			description: "inspection",
@@ -204,6 +217,10 @@ export default new ChatInputCommand({
 
 			case "exec": {
 				return devFunc.exec(interaction);
+			}
+
+			case "tweet": {
+				return devFunc.tweet(interaction);
 			}
 		}
 
