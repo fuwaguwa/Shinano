@@ -31,7 +31,7 @@ export default new ChatInputCommand({
 						{ name: "Undies ⭐", value: "undies", },
 						{ name: "Uniform ⭐", value: "uniform", },
 						{ name: "Genshin ⭐", value: "genshin", },
-						{ name: "Elf", value: "elf", },
+						{ name: "Honkai", value: "honkai", },
 						{ name: "Kemonomimi", value: "kemonomimi", },
 						{ name: "Misc", value: "misc", }
 					],
@@ -51,8 +51,8 @@ export default new ChatInputCommand({
 					choices: [
 						{ name: "Shipgirls", value: "shipgirls", },
 						{ name: "Undies", value: "undies", },
-						{ name: "Elf", value: "elf", },
 						{ name: "Genshin", value: "genshin", },
+						{ name: "Honkai", value: "honkai", },
 						{ name: "Kemonomimi", value: "kemonomimi", },
 						{ name: "Misc", value: "misc", },
 						{ name: "Uniform", value: "uniform", }
@@ -75,7 +75,7 @@ export default new ChatInputCommand({
 						{ name: "Undies ⭐", value: "undies", },
 						{ name: "Uniform ⭐", value: "uniform", },
 						{ name: "Genshin ⭐", value: "genshin", },
-						{ name: "Elf", value: "elf", },
+						{ name: "Honkai", value: "honkai", },
 						{ name: "Kemonomimi", value: "kemonomimi", },
 						{ name: "Misc", value: "misc", }
 					],
@@ -107,7 +107,6 @@ export default new ChatInputCommand({
 						{ name: "Shipgirls ⭐", value: "shipgirls", },
 						{ name: "Genshin ⭐", value: "genshin", },
 						{ name: "Undies", value: "undies", },
-						{ name: "Elf", value: "elf", },
 						{ name: "Kemonomimi", value: "kemonomimi", },
 						{ name: "Misc", value: "misc", },
 						{ name: "Uniform", value: "uniform", }
@@ -140,7 +139,6 @@ export default new ChatInputCommand({
 						{ name: "Shipgirls ⭐", value: "shipgirls", },
 						{ name: "Genshin ⭐", value: "genshin", },
 						{ name: "Undies", value: "undies", },
-						{ name: "Elf", value: "elf", },
 						{ name: "Kemonomimi", value: "kemonomimi", },
 						{ name: "Misc", value: "misc", },
 						{ name: "Uniform", value: "uniform", }
@@ -190,6 +188,11 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
+			name: "honkai",
+			description: "Honkai girls, from both series!",
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
 			name: "undies",
 			description:
 				"Undies, sportwears, swimsuits, bodysuits and stockings/thigh highs.",
@@ -208,11 +211,6 @@ export default new ChatInputCommand({
 			type: ApplicationCommandOptionType.Subcommand,
 			name: "shipgirls",
 			description: "Shipgirls from Azur Lane!",
-		},
-		{
-			type: ApplicationCommandOptionType.Subcommand,
-			name: "elf",
-			description: "Thicc and pointy-eared.",
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
@@ -366,6 +364,7 @@ export default new ChatInputCommand({
 					case "shipgirls":
 					case "undies":
 					case "uniform":
+					case "honkai":
 					case "random": {
 						return nsfwFunc.privateColle(
 							interaction,

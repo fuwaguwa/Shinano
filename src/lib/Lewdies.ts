@@ -67,7 +67,6 @@ export async function queryPrivateImage(
 					{ $sample: { size: size || 1, }, }
 				]);
 			}
-			console.log(result);
 			return result.length > 1 ? result : result[0];
 		}
 	}
