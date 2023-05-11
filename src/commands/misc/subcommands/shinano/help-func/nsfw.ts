@@ -54,7 +54,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			{
 				name: "Private Collection (High-Quality):",
 				value:
-					"`elf`, `fanbox`, `genshin`, `kemonomimi`, `misc`, `shipgirls`, `undies`",
+					"`fanbox`, `genshin`, `honkai`, `kemonomimi`, `misc`, `shipgirls`, `undies`",
 			},
 			{
 				name: "Porn Commands:",
