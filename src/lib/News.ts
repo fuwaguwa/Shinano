@@ -72,6 +72,8 @@ export async function fetchTweets()
 
 async function postTweet(tweet) 
 {
+	if (tweet.url.includes("RT @")) return;
+
 	const server = tweet.url.includes("azurlane_staff") ? "JP" : "EN";
 
 	let messageOptions: MessageCreateOptions = {
