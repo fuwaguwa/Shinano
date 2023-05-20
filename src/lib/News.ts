@@ -37,12 +37,10 @@ export async function fetchTweets()
 				const result = tweetsInfo.tweets.find(tweetI => tweetI.id == tweet.id);
 
 				if (
-					!result ||
-					(tweet.text && tweet.text.includes("Age-restricted adult content"))
+					!result &&
+					!(tweet.text && tweet.text.includes("Age-restricted adult content"))
 				) 
 				{
-					console.log(tweet);
-
 					tweetsInfo.tweets.push({
 						id: tweet.conversationId,
 						url: tweet.url,
