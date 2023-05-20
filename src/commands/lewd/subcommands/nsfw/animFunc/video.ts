@@ -19,8 +19,6 @@ export = async (
 		await Image.aggregate([{ $match: match, }, { $sample: { size: 1, }, }])
 	)[0];
 
-	console.log(image);
-
 	return mode === "followUp"
 		? await interaction.followUp({
 			content: image.link,
