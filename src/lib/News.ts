@@ -31,7 +31,7 @@ export async function fetchTweets()
 				const tweetsInfo = JSON.parse(data);
 
 				const response = json.data;
-				response.sort((a, b) => b.conversationId - a.conversationId);
+				response.sort((a, b) => b.id - a.id);
 				const tweet = response[0];
 
 				const result = tweetsInfo.tweets.find(tweetI => tweetI.id == tweet.id);
@@ -42,7 +42,7 @@ export async function fetchTweets()
 				) 
 				{
 					tweetsInfo.tweets.push({
-						id: tweet.conversationId,
+						id: tweet.id,
 						url: tweet.url,
 						raw: tweet.rawContent,
 					});
@@ -65,6 +65,7 @@ export async function fetchTweets()
 		{
 			if (retries < 3) 
 			{
+				retries++;
 				return fetchTweets();
 			}
 
@@ -108,7 +109,7 @@ async function postTweet(tweet)
 		catch (error) 
 		{
 			console.warn(error);
-			continue;
+			if (error.name.includes("DiscordAPIError[10004]")) await doc.delete();
 		}
 	}
 }
