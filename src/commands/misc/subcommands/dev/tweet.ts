@@ -1,5 +1,6 @@
 import {
 	ChatInputCommandInteraction,
+	EmbedBuilder,
 	MessageCreateOptions,
 	TextChannel
 } from "discord.js";
@@ -29,4 +30,9 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			continue;
 		}
 	}
+
+	const confirmed: EmbedBuilder = new EmbedBuilder()
+		.setColor("Green")
+		.setDescription("✅ | Sent out tweets to all server!");
+	await interaction.editReply({ embeds: [confirmed], });
 };

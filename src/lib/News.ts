@@ -36,7 +36,10 @@ export async function fetchTweets()
 
 				const result = tweetsInfo.tweets.find(tweetI => tweetI.id == tweet.id);
 
-				if (!result) 
+				if (
+					!result &&
+					!(tweet.text && tweet.text.includes("Age-restricted adult content"))
+				) 
 				{
 					tweetsInfo.tweets.push({
 						id: tweet.conversationId,
@@ -72,6 +75,8 @@ export async function fetchTweets()
 
 async function postTweet(tweet) 
 {
+	if (tweet.raw.includes("RT @")) return;
+
 	const server = tweet.url.includes("azurlane_staff") ? "JP" : "EN";
 
 	let messageOptions: MessageCreateOptions = {
