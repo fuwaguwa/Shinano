@@ -123,6 +123,7 @@ export async function postLewd()
 		catch (error) 
 		{
 			console.warn(error);
+			if (error.name.includes("DiscordAPIError[10004]")) await doc.delete();
 		}
 	}
 }
