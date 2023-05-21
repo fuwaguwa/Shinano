@@ -9,7 +9,8 @@ export default new Event("guildDelete", async (guild) =>
 		[
 			"1068135541360578590",
 			"260978723455631373",
-			"1101522020291842189"
+			"1101522020291842189",
+			"1060640666411077692"
 		].includes(guild.id)
 	)
 		return;
