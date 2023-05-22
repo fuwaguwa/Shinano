@@ -3,13 +3,17 @@ import fs from "fs";
 import path from "path";
 import {
 	ActionRowBuilder,
+	AttachmentBuilder,
 	ButtonBuilder,
 	ButtonStyle,
+	EmbedBuilder,
 	MessageCreateOptions,
 	TextChannel
 } from "discord.js";
 import { client } from "..";
 import News from "../schemas/ALNews";
+import puppeteer, { Browser, Page } from "puppeteer";
+import axios from "axios";
 
 let retries: number = 0;
 export async function fetchTweets() 
@@ -74,27 +78,192 @@ export async function fetchTweets()
 		});
 }
 
+export async function fetchWeiboTweets() 
+{
+	fetch("https://twitapi.fuwafuwa08.repl.co/alweibotweet")
+		.then(res => res.json())
+		.then((json) => 
+		{
+			const tweetJsonDir = path.join(
+				__dirname,
+				"..",
+				"..",
+				"data",
+				"weiboTweetsInfo.json"
+			);
+
+			fs.readFile(tweetJsonDir, "utf-8", async (err, data) => 
+			{
+				const tweetsInfo = JSON.parse(data);
+
+				const response = json.data;
+				response.sort((a, b) => b.id - a.id);
+				const tweet = response[0];
+
+				const result = tweetsInfo.tweets.find(tweetI => tweetI.id == tweet.id);
+
+				if (!result) 
+				{
+					const main = async (url: string) => 
+					{
+						const browser: Browser = await puppeteer.launch({
+							headless: "new",
+							args: ["--no-sandbox"],
+						});
+
+						const page: Page = await browser.newPage();
+						await page.goto(url);
+						await page.waitForSelector(".weibo-text", { timeout: 300000, });
+
+						const pageData = await page.evaluate(() => 
+						{
+							// eslint-disable-next-line no-undef
+							const div = document.querySelector(".weibo-text");
+							const textNodes = div.childNodes;
+
+							let text = "";
+							for (let i = 0; i < textNodes.length; i++) 
+							{
+								const node = textNodes[i];
+
+								if (node.nodeName === "#text") 
+								{
+									text += node.textContent;
+								}
+								else if (node.nodeName === "A") 
+								{
+									text += node.textContent;
+								}
+								else if (node.nodeName === "BR") 
+								{
+									text += "\n";
+								}
+							}
+
+							return text;
+						});
+
+						await browser.close();
+
+						return pageData;
+					};
+
+					const text = await main(tweet.url);
+					let img = null;
+
+					if (tweet.pictures && tweet.pictures.length >= 1) 
+					{
+						const imageResponse = await axios.get(tweet.pictures[0], {
+							responseType: "arraybuffer",
+							headers: {
+								Host: "wx2.sinaimg.cn",
+								Referer: "https://m.weibo.cn/",
+							},
+						});
+
+						const buffer = Buffer.from(imageResponse.data, "utf-8");
+
+						const guild = await client.guilds.fetch("1002188088942022807");
+						const channel = await guild.channels.fetch("1110132419484454935");
+
+						const message = await (channel as TextChannel).send({
+							files: [new AttachmentBuilder(buffer, { name: "image.gif", })],
+						});
+
+						img = message.attachments.first().url;
+					}
+
+					tweetsInfo.tweets.push({
+						id: tweet.id,
+						url: tweet.url,
+						raw: text,
+						img: img,
+					});
+
+					fs.writeFile(
+						tweetJsonDir,
+						JSON.stringify(tweetsInfo, null, "\t"),
+						"utf-8",
+						(err) => 
+						{
+							if (err) console.error(err);
+						}
+					);
+
+					postTweet(tweetsInfo.tweets[tweetsInfo.tweets.length - 1]);
+				}
+			});
+		})
+		.catch((err) => 
+		{
+			if (retries < 3) 
+			{
+				retries++;
+				return fetchTweets();
+			}
+
+			retries = 0;
+			console.error(err);
+		});
+}
+
 async function postTweet(tweet) 
 {
 	if (tweet.raw.includes("RT @")) return;
 
-	const server = tweet.url.includes("azurlane_staff") ? "JP" : "EN";
+	let messageOptions: MessageCreateOptions = {};
 
-	let messageOptions: MessageCreateOptions = {
-		content:
-			`__Shikikans, there's a new message from ${server} HQ!__\n` + tweet.url,
-	};
 	if (tweet.url.includes("azurlane_staff")) 
 	{
 		const translate: ActionRowBuilder<ButtonBuilder> =
 			new ActionRowBuilder<ButtonBuilder>().setComponents(
 				new ButtonBuilder()
 					.setStyle(ButtonStyle.Primary)
-					.setCustomId(`STWT-${tweet.id}`)
+					.setCustomId(`JTWT-${tweet.id}`)
 					.setLabel("Translate Tweet")
 					.setEmoji({ id: "1065640481687617648", })
 			);
-		messageOptions = Object.assign({ components: [translate], }, messageOptions);
+		messageOptions = Object.assign(
+			{
+				content:
+					"__Shikikans, there's a new message from JP HQ!__\n" + tweet.url,
+				components: [translate],
+			},
+			messageOptions
+		);
+	}
+	else if (tweet.url.includes("weibo.cn")) 
+	{
+		const translate: ActionRowBuilder<ButtonBuilder> =
+			new ActionRowBuilder<ButtonBuilder>().setComponents(
+				new ButtonBuilder()
+					.setStyle(ButtonStyle.Primary)
+					.setCustomId(`CTWT-${tweet.id}`)
+					.setLabel("Translate Tweet")
+					.setEmoji({ id: "1065640481687617648", })
+			);
+		const tweetEmbed: EmbedBuilder = new EmbedBuilder()
+			.setColor("#1da0f2")
+			.setDescription(tweet.raw)
+			.setAuthor({
+				name: "碧蓝航线",
+				iconURL:
+					"https://cdn.discordapp.com/attachments/1022191350835331203/1110126024978616361/response.jpeg",
+				url: "https://m.weibo.cn/u/5770760941",
+			});
+
+		if (tweet.img) tweetEmbed.setImage(tweet.img);
+
+		messageOptions = Object.assign(
+			{
+				content:
+					"__Shikikans, there's a new message from CN HQ!__\n" +
+					`<${tweet.url}>`,
+				embeds: [tweetEmbed],
+				components: [translate],
+			},
+			messageOptions
+		);
 	}
 
 	for await (const doc of News.find()) 

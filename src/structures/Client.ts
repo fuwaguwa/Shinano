@@ -17,7 +17,7 @@ import {
 	EmbedBuilder,
 	TextChannel
 } from "discord.js";
-import { fetchTweets } from "../lib/News";
+import { fetchTweets, fetchWeiboTweets } from "../lib/News";
 import { restartBot } from "../lib/Utils";
 import { postLewd } from "../lib/AutoLewd";
 import http from "http";
@@ -92,6 +92,7 @@ export class Shinano extends Client
 			setInterval(async () => 
 			{
 				await fetchTweets();
+				await fetchWeiboTweets();
 			}, 120000);
 			console.log("Started tweet checker!");
 		}
