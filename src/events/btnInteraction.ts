@@ -21,10 +21,14 @@ const Cooldown: Collection<string, number> = new Collection();
 const owner = "836215956346634270";
 
 let EHOSTRetries: number = 0;
-function translateTweet(text: string, interaction: ButtonInteraction) 
+function translateTweet(
+	text: string,
+	interaction: ButtonInteraction,
+	language: string
+) 
 {
 	translate(text, {
-		from: "ja",
+		from: language,
 		to: "en",
 		requestFunction: fetch,
 	})
@@ -45,7 +49,7 @@ function translateTweet(text: string, interaction: ButtonInteraction)
 			if (err.message.includes("EHOSTUNREACH") && EHOSTRetries < 3) 
 			{
 				EHOSTRetries += 1;
-				return translateTweet(text, interaction);
+				return translateTweet(text, interaction, language);
 			}
 
 			EHOSTRetries = 0;
@@ -193,7 +197,7 @@ export default new Event("interactionCreate", async (interaction) =>
 			}
 		}
 
-		case interaction.customId.includes("STWT"): {
+		case interaction.customId.includes("JTWT"): {
 			await interaction.deferReply({ ephemeral: true, });
 
 			const tweetId = interaction.customId.split("-")[1];
@@ -210,12 +214,40 @@ export default new Event("interactionCreate", async (interaction) =>
 						const noTweet: EmbedBuilder = new EmbedBuilder()
 							.setColor("Red")
 							.setDescription(
-								"❌ | Tweet is currently in the database. Please click on the link and translate the tweet there."
+								"❌ | Tweet is currently not in the database. Please click on the link and translate the tweet there."
 							);
 						return interaction.editReply({ embeds: [noTweet], });
 					}
 
-					return translateTweet(tweet.raw, interaction);
+					return translateTweet(tweet.raw, interaction, "ja");
+				}
+			);
+			break;
+		}
+
+		case interaction.customId.includes("CTWT"): {
+			await interaction.deferReply({ ephemeral: true, });
+
+			const tweetId = interaction.customId.split("-")[1];
+			fs.readFile(
+				path.join(__dirname, "..", "..", "data", "weiboTweetsInfo.json"),
+				"utf-8",
+				(err, data) => 
+				{
+					const json = JSON.parse(data);
+					const tweet = json.tweets.find(tweet => tweet.id == tweetId);
+
+					if (!tweet) 
+					{
+						const noTweet: EmbedBuilder = new EmbedBuilder()
+							.setColor("Red")
+							.setDescription(
+								"❌ | Tweet is currently not in the database. Please click on the link and translate the tweet there."
+							);
+						return interaction.editReply({ embeds: [noTweet], });
+					}
+
+					return translateTweet(tweet.raw, interaction, "zh-CN");
 				}
 			);
 			break;
