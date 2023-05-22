@@ -211,7 +211,7 @@ async function postTweet(tweet)
 {
 	if (tweet.raw.includes("RT @")) return;
 
-	let messageOptions: MessageCreateOptions = {};
+	let messageOptions: MessageCreateOptions;
 
 	if (tweet.url.includes("azurlane_staff")) 
 	{
@@ -223,14 +223,10 @@ async function postTweet(tweet)
 					.setLabel("Translate Tweet")
 					.setEmoji({ id: "1065640481687617648", })
 			);
-		messageOptions = Object.assign(
-			{
-				content:
-					"__Shikikans, there's a new message from JP HQ!__\n" + tweet.url,
-				components: [translate],
-			},
-			messageOptions
-		);
+		messageOptions = {
+			content: "__Shikikans, there's a new message from JP HQ!__\n" + tweet.url,
+			components: [translate],
+		};
 	}
 	else if (tweet.url.includes("weibo.cn")) 
 	{
@@ -254,16 +250,18 @@ async function postTweet(tweet)
 
 		if (tweet.img) tweetEmbed.setImage(tweet.img);
 
-		messageOptions = Object.assign(
-			{
-				content:
-					"__Shikikans, there's a new message from CN HQ!__\n" +
-					`<${tweet.url}>`,
-				embeds: [tweetEmbed],
-				components: [translate],
-			},
-			messageOptions
-		);
+		messageOptions = {
+			content:
+				"__Shikikans, there's a new message from CN HQ!__\n" + `<${tweet.url}>`,
+			embeds: [tweetEmbed],
+			components: [translate],
+		};
+	}
+	else 
+	{
+		messageOptions = {
+			content: "__Shikikans, there's a new message from EN HQ!__\n" + tweet.url,
+		};
 	}
 
 	for await (const doc of News.find()) 
