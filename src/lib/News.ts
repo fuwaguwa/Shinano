@@ -12,8 +12,12 @@ import {
 } from "discord.js";
 import { client } from "..";
 import News from "../schemas/ALNews";
-import puppeteer, { Browser, Page } from "puppeteer";
+import { Browser, Page } from "puppeteer";
+import puppeteer from "puppeteer-extra";
+import Stealth from "puppeteer-extra-plugin-stealth";
 import axios from "axios";
+
+puppeteer.use(Stealth());
 
 let retries: number = 0;
 export async function fetchTweets() 
