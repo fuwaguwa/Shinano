@@ -76,7 +76,9 @@ export default new ChatInputCommand({
 			.setColor("#2b2d31")
 			.setDescription(
 				`> **${choices.join(", ")}**\n` +
-					`I pick...**${choices[Math.floor(Math.random() * choices.length)]}**!`
+					`I shall choose...**${
+						choices[Math.floor(Math.random() * choices.length)]
+					}**!`
 			);
 
 		await interaction.reply({ embeds: [pickEmbed], });

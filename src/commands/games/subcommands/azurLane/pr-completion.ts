@@ -44,7 +44,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	{
 		const shipNotFound: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
-			.setDescription("Ship not found!");
+			.setDescription("❌ | I couldn't find that ship...");
 		return interaction.reply({ embeds: [shipNotFound], ephemeral: true, });
 	}
 
@@ -52,7 +52,9 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	{
 		const shipNotPR: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
-			.setDescription("The ship is not a PR ship!");
+			.setDescription(
+				`❌ | I apologize, but \`${ship.names.en}\` does not have the PR/DR classsification...`
+			);
 		return interaction.reply({ embeds: [shipNotPR], });
 	}
 
@@ -83,7 +85,9 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	{
 		const impossible: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
-			.setDescription("Your inputted data is wrong, please check again");
+			.setDescription(
+				"❌ | Pardon me, but your input data appears to be erroneous. Kindly verify them once more, I beseech you."
+			);
 		return interaction.reply({ embeds: [impossible], });
 	}
 

@@ -33,7 +33,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		const error: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
-				"❌ | No banner found! Please enter the name of the banner instead of the name of the ships!"
+				"❌ | Apologies, but I was unable to locate the banner. Kindly provide the name of the banner instead of the names of the ships."
 			);
 		return interaction.editReply({ embeds: [error], });
 	}
@@ -151,7 +151,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		if (!i.customId.endsWith(i.user.id)) 
 		{
 			await i.reply({
-				content: "This button is not for you!",
+				content: "\"This button does not pertain to you!\"",
 				ephemeral: true,
 			});
 		}

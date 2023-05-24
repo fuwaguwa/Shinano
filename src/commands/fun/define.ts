@@ -36,7 +36,7 @@ export default new ChatInputCommand({
 			const noResult: EmbedBuilder = new EmbedBuilder()
 				.setColor("Red")
 				.setDescription(
-					`❌ | No definition for the word \`${word}\` can be found!`
+					`❌ | I apologize, but no definition for \`${word}\` can be located...`
 				);
 			return interaction.editReply({ embeds: [noResult], });
 		}

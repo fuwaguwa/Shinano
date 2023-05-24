@@ -18,7 +18,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		const noPerm: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
-				"❌ | You need `Manage Webhooks` permission to use this command!"
+				"❌ | \"I humbly apologize, but you devoid of the `Manage Webhooks` permission...\""
 			);
 		return interaction.editReply({ embeds: [noPerm], });
 	}
@@ -32,7 +32,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		const none: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
-				"❌ | You haven't set-up Shinano to send news/tweets into any channel yet!"
+				"❌ | \"Alas, you have yet to establish any arrangement of channel for this one to deliver thy news...\""
 			);
 		return interaction.editReply({ embeds: [none], });
 	}
@@ -44,7 +44,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const deleted: EmbedBuilder = new EmbedBuilder()
 		.setColor("Green")
 		.setDescription(
-			"✅ | Shinano will no longer send news/tweets into the server!"
+			"✅ | \"I shall cease from disseminating the news forthwith...\""
 		);
 	await interaction.editReply({ embeds: [deleted], });
 };

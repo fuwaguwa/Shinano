@@ -77,7 +77,7 @@ export = async (
 		if (!i.customId.endsWith(i.user.id)) 
 		{
 			await i.reply({
-				content: "This button is not for you!",
+				content: "\"This button does not pertain to you!\"",
 				ephemeral: true,
 			});
 		}

@@ -27,7 +27,9 @@ export default new ChatInputCommand({
 		{
 			const invalid: EmbedBuilder = new EmbedBuilder()
 				.setColor("Red")
-				.setDescription("❌ | The text limit is 200 characters!");
+				.setDescription(
+					"❌ | The `text` is constrained by a limit of 200 characters..."
+				);
 			return interaction.editReply({ embeds: [invalid], });
 		}
 

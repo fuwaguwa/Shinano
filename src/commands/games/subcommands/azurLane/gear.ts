@@ -31,7 +31,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 		const noResult: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
-				"Gear not found! Make sure you entered the gear's full name or spelt the gear's name properly!"
+				"❌ | I apologize, but I could not find the mentioned gear. Please ensure that you have spelled the gear's name correctly."
 			);
 		return interaction.editReply({ embeds: [noResult], });
 	}
@@ -198,7 +198,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 		if (!i.customId.endsWith(i.user.id)) 
 		{
 			await i.reply({
-				content: "This menu is not for you!",
+				content: "\"This menu does not pertain to you!\"",
 				ephemeral: true,
 			});
 		}

@@ -99,7 +99,7 @@ export default new Event("interactionCreate", async (interaction) =>
 				const noVotes: EmbedBuilder = new EmbedBuilder()
 					.setColor("Red")
 					.setDescription(
-						"You have not voted for Shinano! Please vote using the button below!"
+						"It seems that you have not cast your vote for me! I earnestly request you to do so by using the option below!"
 					)
 					.setTimestamp();
 				return interaction.reply({
@@ -158,7 +158,7 @@ export default new Event("interactionCreate", async (interaction) =>
 						const noTweet: EmbedBuilder = new EmbedBuilder()
 							.setColor("Red")
 							.setDescription(
-								"❌ | Tweet is currently not in the database. Please click on the link and translate the tweet there."
+								"❌ | \"Regrettably, the tweet is currently not in the database. I suggesting visiting the tweet manually and seeking the desired translation there.\""
 							);
 						return interaction.editReply({ embeds: [noTweet], });
 					}
@@ -186,7 +186,7 @@ export default new Event("interactionCreate", async (interaction) =>
 						const noTweet: EmbedBuilder = new EmbedBuilder()
 							.setColor("Red")
 							.setDescription(
-								"❌ | Tweet is currently not in the database. Please click on the link and translate the tweet there."
+								"❌ | \"Regrettably, the tweet is currently not in the database. I suggesting visiting the tweet manually and seeking the desired translation there.\""
 							);
 						return interaction.editReply({ embeds: [noTweet], });
 					}
