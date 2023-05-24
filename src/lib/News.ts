@@ -49,9 +49,20 @@ export async function fetchTweets()
 					!(tweet.text && tweet.text.includes("Age-restricted adult content"))
 				) 
 				{
+					let tweetUrl = tweet.url;
+					if (
+						tweet.media.find(
+							media =>
+								media.type.toLowerCase() === "snscrape.modules.twitter.cideo"
+						)
+					)
+						tweetUrl =
+							"https://vxtwitter.com/" +
+							tweetUrl.split("https://twitter.com/")[1];
+
 					tweetsInfo.tweets.push({
 						id: tweet.id,
-						url: tweet.url,
+						url: tweetUrl,
 						raw: tweet.rawContent,
 					});
 
