@@ -52,8 +52,7 @@ export async function fetchTweets()
 					let tweetUrl = tweet.url;
 					if (
 						tweet.media.find(
-							media =>
-								media.type.toLowerCase() === "snscrape.modules.twitter.Video"
+							media => media._type === "snscrape.modules.twitter.Video"
 						)
 					)
 						tweetUrl =
