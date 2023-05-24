@@ -24,7 +24,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	{
 		const invalid: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
-			.setDescription("❌ | Invalid input for levels!");
+			.setDescription("❌ | The input for levels seems to be erroneous...");
 		return interaction.editReply({ embeds: [invalid], });
 	}
 
@@ -32,7 +32,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	if (!ship) 
 	{
 		const shipNotFound: EmbedBuilder = new EmbedBuilder()
-			.setDescription("❌ | Ship not found!")
+			.setDescription("❌ | I couldn't find that ship...")
 			.setColor("Red");
 		return interaction.reply({ embeds: [shipNotFound], ephemeral: true, });
 	}

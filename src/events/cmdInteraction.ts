@@ -72,7 +72,7 @@ function runCommand(
 			.setColor("Red")
 			.setDescription(`**${err.name}**: ${err.message}`)
 			.setFooter({
-				text: "Please try executing again, error sent to developer!",
+				text: "Kindly retry the command or reach out to the support team for further assistance!",
 			});
 		const button: ActionRowBuilder<ButtonBuilder> =
 			new ActionRowBuilder<ButtonBuilder>().setComponents(
@@ -129,7 +129,9 @@ export default new Event("interactionCreate", async (interaction) =>
 
 	const command = client.commands.get(interaction.commandName);
 	if (!command)
-		return interaction.reply("You have used a non existent command");
+		return interaction.reply(
+			"It seems you have employed a command that does not exist..."
+		);
 
 	if (command.cooldown) 
 	{
@@ -200,7 +202,9 @@ export default new Event("interactionCreate", async (interaction) =>
 				const nsfwCommand: EmbedBuilder = new EmbedBuilder()
 					.setColor("Red")
 					.setTitle("NSFW Command")
-					.setDescription("NSFW commands can only be used in NSFW channels.");
+					.setDescription(
+						"Commands of NSFW nature are exclusively permissible within NSFW-designated channels..."
+					);
 				return interaction.deferred
 					? interaction.editReply({ embeds: [nsfwCommand], })
 					: interaction.reply({ embeds: [nsfwCommand], ephemeral: true, });
@@ -285,7 +289,7 @@ export default new Event("interactionCreate", async (interaction) =>
 			{
 				const notForYou: EmbedBuilder = new EmbedBuilder()
 					.setColor("Red")
-					.setDescription("This command is for owners only!");
+					.setDescription("This command is exclusively reserved for owners...");
 				return interaction.deferred
 					? interaction.editReply({ embeds: [notForYou], })
 					: interaction.reply({ embeds: [notForYou], ephemeral: true, });

@@ -19,7 +19,7 @@ export = async (
 	{
 		const notFound: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
-			.setDescription("❌ | Doujin not found!");
+			.setDescription("❌ | Alas, the doujin was not found...");
 		return interaction.editReply({ embeds: [notFound], });
 	}
 

@@ -138,7 +138,7 @@ export async function ShinanoPaginator({
 			if (interactorOnly && i.customId.split("-")[1] !== i.user.id) 
 			{
 				await i.reply({
-					content: "This button is not for you!",
+					content: "\"This button does not pertain to you!\"",
 					ephemeral: true,
 				});
 			}

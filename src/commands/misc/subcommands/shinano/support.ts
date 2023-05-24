@@ -11,7 +11,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const supportEmbed: EmbedBuilder = new EmbedBuilder()
 		.setColor("#2b2d31")
 		.setDescription(
-			"If you got any issue with the bot, please contact us in the support server down below!"
+			"If you encounter any issues pertaining to my services, kindly reach out to my creator through the support server provided below..."
 		);
 
 	const supportButton: ActionRowBuilder<ButtonBuilder> =

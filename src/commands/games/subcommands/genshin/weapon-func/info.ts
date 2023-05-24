@@ -63,7 +63,7 @@ export = async (interaction: ChatInputCommandInteraction, weapon: Weapon) =>
 		if (!i.customId.endsWith(i.user.id)) 
 		{
 			await i.reply({
-				content: "This menu is not for you!",
+				content: "\"This menu does not pertain to you!\"",
 				ephemeral: true,
 			});
 		}

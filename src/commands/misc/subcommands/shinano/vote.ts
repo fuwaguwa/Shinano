@@ -13,7 +13,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const voteEmbed: EmbedBuilder = new EmbedBuilder()
 		.setColor("#2b2d31")
 		.setDescription(
-			"You can vote for Shinano using the buttons below. Thank you for the support!\n"
+			"You may cast your vote for me down below. I express my gratitude for your unwavering support!\n"
 		);
 
 	const links1: ActionRowBuilder<ButtonBuilder> =

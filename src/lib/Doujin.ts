@@ -137,7 +137,7 @@ export async function displayDoujin(
 		const blacklisted: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
-				`❌ | Shinano found that the doujin contains a blacklisted tag (\`${filter.toLowerCase()}\`) and will not be displaying it here!\n`
+				`❌ | I have discovered that the doujin contains a blacklisted tag (\`${filter.toLowerCase()}\`), therefore I shall refrain from displaying it at this moment.\n`
 			);
 		return interaction.editReply({ embeds: [blacklisted], });
 	}
@@ -194,7 +194,7 @@ export async function displayDoujin(
 		if (!i.customId.endsWith(`${i.user.id}`)) 
 		{
 			await i.reply({
-				content: "This menu is not for you!",
+				content: "\"This menu does not pertain to you!\"",
 				ephemeral: true,
 			});
 		}
@@ -241,7 +241,7 @@ export async function displayDoujin(
 							const notAvailable: EmbedBuilder = new EmbedBuilder()
 								.setColor("Red")
 								.setDescription(
-									"Unfortunately, we only support doujins that are under 150 pages long. Instead, you can read this doujin " +
+									"Regrettably, I can only provide support for doujins that are up to 150 pages in length, but you can still read them " +
 										`[here](https://nhentai.net/g/${doujin.body.id})`
 								);
 							await i.editReply({

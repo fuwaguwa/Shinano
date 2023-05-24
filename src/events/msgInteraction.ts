@@ -37,7 +37,7 @@ function runCommand(
 			.setColor("Red")
 			.setDescription(`**${err.name}**: ${err.message}`)
 			.setFooter({
-				text: "Please use the command again or contact support!",
+				text: "Kindly retry the command or reach out to the support team for further assistance!",
 			});
 		const button: ActionRowBuilder<ButtonBuilder> =
 			new ActionRowBuilder<ButtonBuilder>().setComponents(
@@ -67,7 +67,9 @@ export default new Event("interactionCreate", async (interaction) =>
 
 	const command = client.messageCommands.get(interaction.commandName);
 	if (!command)
-		return interaction.reply("You have used a non existent command");
+		return interaction.reply(
+			"It seems you have employed a command that does not exist..."
+		);
 
 	if (command.cooldown) 
 	{

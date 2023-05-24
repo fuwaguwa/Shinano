@@ -228,7 +228,8 @@ async function postTweet(tweet)
 					.setEmoji({ id: "1065640481687617648", })
 			);
 		messageOptions = {
-			content: "__Shikikans, there's a new message from JP HQ!__\n" + tweet.url,
+			content:
+				"__Shikikans, a new message has arrived from JP HQ!__\n" + tweet.url,
 			components: [translate],
 		};
 	}
@@ -256,7 +257,8 @@ async function postTweet(tweet)
 
 		messageOptions = {
 			content:
-				"__Shikikans, there's a new message from CN HQ!__\n" + `<${tweet.url}>`,
+				"__Shikikans, a new message has arrived from CN HQ!__\n" +
+				`<${tweet.url}>`,
 			embeds: [tweetEmbed],
 			components: [translate],
 		};
@@ -264,7 +266,8 @@ async function postTweet(tweet)
 	else 
 	{
 		messageOptions = {
-			content: "__Shikikans, there's a new message from EN HQ!__\n" + tweet.url,
+			content:
+				"__Shikikans, a new message has arrived from EN HQ!__\n" + tweet.url,
 		};
 	}
 
