@@ -22,7 +22,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		const noPerm: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
-				"❌ | \"I humbly apologize, but you devoid of the `Manage Webhooks` permission...\""
+				"❌ | I humbly apologize, but you devoid of the `Manage Webhooks` permission..."
 			);
 		return interaction.editReply({ embeds: [noPerm], });
 	}
@@ -36,7 +36,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		const noPerm: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
-				"❌ | \"Ah, my apologies, Shikikan. It seems I am unable to fulfill your request without the necessary permission to `Send Messages` in the channel...\""
+				"❌ | Ah, my apologies, Shikikan. It seems I am unable to fulfill your request without the necessary permission to `Send Messages` in the channel..."
 			);
 		return interaction.editReply({ embeds: [noPerm], });
 	}
@@ -54,7 +54,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const done: EmbedBuilder = new EmbedBuilder()
 		.setColor("Green")
 		.setDescription(
-			`✅ | "This one shall send you the most recent news in <#${channel.id}>..."`
+			`✅ | I shall send you the most recent news in <#${channel.id}>...`
 		);
 	await interaction.editReply({ embeds: [done], });
 };
