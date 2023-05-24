@@ -53,7 +53,7 @@ export async function fetchTweets()
 					if (
 						tweet.media.find(
 							media =>
-								media.type.toLowerCase() === "snscrape.modules.twitter.cideo"
+								media.type.toLowerCase() === "snscrape.modules.twitter.Video"
 						)
 					)
 						tweetUrl =
