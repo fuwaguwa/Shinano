@@ -51,6 +51,7 @@ export async function fetchTweets()
 				{
 					let tweetUrl = tweet.url;
 					if (
+						tweet.media &&
 						tweet.media.find(
 							media => media._type === "snscrape.modules.twitter.Video"
 						)
