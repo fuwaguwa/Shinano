@@ -287,7 +287,9 @@ export async function checkNSFW(
 		const nsfwCommand: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setTitle("NSFW Command")
-			.setDescription("NSFW commands can only be used in NSFW channels.");
+			.setDescription(
+				"I apologize, but commands of NSFW nature are exclusively permissible within NSFW-designated channels..."
+			);
 		interaction.deferred
 			? await interaction.editReply({ embeds: [nsfwCommand], })
 			: await interaction.reply({ embeds: [nsfwCommand], ephemeral: true, });
