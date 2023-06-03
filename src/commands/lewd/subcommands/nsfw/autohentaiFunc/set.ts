@@ -57,10 +57,13 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	 */
 	const dbChannel = await Guild.findOne({ guildId: interaction.guild.id, });
 	dbChannel
-		? await dbChannel.update({
-			channelId: channel.id,
-			identifier: `${interaction.guild.id}|${interaction.user.id}`,
-		  })
+		? await dbChannel.updateOne(
+			{ guildId: dbChannel.guildId, },
+			{
+				channelId: channel.id,
+				identifier: `${interaction.guild.id}|${interaction.user.id}`,
+			}
+		  )
 		: await Guild.create({
 			guildId: interaction.guild.id,
 			channelId: channel.id,
