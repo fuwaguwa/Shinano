@@ -37,6 +37,7 @@ export class Shinano extends Client
 	userCommands: Collection<string, UserCommandType> = new Collection();
 
 	connectedToDatabase: boolean = false;
+	connectionAttempt = 1;
 
 	catagorizedCommands = {
 		Anime: [],
@@ -63,7 +64,7 @@ export class Shinano extends Client
 		this.registerModules();
 		this.connectToDatabase();
 		this.login(process.env.botToken);
-		this.startAPI();
+		// this.startAPI();
 
 		(async () => 
 		{
@@ -261,12 +262,15 @@ export class Shinano extends Client
 
 		mongoose.connection.on("connecting", () => 
 		{
-			this.connectedToDatabase = true;
-			console.log("Connecting to the database...");
+			console.log(
+				`Connecting to the database... | Attempt: ${this.connectionAttempt}`
+			);
+			this.connectionAttempt++;
 		});
 
 		mongoose.connection.on("connected", () => 
 		{
+			this.connectedToDatabase = true;
 			console.log("Connected to the database!");
 		});
 
