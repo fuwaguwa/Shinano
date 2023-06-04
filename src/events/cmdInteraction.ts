@@ -203,7 +203,7 @@ export default new Event("interactionCreate", async (interaction) =>
 					.setColor("Red")
 					.setTitle("NSFW Command")
 					.setDescription(
-						"Commands of NSFW nature are exclusively permissible within NSFW-designated channels..."
+						"I apologize, but commands of NSFW nature are exclusively permissible within NSFW-designated channels..."
 					);
 				return interaction.deferred
 					? interaction.editReply({ embeds: [nsfwCommand], })

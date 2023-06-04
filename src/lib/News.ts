@@ -51,6 +51,7 @@ export async function fetchTweets()
 				{
 					let tweetUrl = tweet.url;
 					if (
+						tweet.media &&
 						tweet.media.find(
 							media => media._type === "snscrape.modules.twitter.Video"
 						)
@@ -180,8 +181,13 @@ export async function fetchWeiboTweets()
 						const guild = await client.guilds.fetch("1002188088942022807");
 						const channel = await guild.channels.fetch("1110132419484454935");
 
+						let fileFormat = tweet.pictures[0].slice(-3);
+						if (["jpg", "png"].includes(fileFormat)) fileFormat = "png";
+
 						const message = await (channel as TextChannel).send({
-							files: [new AttachmentBuilder(buffer, { name: "image.gif", })],
+							files: [
+								new AttachmentBuilder(buffer, { name: `image.${fileFormat}`, })
+							],
 						});
 
 						img = message.attachments.first().url;
@@ -293,7 +299,8 @@ async function postTweet(tweet)
 		catch (error) 
 		{
 			console.warn(error);
-			if (error.name.includes("DiscordAPIError[10004]")) await doc.delete();
+			if (error.name.includes("DiscordAPIError[10004]"))
+				await doc.deleteOne({ guildId: doc.guildId, });
 		}
 	}
 }

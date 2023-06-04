@@ -22,7 +22,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		const noPerm: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
-				"❌ | You need `Manage Webhooks` permission to use this command!"
+				"❌ | I humbly apologize, but you devoid of the `Manage Webhooks` permission..."
 			);
 		return interaction.editReply({ embeds: [noPerm], });
 	}
@@ -36,7 +36,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		const noPerm: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
-				"❌ | Shinano does not have permission to send message in this channel"
+				"❌ | I seem to lack the permission to `Send Messages` in this channel..."
 			);
 		return interaction.editReply({ embeds: [noPerm], });
 	}
@@ -46,7 +46,9 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		const nsfw: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setTitle("NSFW Command")
-			.setDescription("NSFW commands can only be used in NSFW channels.");
+			.setDescription(
+				"I apologize, but commands of NSFW nature are exclusively permissible within NSFW-designated channels..."
+			);
 		return interaction.editReply({ embeds: [nsfw], });
 	}
 
@@ -55,10 +57,13 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	 */
 	const dbChannel = await Guild.findOne({ guildId: interaction.guild.id, });
 	dbChannel
-		? await dbChannel.update({
-			channelId: channel.id,
-			identifier: `${interaction.guild.id}|${interaction.user.id}`,
-		  })
+		? await dbChannel.updateOne(
+			{ guildId: dbChannel.guildId, },
+			{
+				channelId: channel.id,
+				identifier: `${interaction.guild.id}|${interaction.user.id}`,
+			}
+		  )
 		: await Guild.create({
 			guildId: interaction.guild.id,
 			channelId: channel.id,

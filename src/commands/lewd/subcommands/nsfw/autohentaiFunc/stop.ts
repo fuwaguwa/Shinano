@@ -18,7 +18,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		const noPerm: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setDescription(
-				"❌ | You need `Manage Webhooks` permission to use this command!"
+				"❌ | I humbly apologize, but you devoid of the `Manage Webhooks` permission..."
 			);
 		return interaction.editReply({ embeds: [noPerm], });
 	}
@@ -31,7 +31,9 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	{
 		const none: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
-			.setDescription("❌ | You haven't set-up Shinano to post lewdies!");
+			.setDescription(
+				"❌ | Alas, you have yet to establish any arrangement for this one to post...lewd stuff..."
+			);
 		return interaction.editReply({ embeds: [none], });
 	}
 
