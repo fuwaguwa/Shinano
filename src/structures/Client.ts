@@ -66,7 +66,7 @@ export class Shinano extends Client
 				},
 				users: {
 					interval: 3600,
-					lifetime: 1800,
+					filter: () => user => user.bot && user.id !== this.user.id,
 				},
 			},
 		});
