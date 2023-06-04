@@ -37,6 +37,7 @@ export class Shinano extends Client
 	userCommands: Collection<string, UserCommandType> = new Collection();
 
 	connectedToDatabase: boolean = false;
+	connectingAttempt = 0;
 
 	catagorizedCommands = {
 		Anime: [],
@@ -231,7 +232,7 @@ export class Shinano extends Client
 		process.on("unhandledRejection", async (err: any) => 
 		{
 			/**
-			 * Unknow interaction and unknown message error
+			 * Unknown interaction and unknown message error
 			 * Usually caused by connection error in the VPS, haven't found any perma fix yet :(
 			 */
 			if (
@@ -241,6 +242,7 @@ export class Shinano extends Client
 				console.error(err);
 				return restartBot();
 			}
+
 			console.error("Unhandled Promise Rejection:\n", err);
 		});
 
@@ -259,6 +261,12 @@ export class Shinano extends Client
 			console.log("Connecting to the database...");
 		});
 
+		mongoose.connection.on("connecting", () => 
+		{
+			this.connectingAttempt++;
+			console.log(`Connecting Attempt #${this.connectingAttempt}`);
+		});
+
 		mongoose.connection.on("connected", () => 
 		{
 			this.connectedToDatabase = true;
@@ -268,7 +276,12 @@ export class Shinano extends Client
 		mongoose.connection.on("disconnected", () => 
 		{
 			console.log("Lost database connection...");
-			if (this.connectedToDatabase == false) 
+
+			if (this.connectedToDatabase) 
+			{
+				restartBot();
+			}
+			else 
 			{
 				console.log("Attempting to reconnect to the database...");
 				this.connectToDatabase();
@@ -278,6 +291,11 @@ export class Shinano extends Client
 		mongoose.connection.on("reconnected", () => 
 		{
 			console.log("Reconnected to the database!");
+		});
+
+		mongoose.connection.on("error", (err) => 
+		{
+			console.log(err);
 		});
 	}
 
