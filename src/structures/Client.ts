@@ -15,7 +15,8 @@ import {
 	ClientEvents,
 	Collection,
 	EmbedBuilder,
-	TextChannel
+	TextChannel,
+	Options
 } from "discord.js";
 import { fetchTweets, fetchWeiboTweets } from "../lib/News";
 import { restartBot } from "../lib/Utils";
@@ -55,6 +56,19 @@ export class Shinano extends Client
 	{
 		super({
 			intents: 513,
+
+			// Cache Sweeper
+			sweepers: {
+				...Options.DefaultSweeperSettings,
+				messages: {
+					interval: 1200,
+					lifetime: 1800,
+				},
+				users: {
+					interval: 3600,
+					lifetime: 1800,
+				},
+			},
 		});
 	}
 
