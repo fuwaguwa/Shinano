@@ -14,6 +14,17 @@ import { cooldownCheck, setCooldown } from "../../../../events/btnInteraction";
 import nsfwSubs from "../nsfwSubs";
 import { collectors } from "../../../../events/cmdInteraction";
 
+const allTags = [
+	"thigh",
+	"ass",
+	"anal",
+	"blowjob",
+	"boobs",
+	"feet",
+	"gonewild",
+	"pussy"
+];
+
 export = async (
 	interaction: LoadableNSFWInteraction,
 	lewdEmbed: EmbedBuilder,
@@ -22,6 +33,8 @@ export = async (
 ) => 
 {
 	// Fetching
+	if (tag === "random")
+		tag = allTags[Math.floor(Math.random() * allTags.length)];
 	const response = await fetch(`https://nekobot.xyz/api/image?type=${tag}`);
 	const result = await response.json();
 

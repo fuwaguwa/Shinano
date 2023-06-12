@@ -248,6 +248,7 @@ export default new ChatInputCommand({
 					name: "category",
 					description: "Category",
 					choices: [
+						{ name: "random", value: "random", },
 						{ name: "thigh", value: "thigh", },
 						{ name: "ass", value: "ass", },
 						{ name: "anal", value: "anal", },
