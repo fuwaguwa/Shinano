@@ -14,6 +14,17 @@ import { cooldownCheck, setCooldown } from "../../../../events/btnInteraction";
 import nsfwSubs from "../nsfwSubs";
 import { collectors } from "../../../../events/cmdInteraction";
 
+const allTags = [
+	"thigh",
+	"ass",
+	"anal",
+	"blowjob",
+	"boobs",
+	"feet",
+	"gonewild",
+	"pussy"
+];
+
 export = async (
 	interaction: LoadableNSFWInteraction,
 	lewdEmbed: EmbedBuilder,
@@ -21,16 +32,13 @@ export = async (
 	mode?: string
 ) => 
 {
-	const response = await fetch(
-		`https://Amagi.fuwafuwa08.repl.co/nsfw/porn/${tag}`,
-		{
-			method: "GET",
-			headers: {
-				Authorization: process.env.amagiApiKey,
-			},
-		}
-	);
+	// Fetching
+	if (tag === "random")
+		tag = allTags[Math.floor(Math.random() * allTags.length)];
+	const response = await fetch(`https://nekobot.xyz/api/image?type=${tag}`);
 	const result = await response.json();
+
+	if (!result.success) throw new Error("Fetch failed!");
 
 	const load: ActionRowBuilder<ButtonBuilder> =
 		new ActionRowBuilder<ButtonBuilder>().setComponents(
@@ -40,39 +48,19 @@ export = async (
 				.setCustomId(`LMORE-${interaction.user.id}`)
 		);
 
-	let message: Message;
+	lewdEmbed.setImage(result.message).setColor("Random");
+	const message: Message =
+		mode === "followUp"
+			? await interaction.followUp({
+				embeds: [lewdEmbed],
+				components: [load],
+			  })
+			: await interaction.editReply({
+				embeds: [lewdEmbed],
+				components: [load],
+			  });
 
-	if (
-		(result.body.link as string).includes("redgifs") ||
-		(result.body.link as string).includes(".gifv")
-	) 
-	{
-		message =
-			mode === "followUp"
-				? await interaction.followUp({
-					content: result.body.link,
-					components: [load],
-				  })
-				: await interaction.editReply({
-					content: result.body.link,
-					components: [load],
-				  });
-	}
-	else 
-	{
-		lewdEmbed.setImage(result.body.link).setColor("Random");
-		message =
-			mode === "followUp"
-				? await interaction.followUp({
-					embeds: [lewdEmbed],
-					components: [load],
-				  })
-				: await interaction.editReply({
-					embeds: [lewdEmbed],
-					components: [load],
-				  });
-	}
-
+	// Load More
 	const collector: InteractionCollector<ButtonInteraction> =
 		await message.createMessageComponentCollector({
 			componentType: ComponentType.Button,

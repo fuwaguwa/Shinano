@@ -248,16 +248,15 @@ export default new ChatInputCommand({
 					name: "category",
 					description: "Category",
 					choices: [
-						{ name: "Random", value: "random", },
-						{ name: "Video", value: "video", },
-						{ name: "Ass", value: "ass", },
-						{ name: "Cum", value: "cum", },
-						{ name: "Anal", value: "anal", },
-						{ name: "Blowjob", value: "blowjob", },
-						{ name: "Boobs", value: "boobs", },
-						{ name: "Pussy", value: "pussy", },
-						{ name: "Cosplay", value: "cosplay", },
-						{ name: "Lingerie", value: "lingerie", }
+						{ name: "random", value: "random", },
+						{ name: "thigh", value: "thigh", },
+						{ name: "ass", value: "ass", },
+						{ name: "anal", value: "anal", },
+						{ name: "blowjob", value: "blowjob", },
+						{ name: "boobs", value: "boobs", },
+						{ name: "feet", value: "feet", },
+						{ name: "gone wild", value: "gonewild", },
+						{ name: "pussy", value: "pussy", }
 					],
 				}
 			],
@@ -294,7 +293,7 @@ export default new ChatInputCommand({
 	{
 		if (!interaction.deferred) await interaction.deferReply();
 		const lewdEmbed: EmbedBuilder = new EmbedBuilder().setFooter({
-			text: `Requested by ${interaction.user.tag}`,
+			text: `Requested by ${interaction.user.username}`,
 			iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 		});
 

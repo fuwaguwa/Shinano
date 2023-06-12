@@ -15,7 +15,7 @@ export default new ChatInputCommand({
 			.setColor("Random")
 			.setImage((await SRA.animal.image({ animal: "dog", })).imgUrl)
 			.setFooter({
-				text: `Requested by ${interaction.user.tag}`,
+				text: `Requested by ${interaction.user.username}`,
 				iconURL: interaction.user.displayAvatarURL({ forceStatic: true, }),
 			});
 

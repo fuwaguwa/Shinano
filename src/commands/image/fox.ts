@@ -20,7 +20,7 @@ export default new ChatInputCommand({
 			.setColor("Random")
 			.setImage(fox.image)
 			.setFooter({
-				text: `Requested by ${interaction.user.tag}`,
+				text: `Requested by ${interaction.user.username}`,
 				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 			});
 
