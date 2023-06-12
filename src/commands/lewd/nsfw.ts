@@ -248,16 +248,14 @@ export default new ChatInputCommand({
 					name: "category",
 					description: "Category",
 					choices: [
-						{ name: "Random", value: "random", },
-						{ name: "Video", value: "video", },
-						{ name: "Ass", value: "ass", },
-						{ name: "Cum", value: "cum", },
-						{ name: "Anal", value: "anal", },
-						{ name: "Blowjob", value: "blowjob", },
-						{ name: "Boobs", value: "boobs", },
-						{ name: "Pussy", value: "pussy", },
-						{ name: "Cosplay", value: "cosplay", },
-						{ name: "Lingerie", value: "lingerie", }
+						{ name: "thigh", value: "thigh", },
+						{ name: "ass", value: "ass", },
+						{ name: "anal", value: "anal", },
+						{ name: "blowjob", value: "blowjob", },
+						{ name: "boobs", value: "boobs", },
+						{ name: "feet", value: "feet", },
+						{ name: "gone wild", value: "gonewild", },
+						{ name: "pussy", value: "pussy", }
 					],
 				}
 			],
