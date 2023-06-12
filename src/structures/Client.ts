@@ -78,7 +78,7 @@ export class Shinano extends Client
 		this.registerModules();
 		this.connectToDatabase();
 		this.login(process.env.botToken);
-		this.startAPI();
+		// this.startAPI();
 
 		(async () => 
 		{
