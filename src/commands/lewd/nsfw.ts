@@ -292,7 +292,7 @@ export default new ChatInputCommand({
 	{
 		if (!interaction.deferred) await interaction.deferReply();
 		const lewdEmbed: EmbedBuilder = new EmbedBuilder().setFooter({
-			text: `Requested by ${interaction.user.tag}`,
+			text: `Requested by ${interaction.user.username}`,
 			iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 		});
 

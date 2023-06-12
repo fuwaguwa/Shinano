@@ -185,7 +185,7 @@ export async function searchBooru(
 			.setColor("Random")
 			.setImage(result.fileUrl)
 			.setFooter({
-				text: `Requested by ${interaction.user.tag}`,
+				text: `Requested by ${interaction.user.username}`,
 				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 			});
 

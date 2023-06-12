@@ -22,7 +22,7 @@ export default new ChatInputCommand({
 		const waifuEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Random")
 			.setFooter({
-				text: `Requested by ${interaction.user.tag}`,
+				text: `Requested by ${interaction.user.username}`,
 				iconURL: interaction.user.displayAvatarURL({ forceStatic: false, }),
 			})
 			.setTimestamp()
