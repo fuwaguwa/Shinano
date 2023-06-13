@@ -249,13 +249,13 @@ export class Shinano extends Client
 			 * Unknown interaction and unknown message error
 			 * Usually caused by connection error in the VPS, haven't found any perma fix yet :(
 			 */
-			if (
-				["DiscordAPIError[10062]", "DiscordAPIError[10008]"].includes(err.name)
-			) 
-			{
-				console.error(err);
-				return restartBot();
-			}
+			// if (
+			// 	["DiscordAPIError[10062]", "DiscordAPIError[10008]"].includes(err.name)
+			// ) 
+			// {
+			// 	console.error(err);
+			// 	return restartBot();
+			// }
 
 			console.error("Unhandled Promise Rejection:\n", err);
 		});
