@@ -17,6 +17,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		"[nekos.fun](https://nekos.fun)",
 		"[nekos.life](https://nekos.life)",
 		"[nekos.best](https://nekos.best)",
+		"[nekobot](https://nekobot.xyz/api)",
 		"[jikan.moe](https://jikan.moe)",
 		"[genshin-db](https://github.com/theBowja/genshin-db)"
 	];

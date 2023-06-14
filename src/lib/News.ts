@@ -299,7 +299,11 @@ async function postTweet(tweet)
 		catch (error) 
 		{
 			console.warn(error);
-			if (error.name.includes("DiscordAPIError[10004]"))
+			if (
+				["DiscordAPIError[10004]", "DiscordAPIError[10003]"].includes(
+					error.name
+				)
+			)
 				await doc.deleteOne({ guildId: doc.guildId, });
 		}
 	}
