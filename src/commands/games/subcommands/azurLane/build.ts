@@ -208,21 +208,24 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	const partWidth = Math.round(canvas.width / 3);
 	const partHeight = canvas.height;
 
-	const max = shipImage.width >= 2048 ? 2.25 : 1.75;
+	const maxImageHeight = partHeight;
 
-	const maxImageWidth = partWidth * max;
-	const maxImageHeight = partHeight * max;
+	let scaledWidth, scaledHeight;
+	if (shipImage.height > maxImageHeight) 
+	{
+		const scale = maxImageHeight / shipImage.height;
+		scaledWidth = Math.round(shipImage.width * scale);
+		scaledHeight = Math.round(shipImage.height * scale);
+	}
+	else 
+	{
+		scaledWidth = partWidth;
+		scaledHeight = partHeight;
+	}
 
-	const scale = Math.min(
-		maxImageWidth / shipImage.width,
-		maxImageHeight / shipImage.height
-	);
-
-	const scaledWidth = Math.round(shipImage.width * scale);
-	const scaledHeight = Math.round(shipImage.height * scale);
-
-	const imageX = Math.round(partWidth * 2 + (partWidth - scaledWidth) / 2);
-	const imageY = Math.round((partHeight - scaledHeight) / 2);
+	// Calculate the position to place the resized image
+	const imageX = partWidth * 2 + (partWidth - scaledWidth) / 2;
+	const imageY = (partHeight - scaledHeight) / 2;
 
 	ctx.drawImage(shipImage, imageX, imageY, scaledWidth, scaledHeight);
 
