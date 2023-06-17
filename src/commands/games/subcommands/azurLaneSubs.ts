@@ -5,6 +5,7 @@ import chapter from "./azurLane/chapter";
 import ship from "./azurLane/ship";
 import gear from "./azurLane/gear";
 import gacha from "./azurLane/gacha";
+import build from "./azurLane/build";
 
 export default {
 	farm,
@@ -14,4 +15,5 @@ export default {
 	ship,
 	gear,
 	gacha,
+	build,
 };

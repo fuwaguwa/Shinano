@@ -8,7 +8,7 @@ const AL = new AzurAPI();
 export default new ChatInputCommand({
 	name: "azur-lane",
 	description: "Get information related to Azur Lane!",
-	cooldown: 5000,
+	cooldown: 5500,
 	category: "AzurLane",
 	options: [
 		{
@@ -77,6 +77,20 @@ export default new ChatInputCommand({
 					name: "banner-name",
 					description:
 						"The name of the banner you wish to pull on (You can build 300 times per session!)",
+				}
+			],
+		},
+		{
+			type: ApplicationCommandOptionType.Subcommand,
+			name: "build",
+			description:
+				"Get the recommended gears for a ship from the community tier list!",
+			options: [
+				{
+					type: ApplicationCommandOptionType.String,
+					required: true,
+					name: "ship-name",
+					description: "Ship's Name.",
 				}
 			],
 		},
@@ -243,6 +257,10 @@ export default new ChatInputCommand({
 
 				case "gacha": {
 					return azurLaneFunc.gacha(interaction);
+				}
+
+				case "build": {
+					return azurLaneFunc.build(interaction, AL);
 				}
 			}
 		}
