@@ -205,7 +205,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	ctx.drawImage(bgImage, 0, 0);
 
 	// Adding ship image
-	const partWidth = Math.round(canvas.width / 3);
+	const partWidth = Math.round(canvas.width * 0.32);
 	const partHeight = canvas.height;
 
 	const maxImageHeight = partHeight;
@@ -293,7 +293,9 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 					.split("/")
 					.join("/\n")
 					.replace(/\(Dev\.(30|10)\)/i, "")
-				: slot[i],
+				: slot[i].includes("Submarine Torpedoes")
+					? slot[i].replace("Torpedoes", "Torps.")
+					: slot[i],
 			tX,
 			tY
 		);
