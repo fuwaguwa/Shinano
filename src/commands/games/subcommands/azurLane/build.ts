@@ -287,7 +287,16 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 			}
 		}
 
-		ctx.fillText(slot[i], tX, tY);
+		ctx.fillText(
+			slot[i].includes("(Dev.30)") || slot[i].includes("(Dev.10)")
+				? slot[i]
+					.split("/")
+					.join("/\n")
+					.replace(/\(Dev\.(30|10)\)/i, "")
+				: slot[i],
+			tX,
+			tY
+		);
 	}
 
 	const guild = await client.guilds.fetch("1002188088942022807");
