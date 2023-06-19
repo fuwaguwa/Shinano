@@ -9,6 +9,7 @@ import puppeteer from "puppeteer-extra";
 import Stealth from "puppeteer-extra-plugin-stealth";
 import Canvas, { createCanvas, loadImage } from "canvas";
 import { client } from "../../../..";
+import path from "path";
 
 puppeteer.use(Stealth());
 Canvas.registerFont("QuireSansSemiBold.ttf", { family: "QuireSans", });
@@ -197,7 +198,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	 */
 	const shipImage = await loadImage(shipInfo.skins[0].image);
 	const bgImage = await loadImage(
-		"https://cdn.discordapp.com/attachments/1022191350835331203/1119543757713444925/Skin_BG_145.png"
+		path.join(__dirname, "..", "..", "..", "..", "..", "data", "buildBG.png")
 	);
 
 	const canvas = await createCanvas(bgImage.width, bgImage.height);
