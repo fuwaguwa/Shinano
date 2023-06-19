@@ -40,7 +40,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	/**
 	 * Stop posting news
 	 */
-	dbChannel.deleteOne({ guildId: interaction.guild.id, });
+	dbChannel.deleteOne();
 	const deleted: EmbedBuilder = new EmbedBuilder()
 		.setColor("Green")
 		.setDescription(

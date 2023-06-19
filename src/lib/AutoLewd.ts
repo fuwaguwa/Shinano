@@ -128,7 +128,7 @@ export async function postLewd()
 					error.name
 				)
 			)
-				await doc.deleteOne({ guildId: doc.guildId, });
+				await doc.deleteOne();
 		}
 	}
 }
