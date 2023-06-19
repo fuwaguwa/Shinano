@@ -288,18 +288,36 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 			}
 		}
 
-		ctx.fillText(
-			slot[i].includes("(Dev.30)") || slot[i].includes("(Dev.10)")
-				? slot[i]
+		// Text Processing
+		let gearName: string;
+
+		switch (true) 
+		{
+			case slot[i].includes("(Dev.30)") || slot[i].includes("(Dev.10)"): {
+				gearName = slot[i]
 					.split("/")
-					.join("/\n")
-					.replace(/\(Dev\.(30|10)\)/i, "")
-				: slot[i].includes("Submarine Torpedoes")
-					? slot[i].replace("Torpedoes", "Torps.")
-					: slot[i],
-			tX,
-			tY
-		);
+					.join(".\n")
+					.replace(/\(Dev\.(30|10)\)/i, "");
+				break;
+			}
+
+			case slot[i].includes("(LB"): {
+				gearName = "Aircraft (Any Type)";
+				break;
+			}
+
+			case slot[i].includes("Submarine Torpedoes"): {
+				gearName = "Submarine Torps.";
+				break;
+			}
+
+			default: {
+				gearName = slot[i];
+				break;
+			}
+		}
+
+		ctx.fillText(gearName, tX, tY);
 	}
 
 	const guild = await client.guilds.fetch("1002188088942022807");
