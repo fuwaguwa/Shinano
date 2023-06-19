@@ -47,10 +47,13 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 
 	const slot = [];
 	const gears = [];
-	const link = `https://slaimuda.github.io/ectl/#/home?ship=${shipInfo.names.en
+
+	let name = shipInfo.names.en
 		.toLowerCase()
 		.split(" ")
-		.join("_")}`;
+		.join("_")
+		.replace("μ", "%C2%B5");
+	const link = `https://slaimuda.github.io/ectl/#/home?ship=${name}`;
 
 	/**
 	 * Fetching data and generate image
@@ -201,37 +204,40 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 		path.join(__dirname, "..", "..", "..", "..", "..", "data", "buildBG.png")
 	);
 
-	const canvas = await createCanvas(bgImage.width, bgImage.height);
+	const canvas = await createCanvas(1280, 720);
 	const ctx = canvas.getContext("2d");
 	ctx.drawImage(bgImage, 0, 0);
 
 	// Adding ship image
-	const partWidth = Math.round(canvas.width * 0.32);
+	const rectangleWidth = canvas.width * 0.57;
+	const rectangleHeight = canvas.height;
+
+	const partWidth = Math.round(canvas.width - rectangleWidth);
 	const partHeight = canvas.height;
 
-	const maxImageHeight = partHeight;
+	let resizedHeight = canvas.height;
+	let resizedWidth = Math.floor(
+		resizedHeight * (shipImage.width / shipImage.height)
+	);
 
-	let scaledWidth, scaledHeight;
-	if (shipImage.height > maxImageHeight) 
+	if (shipImage.height - canvas.height >= 500) 
 	{
-		const scale = maxImageHeight / shipImage.height;
-		scaledWidth = Math.round(shipImage.width * scale);
-		scaledHeight = Math.round(shipImage.height * scale);
-	}
-	else 
-	{
-		scaledWidth = partWidth;
-		scaledHeight = partHeight;
+		resizedHeight = Math.round(canvas.height * 1.5);
+		resizedWidth = Math.floor(
+			resizedHeight * (shipImage.width / shipImage.height)
+		);
 	}
 
-	// Calculate the position to place the resized image
-	const imageX = partWidth * 2 + (partWidth - scaledWidth) / 2;
-	const imageY = (partHeight - scaledHeight) / 2;
+	const imageX = Math.floor((partWidth - resizedWidth) / 2);
+	const imageY = Math.floor((partHeight - resizedHeight) / 2);
 
-	ctx.drawImage(shipImage, imageX, imageY, scaledWidth, scaledHeight);
-
-	const rectangleWidth = canvas.width * 0.68;
-	const rectangleHeight = canvas.height;
+	ctx.drawImage(
+		shipImage,
+		rectangleWidth + imageX,
+		imageY,
+		resizedWidth,
+		resizedHeight
+	);
 
 	ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
 	ctx.fillRect(0, 0, rectangleWidth, rectangleHeight);
@@ -253,7 +259,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	let tX = 20;
 	let tY = rowY + 25;
 
-	const imageGap = 3;
+	const imageGap = 5;
 
 	fontSize = 15;
 	ctx.font = `${fontSize}px QuireSans`;
@@ -261,6 +267,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	{
 		if (i >= 1) 
 		{
+			// Extra pixels to make the rows look more seperated
 			rowY += 3;
 		}
 
