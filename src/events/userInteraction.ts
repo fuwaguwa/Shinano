@@ -158,11 +158,11 @@ export default new Event("interactionCreate", async (interaction) =>
 				},
 				{
 					name: "User | User ID",
-					value: `${interaction.user.username}#${interaction.user.discriminator} | ${interaction.user.id}`,
+					value: `${interaction.user.username} | ${interaction.user.id}`,
 				},
 				{
 					name: "Target | Target ID",
-					value: `${targetUser.username}#${targetUser.discriminator} | ${targetUser.id}`,
+					value: `${targetUser.username} | ${targetUser.id}`,
 				}
 			)
 			.setTimestamp();

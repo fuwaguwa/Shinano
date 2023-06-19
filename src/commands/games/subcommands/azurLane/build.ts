@@ -9,6 +9,7 @@ import puppeteer from "puppeteer-extra";
 import Stealth from "puppeteer-extra-plugin-stealth";
 import Canvas, { createCanvas, loadImage } from "canvas";
 import { client } from "../../../..";
+import path from "path";
 
 puppeteer.use(Stealth());
 Canvas.registerFont("QuireSansSemiBold.ttf", { family: "QuireSans", });
@@ -197,7 +198,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	 */
 	const shipImage = await loadImage(shipInfo.skins[0].image);
 	const bgImage = await loadImage(
-		"https://cdn.discordapp.com/attachments/1022191350835331203/1119543757713444925/Skin_BG_145.png"
+		path.join(__dirname, "..", "..", "..", "..", "..", "data", "buildBG.png")
 	);
 
 	const canvas = await createCanvas(bgImage.width, bgImage.height);
@@ -205,7 +206,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	ctx.drawImage(bgImage, 0, 0);
 
 	// Adding ship image
-	const partWidth = Math.round(canvas.width / 3);
+	const partWidth = Math.round(canvas.width * 0.32);
 	const partHeight = canvas.height;
 
 	const maxImageHeight = partHeight;
@@ -287,16 +288,36 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 			}
 		}
 
-		ctx.fillText(
-			slot[i].includes("(Dev.30)") || slot[i].includes("(Dev.10)")
-				? slot[i]
+		// Text Processing
+		let gearName: string;
+
+		switch (true) 
+		{
+			case slot[i].includes("(Dev.30)") || slot[i].includes("(Dev.10)"): {
+				gearName = slot[i]
 					.split("/")
-					.join("/\n")
-					.replace(/\(Dev\.(30|10)\)/i, "")
-				: slot[i],
-			tX,
-			tY
-		);
+					.join(".\n")
+					.replace(/\(Dev\.(30|10)\)/i, "");
+				break;
+			}
+
+			case slot[i].includes("(LB"): {
+				gearName = "Aircraft (Any Type)";
+				break;
+			}
+
+			case slot[i].includes("Submarine Torpedoes"): {
+				gearName = "Submarine Torps.";
+				break;
+			}
+
+			default: {
+				gearName = slot[i];
+				break;
+			}
+		}
+
+		ctx.fillText(gearName, tX, tY);
 	}
 
 	const guild = await client.guilds.fetch("1002188088942022807");
