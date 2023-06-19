@@ -47,10 +47,13 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 
 	const slot = [];
 	const gears = [];
-	const link = `https://slaimuda.github.io/ectl/#/home?ship=${shipInfo.names.en
+
+	let name = shipInfo.names.en
 		.toLowerCase()
 		.split(" ")
-		.join("_")}`;
+		.join("_")
+		.replace("μ", "%C2%B5");
+	const link = `https://slaimuda.github.io/ectl/#/home?ship=${name}`;
 
 	/**
 	 * Fetching data and generate image
