@@ -80,10 +80,30 @@ export async function searchBooru(
 		"-sayu_(genshin_impact)",
 		"-hilichurl_(genshin_impact)"
 	];
-	const booruResult = await booru.search(site, query.concat(obligatory), {
-		limit: 1,
-		random: true,
-	});
+
+	let booruResult;
+	try 
+	{
+		booruResult = await booru.search(site, query.concat(obligatory), {
+			limit: 1,
+			random: true,
+		});
+	}
+	catch (err) 
+	{
+		// Usually resolved after a retry
+		if (err.messsage.includes("fetch failed")) 
+		{
+			booruResult = await booru.search(site, query.concat(obligatory), {
+				limit: 1,
+				random: true,
+			});
+		}
+		else 
+		{
+			throw new Error(err.message);
+		}
+	}
 
 	if (booruResult.length == 0) 
 	{
@@ -240,7 +260,7 @@ export async function searchBooru(
 				ephemeral: true,
 			});
 		}
-		else 
+		else if (i.customId.includes("LMORE")) 
 		{
 			if (await cooldownCheck("LMORE", i)) return;
 

@@ -266,8 +266,11 @@ export class ShinanoShip
 			.setTitle(`${ship.names.en} | ${ship.names.code}`)
 			.setURL(ship.wikiUrl)
 			.setDescription(
-				`Drawn by [${ship.misc.artist.name}](https://azurlane.koumakan.jp/wiki/Artists#${ship.misc.artist.name})\n` +
-					`Voiced by ${ship.misc.voice.name || "Unknown"}`
+				`Drawn by [${
+					ship.misc.artist.name
+				}](https://azurlane.koumakan.jp/wiki/Artists#${ship.misc.artist.name
+					.split(" ")
+					.join("_")})\n` + `Voiced by ${ship.misc.voice.name || "Unknown"}`
 			)
 			.setFields(
 				{ name: "Rarity:", value: ship.rarity, },

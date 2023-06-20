@@ -63,7 +63,7 @@ export = async (
 				ephemeral: true,
 			});
 		}
-		else 
+		else if (i.customId.includes("LMORE")) 
 		{
 			if (await cooldownCheck("LMORE", i)) return;
 

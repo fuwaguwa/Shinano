@@ -7,7 +7,7 @@ import {
 import { SauceOptions } from "../typings/Sauce";
 import { isImageAndGif } from "./Utils";
 import fetch from "node-fetch";
-import sagiri from "sagiri";
+import sagiri, { SagiriResult } from "sagiri";
 
 const sClient = sagiri(process.env.saucenaoApiKey);
 
@@ -67,7 +67,23 @@ export async function findSauce({
 	);
 	await interaction.editReply({ embeds: [wait], });
 
-	const results = await sClient(link);
+	let results: SagiriResult[];
+	try 
+	{
+		results = await sClient(link);
+	}
+	catch (err) 
+	{
+		// Usually resolved after a retry
+		if (err.message.includes("undefined")) 
+		{
+			results = await sClient(link);
+		}
+		else 
+		{
+			throw new Error(err.message);
+		}
+	}
 
 	/**
 	 * Processing
