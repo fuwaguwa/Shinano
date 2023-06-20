@@ -264,10 +264,10 @@ export class ShinanoShip
 			.setColor(this.shipColor())
 			.setThumbnail(ship.thumbnail)
 			.setTitle(`${ship.names.en} | ${ship.names.code}`)
+			.setURL(ship.wikiUrl)
 			.setDescription(
-				`[Wiki Link](${ship.wikiUrl})\nDrawn by ${
-					ship.misc.artist.name
-				}\nVoiced by ${ship.misc.voice.name || "Unknown"}`
+				`Drawn by [${ship.misc.artist.name}](https://azurlane.koumakan.jp/wiki/Artists#${ship.misc.artist.name})\n` +
+					`Voiced by ${ship.misc.voice.name || "Unknown"}`
 			)
 			.setFields(
 				{ name: "Rarity:", value: ship.rarity, },
