@@ -339,6 +339,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	const buildEmbed: EmbedBuilder = new EmbedBuilder()
 		.setColor("#2b2d31")
 		.setTitle(`${shipInfo.names.en} | ${shipInfo.names.code}`)
+		.setURL(shipInfo.wikiUrl)
 		.setDescription(`[Overview of the Ship & Gears Explanation](${link})`)
 		.setImage(img)
 		.setFooter({
