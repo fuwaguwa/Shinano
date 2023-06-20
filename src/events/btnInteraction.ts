@@ -186,7 +186,7 @@ export default new Event("interactionCreate", async (interaction) =>
 						const noTweet: EmbedBuilder = new EmbedBuilder()
 							.setColor("Red")
 							.setDescription(
-								"❌ | \"Regrettably, the tweet is currently not in the database. I suggesting visiting the tweet manually and seeking the desired translation there.\""
+								"❌ | \"My apologies, the tweet is currently not in the database. I suggesting visiting the tweet manually and seeking the desired translation there.\""
 							);
 						return interaction.editReply({ embeds: [noTweet], });
 					}
