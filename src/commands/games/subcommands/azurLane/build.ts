@@ -220,7 +220,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 		resizedHeight * (shipImage.width / shipImage.height)
 	);
 
-	if (shipImage.height - canvas.height >= 500) 
+	if (shipImage.height - canvas.height >= 1500) 
 	{
 		resizedHeight = Math.round(canvas.height * 1.5);
 		resizedWidth = Math.floor(
