@@ -14,7 +14,6 @@ import path from "path";
 import { findSauce } from "../lib/Sauce";
 import { client } from "../index";
 import ms from "ms";
-import { translateTweet } from "../lib/Utils";
 
 const Cooldown: Collection<string, number> = new Collection();
 const owner = "836215956346634270";
@@ -82,6 +81,8 @@ export default new Event("interactionCreate", async (interaction) =>
 		}
 
 		case interaction.customId === "VOTE-CHECK": {
+			if (await cooldownCheck("VOTE-CHECK", interaction)) return;
+
 			const user = await User.findOne({ userId: interaction.user.id, });
 
 			const voteLink: ActionRowBuilder<ButtonBuilder> =
@@ -92,6 +93,8 @@ export default new Event("interactionCreate", async (interaction) =>
 						.setEmoji({ id: "1002849574517477447", })
 						.setURL("https://top.gg/bot/1002193298229829682/vote")
 				);
+
+			setCooldown("VOTE-CHECK", interaction);
 
 			if (!user.lastVoteTimestamp) 
 			{
@@ -142,6 +145,8 @@ export default new Event("interactionCreate", async (interaction) =>
 		}
 
 		case interaction.customId.includes("JTWT"): {
+			if (await cooldownCheck("JTWT", interaction)) return;
+
 			await interaction.deferReply({ ephemeral: true, });
 
 			const tweetId = interaction.customId.split("-")[1];
@@ -153,7 +158,7 @@ export default new Event("interactionCreate", async (interaction) =>
 					const json = JSON.parse(data);
 					const tweet = json.tweets.find(tweet => tweet.id == tweetId);
 
-					if (!tweet) 
+					if (!tweet || !tweet.enTranslate) 
 					{
 						const noTweet: EmbedBuilder = new EmbedBuilder()
 							.setColor("Red")
@@ -163,13 +168,24 @@ export default new Event("interactionCreate", async (interaction) =>
 						return interaction.editReply({ embeds: [noTweet], });
 					}
 
-					return translateTweet(tweet.raw, interaction, "ja");
+					const translatedTweet: EmbedBuilder = new EmbedBuilder()
+						.setColor("#2b2d31")
+						.setTitle("Translated Tweet")
+						.setDescription(tweet.enTranslate)
+						.setFooter({ text: "Translated with Google Translate", });
+
+					return interaction.editReply({ embeds: [translatedTweet], });
 				}
 			);
+
+			setCooldown("JTWT", interaction);
+
 			break;
 		}
 
 		case interaction.customId.includes("CTWT"): {
+			if (await cooldownCheck("CTWT", interaction)) return;
+
 			await interaction.deferReply({ ephemeral: true, });
 
 			const tweetId = interaction.customId.split("-")[1];
@@ -181,7 +197,7 @@ export default new Event("interactionCreate", async (interaction) =>
 					const json = JSON.parse(data);
 					const tweet = json.tweets.find(tweet => tweet.id == tweetId);
 
-					if (!tweet) 
+					if (!tweet || !tweet.enTranslate) 
 					{
 						const noTweet: EmbedBuilder = new EmbedBuilder()
 							.setColor("Red")
@@ -191,9 +207,18 @@ export default new Event("interactionCreate", async (interaction) =>
 						return interaction.editReply({ embeds: [noTweet], });
 					}
 
-					return translateTweet(tweet.raw, interaction, "zh-CN");
+					const translatedTweet: EmbedBuilder = new EmbedBuilder()
+						.setColor("#2b2d31")
+						.setTitle("Translated Tweet")
+						.setDescription(tweet.enTranslate)
+						.setFooter({ text: "Translated with Google Translate", });
+
+					return interaction.editReply({ embeds: [translatedTweet], });
 				}
 			);
+
+			setCooldown("CTWT", interaction);
+
 			break;
 		}
 
@@ -220,6 +245,7 @@ export default new Event("interactionCreate", async (interaction) =>
 			}
 
 			setCooldown("SAUCE", interaction);
+			break;
 		}
 	}
 
