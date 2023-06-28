@@ -31,7 +31,7 @@ export async function findSauce({
 	/**
 	 * Filtering Inputs
 	 */
-	await interaction.deferReply({ ephemeral, });
+	if (!interaction.deferred && !interaction.replied) await interaction.deferReply({ ephemeral, });
 	let wait: EmbedBuilder = new EmbedBuilder()
 		.setTitle("Processing...")
 		.setColor("Green")
