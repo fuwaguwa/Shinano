@@ -168,7 +168,7 @@ export default new Event("interactionCreate", async (interaction) =>
 						.setDescription(tweet.enTranslate)
 						.setFooter({ text: "Translated with Google Translate", });
 
-					return interaction.reply({ embeds: [translatedTweet], });
+					return interaction.editReply({ embeds: [translatedTweet], });
 				}
 			);
 			break;
@@ -202,7 +202,7 @@ export default new Event("interactionCreate", async (interaction) =>
 						.setDescription(tweet.enTranslate)
 						.setFooter({ text: "Translated with Google Translate", });
 
-					return interaction.reply({ embeds: [translatedTweet], });
+					return interaction.editReply({ embeds: [translatedTweet], });
 				}
 			);
 			break;

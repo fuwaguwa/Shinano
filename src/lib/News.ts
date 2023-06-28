@@ -35,7 +35,7 @@ export async function fetchTweets()
 				"tweetsInfo.json"
 			);
 
-			fs.readFile(tweetJsonDir, "utf-8", (err, data) => 
+			fs.readFile(tweetJsonDir, "utf-8", async (err, data) => 
 			{
 				const tweetsInfo = JSON.parse(data);
 
@@ -65,9 +65,7 @@ export async function fetchTweets()
 						id: tweet.id,
 						url: tweetUrl,
 						raw: tweet.rawContent,
-						enTranslate: tweetUrl.includes("azurlane_staff")
-							? translateTweet(tweet.rawContent, "ja")
-							: null,
+						enTranslate: await translateTweet(tweet.rawContent, "ja"),
 					});
 
 					fs.writeFile(
@@ -202,7 +200,7 @@ export async function fetchWeiboTweets()
 						url: tweet.url,
 						raw: text,
 						img: img,
-						enTranslate: translateTweet(text, "zh-CN"),
+						enTranslate: await translateTweet(text, "zh-CN"),
 					});
 
 					fs.writeFile(

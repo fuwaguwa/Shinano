@@ -347,28 +347,29 @@ let EHOSTRetries: number = 0;
  * @param interaction interaction
  * @param language original language
  */
-export function translateTweet(text: string, language: string) 
+export async function translateTweet(text: string, language: string) 
 {
-	translate(text, {
-		from: language,
-		to: "en",
-		requestFunction: fetch,
-		forceBatch: false,
-	})
-		.then(async (translations) => 
-		{
-			return translations.text;
-		})
-		.catch(async (err) => 
-		{
-			console.error(err);
-
-			if (err.message.includes("EHOSTUNREACH") && EHOSTRetries < 3) 
-			{
-				EHOSTRetries += 1;
-				return translateTweet(text, language);
-			}
-
-			EHOSTRetries = 0;
+	try 
+	{
+		const translations = await translate(text, {
+			from: language,
+			to: "en",
+			requestFunction: fetch,
+			forceBatch: false,
 		});
+
+		return translations.text;
+	}
+	catch (err) 
+	{
+		console.error(err);
+
+		if (err.message.includes("EHOSTUNREACH") && EHOSTRetries < 3) 
+		{
+			EHOSTRetries += 1;
+			return translateTweet(text, language);
+		}
+
+		EHOSTRetries = 0;
+	}
 }
