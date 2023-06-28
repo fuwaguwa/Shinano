@@ -347,11 +347,7 @@ let EHOSTRetries: number = 0;
  * @param interaction interaction
  * @param language original language
  */
-export function translateTweet(
-	text: string,
-	interaction: ButtonInteraction,
-	language: string
-) 
+export function translateTweet(text: string, language: string) 
 {
 	translate(text, {
 		from: language,
@@ -361,13 +357,7 @@ export function translateTweet(
 	})
 		.then(async (translations) => 
 		{
-			const translateEmbed: EmbedBuilder = new EmbedBuilder()
-				.setColor("#2b2d31")
-				.setTitle("Translated Tweet")
-				.setDescription(translations.text)
-				.setFooter({ text: "Translated with Google Translate", });
-
-			await interaction.editReply({ embeds: [translateEmbed], });
+			return translations.text;
 		})
 		.catch(async (err) => 
 		{
@@ -376,28 +366,9 @@ export function translateTweet(
 			if (err.message.includes("EHOSTUNREACH") && EHOSTRetries < 3) 
 			{
 				EHOSTRetries += 1;
-				return translateTweet(text, interaction, language);
+				return translateTweet(text, language);
 			}
 
 			EHOSTRetries = 0;
-			const errorEmbed: EmbedBuilder = new EmbedBuilder()
-				.setColor("Red")
-				.setDescription(`**${err.name}**: ${err.message}`)
-				.setFooter({
-					text: "Please use the command again or contact support!",
-				});
-			const button: ActionRowBuilder<ButtonBuilder> =
-				new ActionRowBuilder<ButtonBuilder>().setComponents(
-					new ButtonBuilder()
-						.setStyle(ButtonStyle.Link)
-						.setLabel("Support Server")
-						.setEmoji({ name: "⚙️", })
-						.setURL("https://discord.gg/NFkMxFeEWr")
-				);
-
-			await interaction.editReply({
-				embeds: [errorEmbed],
-				components: [button],
-			});
 		});
 }

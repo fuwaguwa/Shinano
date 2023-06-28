@@ -14,7 +14,6 @@ import path from "path";
 import { findSauce } from "../lib/Sauce";
 import { client } from "../index";
 import ms from "ms";
-import { translateTweet } from "../lib/Utils";
 
 const Cooldown: Collection<string, number> = new Collection();
 const owner = "836215956346634270";
@@ -153,7 +152,7 @@ export default new Event("interactionCreate", async (interaction) =>
 					const json = JSON.parse(data);
 					const tweet = json.tweets.find(tweet => tweet.id == tweetId);
 
-					if (!tweet) 
+					if (!tweet || !tweet.enTranslate) 
 					{
 						const noTweet: EmbedBuilder = new EmbedBuilder()
 							.setColor("Red")
@@ -163,7 +162,13 @@ export default new Event("interactionCreate", async (interaction) =>
 						return interaction.editReply({ embeds: [noTweet], });
 					}
 
-					return translateTweet(tweet.raw, interaction, "ja");
+					const translatedTweet: EmbedBuilder = new EmbedBuilder()
+						.setColor("#2b2d31")
+						.setTitle("Translated Tweet")
+						.setDescription(tweet.enTranslate)
+						.setFooter({ text: "Translated with Google Translate", });
+
+					return interaction.reply({ embeds: [translatedTweet], });
 				}
 			);
 			break;
@@ -181,7 +186,7 @@ export default new Event("interactionCreate", async (interaction) =>
 					const json = JSON.parse(data);
 					const tweet = json.tweets.find(tweet => tweet.id == tweetId);
 
-					if (!tweet) 
+					if (!tweet || !tweet.enTranslate) 
 					{
 						const noTweet: EmbedBuilder = new EmbedBuilder()
 							.setColor("Red")
@@ -191,7 +196,13 @@ export default new Event("interactionCreate", async (interaction) =>
 						return interaction.editReply({ embeds: [noTweet], });
 					}
 
-					return translateTweet(tweet.raw, interaction, "zh-CN");
+					const translatedTweet: EmbedBuilder = new EmbedBuilder()
+						.setColor("#2b2d31")
+						.setTitle("Translated Tweet")
+						.setDescription(tweet.enTranslate)
+						.setFooter({ text: "Translated with Google Translate", });
+
+					return interaction.reply({ embeds: [translatedTweet], });
 				}
 			);
 			break;

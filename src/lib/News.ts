@@ -16,6 +16,7 @@ import { Browser, Page } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import Stealth from "puppeteer-extra-plugin-stealth";
 import axios from "axios";
+import { translateTweet } from "./Utils";
 
 puppeteer.use(Stealth());
 
@@ -64,6 +65,9 @@ export async function fetchTweets()
 						id: tweet.id,
 						url: tweetUrl,
 						raw: tweet.rawContent,
+						enTranslate: tweetUrl.includes("azurlane_staff")
+							? translateTweet(tweet.rawContent, "ja")
+							: null,
 					});
 
 					fs.writeFile(
@@ -198,6 +202,7 @@ export async function fetchWeiboTweets()
 						url: tweet.url,
 						raw: text,
 						img: img,
+						enTranslate: translateTweet(text, "zh-CN"),
 					});
 
 					fs.writeFile(
