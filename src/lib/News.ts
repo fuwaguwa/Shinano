@@ -65,7 +65,9 @@ export async function fetchTweets()
 						id: tweet.id,
 						url: tweetUrl,
 						raw: tweet.rawContent,
-						enTranslate: await translateTweet(tweet.rawContent, "ja"),
+						enTranslate: tweetUrl.includes("azurlane_staff")
+							? await translateTweet(tweet.rawContent, "ja")
+							: null,
 					});
 
 					fs.writeFile(
