@@ -81,6 +81,8 @@ export default new Event("interactionCreate", async (interaction) =>
 		}
 
 		case interaction.customId === "VOTE-CHECK": {
+			if (await cooldownCheck("VOTE-CHECK", interaction)) return;
+
 			const user = await User.findOne({ userId: interaction.user.id, });
 
 			const voteLink: ActionRowBuilder<ButtonBuilder> =
@@ -91,6 +93,8 @@ export default new Event("interactionCreate", async (interaction) =>
 						.setEmoji({ id: "1002849574517477447", })
 						.setURL("https://top.gg/bot/1002193298229829682/vote")
 				);
+
+			setCooldown("VOTE-CHECK", interaction);
 
 			if (!user.lastVoteTimestamp) 
 			{
@@ -141,6 +145,8 @@ export default new Event("interactionCreate", async (interaction) =>
 		}
 
 		case interaction.customId.includes("JTWT"): {
+			if (await cooldownCheck("JTWT", interaction)) return;
+
 			await interaction.deferReply({ ephemeral: true, });
 
 			const tweetId = interaction.customId.split("-")[1];
@@ -171,10 +177,15 @@ export default new Event("interactionCreate", async (interaction) =>
 					return interaction.editReply({ embeds: [translatedTweet], });
 				}
 			);
+
+			setCooldown("JTWT", interaction);
+
 			break;
 		}
 
 		case interaction.customId.includes("CTWT"): {
+			if (await cooldownCheck("CTWT", interaction)) return;
+
 			await interaction.deferReply({ ephemeral: true, });
 
 			const tweetId = interaction.customId.split("-")[1];
@@ -205,6 +216,9 @@ export default new Event("interactionCreate", async (interaction) =>
 					return interaction.editReply({ embeds: [translatedTweet], });
 				}
 			);
+
+			setCooldown("CTWT", interaction);
+
 			break;
 		}
 
@@ -231,6 +245,7 @@ export default new Event("interactionCreate", async (interaction) =>
 			}
 
 			setCooldown("SAUCE", interaction);
+			break;
 		}
 	}
 
