@@ -75,14 +75,7 @@ export async function findSauce({
 	catch (err) 
 	{
 		// Usually resolved after a retry
-		if (err.message.includes("undefined")) 
-		{
-			results = await sClient(link);
-		}
-		else 
-		{
-			throw new Error(err.message);
-		}
+		results = await sClient(link);
 	}
 
 	/**
