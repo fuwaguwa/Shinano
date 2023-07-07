@@ -16,6 +16,7 @@ import t2c from "table2canvas";
 import { Canvas } from "canvas";
 import pm2 from "pm2";
 import translate from "google-translate-api-x";
+import Parser from "rss-parser";
 
 /**
  * Check if a link is a direct image link
@@ -372,4 +373,18 @@ export async function translateTweet(text: string, language: string)
 
 		EHOSTRetries = 0;
 	}
+}
+
+/**
+ * Parse an RSS feed for a twitter user
+ * @param user twitter username
+ */
+export async function getTwitterUserFeed(user: string) 
+{
+	const parser = new Parser();
+
+	const feed = await parser.parseURL(
+		`https://rsshub.app/twitter/user/${user}/includeRts=false&excludeReplies=true&showEmojiForRetweetAndReply=true`
+	);
+	return feed;
 }

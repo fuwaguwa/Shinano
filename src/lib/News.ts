@@ -16,85 +16,73 @@ import { Browser, Page } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import Stealth from "puppeteer-extra-plugin-stealth";
 import axios from "axios";
-import { translateTweet } from "./Utils";
+import { getTwitterUserFeed, translateTweet } from "./Utils";
 
 puppeteer.use(Stealth());
 
 let retries: number = 0;
 export async function fetchTweets() 
 {
-	fetch("https://twitapi.fuwafuwa08.repl.co/altweet")
-		.then(res => res.json())
-		.then((json) => 
+	const enFeed = await getTwitterUserFeed("AzurLane_EN");
+	const jpFeed = await getTwitterUserFeed("azurlane_staff");
+
+	const allFeed = enFeed.items.concat(jpFeed.items);
+
+	allFeed.sort((x, y) => 
+	{
+		const xId = x.link.split("/status/")[1];
+		const yId = y.link.split("/status/")[1];
+
+		if (xId > yId) return -1;
+		if (xId < yId) return 1;
+		return 0;
+	});
+
+	const newestTweet = allFeed[0];
+	const newestTweetId = parseInt(newestTweet.link.split("/status/")[1]);
+
+	const tweetJsonDir = path.join(
+		__dirname,
+		"..",
+		"..",
+		"data",
+		"tweetsInfo.json"
+	);
+
+	fs.readFile(tweetJsonDir, "utf-8", async (err, data) => 
+	{
+		const allSavedTweets = JSON.parse(data);
+
+		const newTweetPresence = allSavedTweets.tweets.find(
+			tweet => tweet.id == newestTweetId
+		);
+
+		if (
+			!newTweetPresence &&
+			!newestTweet.title.includes("🔁") &&
+			!newestTweet.title.includes("↩️")
+		) 
 		{
-			const tweetJsonDir = path.join(
-				__dirname,
-				"..",
-				"..",
-				"data",
-				"tweetsInfo.json"
+			allSavedTweets.tweets.push({
+				id: newestTweetId,
+				url: newestTweet.link,
+				raw: null,
+				enTranslate: null,
+			});
+
+			fs.writeFile(
+				tweetJsonDir,
+				JSON.stringify(allSavedTweets, null, "\t"),
+				"utf-8",
+				(err) => 
+				{
+					if (err) console.log(err);
+				}
 			);
 
-			fs.readFile(tweetJsonDir, "utf-8", async (err, data) => 
-			{
-				const tweetsInfo = JSON.parse(data);
-
-				const response = json.data;
-				response.sort((a, b) => b.id - a.id);
-				const tweet = response[0];
-
-				const result = tweetsInfo.tweets.find(tweetI => tweetI.id == tweet.id);
-
-				if (
-					!result &&
-					!(tweet.text && tweet.text.includes("Age-restricted adult content"))
-				) 
-				{
-					let tweetUrl = tweet.url;
-					if (
-						tweet.media &&
-						tweet.media.find(
-							media => media._type === "snscrape.modules.twitter.Video"
-						)
-					)
-						tweetUrl =
-							"https://vxtwitter.com/" +
-							tweetUrl.split("https://twitter.com/")[1];
-
-					tweetsInfo.tweets.push({
-						id: tweet.id,
-						url: tweetUrl,
-						raw: tweet.rawContent,
-						enTranslate: tweetUrl.includes("azurlane_staff")
-							? await translateTweet(tweet.rawContent, "ja")
-							: null,
-					});
-
-					fs.writeFile(
-						tweetJsonDir,
-						JSON.stringify(tweetsInfo, null, "\t"),
-						"utf-8",
-						(err) => 
-						{
-							if (err) console.error(err);
-						}
-					);
-
-					postTweet(tweetsInfo.tweets[tweetsInfo.tweets.length - 1]);
-				}
-			});
-		})
-		.catch((err) => 
-		{
-			if (retries < 3) 
-			{
-				retries++;
-				return fetchTweets();
-			}
-
-			retries = 0;
-			console.error(err);
-		});
+			postTweet(allSavedTweets.tweets[allSavedTweets.tweets.length - 1]);
+		}
+	});
 }
 
 export async function fetchWeiboTweets() 
@@ -234,24 +222,13 @@ export async function fetchWeiboTweets()
 
 async function postTweet(tweet) 
 {
-	if (tweet.raw.includes("RT @")) return;
-
 	let messageOptions: MessageCreateOptions;
 
 	if (tweet.url.includes("azurlane_staff")) 
 	{
-		const translate: ActionRowBuilder<ButtonBuilder> =
-			new ActionRowBuilder<ButtonBuilder>().setComponents(
-				new ButtonBuilder()
-					.setStyle(ButtonStyle.Primary)
-					.setCustomId(`JTWT-${tweet.id}`)
-					.setLabel("Translate Tweet")
-					.setEmoji({ id: "1065640481687617648", })
-			);
 		messageOptions = {
 			content:
 				"__Shikikans, a new message has arrived from JP HQ!__\n" + tweet.url,
-			components: [translate],
 		};
 	}
 	else if (tweet.url.includes("weibo.cn")) 
