@@ -37,7 +37,7 @@ export default new Event("guildCreate", async (guild) =>
 					},
 					{
 						name: "User | User ID",
-						value: `${adder.username}#${adder.discriminator} | ${adder.id}`,
+						value: `${adder.username} | ${adder.id}`,
 					}
 				)
 				.setTimestamp();
