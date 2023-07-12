@@ -26,19 +26,23 @@ export async function fetchTweets()
 	const enFeed = await getTwitterUserFeed("AzurLane_EN");
 	const jpFeed = await getTwitterUserFeed("azurlane_staff");
 
-	const allFeed = enFeed.items.concat(jpFeed.items);
+	console.log("-----------------------------------------------------");
+	console.log(`Newest EN Tweet: ${enFeed.item[0].link}`);
+	console.log(`Newest JP Tweet: ${jpFeed.item[0].link}`);
+
+	const allFeed = enFeed.item.concat(jpFeed.item);
 
 	allFeed.sort((x, y) => 
 	{
 		const xId = x.link.split("/status/")[1];
 		const yId = y.link.split("/status/")[1];
 
-		if (xId > yId) return 1;
-		if (xId < yId) return -1;
+		if (xId > yId) return -1;
+		if (xId < yId) return 1;
 		return 0;
 	});
 
-	const newestTweet = allFeed[allFeed.length - 1];
+	const newestTweet = allFeed[0];
 	const newestTweetId = parseInt(newestTweet.link.split("/status/")[1]);
 
 	const tweetJsonDir = path.join(
@@ -63,6 +67,7 @@ export async function fetchTweets()
 			!newestTweet.title.includes("↩️");
 
 		console.log(`Newest Tweet: ${newestTweet.link} | Valid: ${validTweet}`);
+		console.log("-----------------------------------------------------");
 
 		if (validTweet) 
 		{
