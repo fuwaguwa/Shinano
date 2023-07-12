@@ -122,7 +122,12 @@ export async function postLewd()
 		}
 		catch (error) 
 		{
-			console.warn(error);
+			/**
+			 * 50001: Missing Access
+			 * 10003: Unknown Channel
+			 * 10004: Unknown Guild
+			 */
+			if (error.name !== "DiscordAPIError[50001]") console.warn(error);
 			if (
 				["DiscordAPIError[10004]", "DiscordAPIError[10003]"].includes(
 					error.name
