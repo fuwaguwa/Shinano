@@ -384,7 +384,7 @@ export async function getTwitterUserFeed(user: string)
 	const parser = new Parser();
 
 	const feed = await parser.parseURL(
-		`https://rsshub.app/twitter/user/${user}/includeRts=false&excludeReplies=true&showEmojiForRetweetAndReply=true`
+		`https://rsshub.app/twitter/user/${user}/?readable=0&includeRts=false&excludeReplies=true&showEmojiForRetweetAndReply=true`
 	);
 	return feed;
 }
