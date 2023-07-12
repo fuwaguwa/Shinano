@@ -26,7 +26,11 @@ export async function fetchTweets()
 	const enFeed = await getTwitterUserFeed("AzurLane_EN");
 	const jpFeed = await getTwitterUserFeed("azurlane_staff");
 
-	const allFeed = enFeed.items.concat(jpFeed.items);
+	console.log("-----------------------------------------------------");
+	console.log(`Newest EN Tweet: ${enFeed.item[0].link}`);
+	console.log(`Newest JP Tweet: ${jpFeed.item[0].link}`);
+
+	const allFeed = enFeed.item.concat(jpFeed.item);
 
 	allFeed.sort((x, y) => 
 	{
@@ -57,11 +61,15 @@ export async function fetchTweets()
 			tweet => tweet.id == newestTweetId
 		);
 
-		if (
+		const validTweet =
 			!newTweetPresence &&
 			!newestTweet.title.includes("🔁") &&
-			!newestTweet.title.includes("↩️")
-		) 
+			!newestTweet.title.includes("↩️");
+
+		console.log(`Newest Tweet: ${newestTweet.link} | Valid: ${validTweet}`);
+		console.log("-----------------------------------------------------");
+
+		if (validTweet) 
 		{
 			allSavedTweets.tweets.push({
 				id: newestTweetId,
@@ -280,7 +288,12 @@ async function postTweet(tweet)
 		}
 		catch (error) 
 		{
-			console.warn(error);
+			/**
+			 * 50001: Missing Access
+			 * 10003: Unknown Channel
+			 * 10004: Unknown Guild
+			 */
+			if (error.name !== "DiscordAPIError[50001]") console.warn(error);
 			if (
 				["DiscordAPIError[10004]", "DiscordAPIError[10003]"].includes(
 					error.name
