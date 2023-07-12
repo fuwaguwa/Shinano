@@ -103,7 +103,7 @@ export class Shinano extends Client
 			{
 				await fetchTweets();
 				await fetchWeiboTweets();
-			}, 120000);
+			}, 60000);
 			console.log("Started tweet checker!");
 		}
 	}
@@ -251,7 +251,7 @@ export class Shinano extends Client
 			 */
 			// if (
 			// 	["DiscordAPIError[10062]", "DiscordAPIError[10008]"].includes(err.name)
-			// ) 
+			// )
 			// {
 			// 	console.error(err);
 			// 	return restartBot();
