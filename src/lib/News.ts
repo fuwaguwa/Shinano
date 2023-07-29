@@ -27,10 +27,10 @@ export async function fetchTweets()
 	const jpFeed = await getTwitterUserFeed("azurlane_staff");
 
 	console.log("-----------------------------------------------------");
-	console.log(`Newest EN Tweet: ${enFeed.item[0].link}`);
-	console.log(`Newest JP Tweet: ${jpFeed.item[0].link}`);
+	console.log(`Newest EN Tweet: ${enFeed.items[0].link}`);
+	console.log(`Newest JP Tweet: ${jpFeed.items[0].link}`);
 
-	const allFeed = enFeed.item.concat(jpFeed.item);
+	const allFeed = enFeed.items.concat(jpFeed.items);
 
 	allFeed.sort((x, y) => 
 	{
