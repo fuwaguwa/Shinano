@@ -18,14 +18,14 @@ export default new ChatInputCommand({
 	options: [
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: "fanbox",
-			description: "Images from artists' FANBOX/Patreon (High Quality)",
+			name: "hquality",
+			description: "High quality images.",
 			options: [
 				{
 					type: ApplicationCommandOptionType.String,
-					name: "fanbox-category",
+					name: "hquality-category",
 					description:
-						"The category you want FANBOX/Patreon content from. Ignore this option for random category.",
+						"The category of high res content from. Ignore this option for random category.",
 					choices: [
 						{ name: "Shipgirls", value: "shipgirls", },
 						{ name: "Undies ⭐", value: "undies", },
@@ -62,7 +62,7 @@ export default new ChatInputCommand({
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
-			name: "fanbox-bomb",
+			name: "hquality-bomb",
 			description: "Bombs you with XTRA lewdness!",
 			options: [
 				{
@@ -316,9 +316,9 @@ export default new ChatInputCommand({
 						return nsfwFunc.bomb(interaction);
 					}
 
-					case "fanbox-bomb": {
+					case "hquality-bomb": {
 						if (await checkMutual(interaction))
-							return nsfwFunc.fanboxBomb(interaction);
+							return nsfwFunc.hqualityBomb(interaction);
 						break;
 					}
 
@@ -339,7 +339,7 @@ export default new ChatInputCommand({
 						return nsfwFunc.animation(interaction, fileType, category);
 					}
 
-					case "fanbox": {
+					case "hquality": {
 						const tags = [
 							"elf",
 							"genshin",
@@ -350,10 +350,10 @@ export default new ChatInputCommand({
 							"uniform"
 						];
 						const tag =
-							interaction.options.getString("fanbox-category") ||
+							interaction.options.getString("hquality-category") ||
 							tags[Math.floor(Math.random() * tags.length)];
 
-						return nsfwFunc.fanbox(interaction, lewdEmbed, tag);
+						return nsfwFunc.hquality(interaction, lewdEmbed, tag);
 					}
 
 					case "elf":

@@ -83,7 +83,7 @@ export = async (
 			load.components[0].setDisabled(true);
 			await message.edit({ components: [imageLink, load], });
 
-			await nsfwSubs.fanbox(i, lewdEmbed, tag, "followUp");
+			await nsfwSubs.hquality(i, lewdEmbed, tag, "followUp");
 
 			setCooldown("LMORE", i);
 

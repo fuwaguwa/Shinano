@@ -49,12 +49,12 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			{
 				name: "Hentai Commands:",
 				value:
-					"`autohentai`, `ass`, `anal`, `bomb`, `fanbox-bomb`, `blowjob`, `boobs`, `cum`, `feet`, `gif`, `nekomimi`, `paizuri`, `pussy`, `random`, `thighs`",
+					"`autohentai`, `ass`, `anal`, `bomb`, `hquality-bomb`, `blowjob`, `boobs`, `cum`, `feet`, `gif`, `nekomimi`, `paizuri`, `pussy`, `random`, `thighs`",
 			},
 			{
 				name: "Private Collection (High-Quality):",
 				value:
-					"`fanbox`, `genshin`, `honkai`, `kemonomimi`, `misc`, `shipgirls`, `undies`",
+					"`hquality`, `genshin`, `honkai`, `kemonomimi`, `misc`, `shipgirls`, `undies`",
 			},
 			{
 				name: "Porn Commands:",
