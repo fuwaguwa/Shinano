@@ -16,11 +16,9 @@ import t2c from "table2canvas";
 import { Canvas } from "canvas";
 import pm2 from "pm2";
 import translate from "google-translate-api-x";
-import RSSHub from "rsshub";
+import Parser from "rss-parser";
 
-RSSHub.init({
-	CACHE_TYPE: null,
-});
+const parser = new Parser();
 
 /**
  * Check if a link is a direct image link
@@ -385,8 +383,8 @@ export async function translateTweet(text: string, language: string)
  */
 export async function getTwitterUserFeed(user: string) 
 {
-	const feed = await RSSHub.request(
-		`/twitter/user/${user}/includeRts=false&excludeReplies=true&showEmojiForRetweetAndReply=true`
+	const feed = await parser.parseURL(
+		`https://rsshub.app/twitter/user/${user}/includeRts=false&excludeReplies=true&showEmojiForRetweetAndReply=true`
 	);
 	return feed;
 }

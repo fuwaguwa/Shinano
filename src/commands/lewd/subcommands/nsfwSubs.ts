@@ -1,6 +1,6 @@
 import bomb from "./nsfw/bomb";
-import fanbox from "./nsfw/fanbox";
-import fanboxBomb from "./nsfw/fanboxBomb";
+import hquality from "./nsfw/hquality";
+import hqualityBomb from "./nsfw/hqualityBomb";
 import privateColle from "./nsfw/privateColle";
 import animation from "./nsfw/animation";
 import autohentai from "./nsfw/autohentai";
@@ -10,8 +10,8 @@ import irl from "./nsfw/irl";
 export default {
 	bomb,
 	irl,
-	fanbox,
-	fanboxBomb,
+	hquality,
+	hqualityBomb,
 	privateColle,
 	animation,
 	autohentai,
