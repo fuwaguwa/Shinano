@@ -25,7 +25,7 @@ export default new ChatInputCommand({
 					type: ApplicationCommandOptionType.String,
 					name: "hquality-category",
 					description:
-						"The category of high res content from. Ignore this option for random category.",
+						"The category of the image. Ignore this option for random category.",
 					choices: [
 						{ name: "Shipgirls", value: "shipgirls", },
 						{ name: "Undies ⭐", value: "undies", },
