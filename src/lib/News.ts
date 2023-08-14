@@ -236,7 +236,8 @@ async function postTweet(tweet)
 	{
 		messageOptions = {
 			content:
-				"__Shikikans, a new message has arrived from JP HQ!__\n" + tweet.url,
+				"__Shikikans, a new message has arrived from JP HQ!__\n" +
+				tweet.url.replace("twitter.com", "vxtwitter.com"),
 		};
 	}
 	else if (tweet.url.includes("weibo.cn")) 
@@ -273,7 +274,8 @@ async function postTweet(tweet)
 	{
 		messageOptions = {
 			content:
-				"__Shikikans, a new message has arrived from EN HQ!__\n" + tweet.url,
+				"__Shikikans, a new message has arrived from EN HQ!__\n" +
+				tweet.url.replace("twitter.com", "vxtwitter.com"),
 		};
 	}
 
