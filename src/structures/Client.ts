@@ -103,7 +103,7 @@ export class Shinano extends Client
 			{
 				await fetchTweets();
 				await fetchWeiboTweets();
-			}, 300000);
+			}, 600000);
 			console.log("Started tweet checker!");
 		}
 	}

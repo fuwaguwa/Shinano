@@ -16,26 +16,24 @@ import { Browser, Page } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import Stealth from "puppeteer-extra-plugin-stealth";
 import axios from "axios";
-import { getTwitterUserFeed, translateTweet } from "./Utils";
+import { getRSSFeed, translateTweet } from "./Utils";
 
 puppeteer.use(Stealth());
 
 let retries: number = 0;
 export async function fetchTweets() 
 {
-	const enFeed = await getTwitterUserFeed("AzurLane_EN");
-	const jpFeed = await getTwitterUserFeed("azurlane_staff");
+	const enFeed = await getRSSFeed("AzurLane_EN");
+	const jpFeed = await getRSSFeed("azurlane_staff");
 
 	console.log("-----------------------------------------------------");
-	console.log(`Newest EN Tweet: ${enFeed.items[0].link}`);
-	console.log(`Newest JP Tweet: ${jpFeed.items[0].link}`);
 
 	const allFeed = enFeed.items.concat(jpFeed.items);
 
 	allFeed.sort((x, y) => 
 	{
-		const xId = x.link.split("/status/")[1];
-		const yId = y.link.split("/status/")[1];
+		const xId = x.link.substring(0, x.link.length - 2).split("/status/")[1];
+		const yId = y.link.substring(0, y.link.length - 2).split("/status/")[1];
 
 		if (xId > yId) return -1;
 		if (xId < yId) return 1;
@@ -43,7 +41,13 @@ export async function fetchTweets()
 	});
 
 	const newestTweet = allFeed[0];
-	const newestTweetId = parseInt(newestTweet.link.split("/status/")[1]);
+	const newestTweetLinkUn = newestTweet.link
+		.substring(0, newestTweet.link.length - 2)
+		.split("/")
+		.splice(3);
+	const newestTweetLink =
+		"https://vxtwitter.com/" + newestTweetLinkUn.join("/");
+	const newestTweetId = parseInt(newestTweetLink.split("/status/")[1]);
 
 	const tweetJsonDir = path.join(
 		__dirname,
@@ -63,17 +67,17 @@ export async function fetchTweets()
 
 		const validTweet =
 			!newTweetPresence &&
-			!newestTweet.title.includes("🔁") &&
-			!newestTweet.title.includes("↩️");
+			!newestTweet.title.includes("RT by") &&
+			!newestTweet.title.includes("RE by");
 
-		console.log(`Newest Tweet: ${newestTweet.link} | Valid: ${validTweet}`);
+		console.log(`Newest Tweet: ${newestTweetLink} | Valid: ${validTweet}`);
 		console.log("-----------------------------------------------------");
 
 		if (validTweet) 
 		{
 			allSavedTweets.tweets.push({
 				id: newestTweetId,
-				url: newestTweet.link,
+				url: newestTweetLink,
 				raw: null,
 				enTranslate: null,
 			});
@@ -236,8 +240,7 @@ async function postTweet(tweet)
 	{
 		messageOptions = {
 			content:
-				"__Shikikans, a new message has arrived from JP HQ!__\n" +
-				tweet.url.replace("twitter.com", "vxtwitter.com"),
+				"__Shikikans, a new message has arrived from JP HQ!__\n" + tweet.url,
 		};
 	}
 	else if (tweet.url.includes("weibo.cn")) 
@@ -274,8 +277,7 @@ async function postTweet(tweet)
 	{
 		messageOptions = {
 			content:
-				"__Shikikans, a new message has arrived from EN HQ!__\n" +
-				tweet.url.replace("twitter.com", "vxtwitter.com"),
+				"__Shikikans, a new message has arrived from EN HQ!__\n" + tweet.url,
 		};
 	}
 
