@@ -388,3 +388,24 @@ export async function getTwitterUserFeed(user: string)
 	);
 	return feed;
 }
+
+/**
+ * Parse an RSS feed for a twitter user
+ * @param user twitter username
+ */
+export async function getRSSFeed(user: string) 
+{
+	const feed = await parser.parseURL(`https://twiiit.com/${user}/rss`);
+	return feed;
+}
+
+/**
+ * Removes HTML tags from a string
+ * @param str string
+ * @returns string
+ */
+export function formatString(str) 
+{
+	str.toString();
+	return str.replace(/(<([^>]+)>)/gi, "");
+}
