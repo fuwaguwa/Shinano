@@ -16,7 +16,7 @@ import { Browser, Page } from "puppeteer";
 import puppeteer from "puppeteer-extra";
 import Stealth from "puppeteer-extra-plugin-stealth";
 import axios from "axios";
-import { getRSSFeed, translateTweet } from "./Utils";
+import { formatString, getRSSFeed, translateTweet } from "./Utils";
 
 puppeteer.use(Stealth());
 
@@ -68,7 +68,7 @@ export async function fetchTweets()
 		const validTweet =
 			!newTweetPresence &&
 			!newestTweet.title.includes("RT by") &&
-			!newestTweet.title.includes("RE by");
+			!newestTweet.title.includes("R to");
 
 		console.log(`Newest Tweet: ${newestTweetLink} | Valid: ${validTweet}`);
 		console.log("-----------------------------------------------------");
@@ -79,7 +79,9 @@ export async function fetchTweets()
 				id: newestTweetId,
 				url: newestTweetLink,
 				raw: null,
-				enTranslate: null,
+				enTranslate: newestTweetLink.includes("azurlane_staff")
+					? await translateTweet(formatString(newestTweet.content), "ja")
+					: null,
 			});
 
 			fs.writeFile(
@@ -238,9 +240,18 @@ async function postTweet(tweet)
 
 	if (tweet.url.includes("azurlane_staff")) 
 	{
+		const translate: ActionRowBuilder<ButtonBuilder> =
+			new ActionRowBuilder<ButtonBuilder>().setComponents(
+				new ButtonBuilder()
+					.setStyle(ButtonStyle.Primary)
+					.setCustomId(`JTWT-${tweet.id}`)
+					.setLabel("Translate Tweet")
+					.setEmoji({ id: "1065640481687617648", })
+			);
 		messageOptions = {
 			content:
 				"__Shikikans, a new message has arrived from JP HQ!__\n" + tweet.url,
+			components: [translate],
 		};
 	}
 	else if (tweet.url.includes("weibo.cn")) 

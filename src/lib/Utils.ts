@@ -398,3 +398,14 @@ export async function getRSSFeed(user: string)
 	const feed = await parser.parseURL(`https://twiiit.com/${user}/rss`);
 	return feed;
 }
+
+/**
+ * Removes HTML tags from a string
+ * @param str string
+ * @returns string
+ */
+export function formatString(str) 
+{
+	str.toString();
+	return str.replace(/(<([^>]+)>)/gi, "");
+}
