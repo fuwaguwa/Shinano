@@ -44,6 +44,7 @@ export async function searchBooru(
 	// Tried my best since blue archive content is used quite a lot
 	const obligatory: string[] = [
 		"sort:score",
+		"-guro",
 		"-loli",
 		"-shota",
 		"-furry",
