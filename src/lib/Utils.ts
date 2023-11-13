@@ -389,14 +389,32 @@ export async function getTwitterUserFeed(user: string)
 	return feed;
 }
 
+let rssRetries: number = 0;
 /**
  * Parse an RSS feed for a twitter user
  * @param user twitter username
  */
 export async function getRSSFeed(user: string) 
 {
-	const feed = await parser.parseURL(`https://twiiit.com/${user}/rss`);
-	return feed;
+	try 
+	{
+		const feed = await parser.parseURL(`https://twiiit.com/${user}/rss`);
+		rssRetries = 0;
+		return feed;
+	}
+	catch (error) 
+	{
+		rssRetries++;
+		if (rssRetries < 5) 
+		{
+			return getRSSFeed(user);
+		}
+		else 
+		{
+			rssRetries = 0;
+			console.error(error);
+		}
+	}
 }
 
 /**
