@@ -20,7 +20,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	/**
 	 * API Stats
 	 */
-	const apiResponse = await fetch("https://Amagi.fuwafuwa08.repl.co");
+	const apiResponse = await fetch("https://amagi2.fuwafuwa08.repl.co");
 	const apiStatus = await apiResponse.json();
 
 	/**

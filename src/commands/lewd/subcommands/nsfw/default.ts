@@ -22,7 +22,7 @@ export = async (
 ) => 
 {
 	const response = await fetch(
-		`https://Amagi.fuwafuwa08.repl.co/nsfw/public/${tag}`,
+		`https://amagi2.fuwafuwa08.repl.co/nsfw/public/${tag}`,
 		{
 			method: "GET",
 			headers: {

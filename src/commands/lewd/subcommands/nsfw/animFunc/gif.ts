@@ -26,7 +26,7 @@ export = async (
 	if (!category) 
 	{
 		const response = await fetch(
-			"https://Amagi.fuwafuwa08.repl.co/nsfw/public/gif",
+			"https://amagi2.fuwafuwa08.repl.co/nsfw/public/gif",
 			{
 				method: "GET",
 				headers: {
