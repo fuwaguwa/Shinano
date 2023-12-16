@@ -20,7 +20,7 @@ export default new ChatInputCommand({
 	{
 		if (!interaction.deferred) await interaction.deferReply();
 
-		const response = await fetch("https://amagi.fuwafuwa08.repl.co/wyr");
+		const response = await fetch("https://amagi2.fuwafuwa08.repl.co/wyr");
 		const wyr = await response.json();
 
 		const wyrEmbed: EmbedBuilder = new EmbedBuilder()
