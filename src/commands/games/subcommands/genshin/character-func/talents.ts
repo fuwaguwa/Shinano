@@ -72,7 +72,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		{
 			case 1: {
 				embed
-					.setTitle(`${characterName}'s Talents | Normal Attack`)
+					.setTitle(`${character.name}'s Talents | Normal Attack`)
 					.setDescription(
 						`**${talents.combat1.name}**\n` + talents.combat1.info
 					);
@@ -81,7 +81,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 
 			case 2: {
 				embed
-					.setTitle(`${characterName}'s Talents | Elemental Skill`)
+					.setTitle(`${character.name}'s Talents | Elemental Skill`)
 					.setDescription(
 						`*${talents.combat2.description}*\n\n` +
 							`**Elemental Skill: ${talents.combat2.name}**\n` +
@@ -92,7 +92,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 
 			case 3: {
 				embed
-					.setTitle(`${characterName}'s Talents | Elemental Burst`)
+					.setTitle(`${character.name}'s Talents | Elemental Burst`)
 					.setDescription(
 						`*${talents.combat3.description}*\n\n` +
 							`**Elemental Burst: ${talents.combat3.name}**\n` +
@@ -102,7 +102,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			}
 
 			case 4: {
-				embed.setTitle(`${characterName}'s Talents | SP Skill`).setFields({
+				embed.setTitle(`${character.name}'s Talents | SP Skill`).setFields({
 					name: "Alternate Sprint",
 					value: talents.combatsp.info,
 				});
@@ -120,7 +120,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	{
 		const embed: EmbedBuilder = new EmbedBuilder()
 			.setColor(embedColor)
-			.setTitle(`${characterName}'s Talents | Passive ${i + 1}`)
+			.setTitle(`${character.name}'s Talents | Passive ${i + 1}`)
 			.setThumbnail(character.images.icon)
 			.setFields({
 				name: `Passive: ${talents[`passive${i + 1}`].name}`,
