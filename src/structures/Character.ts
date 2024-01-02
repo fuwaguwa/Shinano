@@ -77,7 +77,7 @@ export class ShinanoCharacter
 	 */
 	private queryTravellerCons() 
 	{
-		const currNumOfTravellerElement: number = 4;
+		const currNumOfTravellerElement: number = 5;
 		for (let i = 0; i < currNumOfTravellerElement; i++) 
 		{
 			let element: string;
@@ -95,6 +95,9 @@ export class ShinanoCharacter
 					break;
 				case 3:
 					element = "Dendro";
+					break;
+				case 4:
+					element = "Hydro";
 					break;
 			}
 
