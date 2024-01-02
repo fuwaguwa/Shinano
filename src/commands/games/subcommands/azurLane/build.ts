@@ -10,6 +10,7 @@ import Stealth from "puppeteer-extra-plugin-stealth";
 import Canvas, { createCanvas, loadImage } from "canvas";
 import { client } from "../../../..";
 import path from "path";
+import { toTitleCase } from "../../../../lib/Utils";
 
 puppeteer.use(Stealth());
 Canvas.registerFont("QuireSansSemiBold.ttf", { family: "QuireSans", });
@@ -29,16 +30,23 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 
 	const shipName: string = interaction.options.getString("ship-name");
 	const shipInfo = await AL.ships.get(shipName);
-	if (!shipInfo) 
+	let name: string;
+	let validationResponse: string;
+
+	if (shipInfo) 
 	{
-		const shipNotFound: EmbedBuilder = new EmbedBuilder()
-			.setColor("Red")
-			.setDescription("❌ | I couldn't find that ship...");
-		return interaction.editReply({ embeds: [shipNotFound], });
+		name = shipInfo.names.en;
+		validationResponse = "✅ | Valid Ship!\n";
+	}
+	else 
+	{
+		name = shipName;
+		validationResponse =
+			"❓ | Ship not found in database, looking up ship build regardless, make sure you spell their name **fully and correctly**!\n";
 	}
 
 	wait.setDescription(
-		"✅ | Valid Ship!\n" +
+		validationResponse +
 			"<a:lod:1021265223707000923> | Fetching Build...\n" +
 			"<a:lod:1021265223707000923> | Processing Gear Images...\n" +
 			"<a:lod:1021265223707000923> | Creating Infographic...\n"
@@ -48,11 +56,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	const slot = [];
 	const gears = [];
 
-	let name = shipInfo.names.en
-		.toLowerCase()
-		.split(" ")
-		.join("_")
-		.replace("μ", "%C2%B5");
+	name = name.toLowerCase().split(" ").join("_").replace("μ", "%C2%B5");
 	const link = `https://slaimuda.github.io/ectl/#/home?ship=${name}`;
 
 	/**
@@ -67,17 +71,28 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	await page.goto(link);
 	await page.waitForSelector(".col-4.col-sm-4.col-md-2");
 
+	const containerDivs = await page.$$(
+		".modal-body > div:nth-child(1) > div:nth-child(1)"
+	);
+
+	if (!containerDivs || containerDivs.length == 0) 
+	{
+		wait.setDescription(
+			validationResponse +
+				"❌ | Build not found, please make sure you spell the ship name right!\n" +
+				"❌ | Failed to process gear images...\n" +
+				"❌ | Failed to create infographic\n"
+		);
+		return interaction.editReply({ embeds: [wait], });
+	}
+
 	wait.setDescription(
-		"✅ | Valid Ship!\n" +
+		validationResponse +
 			"✅ | Build Fetched!\n" +
 			"<a:lod:1021265223707000923> | Processing Gear Images...\n" +
 			"<a:lod:1021265223707000923> | Creating Infographic...\n"
 	);
 	await interaction.editReply({ embeds: [wait], });
-
-	const containerDivs = await page.$$(
-		".modal-body > div:nth-child(1) > div:nth-child(1)"
-	);
 
 	for (const containerDiv of containerDivs) 
 	{
@@ -189,7 +204,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	await browser.close();
 
 	wait.setDescription(
-		"✅ | Valid Ship!\n" +
+		validationResponse +
 			"✅ | Build Fetched!\n" +
 			"✅ | Processed Gear Images!\n" +
 			"<a:lod:1021265223707000923> | Creating Infographic...\n"
@@ -199,7 +214,11 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	/**
 	 * Create build image
 	 */
-	const shipImage = await loadImage(shipInfo.skins[0].image);
+	const shipImage = await loadImage(
+		shipInfo
+			? shipInfo.skins[0].image
+			: "https://media.discordapp.net/attachments/1110132419484454935/1191690824422015037/Manjuu_logo1.png"
+	);
 	const bgImage = await loadImage(
 		path.join(__dirname, "..", "..", "..", "..", "..", "data", "buildBG.png")
 	);
@@ -247,7 +266,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	const textX = 20;
 	const textY = 25 + fontSize;
 
-	const text = shipInfo.names.code;
+	const text = shipInfo ? shipInfo.names.code : toTitleCase(name);
 	ctx.font = `${fontSize}px QuireSans`;
 	ctx.fillStyle = "white";
 	ctx.fillText(text, textX, textY);
@@ -338,12 +357,18 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 
 	const buildEmbed: EmbedBuilder = new EmbedBuilder()
 		.setColor("#2b2d31")
-		.setTitle(`${shipInfo.names.en} | ${shipInfo.names.code}`)
-		.setURL(shipInfo.wikiUrl)
+		.setTitle(
+			`${
+				shipInfo
+					? `${shipInfo.names.en} | ${shipInfo.names.code}`
+					: toTitleCase(name)
+			}`
+		)
 		.setDescription(`[Overview of the Ship & Gears Explanation](${link})`)
 		.setImage(img)
 		.setFooter({
 			text: "Community TL @ https://slaimuda.github.io/ectl/#/home",
 		});
+	if (shipInfo) buildEmbed.setURL(shipInfo.wikiUrl);
 	await interaction.editReply({ embeds: [buildEmbed], });
 };
