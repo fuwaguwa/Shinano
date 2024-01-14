@@ -47,7 +47,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const infoEmbed: EmbedBuilder = new EmbedBuilder()
 		.setTitle(artifact.name)
 		.setColor(embedColor);
-	if (artifact.url.fandom)
+	if (artifact.url?.fandom)
 		infoEmbed.setDescription(`[Wiki Link](${artifact.url.fandom})`);
 
 	if (artifact["1pc"]) 

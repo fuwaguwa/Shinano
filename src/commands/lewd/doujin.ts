@@ -8,6 +8,8 @@ export default new ChatInputCommand({
 	nsfw: true,
 	cooldown: 5000,
 	category: "NSFW",
+	ownerOnly: true,
+	defaultMemberPermissions: "0",
 	options: [
 		{
 			type: ApplicationCommandOptionType.Subcommand,
