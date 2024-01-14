@@ -14,17 +14,11 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		const nsfwErrorEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("Red")
 			.setTitle("NSFW Command")
-			.setDescription("NSFW commands can only be used in NSFW channels!");
+			.setDescription(
+				"I apologize, but commands of NSFW nature are exclusively permissible within NSFW-designated channels..."
+			);
 		return interaction.reply({ embeds: [nsfwErrorEmbed], });
 	}
-
-	const noNSFW: ActionRowBuilder<ButtonBuilder> =
-		new ActionRowBuilder<ButtonBuilder>().setComponents(
-			new ButtonBuilder()
-				.setStyle(ButtonStyle.Secondary)
-				.setLabel("Can't see NSFW commands?")
-				.setCustomId("NO-NSFW")
-		);
 
 	const nsfwHelpEmbed: EmbedBuilder = new EmbedBuilder()
 		.setTitle("NSFW Commands")
@@ -71,6 +65,5 @@ export = async (interaction: ChatInputCommandInteraction) =>
 
 	await interaction.reply({
 		embeds: [nsfwHelpEmbed],
-		components: [noNSFW],
 	});
 };
