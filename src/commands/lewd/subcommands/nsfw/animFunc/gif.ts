@@ -25,15 +25,12 @@ export = async (
 	let url;
 	if (!category) 
 	{
-		const response = await fetch(
-			"https://amagi2.fuwafuwa08.repl.co/nsfw/public/gif",
-			{
-				method: "GET",
-				headers: {
-					Authorization: process.env.amagiApiKey,
-				},
-			}
-		);
+		const response = await fetch(`${process.env.amagiApi}/nsfw/public/gif`, {
+			method: "GET",
+			headers: {
+				Authorization: process.env.amagiApiKey,
+			},
+		});
 
 		const waifu = await response.json();
 		url = waifu.body.link;

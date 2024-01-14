@@ -21,15 +21,12 @@ export = async (
 	mode?: string
 ) => 
 {
-	const response = await fetch(
-		`https://amagi2.fuwafuwa08.repl.co/nsfw/public/${tag}`,
-		{
-			method: "GET",
-			headers: {
-				Authorization: process.env.amagiApiKey,
-			},
-		}
-	);
+	const response = await fetch(`${process.env.amagiApi}/nsfw/public/${tag}`, {
+		method: "GET",
+		headers: {
+			Authorization: process.env.amagiApiKey,
+		},
+	});
 	const waifu = await response.json();
 	lewdEmbed.setImage(waifu.body.link).setColor("Random");
 

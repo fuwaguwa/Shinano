@@ -23,7 +23,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const blacklist: string =
 		"-lolicon -scat -guro -insect -shotacon -amputee -vomit -vore -bestiality";
 	const response = await fetch(
-		`https://amagi2.fuwafuwa08.repl.co/doujin/search/?query=${name} ${blacklist}&sorting=${sorting}`
+		`${process.env.amagiApi}/doujin/search/?query=${name} ${blacklist}&sorting=${sorting}`
 	);
 	const searchResults = await response.json();
 
