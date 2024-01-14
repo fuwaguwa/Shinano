@@ -14,7 +14,6 @@ export default new ChatInputCommand({
 	nsfw: true,
 	voteRequired: true,
 	category: "NSFW",
-	defaultMemberPermissions: "0",
 	options: [
 		{
 			type: ApplicationCommandOptionType.Subcommand,
