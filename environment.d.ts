@@ -18,6 +18,7 @@ declare global {
 			twitterAccessTokenSecret: string;
 			nhentaiIP: string;
 			topggWebhook: string;
+			amagiApi: string;
 		}
 	}
 }
