@@ -1,5 +1,6 @@
 import { ApplicationCommandOptionType, EmbedBuilder, User } from "discord.js";
 import { ChatInputCommand } from "../../structures/Command";
+import fetch from "node-fetch";
 
 export default new ChatInputCommand({
 	name: "banner",
