@@ -7,6 +7,7 @@ import {
 } from "discord.js";
 import { LoadableNSFWInteraction } from "../../../../../typings/Sauce";
 import Image from "../../../../../schemas/Image";
+import { queryDefault } from "../../../../../lib/Lewdies";
 
 export = async (
 	interaction: LoadableNSFWInteraction,
@@ -25,15 +26,7 @@ export = async (
 	let url;
 	if (!category) 
 	{
-		const response = await fetch(`${process.env.amagiApi}/nsfw/public/gif`, {
-			method: "GET",
-			headers: {
-				Authorization: process.env.amagiApiKey,
-			},
-		});
-
-		const waifu = await response.json();
-		url = waifu.body.link;
+		url = await queryDefault("gif");
 	}
 	else 
 	{

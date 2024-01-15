@@ -5,6 +5,7 @@
         "moduleResolution": "node",
         "target": "ESNext",
         "outDir": "dist",
+        "rootDir": "src",
         "sourceMap": false,
         "esModuleInterop": true,
         "experimentalDecorators": true,
@@ -16,5 +17,5 @@
         "importHelpers": true
     },
     "include": ["src", "environment.d.ts"],
-    "exclude": ["node_modules", "**/*.spec.ts"]
+    "exclude": ["node_modules", "**/*.spec.ts", "data"]
 }

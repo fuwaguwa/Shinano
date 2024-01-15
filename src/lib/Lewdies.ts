@@ -1,4 +1,7 @@
 import Image from "../schemas/Image";
+import akaneko from "akaneko";
+import neko from "nekos-fun";
+import fetch from "node-fetch";
 
 export async function queryPrivateImage(
 	imageCategory?,
@@ -76,4 +79,66 @@ export async function queryRandom(size)
 {
 	const content = await Image.aggregate([{ $sample: { size: size || 1, }, }]);
 	return size > 1 ? content : content[0];
+}
+
+export async function queryDefault(tag): Promise<string> 
+{
+	let link: string;
+	switch (tag) 
+	{
+		case "nekomimi": {
+			const response = await fetch("https://api.waifu.pics/nsfw/neko");
+			const neko = await response.json();
+
+			link = neko.url;
+			break;
+		}
+
+		case "anal":
+		case "boobs":
+		case "blowjob": {
+			link = await neko.nsfw[tag]();
+			break;
+		}
+
+		case "paizuri": {
+			const response = await fetch("https://hmtai.hatsunia.cfd/v2/boobjob");
+			const json = await response.json();
+
+			link = json.url;
+
+			break;
+		}
+
+		case "gif": {
+			if ([1, 2][Math.floor(Math.random() * 2)] == 1) 
+			{
+				const requestHentai = async () => 
+				{
+					const choice = ["boobs", "cum", "anal", "blowjob"];
+					const botChoice = choice[Math.floor(Math.random() * choice.length)];
+					return await neko.nsfw[botChoice]();
+				};
+
+				let image = await requestHentai();
+				while (!(image as string).endsWith("gif"))
+					image = await requestHentai();
+
+				link = image;
+			}
+			else 
+			{
+				link = (await queryPrivateImage("random", "gif")).link;
+			}
+
+			break;
+		}
+
+		default: {
+			link = await akaneko.nsfw[tag]();
+			break;
+		}
+	}
+
+	return link;
 }

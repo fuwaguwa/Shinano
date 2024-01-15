@@ -1,5 +1,4 @@
 import { LoadableNSFWInteraction } from "../../../../typings/Sauce";
-import fetch from "node-fetch";
 import {
 	ActionRowBuilder,
 	ButtonBuilder,
@@ -13,6 +12,7 @@ import {
 import { cooldownCheck, setCooldown } from "../../../../events/btnInteraction";
 import nsfwSubs from "../nsfwSubs";
 import { collectors } from "../../../../events/cmdInteraction";
+import { queryDefault } from "../../../../lib/Lewdies";
 
 export = async (
 	interaction: LoadableNSFWInteraction,
@@ -21,14 +21,8 @@ export = async (
 	mode?: string
 ) => 
 {
-	const response = await fetch(`${process.env.amagiApi}/nsfw/public/${tag}`, {
-		method: "GET",
-		headers: {
-			Authorization: process.env.amagiApiKey,
-		},
-	});
-	const waifu = await response.json();
-	lewdEmbed.setImage(waifu.body.link).setColor("Random");
+	const waifu = await queryDefault(tag);
+	lewdEmbed.setImage(waifu).setColor("Random");
 
 	const load: ActionRowBuilder<ButtonBuilder> =
 		new ActionRowBuilder<ButtonBuilder>().setComponents(
@@ -42,7 +36,7 @@ export = async (
 			.setStyle(ButtonStyle.Link)
 			.setEmoji({ name: "🔗", })
 			.setLabel("Image Link")
-			.setURL(waifu.body.link),
+			.setURL(waifu),
 		new ButtonBuilder()
 			.setStyle(ButtonStyle.Secondary)
 			.setEmoji({ name: "🔍", })

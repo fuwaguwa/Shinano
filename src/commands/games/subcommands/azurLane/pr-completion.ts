@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
-import { getALEXPTable } from "../../../../lib/AzurLane";
 import { closest } from "../../../../lib/Utils";
+import expInfo from "../../../../../data/shipStats.json";
 
 export = async (interaction: ChatInputCommandInteraction, AL: any) => 
 {
@@ -21,7 +21,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	let prFSTableTotal: number[];
 	let color: any;
 
-	const data = await getALEXPTable();
+	const data = expInfo;
 
 	/**
 	 * Filtering

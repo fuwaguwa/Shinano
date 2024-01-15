@@ -1,22 +1,7 @@
 import { AzurAPI } from "@azurapi/azurapi";
 import { EmbedBuilder } from "discord.js";
 import Fuse from "fuse.js";
-import fetch from "node-fetch";
 import { toTitleCase } from "./Utils";
-
-/**
- * Get EXP Table
- */
-export async function getALEXPTable() 
-{
-	const response = await fetch(`${process.env.amagiApi}/azur-lane/ship-stats`, {
-		method: "GET",
-		headers: {
-			Authorization: process.env.amagiApiKey,
-		},
-	});
-	return (await response.json()).body;
-}
 
 /**
  * Format gear's stats

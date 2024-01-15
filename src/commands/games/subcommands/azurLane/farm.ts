@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
-import { getALEXPTable } from "../../../../lib/AzurLane";
+import expInfo from "../../../../../data/shipStats.json";
 import { ShinanoShip } from "../../../../structures/Ship";
 
 export = async (interaction: ChatInputCommandInteraction, AL: any) => 
@@ -66,7 +66,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	if (ship.rarity === "Ultra Rare" || ship.rarity === "Decisive")
 		rarity = "ultra rare";
 
-	let data: any = await getALEXPTable();
+	let data: any = expInfo;
 	rarity === "normal" ? (data = data.normal) : (data = data.ultraRare);
 	const expDifference = data[tLevel - 1] - data[cLevel - 1];
 

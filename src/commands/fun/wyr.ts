@@ -1,5 +1,4 @@
 import { ChatInputCommand } from "../../structures/Command";
-import fetch from "node-fetch";
 import {
 	ActionRowBuilder,
 	ButtonBuilder,
@@ -10,6 +9,7 @@ import {
 	InteractionCollector
 } from "discord.js";
 import { collectors } from "../../events/cmdInteraction";
+import wyrTable from "../../../data/wyr.json";
 
 export default new ChatInputCommand({
 	name: "would-you-rather",
@@ -20,8 +20,13 @@ export default new ChatInputCommand({
 	{
 		if (!interaction.deferred) await interaction.deferReply();
 
-		const response = await fetch(`${process.env.amagiApi}/wyr`);
-		const wyr = await response.json();
+		const wyrResult = wyrTable[Math.floor(Math.random() * wyrTable.length)];
+		const wyr = {
+			optionA: wyrResult.option_a,
+			votesA: wyrResult.votes_a,
+			optionB: wyrResult.option_b,
+			votesB: wyrResult.votes_b,
+		};
 
 		const wyrEmbed: EmbedBuilder = new EmbedBuilder()
 			.setColor("#2b2d31")
