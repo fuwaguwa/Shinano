@@ -217,7 +217,9 @@ export default new Event("interactionCreate", async (interaction) =>
 			{
 				if (
 					interaction.user.id !== owner &&
-					interaction.guild.id !== "1020960562710052895"
+					!["1020960562710052895", "1002156534270267442"].includes(
+						interaction.guild.id
+					)
 				) 
 				{
 					const voteEmbed: EmbedBuilder = new EmbedBuilder()
