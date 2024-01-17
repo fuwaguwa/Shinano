@@ -10,7 +10,7 @@ import Stealth from "puppeteer-extra-plugin-stealth";
 import Canvas, { createCanvas, loadImage } from "canvas";
 import { client } from "../../../..";
 import path from "path";
-import { toTitleCase } from "../../../../lib/Utils";
+import { sleep, toTitleCase } from "../../../../lib/Utils";
 
 puppeteer.use(Stealth());
 Canvas.registerFont("QuireSansSemiBold.ttf", { family: "QuireSans", });
@@ -69,11 +69,9 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 	const page: Page = await browser.newPage();
 
 	await page.goto(link);
-	await page.waitForSelector(".col-4.col-sm-4.col-md-2");
+	await page.waitForSelector(".equipment-grid");
 
-	const containerDivs = await page.$$(
-		".modal-body > div:nth-child(1) > div:nth-child(1)"
-	);
+	const containerDivs = await page.$$(".equipment-grid");
 
 	if (!containerDivs || containerDivs.length == 0) 
 	{
@@ -96,7 +94,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 
 	for (const containerDiv of containerDivs) 
 	{
-		const cols = await containerDiv.$$(".col-4.col-sm-4.col-md-2");
+		const cols = await containerDiv.$$(".equipment-column");
 
 		const canvas = createCanvas(50, 50);
 		const ctx = canvas.getContext("2d");
@@ -201,6 +199,7 @@ export = async (interaction: ChatInputCommandInteraction, AL: any) =>
 		}
 	}
 
+	await page.close();
 	await browser.close();
 
 	wait.setDescription(

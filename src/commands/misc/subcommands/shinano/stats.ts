@@ -18,12 +18,6 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const topggStats = await response.json();
 
 	/**
-	 * API Stats
-	 */
-	const apiResponse = await fetch(process.env.amagiApi);
-	const apiStatus = await apiResponse.json();
-
-	/**
 	 * Uptime
 	 */
 	let totalSeconds = client.uptime / 1000;
@@ -63,10 +57,6 @@ export = async (interaction: ChatInputCommandInteraction) =>
 					`Current Votes: **${topggStats.monthlyPoints}**\n` +
 					`Total Votes: **${topggStats.points}**\n` +
 					`Commands Registered: **${commandsCount}**`,
-			},
-			{
-				name: "API Status:",
-				value: `Connected to Database: **${apiStatus.connectedToDatabase}**`,
 			}
 		);
 	await interaction.editReply({ embeds: [performance], });

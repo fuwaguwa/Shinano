@@ -79,7 +79,13 @@ export async function searchBooru(
 		"-nahida_(genshin_impact)",
 		"-diona_(genshin_impact)",
 		"-sayu_(genshin_impact)",
-		"-hilichurl_(genshin_impact)"
+		"-hilichurl_(genshin_impact)",
+		"-goblin",
+		"-orc",
+		"-huohuo_(honkai:_star_rail)",
+		"-pela_(honkai:_star_rail)",
+		"-hook_(honkai:_star_rail)",
+		"-bailu_(honkai:_star_rail)"
 	];
 
 	let booruResult;
