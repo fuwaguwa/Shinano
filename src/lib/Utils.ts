@@ -98,6 +98,16 @@ export function strFormat(str: string, obj: any[])
 	});
 }
 
+
+/**
+ * Strips color tags from a string
+ * @param input input string
+ * @returns string without color tags
+ */
+export function stripColorTags(input: string): string {
+    return input.replace(/<color=#\w+>(.*?)<\/color>/g, '$1');
+}
+
 /**
  * Return closest number match in array
  * @param num number

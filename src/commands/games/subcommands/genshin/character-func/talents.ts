@@ -66,7 +66,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	{
 		const embed: EmbedBuilder = new EmbedBuilder()
 			.setColor(embedColor)
-			.setThumbnail(character.images.icon);
+			.setThumbnail(character.images.mihoyo_icon);
 
 		switch (i + 1) 
 		{
@@ -74,7 +74,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 				embed
 					.setTitle(`${character.name}'s Talents | Normal Attack`)
 					.setDescription(
-						`**${talents.combat1.name}**\n` + talents.combat1.info
+						`**${talents.combat1.name}**\n` + talents.combat1.description
 					);
 				break;
 			}
@@ -85,7 +85,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 					.setDescription(
 						`*${talents.combat2.description}*\n\n` +
 							`**Elemental Skill: ${talents.combat2.name}**\n` +
-							talents.combat2.info
+							talents.combat2.description
 					);
 				break;
 			}
@@ -96,7 +96,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 					.setDescription(
 						`*${talents.combat3.description}*\n\n` +
 							`**Elemental Burst: ${talents.combat3.name}**\n` +
-							talents.combat3.info
+							talents.combat3.description
 					);
 				break;
 			}
@@ -104,7 +104,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			case 4: {
 				embed.setTitle(`${character.name}'s Talents | SP Skill`).setFields({
 					name: "Alternate Sprint",
-					value: talents.combatsp.info,
+					value: talents.combatsp.description,
 				});
 				break;
 			}
@@ -121,10 +121,10 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		const embed: EmbedBuilder = new EmbedBuilder()
 			.setColor(embedColor)
 			.setTitle(`${character.name}'s Talents | Passive ${i + 1}`)
-			.setThumbnail(character.images.icon)
+			.setThumbnail(character.images.mihoyo_icon)
 			.setFields({
 				name: `Passive: ${talents[`passive${i + 1}`].name}`,
-				value: talents[`passive${i + 1}`].info,
+				value: talents[`passive${i + 1}`].description,
 			});
 		charTalentsEmbeds.push(embed);
 	}
@@ -153,7 +153,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			new EmbedBuilder()
 				.setColor(embedColor)
 				.setTitle(`${character.name}'s Talents Costs`)
-				.setThumbnail(character.images.icon)
+				.setThumbnail(character.images.mihoyo_icon)
 				.setFields({ name: `Level ${i + 2}`, value: costs[i], })
 		);
 	}

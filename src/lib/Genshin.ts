@@ -22,39 +22,39 @@ const elementIcons = {
 
 export function stars(item: genshin.Character | genshin.Weapon) 
 {
-	return "⭐".repeat(parseInt(item.rarity, 10));
+	return "⭐".repeat(item.rarity);
 }
 
 export function color(char: genshin.Character | string) 
 {
 	if (typeof char == "string") return elementColors[char];
-	return elementColors[char.element];
+	return elementColors[char.elementText];
 }
 
 export function icon(char: genshin.Character | string) 
 {
 	if (typeof char == "string") return elementIcons[char];
-	return elementIcons[char.element];
+	return elementIcons[char.elementText];
 }
 
 export function rarityColor(
-	item: genshin.Weapon | genshin.Material | string
+	item: genshin.Weapon | genshin.Material | number
 ): any 
 {
 	let itemRarity;
-	typeof item === "string" ? (itemRarity = item) : (itemRarity = item.rarity);
+	typeof item === "number" ? (itemRarity = item) : (itemRarity = item.rarity);
 
 	switch (itemRarity) 
 	{
-		case "1":
+		case 1:
 			return "Grey";
-		case "2":
+		case 2:
 			return "#568666";
-		case "3":
+		case 3:
 			return "#59869e";
-		case "4":
+		case 4:
 			return "#a67dbc";
-		case "5":
+		case 5:
 			return "Gold";
 	}
 }

@@ -8,7 +8,7 @@ export = async (interaction: ChatInputCommandInteraction, enemy: Enemy) =>
 	 * Drops
 	 */
 	const possibleDrops: string[] = [];
-	enemy.rewardpreview.forEach((reward) => 
+	enemy.rewardPreview.forEach((reward) => 
 	{
 		if (!possibleDrops.includes(reward.name)) possibleDrops.push(reward.name);
 	});
@@ -18,16 +18,16 @@ export = async (interaction: ChatInputCommandInteraction, enemy: Enemy) =>
 	 */
 	const enemyEmbed: EmbedBuilder = new EmbedBuilder()
 		.setColor("#2b2d31")
-		.setTitle(`${enemy.name} | ${enemy.specialname}`)
+		.setTitle(`${enemy.name} | ${enemy.specialNames[0]}`)
 		.setDescription(`*${enemy.description}*`)
 		.addFields(
 			{
 				name: "Enemy Type:",
-				value: `${toTitleCase(enemy["enemytype"].toLowerCase())}`,
+				value: `${toTitleCase(enemy.enemyType.toLowerCase())}`,
 			},
 			{
 				name: "Enemy Category:",
-				value: enemy.category,
+				value: enemy.categoryText,
 			},
 			{
 				name: "Enemy Drops:",
