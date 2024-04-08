@@ -27,11 +27,8 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const materialEmbed: EmbedBuilder = new EmbedBuilder()
 		.setColor(material.rarity ? rarityColor(material) : "#2b2d31")
 		.setTitle(material.name)
-		.setThumbnail(material.images.redirect)
 		.setDescription(
-			`*${material.description}*\n\n${
-				material.url ? `[Wiki Link](${material.url.fandom})` : ""
-			}`
+			`*${material.description}*`
 		)
 		.setFields(
 			{
@@ -42,10 +39,10 @@ export = async (interaction: ChatInputCommandInteraction) =>
 			},
 			{
 				name: "Material Type:",
-				value: material.materialtype,
+				value: material.typeText,
 			}
 		);
-	if (!material.daysofweek) 
+	if (!material.daysOfWeek) 
 	{
 		materialEmbed.addFields({
 			name: "Material Source:",
@@ -57,8 +54,8 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		materialEmbed.addFields({
 			name: "Material Source",
 			value:
-				`${material.source.join("\n")}\n` +
-				`${material.dropdomain} (${material.daysofweek.join("/")})`,
+				`${(material as any).sources.join("\n")}\n` +
+				`${material.dropDomainName} (${material.daysOfWeek.join("/")})`,
 		});
 	}
 

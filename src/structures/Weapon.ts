@@ -1,7 +1,9 @@
 import { EmbedBuilder } from "discord.js";
 import { Weapon } from "genshin-db";
 import { rarityColor, stars } from "../lib/Genshin";
-import { strFormat } from "../lib/Utils";
+import { strFormat, stripColorTags } from "../lib/Utils";
+
+const kaeya = "https://static.wikia.nocookie.net/115776a8-9014-45e6-9bb7-0bdb6184a80b/"
 
 export class ShinanoWeapon 
 {
@@ -22,19 +24,9 @@ export class ShinanoWeapon
 
 		this.color = rarityColor(weapon);
 		this.stars = stars(weapon);
+		this.subValue = `${weapon.baseStatText} ${weapon.mainStatText}`
 	}
 
-	/**
-	 * Converting weapon subvalues
-	 */
-	private getSubValue() 
-	{
-		const weapon = this.weapon;
-
-		weapon.substat.toLowerCase() !== "elemental mastery"
-			? (this.subValue = `${weapon.subvalue}% ${weapon.substat}`)
-			: (this.subValue = `${weapon.subvalue} ${weapon.substat}`);
-	}
 
 	/**
 	 * Formatting weapon refinement stats
@@ -43,22 +35,19 @@ export class ShinanoWeapon
 	{
 		const weapon = this.weapon;
 
-		if (weapon.effect) 
+		if (weapon.effectName) 
 		{
 			for (let i = 0; i < 5; i++) 
 			{
 				if (i == 0) 
 				{
-					weapon[`r${i + 1}`].forEach((stat) => 
-					{
-						this.refinementStats.push(stat);
-					});
+					weapon.r1.values.forEach((stat) => {this.refinementStats.push(stat)})
 				}
 				else 
 				{
-					for (let k = 0; k < weapon.r1.length; k++) 
+					for (let k = 0; k < weapon.r1.values.length; k++) 
 					{
-						this.refinementStats[k] += `/${weapon[`r${i + 1}`][k]}`;
+						this.refinementStats[k] += `/${weapon[`r${i + 1}`].values[k]}`;
 					}
 				}
 			}
@@ -79,11 +68,11 @@ export class ShinanoWeapon
 	{
 		const weapon = this.weapon;
 
-		if (weapon.effect) 
+		if (weapon.effectName) 
 		{
 			embed.addFields({
-				name: `Effect: ${this.weapon.effectname}`,
-				value: strFormat(this.weapon.effect, refStats || this.refinementStats),
+				name: `Effect: ${this.weapon.effectName}`,
+				value: strFormat(stripColorTags(this.weapon.effectTemplateRaw), refStats || this.refinementStats),
 			});
 		}
 	}
@@ -95,18 +84,13 @@ export class ShinanoWeapon
 	{
 		const weapon = this.weapon;
 
-		this.getSubValue();
 		this.getRefinementStats();
 
 		this.generalInfo = new EmbedBuilder()
 			.setColor(this.color)
 			.setTitle(weapon.name)
-			.setDescription(
-				`*${weapon.description}*\n\n${
-					weapon.url ? `[Wiki Link](${weapon.url.fandom})` : ""
-				}`
-			)
-			.setThumbnail(weapon.images.icon)
+			.setDescription(`*${weapon.description}*`)
+			.setThumbnail(weapon.images.mihoyo_icon || kaeya)
 			.setFields(
 				{
 					name: "Rarity",
@@ -114,16 +98,16 @@ export class ShinanoWeapon
 				},
 				{
 					name: "Weapon Type:",
-					value: weapon.weapontype,
+					value: weapon.weaponText,
 				},
 				{
 					name: "Base Stats",
 					value:
-						`Base ATK: **${weapon.baseatk} ATK**\n` +
+						`Base ATK: **${Math.round(weapon.baseAtkValue)} ATK**\n` +
 						`${this.subValue ? `Base Substat: **${this.subValue}**\n` : ""}`,
 				}
 			);
-		if (weapon.effect) this.includeEffect(this.generalInfo);
+		if (weapon.effectName) this.includeEffect(this.generalInfo);
 	}
 
 	/**
@@ -152,7 +136,7 @@ export class ShinanoWeapon
 				new EmbedBuilder()
 					.setColor(this.color)
 					.setTitle(`${weapon.name}'s Ascension Costs`)
-					.setThumbnail(weapon.images.icon)
+					.setThumbnail(weapon.images.mihoyo_icon || kaeya)
 					.setFields({ name: `Ascension ${i + 1}:`, value: ascensionCosts[i], })
 			);
 		}
@@ -188,27 +172,12 @@ export class ShinanoWeapon
 		let weaponStats = weapon.stats(level);
 		if (ascension) weaponStats = weapon.stats(level, parseInt(ascension, 10));
 
-		let weaponSPStats: string;
-		if (weapon.substat) 
-		{
-			if (weapon.substat.toLowerCase() !== "elemental mastery") 
-			{
-				weaponSPStats = `${(weaponStats.specialized * 100).toFixed(2)}% ${
-					weapon.substat
-				}`;
-			}
-			else 
-			{
-				weaponSPStats = `${weaponStats.specialized.toFixed(2)} ${
-					weapon.substat
-				}`;
-			}
-		}
+		const weaponSPStats: string = this.subValue
 
 		this.weaponStats = new EmbedBuilder()
 			.setColor(this.color)
 			.setTitle(`${weapon.name}\'s Stats | Level ${level}`)
-			.setThumbnail(weapon.images.icon)
+			.setThumbnail(weapon.images.mihoyo_icon || kaeya)
 			.setFields(
 				{
 					name: "Level & Ascensions:",
@@ -216,7 +185,7 @@ export class ShinanoWeapon
 						`Level: **${weaponStats.level}**\n` +
 						`Ascensions: **${weaponStats.ascension}**\n` +
 						`${
-							weapon.effect ? `Refinement Level: **${refinementLevel}**` : ""
+							weapon.effectName ? `Refinement Level: **${refinementLevel}**` : ""
 						}`,
 				},
 				{
@@ -233,10 +202,10 @@ export class ShinanoWeapon
 				}
 			);
 
-		if (weapon.effect) 
+		if (weapon.effectName) 
 		{
 			const refStats: string[] = [];
-			weapon[`r${refinementLevel}`].forEach((stat) => 
+			weapon[`r${refinementLevel}`].values.forEach((stat) => 
 			{
 				refStats.push(`**${stat}**`);
 			});

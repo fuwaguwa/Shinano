@@ -12,6 +12,8 @@ import { rarityColor } from "../../../../lib/Genshin";
 import { toTitleCase } from "../../../../lib/Utils";
 import { collectors } from "../../../../events/cmdInteraction";
 
+const kaeya = "https://static.wikia.nocookie.net/115776a8-9014-45e6-9bb7-0bdb6184a80b/"
+
 export = async (interaction: ChatInputCommandInteraction) => 
 {
 	/**
@@ -30,7 +32,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 		return interaction.editReply({ embeds: [noResult], });
 	}
 
-	const embedColor = rarityColor(artifact.rarity[artifact.rarity.length - 1]);
+	const embedColor = rarityColor(artifact.rarityList[artifact.rarityList.length - 1]);
 
 	/**
 	 * General info
@@ -47,23 +49,21 @@ export = async (interaction: ChatInputCommandInteraction) =>
 	const infoEmbed: EmbedBuilder = new EmbedBuilder()
 		.setTitle(artifact.name)
 		.setColor(embedColor);
-	if (artifact.url?.fandom)
-		infoEmbed.setDescription(`[Wiki Link](${artifact.url.fandom})`);
 
-	if (artifact["1pc"]) 
+	if (artifact.effect1Pc) 
 	{
 		infoEmbed
-			.setThumbnail(artifact.images.circlet)
+			.setThumbnail(artifact.images.mihoyo_circlet || kaeya)
 			.setDescription(`*${artifact.circlet.description}*`)
-			.addFields({ name: "1-piece Effect:", value: artifact["1pc"], });
+			.addFields({ name: "1-piece Effect:", value: artifact.effect1Pc, });
 		return interaction.editReply({ embeds: [infoEmbed], });
 	}
 
-	infoEmbed.setThumbnail(artifact.images.flower);
-	if (artifact["2pc"])
-		infoEmbed.addFields({ name: "2-pieces Effect:", value: artifact["2pc"], });
-	if (artifact["4pc"])
-		infoEmbed.addFields({ name: "4-pieces Effect:", value: artifact["4pc"], });
+	infoEmbed.setThumbnail(artifact.images.mihoyo_flower).setDescription(`*${artifact.circlet.description}*`);
+	if (artifact.effect2Pc)
+		infoEmbed.addFields({ name: "2-pieces Effect:", value: artifact.effect2Pc, });
+	if (artifact.effect4Pc)
+		infoEmbed.addFields({ name: "4-pieces Effect:", value: artifact.effect4Pc, });
 
 	for (let i = 0; i < artifactParts.length; i++) 
 	{
@@ -74,7 +74,7 @@ export = async (interaction: ChatInputCommandInteraction) =>
 					.setTitle(`${toTitleCase(part)}: ${artifact[part].name}`)
 					.setColor(embedColor)
 					.setDescription(`*${artifact[part].description}*`)
-					.setThumbnail(artifact.images[part]),
+					.setThumbnail(artifact.images[`mihoyo_${part}`]),
 			},
 			artifactPartsInfo
 		);

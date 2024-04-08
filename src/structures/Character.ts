@@ -47,11 +47,11 @@ export class ShinanoCharacter
 
 		for (let cons in charCons) 
 		{
-			if (!["name", "images", "version"].includes(cons)) 
+			if (!["name", "images", "version", "id"].includes(cons)) 
 			{
 				consInfo.push({
 					name: cons.toUpperCase() + " | " + charCons[cons].name,
-					description: charCons[cons].effect,
+					description: charCons[cons].description,
 				});
 			}
 		}
@@ -59,7 +59,7 @@ export class ShinanoCharacter
 		this.constellations = new EmbedBuilder()
 			.setColor(embedColor ? color(embedColor) : this.color)
 			.setTitle(`${charName || character.name}'s Constellations`)
-			.setThumbnail(character.images.icon);
+			.setThumbnail(character.images.mihoyo_icon);
 
 		consInfo.forEach((cons) => 
 		{
@@ -124,7 +124,7 @@ export class ShinanoCharacter
 					character.url ? `[Wiki Link](${character.url.fandom})` : ""
 				}`
 			)
-			.setThumbnail(character.images.icon)
+			.setThumbnail(character.images.mihoyo_icon)
 			.addFields(
 				{
 					name: "Element:",
@@ -136,7 +136,7 @@ export class ShinanoCharacter
 				},
 				{
 					name: "Weapon Type:",
-					value: character.weapontype,
+					value: character.weaponText,
 				},
 				{
 					name: "Constellation",
@@ -198,7 +198,7 @@ export class ShinanoCharacter
 				new EmbedBuilder()
 					.setColor(this.color)
 					.setTitle(`${character.name}'s Ascension Costs`)
-					.setThumbnail(character.images.icon)
+					.setThumbnail(character.images.mihoyo_icon)
 					.addFields({ name: `Ascension ${i + 1}:`, value: ascensionCosts[i], })
 			);
 		}
@@ -241,7 +241,7 @@ export class ShinanoCharacter
 
 		this.stats = new EmbedBuilder()
 			.setColor(this.color)
-			.setThumbnail(character.images.icon)
+			.setThumbnail(character.images.mihoyo_icon)
 			.setTitle(`${character.name}'s Stats | Level ${level}`)
 			.addFields(
 				{
@@ -268,7 +268,7 @@ export class ShinanoCharacter
 						}**\n` +
 						`Ascension Stat: **${
 							characterStats.specialized
-								? `${characterSpecializedStat} ${character.substat}`
+								? `${characterSpecializedStat} ${character.substatText}`
 								: "N/A"
 						}**\n`,
 				}
