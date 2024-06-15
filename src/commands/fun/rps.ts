@@ -289,7 +289,7 @@ export default new ChatInputCommand({
 							await i.editReply({
 								content: `${user}`,
 								embeds: [res],
-								components: [choiceButtons],
+								components: [rpsButtons],
 							});
 
 							acceptor.stop("ACCEPTED");

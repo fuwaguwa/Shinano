@@ -1,6 +1,5 @@
 import Image from "../schemas/Image";
 import akaneko from "akaneko";
-import neko from "nekos-fun";
 import fetch from "node-fetch";
 
 export async function queryPrivateImage(
@@ -94,10 +93,11 @@ export async function queryDefault(tag): Promise<string>
 			break;
 		}
 
-		case "anal":
-		case "boobs":
-		case "blowjob": {
-			link = await neko.nsfw[tag]();
+		case "anal": {
+			const response = await fetch("https://hmtai.hatsunia.cfd/v2/anal");
+			const json = await response.json();
+
+			link = json.url;
 			break;
 		}
 
@@ -115,9 +115,13 @@ export async function queryDefault(tag): Promise<string>
 			{
 				const requestHentai = async () => 
 				{
-					const choice = ["boobs", "cum", "anal", "blowjob"];
+					const choice = ["cum", "anal", "blowjob", "paizuri"];
 					const botChoice = choice[Math.floor(Math.random() * choice.length)];
-					return await neko.nsfw[botChoice]();
+					
+					const response = await fetch(`https://hmtai.hatsunia.cfd/v2/${botChoice}`);
+					const json = await response.json();
+
+					return json.url;
 				};
 
 				let image = await requestHentai();

@@ -105,6 +105,7 @@ export default new ChatInputCommand({
 					choices: [
 						{ name: "Shipgirls ⭐", value: "shipgirls", },
 						{ name: "Genshin ⭐", value: "genshin", },
+						{ name: "Honkai", value: "honkai", },
 						{ name: "Undies", value: "undies", },
 						{ name: "Kemonomimi", value: "kemonomimi", },
 						{ name: "Misc", value: "misc", },
@@ -220,11 +221,6 @@ export default new ChatInputCommand({
 			type: ApplicationCommandOptionType.Subcommand,
 			name: "feet",
 			description: "Shinano will not question your kink.",
-		},
-		{
-			type: ApplicationCommandOptionType.Subcommand,
-			name: "boobs",
-			description: "Girls with huge jugs!",
 		},
 		{
 			type: ApplicationCommandOptionType.Subcommand,
