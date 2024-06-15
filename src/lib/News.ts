@@ -101,7 +101,7 @@ export async function fetchTweets()
 
 export async function fetchWeiboTweets() 
 {
-	fetch("https://twitapi.fuwafuwa08.repl.co/alweibotweet")
+	fetch("https://al-tweet-scraper.onrender.com/alweibotweet")
 		.then(res => res.json())
 		.then((json) => 
 		{
