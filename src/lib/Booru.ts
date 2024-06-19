@@ -41,7 +41,6 @@ export async function searchBooru(
 	/**
 	 * Filtering results
 	 */
-	// Tried my best since blue archive content is used quite a lot
 	const obligatory: string[] = [
 		"sort:score",
 		"-guro",
@@ -61,31 +60,8 @@ export async function searchBooru(
 		"-pokephilia",
 		"-animal_genitalia",
 		"-anthro",
-		"-koharu_(blue_archive)",
-		"-miyu_(blue_archive)",
-		"-mutsuki_(blue_archive)",
-		"-hina_(blue_archive)",
-		"-neru_(blue_archive)",
-		"-hoshino_(blue_archive)",
-		"-kisaki_(blue_archive)",
-		"-mari_(blue_archive)",
-		"-chisa_(blue_archive)",
-		"-shizuko_(blue_archive)",
-		"-iori_(blue_archive)",
-		"-hifumi_(blue_archive)",
-		"-iroha_(blue_archive)",
-		"-aris_(blue_archive)",
-		"-klee_(genshin_impact)",
-		"-nahida_(genshin_impact)",
-		"-diona_(genshin_impact)",
-		"-sayu_(genshin_impact)",
-		"-hilichurl_(genshin_impact)",
 		"-goblin",
 		"-orc",
-		"-huohuo_(honkai:_star_rail)",
-		"-pela_(honkai:_star_rail)",
-		"-hook_(honkai:_star_rail)",
-		"-bailu_(honkai:_star_rail)"
 	];
 
 	let booruResult;

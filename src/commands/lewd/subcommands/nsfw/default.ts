@@ -13,6 +13,7 @@ import { cooldownCheck, setCooldown } from "../../../../events/btnInteraction";
 import nsfwSubs from "../nsfwSubs";
 import { collectors } from "../../../../events/cmdInteraction";
 import { queryDefault } from "../../../../lib/Lewdies";
+import { searchBooru } from "../../../../lib/Booru";
 
 export = async (
 	interaction: LoadableNSFWInteraction,
@@ -21,6 +22,11 @@ export = async (
 	mode?: string
 ) => 
 {
+	if (!['nekomimi', 'gif'].includes(tag)) 
+	{
+		return await searchBooru(interaction, [tag], 'gelbooru')
+	}
+
 	const waifu = await queryDefault(tag);
 	lewdEmbed.setImage(waifu).setColor("Random");
 

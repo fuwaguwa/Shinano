@@ -336,7 +336,6 @@ export default new ChatInputCommand({
 
 					case "hquality": {
 						const tags = [
-							"elf",
 							"genshin",
 							"kemonomimi",
 							"shipgirls",
@@ -351,7 +350,6 @@ export default new ChatInputCommand({
 						return nsfwFunc.hquality(interaction, lewdEmbed, tag);
 					}
 
-					case "elf":
 					case "genshin":
 					case "kemonomimi":
 					case "misc":

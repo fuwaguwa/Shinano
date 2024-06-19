@@ -17,7 +17,6 @@
   "description": "",
   "dependencies": {
     "@azurapi/azurapi": "^1.1.2",
-    "akaneko": "^5.3.0",
     "axios": "^1.4.0",
     "body-parser": "^1.20.2",
     "booru": "^2.6.3",
