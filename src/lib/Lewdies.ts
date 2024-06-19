@@ -1,5 +1,4 @@
 import Image from "../schemas/Image";
-import akaneko from "akaneko";
 import fetch from "node-fetch";
 
 export async function queryPrivateImage(
@@ -93,23 +92,6 @@ export async function queryDefault(tag): Promise<string>
 			break;
 		}
 
-		case "anal": {
-			const response = await fetch("https://hmtai.hatsunia.cfd/v2/anal");
-			const json = await response.json();
-
-			link = json.url;
-			break;
-		}
-
-		case "paizuri": {
-			const response = await fetch("https://hmtai.hatsunia.cfd/v2/boobjob");
-			const json = await response.json();
-
-			link = json.url;
-
-			break;
-		}
-
 		case "gif": {
 			if ([1, 2][Math.floor(Math.random() * 2)] == 1) 
 			{
@@ -135,11 +117,6 @@ export async function queryDefault(tag): Promise<string>
 				link = (await queryPrivateImage("random", "gif")).link;
 			}
 
-			break;
-		}
-
-		default: {
-			link = await akaneko.nsfw[tag]();
 			break;
 		}
 	}
